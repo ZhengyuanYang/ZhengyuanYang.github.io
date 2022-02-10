@@ -1,0 +1,585 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/myico.png">
+  <link rel="icon" href="/img/myico.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Statistics gather, describe and analyze sample data in a numerical way to understand the whole date">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Statistics for Data Science">
+<meta property="og:url" content="http://example.com/2022/02/09/statistics-for-ds/index.html">
+<meta property="og:site_name" content="ZY&#39;s Blog">
+<meta property="og:description" content="Statistics gather, describe and analyze sample data in a numerical way to understand the whole date">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2022/02/09/statistics-for-ds/1.PNG">
+<meta property="og:image" content="http://example.com/2022/02/09/statistics-for-ds/3.PNG">
+<meta property="og:image" content="http://example.com/2022/02/09/statistics-for-ds/2.PNG">
+<meta property="article:published_time" content="2022-02-10T01:56:47.000Z">
+<meta property="article:modified_time" content="2022-02-10T06:14:07.987Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Basic Statistics">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2022/02/09/statistics-for-ds/1.PNG">
+  
+  
+  <title>Statistics for Data Science - ZY&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>ZY&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About me
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Statistics for Data Science">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-02-09 17:56" pubdate>
+        February 9, 2022 pm
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      4.6k 字
+    </span>
+  
+
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Statistics for Data Science</h1>
+            
+            <div class="markdown-body">
+              <h1 id="statistics-for-data-science">Statistics for Data Science</h1>
+<h2 id="term-in-statistics">Term in statistics</h2>
+<p><strong>statistics</strong></p>
+<p>Statistics gather, describe and analyze sample data in a numerical way to understand the whole date</p>
+<p><strong>target population</strong></p>
+<p>A particular group of interest</p>
+<p><strong>sample population</strong></p>
+<p>A group which the sample is taken</p>
+<p><strong>sample frame</strong></p>
+<p>A physical list of all members of the sampled population</p>
+<p><strong>sample</strong></p>
+<p>A subset of the sample population from which data are collected</p>
+<p>Ideally, sample should be representative to sample population, the sample population should be the same or representative to target population.</p>
+<p><img src="/2022/02/09/statistics-for-ds/1.PNG" srcset="/img/loading.gif" lazyload alt style="zoom:80%;"></p>
+<p><strong>census</strong></p>
+<p>A study on every member in the target population</p>
+<p><strong>variable</strong></p>
+<p>A value or characteristic that changes among members of the population</p>
+<p><strong>data </strong></p>
+<p>the actual counts, measurements or observation about the variables that you markdown with yout samples</p>
+<p><strong>parameter</strong></p>
+<p>A numerical description of a population characteristic (like mean of a variable's data)</p>
+<p><strong>sample statistics</strong></p>
+<p>A numerical description of a sample characteristic</p>
+<h2 id="data-classification">Data Classification</h2>
+<h3 id="categorical-numeric">Categorical &amp; Numeric</h3>
+<p><strong>Categorical</strong>: consist of labels or description of traits. It's meaning less to apply quantitative calculation on it</p>
+<p><strong>Numeric</strong>: consist of counts and measurement, it have meanings when you apply quantitative calculations</p>
+<h3 id="discrete-continuous">Discrete &amp; Continuous</h3>
+<p><strong>Discrete</strong>: numeric data that can take only particular values(counts, rate stars)</p>
+<p><strong>Continuous</strong>: numeric data that can take any values in an interval</p>
+<p><img src="/2022/02/09/statistics-for-ds/3.PNG" srcset="/img/loading.gif" lazyload></p>
+<h3 id="noir">NOIR</h3>
+<p><strong>Nominal level data</strong>: description of categorical data that order do not matters</p>
+<p><strong>Ordinal level data</strong>: categorical data that have a meaningful order(still not meaningful to add or divide)</p>
+<p><strong>Interval level data</strong>: numeric data that can be arranged in a meaningful order, and the different between data entries are meaningful(timestamp, shoe size, temperature degree)</p>
+<p><strong>Ratio level data</strong>: Interval data where zero indicates absence of something(like body height, 0 inch body high do not have a actual meaning, it means the data are not collected, where 0 degree do have an actual meaning, so it is not a ratio data.) As ratio data cannot participate calculation if data is not included, it must be non-zero in a calculation, thus it can divide other numeric data, that is why it is called ratio data</p>
+<p><img src="/2022/02/09/statistics-for-ds/2.PNG" srcset="/img/loading.gif" lazyload></p>
+<h2 id="the-process-of-a-statistics-study">The Process of a Statistics Study</h2>
+<h3 id="general-process-of-conducting-a-statistic-study">General process of conducting a statistic study</h3>
+<ol type="1">
+<li>Determine the design of the study
+<ol type="1">
+<li>state the question to be studied</li>
+<li>determine the population and variables</li>
+<li>determine the sampling method</li>
+</ol></li>
+<li>Collect data
+<ol type="1">
+<li>An <a href="#observational-study">observational study</a> observe data that already exist</li>
+<li>An experiment generates data to help find cause-and-effect relationship</li>
+</ol></li>
+<li>Organize the data</li>
+<li>Analyze the data</li>
+</ol>
+<h3 id="methods-of-sampling">Methods of sampling:</h3>
+<p><strong>simple random sample</strong></p>
+<p>Every sample in the sample population has a equal chance to be selected</p>
+<p><strong>stratified sample</strong></p>
+<p>The population is divided into subgroups called strata. The grouping variable should be correlated with(or is) the variable we care about. For example, we want to find the relationship between tree's age and apples's color, but in our 100 sample, 80 observations have a red apple, 20 have a green apple. If we randomly 10 sample, we might select a sample with all red apple. In this case, we cannot analyze the relationship between age and color since the sample indicates trees of any ages grow apple of same color.</p>
+<p>By applying stratified, we separate the observations into two groups according to apple color, and we select same percentage of observations from both group(8 from red group and 2 from blue group) and then we analyze cause-and-effect relationship</p>
+<p><strong>Cluster Sample</strong></p>
+<p>The population is divided into subgroups called clusters. The grouping variable should be correlated with the variable we care about.</p>
+<p><strong>Systematic sample</strong></p>
+<p>select every <span class="math inline">\(n^{th}\)</span> of the population</p>
+<p><strong>Convenient sample</strong></p>
+<p>sample on a personal bias, very unethical method to use</p>
+<h3 id="observational-study">Observational Study</h3>
+<p><strong>cross-sectional study</strong>: data are collected towards different members in a single point in time</p>
+<p><strong>longitudinal study</strong>: data are gathered by following a particular group over a period of time</p>
+<h3 id="experiment">Experiment</h3>
+<p><strong>treatment</strong>: a condition applied to a group of subjects in an experiment</p>
+<p><strong>subjects</strong>: people or thing to be studied in a group</p>
+<p><strong>response variable</strong>: the variable in an experiment that responds to the treatment</p>
+<p><strong>explanatory variable</strong>: the variable in an experiment that causes the change in the response variable</p>
+<p><strong>control group</strong>: a group in the experiment that has no treatment applied</p>
+<p><strong>treatment group</strong>: a group in the experiment with a treatment applied</p>
+<p><strong>confounding variable</strong>: unmeasured factors other than the treatment that cause an effect on the subjects of an experiment</p>
+<p><strong>single-blind experiment</strong>: subjects do not know which group they are in, but the people interacting(measurer) with the subjects know</p>
+<p><strong>double-blind experiment</strong>: neither the subjects not the measurer know which group each subject belongs</p>
+<p><strong>placebo</strong>: a substance or method to make subjects believe all subjects in both groups receive same treatment(in order to exclude personal factor)</p>
+<p><strong>Institutional Review Board</strong>: a group of people who review the experiment design to make sure no harm will come to subjects involved</p>
+<p><strong>Informed consent</strong>: completely disclosing to participant the goals and procedures of a study and obtaining their agreement to participate</p>
+<p>Three principles of experiment design:</p>
+<ol type="1">
+<li>randomize the control and treatment group</li>
+<li>control for the outside effects on the response variable</li>
+<li>replicate the experiment a significant number of times to see meaningful patterns</li>
+</ol>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Statistics/">Statistics</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Basic-Statistics/">Basic Statistics</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                     All articles in this blog adpot <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 agreement unless otherwise specified</a>, please indicate the source！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/02/09/feature-selection-stats-method/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Feature Selection: Statistical Method</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/02/06/MongoDB-Guildline/">
+                        <span class="hidden-mobile">MongoDB Guildline</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <!-- <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> --> <i class="iconfont icon-bug"></i> <a href="/report/" target="_blank" rel="nofollow noopener"><span>Report Bug</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        loader: {
+          load: ['ui/lazy']
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
