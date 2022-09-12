@@ -16,21 +16,21 @@
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Category and Components of Machine Learning">
+    <meta name="description" content="Summry of Learning Principle in Machine Learning">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Basic knowledge about Machine Learning(Supervised Learning).md">
-<meta property="og:url" content="http://example.com/2022/09/11/basic_knowledgefor_ML/index.html">
+<meta property="og:title" content="Learning Principle">
+<meta property="og:url" content="http://example.com/2022/09/12/Principle/index.html">
 <meta property="og:site_name" content="ZY&#39;s Blog">
-<meta property="og:description" content="Category and Components of Machine Learning">
+<meta property="og:description" content="Summry of Learning Principle in Machine Learning">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2022-09-12T04:44:12.000Z">
-<meta property="article:modified_time" content="2022-09-12T15:05:44.463Z">
+<meta property="article:published_time" content="2022-09-12T08:29:16.000Z">
+<meta property="article:modified_time" content="2022-09-12T15:05:40.482Z">
 <meta property="article:author" content="John Doe">
-<meta property="article:tag" content="Basic Knowledge">
+<meta property="article:tag" content="Learning Principle">
 <meta name="twitter:card" content="summary_large_image">
   
   
-  <title>Basic knowledge about Machine Learning(Supervised Learning).md - ZY&#39;s Blog</title>
+  <title>Learning Principle - ZY&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -176,7 +176,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="Basic knowledge about Machine Learning(Supervised Learning).md">
+            <span class="h2" id="subtitle" title="Learning Principle">
               
             </span>
 
@@ -186,8 +186,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2022-09-11 21:44" pubdate>
-        September 11, 2022 pm
+      <time datetime="2022-09-12 01:29" pubdate>
+        September 12, 2022 am
       </time>
     </span>
   
@@ -197,7 +197,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      4.9k 字
+      2.6k 字
     </span>
   
 
@@ -236,80 +236,34 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Basic knowledge about Machine Learning(Supervised Learning).md</h1>
+            <h1 style="display: none">Learning Principle</h1>
             
             <div class="markdown-body">
-              <h1 id="machine-learning">Machine Learning</h1>
-<h2 id="about-machine-learning">1.About Machine Learning</h2>
-<h3 id="what-is-machine-learning">1.1 What is Machine Learning</h3>
-<p>The definition about machine learning can be expressed as:</p>
-<p>Suppose we want a model to perform a task T, and we have a approach E to evaluate the goodness the model complete this task. If we improve E through updating an optimization algorithm O using an observational dataset D, we can call such process a machine learning process</p>
-<h3 id="three-components-of-machine-learning">1.2 Three components of Machine Learning</h3>
-<p><strong>Model</strong></p>
-<p>A model is a learnner trying to solve the task we want to perform. In most cases, that task would fitting a real mapping between variables. Thus, a model can usually be noted as <span class="math inline">\(f(x,\theta)\)</span>, where <span class="math inline">\(\theta\)</span> is the parameter of the model, and the fitting task is to find the best <span class="math inline">\(\theta\)</span> according to the training dataset.</p>
-<p>As me may not know the sepcific form of the real mapping, we need to give the algorithm a scope for leaning, we call such scope the Hypothesis Space, noted as F. For all potential fitted mapping f , <span class="math inline">\(f\in F\)</span></p>
-<p><strong>Learning Principle</strong></p>
-<p>To find the best <span class="math inline">\(\theta\)</span>, we need a principle to judge how good a <span class="math inline">\(\theta\)</span> is. This principle usually involve the definition and calculation of a Loss function</p>
-<p><strong>Optimization Algorithm</strong></p>
-<p>After confirming the training dataset, hypothesis space and learning principle, the task of finding the best parameters become a optimization problem. An optimization algorithm is a solver to solve such problem</p>
-<h3 id="proprocess-of-the-data">1.3 Proprocess of the data</h3>
-<h3 id="evaluation-of-the-model">1.4 Evaluation of the model</h3>
-<h2 id="supervised-machine-learning">2. Supervised Machine Learning</h2>
-<p>Supervised learning is a kind of machine learning where the output variable of the model is clearly labeled in the dataset. That is to say, we would have a real outcome <span class="math inline">\(Y_{true}\)</span> and a predicted outcome <span class="math inline">\(Y_{pred}\)</span></p>
-<h3 id="joint-probability-distribution"><strong>2.1 Joint Probability Distribution</strong></h3>
-<p>Joint probability is the probability that multiple conditions are satisfied same time, noted as <span class="math inline">\(P(X,Y)\)</span></p>
-<p>the relationship among joint probability, conditional probability and edge probability are: <span class="math display">\[
-P(Y|X) = \frac{P(X,Y)}{P(X)}
-\\
-P(Y) = \sum_{i=1}^N P(X,Y)P(X)
-\]</span> For two independent variable: <span class="math display">\[
-P(X, Y) = P(X)P(Y)
-\\
-P(Y|X) = P(Y)
-\]</span></p>
-<p>The fundamental hypothesis of supervised machine learning is the existence of the Joint Probability Distribution of input variable X and output variable Y</p>
-<p>The task we want a supervised machine learning algorithm to perform is to imitate the real JPD <span class="math inline">\(P(X,Y)\)</span>, so that we can calculate <span class="math inline">\(P(Y| X)\)</span> when input X is given</p>
-<h3 id="category-of-supervised-machine-learning">2.2 Category of Supervised Machine Learning</h3>
-<p><strong>Probability model v.s. Non-probability model</strong></p>
-<p>The Non-Probability model try to learn the mapping relationship f directly. Usually it confirm a hypothesis space according to prior knowledge(e.g a linear space ). For example, KNN, SVM, NN are all non-probability model</p>
-<p>The probability model try to directly learn one or more of <span class="math inline">\(P(X,Y)\)</span> , <span class="math inline">\(P( X|Y )\)</span> and <span class="math inline">\(P(Y)\)</span></p>
-<p>Usually, it would pre-decide the distribution form of P(Y|X) or P(Y), for example, the logistic regression suppose P(Y| X) follow a Bernoulli Distribution. Logistic Regression, Naive Bayes are probability model</p>
-<p><strong>Parameter model v.s. Non-parameter model</strong></p>
-<p>In statistics, a parameter estimation means an estimation with given hypothesis on the distribution of the whole population, while a non-parameter estimation does not have such hypothesis</p>
-<p>For machine learning:</p>
-<p>A parameter model means you have an explicit hypothesis on the mapping or the probability distribution, like liner regression, logistic regression, naive bayes(limited dimention of <span class="math inline">\(\theta\)</span>) or MLP. The advantage of such kind of models is, if the hypothesis is correct, the model can be fit with very small dataset. However, if the hypothesis is incorrect, no matter how large the dataset is, there would still be inevitable bias</p>
-<p>A non-parameter model means you put no or limited hypothesis on the mapping or distribution, like KNN, tree-based model, SVM(non-linear). The cost of storage and calculation of non-parameter model would be bigger, but theoretically, a non-parameter can fit any complicated mapping as long as we have enough data. Usually a non-parameter model has a few hyperparameters and infinite parameters</p>
-<p><strong>Discriminative model v.s. Generative model </strong></p>
-<p>A discriminative model directly model on Y:</p>
-<ul>
-<li>All non-probability models are discriminative models</li>
-<li>If a probability models try to directly learn <span class="math inline">\(P(Y|X)\)</span>, it is a discriminative model</li>
-</ul>
-<p>including most machine learning model like MLP, logistic regression, decision tree, KNN and SVM</p>
-<p>A Generative model try to induce <span class="math inline">\(P( X| Y)\)</span> through learning P(X, Y) and P(Y), with <span class="math display">\[
-P(X,Y) = P(X| Y )P(Y)
-\]</span></p>
-<p><span class="math display">\[
-P(Y|X) = \frac{P(X,Y)}{P(X)}
-\]</span> including naive bayes，GMM</p>
-<h2 id="unsupervised-machine-learning">3. Unsupervised Machine Learning</h2>
-<p>Unsupervised learning is a kind of machine learning where the output variable of the model is not labeled in the dataset. Typically we can separate unsupervised machine learning algorithm into serval types according to the task we want it to perform</p>
-<h3 id="feature-learning">3.1 Feature learning</h3>
-<p>Mining useful expression or combination of features in unlabeled dataset. Usually applied in dimensionality reduction or visualization, including:</p>
-<ul>
-<li>PCA , T- SNE, SVD</li>
-<li>Sparse Encoding, Auto-encoder ,Denoising Autoencoder</li>
-</ul>
-<h3 id="probabilistic-density-estimation">3.2 Probabilistic Density Estimation</h3>
-<p>Induce the probability density function of a variable through observational data, can be classified as:</p>
-<ul>
-<li>Parametric Density Estimation: have prior hypothesis on the distribution form of the variable,including MLE, MAP etc.</li>
-<li>Non-parametric Density Estimation: do not have a prior hypothesi, including histogram, Kernel Density Estimation(KDE) etc.</li>
-</ul>
-<h3 id="clustering">3.3 Clustering</h3>
-<p>Segment unlabeled dataset into different groups. Including K-Means, DBscan, hierarchical clustering etc.</p>
-<h3 id="other-unsupervised-learning">3.4 Other Unsupervised Learning</h3>
-<p>There are lots of emerging unsupervised learning algorithm like pred-Net, GAN etc. These algorithm would be elaborated in single section in other articles</p>
+              <h1 id="learning-principle">Learning Principle</h1>
+<p>In machine learning, learning principle refer to the standard for judging whether a model is good or not</p>
+<h2 id="loss-function-risk-function-and-objective-function">1. Loss function, Risk function and Objective function</h2>
+<p>Loss function is a function used to evaluate the fitness of a model</p>
+<p>For supervised learning, loss function evaluate the difference between the predicted output and true output, noted as <span class="math inline">\(L(Y,f(x, \theta))\)</span>. Ususally, loss function is applied to a single sample or a part of the samples, it cannot evaluate the overall performance of the model. To obtain that, we define: <span class="math display">\[
+R_{exp}(\theta) = E_P[L(Y,f(x, \theta))] = \int_{X*Y}L(Y,f(x, \theta)P(X,Y)dxdy
+\]</span> Where <span class="math inline">\(R_{exp}\)</span> is called <strong>risk function</strong> or **expected loss*</p>
+<p>To convert a ML problem into an optimization problem, a ideal practice is to adopt risk function as the objective function for the optimization program. However, this require us to know the true JPD P(X, Y), which is usually unknown in real problem(we can only know the estimated JPD through observational dataset), this is called an ill-formed problem</p>
+<p><em>Note: sometimes, instead of directly use loss function, we would use a function of the loss function to construct objective function, for example, the boosting algorithm</em></p>
+<p>For unsupervised learning, the loss function is a totally different thing, we usually directly talked about the objective function since we do not have a <span class="math inline">\(Y_{true}\)</span> to compare with. The specific form of the objective function varies from specific type of unsupervised learning</p>
+<h2 id="empirical-risk-minimization">2. <strong>Empirical Risk Minimization</strong></h2>
+<p>An obvious solution for ill-formed problem is to replace ture P(X,Y) with the observed <span class="math inline">\(\hat{P(X,Y)}\)</span> on training dataset.</p>
+<p>Suppose the weight of all sample are equivalent, we define <span class="math display">\[
+R_{emp}(\theta) = \frac{1}{N}\sum_{n=1}^N L(y, f(x,\theta)
+\]</span> Where <span class="math inline">\(R_{emp}\)</span> is called empirical risk.</p>
+<p>When we use empirical risk as our objective function, we call the learning principle of the machine learning "ERM"</p>
+<p>For a probability model, under some condition, we can consider ERM as equivalent to a <strong>Maximum Likehood Estimation</strong>(MLE). Refer to another article about parameter estimation</p>
+<h2 id="structural-risk-minimization">3. Structural Risk Minimization</h2>
+<p>When sample size is big enough, empirical risk would be close enough to the real expected risk. However, in real problem we will not have infinite samples. We would probably obtain a subset of the sample with unmeasured varaible and noise. Such situation would often lead to overfitting. In such case, we need introduce regularization: <span class="math display">\[
+R_{srm}(\theta) = R_{emp} + \lambda J(\theta)
+\]</span> where <span class="math inline">\(J(\theta)\)</span> is a function represent the complexity of the model, and <span class="math inline">\(\lambda\)</span> is a penalized parameter used the control the degree of regularization</p>
+<p>When we use structural risk as our objective function, we call the learning principle of the machine learning "SRM"</p>
+<p>For a probability model, under some condition, we can consider SRM as equivalent to a <strong>Maximum-A-Posterior</strong>(MAP). Refer to another article about parameter estimation</p>
+<h2 id="objective-function-for-unsupervised-learning">4. Objective function for Unsupervised Learning</h2>
+<p>[ongoing]</p>
 
             </div>
             <hr>
@@ -327,7 +281,7 @@ P(Y|X) = \frac{P(X,Y)}{P(X)}
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/Basic-Knowledge/">Basic Knowledge</a>
+                      <a class="hover-with-bg" href="/tags/Learning-Principle/">Learning Principle</a>
                     
                   </div>
                 
@@ -344,18 +298,12 @@ P(Y|X) = \frac{P(X,Y)}{P(X)}
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/09/12/Principle/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Learning Principle</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/03/25/Hypothesis-Testing/">
-                        <span class="hidden-mobile">Hypothesis Testing for Data Science</span>
+                      <a href="/2022/09/11/basic_knowledgefor_ML/">
+                        <span class="hidden-mobile">Basic knowledge about Machine Learning(Supervised Learning).md</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>Learning Principle</title>
+    <link href="/2022/09/12/Principle/"/>
+    <url>/2022/09/12/Principle/</url>
+    
+    <content type="html"><![CDATA[<h1 id="learning-principle">Learning Principle</h1><p>In machine learning, learning principle refer to the standard for judging whether a model is good or not</p><h2 id="loss-function-risk-function-and-objective-function">1. Loss function, Risk function and Objective function</h2><p>Loss function is a function used to evaluate the fitness of a model</p><p>For supervised learning, loss function evaluate the difference between the predicted output and true output, noted as <span class="math inline">\(L(Y,f(x, \theta))\)</span>. Ususally, loss function is applied to a single sample or a part of the samples, it cannot evaluate the overall performance of the model. To obtain that, we define: <span class="math display">\[R_{exp}(\theta) = E_P[L(Y,f(x, \theta))] = \int_{X*Y}L(Y,f(x, \theta)P(X,Y)dxdy\]</span> Where <span class="math inline">\(R_{exp}\)</span> is called <strong>risk function</strong> or **expected loss*</p><p>To convert a ML problem into an optimization problem, a ideal practice is to adopt risk function as the objective function for the optimization program. However, this require us to know the true JPD P(X, Y), which is usually unknown in real problem(we can only know the estimated JPD through observational dataset), this is called an ill-formed problem</p><p><em>Note: sometimes, instead of directly use loss function, we would use a function of the loss function to construct objective function, for example, the boosting algorithm</em></p><p>For unsupervised learning, the loss function is a totally different thing, we usually directly talked about the objective function since we do not have a <span class="math inline">\(Y_{true}\)</span> to compare with. The specific form of the objective function varies from specific type of unsupervised learning</p><h2 id="empirical-risk-minimization">2. <strong>Empirical Risk Minimization</strong></h2><p>An obvious solution for ill-formed problem is to replace ture P(X,Y) with the observed <span class="math inline">\(\hat{P(X,Y)}\)</span> on training dataset.</p><p>Suppose the weight of all sample are equivalent, we define <span class="math display">\[R_{emp}(\theta) = \frac{1}{N}\sum_{n=1}^N L(y, f(x,\theta)\]</span> Where <span class="math inline">\(R_{emp}\)</span> is called empirical risk.</p><p>When we use empirical risk as our objective function, we call the learning principle of the machine learning "ERM"</p><p>For a probability model, under some condition, we can consider ERM as equivalent to a <strong>Maximum Likehood Estimation</strong>(MLE). Refer to another article about parameter estimation</p><h2 id="structural-risk-minimization">3. Structural Risk Minimization</h2><p>When sample size is big enough, empirical risk would be close enough to the real expected risk. However, in real problem we will not have infinite samples. We would probably obtain a subset of the sample with unmeasured varaible and noise. Such situation would often lead to overfitting. In such case, we need introduce regularization: <span class="math display">\[R_{srm}(\theta) = R_{emp} + \lambda J(\theta)\]</span> where <span class="math inline">\(J(\theta)\)</span> is a function represent the complexity of the model, and <span class="math inline">\(\lambda\)</span> is a penalized parameter used the control the degree of regularization</p><p>When we use structural risk as our objective function, we call the learning principle of the machine learning "SRM"</p><p>For a probability model, under some condition, we can consider SRM as equivalent to a <strong>Maximum-A-Posterior</strong>(MAP). Refer to another article about parameter estimation</p><h2 id="objective-function-for-unsupervised-learning">4. Objective function for Unsupervised Learning</h2><p>[ongoing]</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Machine Learning</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Learning Principle</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Basic knowledge about Machine Learning(Supervised Learning).md</title>
     <link href="/2022/09/11/basic_knowledgefor_ML/"/>
     <url>/2022/09/11/basic_knowledgefor_ML/</url>
