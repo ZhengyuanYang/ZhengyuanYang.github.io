@@ -16,21 +16,24 @@
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Summry of Learning Principle in Machine Learning">
+    <meta name="description" content="Category and Components of Machine Learning">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Learning Principle">
-<meta property="og:url" content="http://example.com/2022/09/12/Principle/index.html">
+<meta property="og:title" content="overfitting">
+<meta property="og:url" content="http://example.com/2022/09/19/overfitting/index.html">
 <meta property="og:site_name" content="ZY&#39;s Blog">
-<meta property="og:description" content="Summry of Learning Principle in Machine Learning">
+<meta property="og:description" content="Category and Components of Machine Learning">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2022-09-12T08:29:16.000Z">
-<meta property="article:modified_time" content="2022-09-12T15:05:40.482Z">
+<meta property="og:image" content="http://example.com/2022/09/19/overfitting/1.PNG">
+<meta property="article:published_time" content="2022-09-19T18:07:35.000Z">
+<meta property="article:modified_time" content="2022-09-19T22:26:53.873Z">
 <meta property="article:author" content="John Doe">
-<meta property="article:tag" content="Learning Principle">
+<meta property="article:tag" content="Model Evaluation">
+<meta property="article:tag" content="Overfitting">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2022/09/19/overfitting/1.PNG">
   
   
-  <title>Learning Principle - ZY&#39;s Blog</title>
+  <title>overfitting - ZY&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -176,7 +179,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="Learning Principle">
+            <span class="h2" id="subtitle" title="overfitting">
               
             </span>
 
@@ -186,8 +189,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2022-09-12 01:29" pubdate>
-        September 12, 2022 am
+      <time datetime="2022-09-19 11:07" pubdate>
+        September 19, 2022 am
       </time>
     </span>
   
@@ -197,7 +200,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      2.6k 字
+      3.8k 字
     </span>
   
 
@@ -236,34 +239,91 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Learning Principle</h1>
+            <h1 style="display: none">overfitting</h1>
             
             <div class="markdown-body">
-              <h1 id="learning-principle">Learning Principle</h1>
-<p>In machine learning, learning principle refer to the standard for judging whether a model is good or not</p>
-<h2 id="loss-function-risk-function-and-objective-function">1. Loss function, Risk function and Objective function</h2>
-<p>Loss function is a function used to evaluate the fitness of a model</p>
-<p>For supervised learning, loss function evaluate the difference between the predicted output and true output, noted as <span class="math inline">\(L(Y,f(x, \theta))\)</span>. Ususally, loss function is applied to a single sample or a part of the samples, it cannot evaluate the overall performance of the model. To obtain that, we define: <span class="math display">\[
-R_{exp}(\theta) = E_P[L(Y,f(x, \theta))] = \int_{X*Y}L(Y,f(x, \theta)P(X,Y)dxdy
-\]</span> Where <span class="math inline">\(R_{exp}\)</span> is called <strong>risk function</strong> or **expected loss*</p>
-<p>To convert a ML problem into an optimization problem, a ideal practice is to adopt risk function as the objective function for the optimization program. However, this require us to know the true JPD P(X, Y), which is usually unknown in real problem(we can only know the estimated JPD through observational dataset), this is called an ill-formed problem</p>
-<p><em>Note: sometimes, instead of directly use loss function, we would use a function of the loss function to construct objective function, for example, the boosting algorithm</em></p>
-<p>For unsupervised learning, the loss function is a totally different thing, we usually directly talked about the objective function since we do not have a <span class="math inline">\(Y_{true}\)</span> to compare with. The specific form of the objective function varies from specific type of unsupervised learning</p>
-<h2 id="empirical-risk-minimization">2. <strong>Empirical Risk Minimization</strong></h2>
-<p>An obvious solution for ill-formed problem is to replace ture P(X,Y) with the observed <span class="math inline">\(\hat{P(X,Y)}\)</span> on training dataset.</p>
-<p>Suppose the weight of all sample are equivalent, we define <span class="math display">\[
-R_{emp}(\theta) = \frac{1}{N}\sum_{n=1}^N L(y, f(x,\theta)
-\]</span> Where <span class="math inline">\(R_{emp}\)</span> is called empirical risk.</p>
-<p>When we use empirical risk as our objective function, we call the learning principle of the machine learning "ERM"</p>
-<p>For a probability model, under some condition, we can consider ERM as equivalent to a <strong>Maximum Likehood Estimation</strong>(MLE). Refer to another article about parameter estimation</p>
-<h2 id="structural-risk-minimization">3. Structural Risk Minimization</h2>
-<p>When sample size is big enough, empirical risk would be close enough to the real expected risk. However, in real problem we will not have infinite samples. We would probably obtain a subset of the sample with unmeasured varaible and noise. Such situation would often lead to overfitting. In such case, we need introduce regularization: <span class="math display">\[
-R_{srm}(\theta) = R_{emp} + \lambda J(\theta)
-\]</span> where <span class="math inline">\(J(\theta)\)</span> is a function represent the complexity of the model, and <span class="math inline">\(\lambda\)</span> is a penalized parameter used the control the degree of regularization</p>
-<p>When we use structural risk as our objective function, we call the learning principle of the machine learning "SRM"</p>
-<p>For a probability model, under some condition, we can consider SRM as equivalent to a <strong>Maximum-A-Posterior</strong>(MAP). Refer to another article about parameter estimation</p>
-<h2 id="objective-function-for-unsupervised-learning">4. Objective function for Unsupervised Learning</h2>
-<p>[ongoing]</p>
+              <h1 id="overfitting-cause-and-solution">Overfitting: Cause and Solution</h1>
+<h2 id="biasvariance-and-overfitting">1. Bias，Variance and Overfitting</h2>
+<p>Theoretically, we consider the expected risk of the model on real data consists of two parts:</p>
+<p><strong>Bias</strong></p>
+<p>The model's failure to imitate the real mapping, probability distribution or other relationship of the data. For example, if we try to fit a non-linear relationship with a linear model, there would be inevitable bias. Another example is that we leave some important factors omitted</p>
+<p><strong>Variance</strong></p>
+<p>The model's sensitivity to changes in data. High variance occurs when the model try to seize any details. It put too many weights on unimportant feature or noise in order to reduce error in training process.</p>
+<p>Neither high bias nor high variance is good. However, when we take measure to solve bias, like applying complex model or increase feature, the variance of the model increase accordingly. In other worlds, there is a trade-off between bias and variance. In training process, our aim would be finding a model with bias and variance acceptable.</p>
+<p><strong>Underfitting and Overfitting</strong></p>
+<p>When the bias is high, we cannot describe the pattern of the data correctly, we call such a scene Underfitting</p>
+<p>When the bias is low, but the variance is high, the model is trapped in the details or noises of the data, ot fit well on the given data but it has poor generality so that it would fail on other data</p>
+<p><img src="/2022/09/19/overfitting/1.PNG" srcset="/img/loading.gif" lazyload></p>
+<p>The performance on training and testing dataset under these scenes</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>training SET Erro</th>
+<th>Testing Set ERROR</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Underfit</td>
+<td>high</td>
+<td>high</td>
+</tr>
+<tr class="even">
+<td>Overfit</td>
+<td>low</td>
+<td>high</td>
+</tr>
+<tr class="odd">
+<td>Optimum</td>
+<td>low</td>
+<td>low</td>
+</tr>
+</tbody>
+</table>
+<h2 id="causes-of-overfitting">2. Causes of Overfitting</h2>
+<p>As specified above, the core reason that cause of overfitting is the imbalanced trade-off(High variance, low bias). Specifically, we induct the reasons into:</p>
+<ul>
+<li>Complexity of the model: The model is too complex for the pattern we want to discover in the data</li>
+<li>Defects of data: the samples contains so much noises that the model cannot ignore them</li>
+<li>Overtraining: the model is trained with too much epochs that force the model to learn noises in order to converge</li>
+<li>Improper sampling/splitting: the training set fails to represent the distribution of the real data. Or, in some other case, the real distribution itself decides that the model is hard to imitate it.</li>
+</ul>
+<h2 id="solutions-for-overfitting">3. Solutions for Overfitting</h2>
+<p>According to four reasons, we can also induct the solutions into:</p>
+<h3 id="control-complexity">3.1 <strong>Control complexity</strong></h3>
+<p><strong>Regularization</strong></p>
+<p>In machine learning, regularization refer to constraints on the number of feature dimensions. Usually, it is realized through adding an regular term to the loss function to penalize putting weight on too many features. This includes:</p>
+<ul>
+<li>Lasso regression and Ridge regression</li>
+<li>Soft margin for SVM</li>
+<li>Regular term in XGBoost</li>
+<li>...</li>
+</ul>
+<p><strong>Feature Engineering</strong></p>
+<p>Reduce the number of features. FIlter those redundant feature through feature engineering methods like correlation analysis and dimensionality reduction. For details, please refer to <a href>ongoing</a></p>
+<p><strong>Simplify Structure</strong></p>
+<p>An important rule for machine learning is to solve the task with possible simplest model. A model with simpler structure can usually solve overfitting. Specific action includes:</p>
+<ul>
+<li>Dropout in NN</li>
+<li>pruning in tree-based model</li>
+<li>Hyperparameter like hidden size, max-leaf-node</li>
+</ul>
+<h3 id="data-augmentation"><strong>3.2 Data augmentation </strong></h3>
+<p>The best way to eliminate the variance caused by data defects is simply increasing more data to the training set. Since sufficient data are sometimes unavailable in real project. We can apply data augmentation to generate more training data. Data augmentation is more common in deep learning feild.</p>
+<h3 id="early-stopping"><strong>3.3 Early stopping</strong></h3>
+<p>Stop the optimizer earlier to prevent overtraining. For example:</p>
+<ul>
+<li>raise error threshold for an optimzer</li>
+<li>set max depth for an decision tree</li>
+<li>set max iterations for an neural network</li>
+</ul>
+<h3 id="sampling-and-spliting"><strong>3.4 Sampling and spliting</strong></h3>
+<p><strong>Cross Validation</strong></p>
+<p>Cross validation means spliting the dataset into subsets. Use some of them to estimate the distribution and other of them to evaluate the estimation. Such procedure can effectively control the varaince caused by sample selection bias. For the details of cross validation, refer to<a href>ongoing</a></p>
+<p><strong>Sampling </strong></p>
+<p>From an theoretical perspective, sampling itself is actually a kind of non-parameter ML model. When you do sampling, yur actual target is to imitate the distribution of the real population through getting a sample. Thus, the sample itself would have bias if it cannot represent the true distribution of the population. Training a mode using these samples would obviously cause variance.</p>
+<p>Thus, a way might help solving overfitting is improving your sampling method. For details of sampling methods in ML, refer to <a href>ongoing</a></p>
 
             </div>
             <hr>
@@ -281,7 +341,9 @@ R_{srm}(\theta) = R_{emp} + \lambda J(\theta)
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/Learning-Principle/">Learning Principle</a>
+                      <a class="hover-with-bg" href="/tags/Model-Evaluation/">Model Evaluation</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Overfitting/">Overfitting</a>
                     
                   </div>
                 
@@ -298,18 +360,12 @@ R_{srm}(\theta) = R_{emp} + \lambda J(\theta)
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/09/19/overfitting/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">overfitting</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/09/11/basic_knowledgefor_ML/">
-                        <span class="hidden-mobile">Basic knowledge about Machine Learning(Supervised Learning).md</span>
+                      <a href="/2022/09/12/Principle/">
+                        <span class="hidden-mobile">Learning Principle</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
