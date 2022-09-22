@@ -16,27 +16,24 @@
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
   
-    <meta name="description" content="This article discuss frequently used methods for classification tasj and their suitable situation">
+    <meta name="description" content="Discuss about 4 reasons that cause machine learning and according solution">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Evaluation Method for Classification">
-<meta property="og:url" content="http://example.com/2022/09/21/Evaluation_Classification/index.html">
+<meta property="og:title" content="Causes and Solutions of Overfitting">
+<meta property="og:url" content="http://example.com/2022/09/19/overfitting/index.html">
 <meta property="og:site_name" content="ZY&#39;s Blog">
-<meta property="og:description" content="This article discuss frequently used methods for classification tasj and their suitable situation">
+<meta property="og:description" content="Discuss about 4 reasons that cause machine learning and according solution">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/2022/09/21/Evaluation_Classification/confusion-matrix.png">
-<meta property="og:image" content="http://example.com/2022/09/21/Evaluation_Classification/2.png">
-<meta property="og:image" content="http://example.com/2022/09/21/Evaluation_Classification/3.PNG">
-<meta property="og:image" content="http://example.com/2022/09/21/Evaluation_Classification/4.png">
-<meta property="article:published_time" content="2022-09-21T20:14:01.000Z">
-<meta property="article:modified_time" content="2022-09-21T22:18:54.527Z">
+<meta property="og:image" content="http://example.com/2022/09/19/overfitting/1.PNG">
+<meta property="article:published_time" content="2022-09-19T18:07:35.000Z">
+<meta property="article:modified_time" content="2022-09-22T04:16:04.370Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="Model Evaluation">
-<meta property="article:tag" content="Classification">
+<meta property="article:tag" content="Overfitting">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/2022/09/21/Evaluation_Classification/confusion-matrix.png">
+<meta name="twitter:image" content="http://example.com/2022/09/19/overfitting/1.PNG">
   
   
-  <title>Evaluation Method for Classification - ZY&#39;s Blog</title>
+  <title>Causes and Solutions of Overfitting - ZY&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -182,7 +179,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="Evaluation Method for Classification">
+            <span class="h2" id="subtitle" title="Causes and Solutions of Overfitting">
               
             </span>
 
@@ -192,8 +189,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2022-09-21 13:14" pubdate>
-        September 21, 2022 pm
+      <time datetime="2022-09-19 11:07" pubdate>
+        September 19, 2022 am
       </time>
     </span>
   
@@ -203,7 +200,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      4.1k 字
+      3.8k 字
     </span>
   
 
@@ -242,79 +239,91 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Evaluation Method for Classification</h1>
+            <h1 style="display: none">Causes and Solutions of Overfitting</h1>
             
             <div class="markdown-body">
-              <h1 id="evaluation-method-for-classification">Evaluation Method for Classification</h1>
-<h2 id="confusion-matrix">1. Confusion Matrix</h2>
-<p>The confusion matrix is a table that count different cases of the predicted outcome given by a classification model. For a binary classification model, it can be given as:</p>
-<p><img src="/2022/09/21/Evaluation_Classification/confusion-matrix.png" srcset="/img/loading.gif" lazyload></p>
-<p>For a multiple classification case, the confusion matrix can be given as:</p>
-<p><img src="/2022/09/21/Evaluation_Classification/2.png" srcset="/img/loading.gif" lazyload></p>
-<p>For such case, we can define TP, TN, FP, FN for each category by deeming all true “not-bird” samples predicted “not-bird” as TN, etc.</p>
-<h2 id="accuracy-precision-recall-and-f1-score">2. Accuracy, Precision, Recall and F1 score</h2>
-<p>With confusion matrix given, we can now define the following matrix:</p>
-<p><strong>Accuracy</strong></p>
-<p>Accuracy = samples predicted correctly / all predicted samples <span class="math display">\[
-accuracy = \frac{TP+TN}{TP+FP+FN+FP} 
-\]</span> Accuracy is a very intuitive metrics. However, it sometimes cannot directly reflect the predicting performance of the model as it cannot deal with imbalanced data. For example, suppose we have a sample set of 100 sample with 99 positive and 1 negative, even if the model simply predicted all samples as positive without any training, it would still receive an accuracy of 99%.</p>
-<p><strong>Recall and Precision</strong></p>
-<p>Recall = correctly predicted positive samples / all actual positive samples <span class="math display">\[
-racall = \frac{TP}{TP + FN}
-\]</span> Recall represent the ability to find positive samples among all actual postive samples. It can deal with imbalanced data. It is sensitive to FN case, thus is suitable for the business case where FN would bring significant cause(e. g Explosion recognition, vehicle safety judgement). On the other side, recall does not consider FN, a model can simply improved recall by judging all samples as positive, which is not good in some cases.</p>
-<p>Precision = correctly predicted positive samples / all predicted positive samples <span class="math display">\[
-precision = \frac{TP}{TP + FP}
-\]</span> Precision represent the probability that a model's judgment on positive case is correct. It can partly deal with imbalanced data. It is sensitive to FP case, thus is suitable for the business case where FP would bring significant cause(e. g Crime judgment, disease diagnosis).</p>
-<p>Recall and Precision can both deal with imbalanced data. However, there's a trade-off between these two metrics. Thus, which metric to put emphasis on idepends on specific business application. Nevertheless, in most cases, since we can just flip P/N, or 1/0, precision is more like an accompanied constraint of recall to prevent model from foucsing too much on capture the minor category samples, as FN and FP are both bad in most business application.</p>
-<p><strong>F1 Score</strong></p>
-<p>The F-measure is a function that balance Precision and recall <span class="math display">\[
-F_\alpha = \frac{(1+\alpha^2)*P*R}{(\alpha^2*P)+R}
-\]</span> when <span class="math inline">\(\alpha\)</span> = 1, we call this metric F1 score: <span class="math display">\[
-F1 = \frac{2PR}{P+R}
-\]</span> F1 socre combine Recall and Precision to find a balance. It is suitable for many business case where we cannot decide a clear preference.</p>
-<h2 id="p--r-curve-roc-curve-and-auc">3. P- R Curve, ROC Curve and AUC</h2>
-<p><strong>P- R Curve</strong></p>
-<p>P-R Curve is a curve to depict the relationship between Precision and Recall. It's application is similar to F1 score, but lessly used as F1 score is more concise to read( The higher the better)</p>
-<p><img src="/2022/09/21/Evaluation_Classification/3.PNG" srcset="/img/loading.gif" lazyload></p>
-<p>Usually, we can regard model B as a better model if it can completely wrap the curve of A. If that; s not the case, we can mark the point on the curve where precision equals recall(Break Event Point, or BEP). The curve with a BEP closer towards up- right direction is better.</p>
-<p><strong>ROC Curve</strong></p>
-<p>We define:</p>
-<ul>
-<li>True positive rate (sensitivity): the ratio that actual positive samples predicted correctly</li>
-<li>True negative rate (specificity): the ratio that actual negative samples predicted correctly</li>
-<li>False positive rate (1-specificity): the ratio that actual negative samples predicted wrongly</li>
-</ul>
-<p><span class="math display">\[
-TPR = \frac{TP}{TP+FN} = Recall
-\\
-TNR = \frac{TN}{FP+TN} = 1-TNP
-\\
-FPR = \frac{FP}{FP+TN}
-\]</span></p>
-<p>From a probabilistic aspect:</p>
+              <h1 id="overfitting-cause-and-solution">Overfitting: Cause and Solution</h1>
+<h2 id="biasvariance-and-overfitting">1. Bias，Variance and Overfitting</h2>
+<p>Theoretically, we consider the expected risk of the model on real data consists of two parts:</p>
+<p><strong>Bias</strong></p>
+<p>The model's failure to imitate the real mapping, probability distribution or other relationship of the data. For example, if we try to fit a non-linear relationship with a linear model, there would be inevitable bias. Another example is that we leave some important factors omitted</p>
+<p><strong>Variance</strong></p>
+<p>The model's sensitivity to changes in data. High variance occurs when the model try to seize any details. It put too many weights on unimportant feature or noise in order to reduce error in training process.</p>
+<p>Neither high bias nor high variance is good. However, when we take measure to solve bias, like applying complex model or increase feature, the variance of the model increase accordingly. In other worlds, there is a trade-off between bias and variance. In training process, our aim would be finding a model with bias and variance acceptable.</p>
+<p><strong>Underfitting and Overfitting</strong></p>
+<p>When the bias is high, we cannot describe the pattern of the data correctly, we call such a scene Underfitting</p>
+<p>When the bias is low, but the variance is high, the model is trapped in the details or noises of the data, ot fit well on the given data but it has poor generality so that it would fail on other data</p>
+<p><img src="/2022/09/19/overfitting/1.PNG" srcset="/img/loading.gif" lazyload></p>
+<p>The performance on training and testing dataset under these scenes</p>
 <table>
+<thead>
+<tr class="header">
+<th></th>
+<th>training SET Erro</th>
+<th>Testing Set ERROR</th>
+</tr>
+</thead>
 <tbody>
 <tr class="odd">
-<td>Precision</td>
-<td style="text-align: center;"><span class="math inline">\(P(Y=1|\hat{Y}=1)\)</span></td>
+<td>Underfit</td>
+<td>high</td>
+<td>high</td>
 </tr>
 <tr class="even">
-<td>Recall (sensitivity)</td>
-<td style="text-align: center;"><span class="math inline">\(P(\hat{Y}=1|Y=1)\)</span></td>
+<td>Overfit</td>
+<td>low</td>
+<td>high</td>
 </tr>
 <tr class="odd">
-<td>Specificity</td>
-<td style="text-align: center;"><span class="math inline">\(P(\hat{Y}=0|Y=0)\)</span></td>
+<td>Optimum</td>
+<td>low</td>
+<td>low</td>
 </tr>
 </tbody>
 </table>
-<p>From this interpreation, we found that sensitivity and specificity are condition on Y, which means The influence of P(Y) are blocked whe calculating these two metrics. Therefore, these two metrics are not influenced by the imbalance of data.</p>
-<p>The Reciever Operating Characteristics cureve(ROC curve) take both metrics into consideration by depict the relationship between sensitivity and 1-specificity:</p>
-<p><img src="/2022/09/21/Evaluation_Classification/4.png" srcset="/img/loading.gif" lazyload></p>
-<p><strong>AUC</strong></p>
-<p>Area Under Curve(AUC) is the area beneath the ROC curve.</p>
-<p>Suppose our model completely randomly classifies the samples, the the probability it regard an actual postive sample or an actual negative sample as a positive sample is equal, in this case, AUC would be 0.5. If AUC &gt; 0.5, it means when the model predicts a sample, <span class="math inline">\(P(\hat{Y}=1|Y=1) &gt; P(\hat{Y}=1|Y=0)\)</span> , which means the prediction is effective. Thus, the higher the AUC is, the better the model performs.</p>
-<p>Obviously, AUC is not influenced by imbalanced data, and it's delivery information concisely. Thus, it is one of the most frequently used metrics in classification.</p>
+<h2 id="causes-of-overfitting">2. Causes of Overfitting</h2>
+<p>As specified above, the core reason that cause of overfitting is the imbalanced trade-off(High variance, low bias). Specifically, we induct the reasons into:</p>
+<ul>
+<li>Complexity of the model: The model is too complex for the pattern we want to discover in the data</li>
+<li>Defects of data: the samples contains so much noises that the model cannot ignore them</li>
+<li>Overtraining: the model is trained with too much epochs that force the model to learn noises in order to converge</li>
+<li>Improper sampling/splitting: the training set fails to represent the distribution of the real data. Or, in some other case, the real distribution itself decides that the model is hard to imitate it.</li>
+</ul>
+<h2 id="solutions-for-overfitting">3. Solutions for Overfitting</h2>
+<p>According to four reasons, we can also induct the solutions into:</p>
+<h3 id="control-complexity">3.1 <strong>Control complexity</strong></h3>
+<p><strong>Regularization</strong></p>
+<p>In machine learning, regularization refer to constraints on the number of feature dimensions. Usually, it is realized through adding an regular term to the loss function to penalize putting weight on too many features. This includes:</p>
+<ul>
+<li>Lasso regression and Ridge regression</li>
+<li>Soft margin for SVM</li>
+<li>Regular term in XGBoost</li>
+<li>...</li>
+</ul>
+<p><strong>Feature Engineering</strong></p>
+<p>Reduce the number of features. FIlter those redundant feature through feature engineering methods like correlation analysis and dimensionality reduction. For details, please refer to <a href>ongoing</a></p>
+<p><strong>Simplify Structure</strong></p>
+<p>An important rule for machine learning is to solve the task with possible simplest model. A model with simpler structure can usually solve overfitting. Specific action includes:</p>
+<ul>
+<li>Dropout in NN</li>
+<li>pruning in tree-based model</li>
+<li>Hyperparameter like hidden size, max-leaf-node</li>
+</ul>
+<h3 id="data-augmentation"><strong>3.2 Data augmentation </strong></h3>
+<p>The best way to eliminate the variance caused by data defects is simply increasing more data to the training set. Since sufficient data are sometimes unavailable in real project. We can apply data augmentation to generate more training data. Data augmentation is more common in deep learning feild.</p>
+<h3 id="early-stopping"><strong>3.3 Early stopping</strong></h3>
+<p>Stop the optimizer earlier to prevent overtraining. For example:</p>
+<ul>
+<li>raise error threshold for an optimzer</li>
+<li>set max depth for an decision tree</li>
+<li>set max iterations for an neural network</li>
+</ul>
+<h3 id="sampling-and-spliting"><strong>3.4 Sampling and spliting</strong></h3>
+<p><strong>Cross Validation</strong></p>
+<p>Cross validation means spliting the dataset into subsets. Use some of them to estimate the distribution and other of them to evaluate the estimation. Such procedure can effectively control the varaince caused by sample selection bias. For the details of cross validation, refer to<a href>ongoing</a></p>
+<p><strong>Sampling </strong></p>
+<p>From an theoretical perspective, sampling itself is actually a kind of non-parameter ML model. When you do sampling, yur actual target is to imitate the distribution of the real population through getting a sample. Thus, the sample itself would have bias if it cannot represent the true distribution of the population. Training a mode using these samples would obviously cause variance.</p>
+<p>Thus, a way might help solving overfitting is improving your sampling method. For details of sampling methods in ML, refer to <a href>ongoing</a></p>
 
             </div>
             <hr>
@@ -334,7 +343,7 @@ FPR = \frac{FP}{FP+TN}
                     
                       <a class="hover-with-bg" href="/tags/Model-Evaluation/">Model Evaluation</a>
                     
-                      <a class="hover-with-bg" href="/tags/Classification/">Classification</a>
+                      <a class="hover-with-bg" href="/tags/Overfitting/">Overfitting</a>
                     
                   </div>
                 
@@ -351,12 +360,18 @@ FPR = \frac{FP}{FP+TN}
                   <article class="post-prev col-6">
                     
                     
+                      <a href="/2022/09/21/Evaluation_Classification/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Evaluation Method for Classification</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/09/19/overfitting/">
-                        <span class="hidden-mobile">Causes and Solutions of Overfitting</span>
+                      <a href="/2022/09/12/Principle/">
+                        <span class="hidden-mobile">Learning Principle</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
