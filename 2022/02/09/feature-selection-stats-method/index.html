@@ -24,7 +24,7 @@
 <meta property="og:description" content="Evaluate features on divergence and correlation. set one or more thresholds and select the feature.">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-02-10T06:04:00.000Z">
-<meta property="article:modified_time" content="2022-02-10T06:12:29.698Z">
+<meta property="article:modified_time" content="2022-09-23T02:55:55.606Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="Feature Engineering">
 <meta property="article:tag" content="Feature Selection">
@@ -198,7 +198,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      5.9k 字
+      6.1k 字
     </span>
   
 
@@ -338,11 +338,12 @@ MI(X,Y) =D_{KL}(p(x,y)||p(x)p(y)) =  \sum_y \sum_x p(x,y) \log \frac{p(x,y)}{p(x
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.metrics <span class="hljs-keyword">import</span> mutual_info_score<br>MI_matrix = np.zeros([data_and_target.shape[<span class="hljs-number">1</span>],data_and_target.shape[<span class="hljs-number">1</span>]])<br><span class="hljs-comment"># calculate the MI matrix between each two feature</span><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">0</span>,data_and_target.shape[<span class="hljs-number">1</span>]):<br>    <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">0</span>,data_and_target.shape[<span class="hljs-number">1</span>]):<br>        MI_matrix[i,j] = mutual_info_score(data_and_target[i+<span class="hljs-number">1</span>],data_and_target[j+<span class="hljs-number">1</span>])<br>df = pd.DataFrame(MI_matrix,columns=data_and_target.columns,index=data_and_target.columns)<br><span class="hljs-built_in">print</span>(df)<br></code></pre></td></tr></table></figure>
 <h2 id="wrapper">2.Wrapper</h2>
 <p>Through the Evaluation(like the MSE, AUC) of the model, add or drop some feature each trail.</p>
-<p><strong>Pro</strong>: accurate</p>
+<p><strong>Pro</strong>: accurate, model-relevant</p>
 <p><strong>Con</strong>: time-consuming</p>
-<h4 id="recursive-feature-elimination">2.1 Recursive Feature Elimination</h4>
-<p>Construct models, select the best features(or drop the worst feature) by the performance of the model, and than repeat this process on the rest of the features.</p>
+<h3 id="recursive-feature-elimination">2.1 Recursive Feature Elimination</h3>
+<p>Construct models, select the best features(or drop the worst feature) based on the weight of the features, put out the selected feature and then repeat this process on the rest of the features, until we reach the max number of feature we want. The put out feature(select best)/remaining feature(drop worst) is the final features we want to preserve</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.feature_selection <span class="hljs-keyword">import</span> RFE<br><span class="hljs-keyword">from</span> sklearn.feature_selection <span class="hljs-keyword">import</span> RFECV<br><span class="hljs-keyword">from</span> sklearn.model_selection <span class="hljs-keyword">import</span> StratifiedKFold<br><span class="hljs-keyword">from</span> sklearn.ensemble <span class="hljs-keyword">import</span> RandomForestClassifier<br><span class="hljs-comment"># REF works for all models that have a weight on features</span><br><span class="hljs-comment"># step: the number(or precentage) of feature to eliminate in each iteration</span><br>estimator = RandomForestClassifier(n_estimators=<span class="hljs-number">100</span>)<br>selector = RFE(estimator= estimator, n_features_to_select= <span class="hljs-number">3</span>,step=<span class="hljs-number">1</span>)<br>data_transformed = selector.fit_transform(data_0,target_0)<br><br><span class="hljs-comment"># REFCV</span><br><span class="hljs-comment"># REF with cross validation</span><br>cv = StratifiedKFold(n_splits=<span class="hljs-number">5</span>)<br>selector = RFECV(estimator= estimator, min_features_to_select= <span class="hljs-number">3</span>, cv=cv, step=<span class="hljs-number">1</span>)<br>data_transformed = selector.fit_transform(data_0,target_0)<br></code></pre></td></tr></table></figure>
+<h3 id="step-wise-regression">2.2 Step-wise Regression</h3>
 <h2 id="embedded">3. Embedded</h2>
 <p>Some models, like Lasso, Ridge, and Random Forest has method embedded in the model to evaluate features. Train these model first and than make selection of feature.</p>
 <p><strong>Pro</strong>: fast, easy to apply</p>

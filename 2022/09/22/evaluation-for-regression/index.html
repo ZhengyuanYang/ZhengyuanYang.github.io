@@ -16,23 +16,21 @@
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Some basic information theory concepts that are useful in machine learning">
+    <meta name="description" content="This article discuss about evaluation methods for regression model">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Information theory in ML">
-<meta property="og:url" content="http://example.com/2022/09/22/information-theory-in-ML/index.html">
+<meta property="og:title" content="evaluation-for-regression">
+<meta property="og:url" content="http://example.com/2022/09/22/evaluation-for-regression/index.html">
 <meta property="og:site_name" content="ZY&#39;s Blog">
-<meta property="og:description" content="Some basic information theory concepts that are useful in machine learning">
+<meta property="og:description" content="This article discuss about evaluation methods for regression model">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/2022/09/22/information-theory-in-ML/1.png">
-<meta property="article:published_time" content="2022-09-22T17:55:42.000Z">
-<meta property="article:modified_time" content="2022-09-23T01:17:04.474Z">
+<meta property="article:published_time" content="2022-09-23T01:17:46.000Z">
+<meta property="article:modified_time" content="2022-09-23T02:57:25.377Z">
 <meta property="article:author" content="John Doe">
-<meta property="article:tag" content="Loss Function">
+<meta property="article:tag" content="Model Evaluation">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/2022/09/22/information-theory-in-ML/1.png">
   
   
-  <title>Information theory in ML - ZY&#39;s Blog</title>
+  <title>evaluation-for-regression - ZY&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -178,7 +176,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="Information theory in ML">
+            <span class="h2" id="subtitle" title="evaluation-for-regression">
               
             </span>
 
@@ -188,8 +186,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2022-09-22 10:55" pubdate>
-        September 22, 2022 am
+      <time datetime="2022-09-22 18:17" pubdate>
+        September 22, 2022 pm
       </time>
     </span>
   
@@ -199,7 +197,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      3.2k 字
+      2.3k 字
     </span>
   
 
@@ -238,72 +236,55 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Information theory in ML</h1>
+            <h1 style="display: none">evaluation-for-regression</h1>
             
             <div class="markdown-body">
-              <h1 id="information-theory-in-machine-learning">Information Theory in Machine Learning</h1>
-<h2 id="information-and-entrophy">1. Information and Entrophy</h2>
-<p><strong>self-info</strong></p>
-<p>self-information is a measure related to the outcome of a probabilistic event. To quantify the information, we hope the measure would have following properties:</p>
+              <h1 id="evaluation-for-regression-model">Evaluation for Regression Model</h1>
+<h2 id="evalution-for-goodness-of-fitting">1. Evalution for goodness of fitting</h2>
+<p>In most case, we can directly used the loss function's value on testing dataset as a metric to evaluate a regression model's performance</p>
+<p>For common loss function for regression model, refer to <a target="_blank" rel="noopener" href="http://zhengyuanyang.com/2022/09/22/loss-function/">here</a></p>
+<p>here supplement several other metrics</p>
+<p><strong>MSLE</strong></p>
+<p>Mean Squared Log Error <span class="math display">\[
+MSLE = \frac{1}{n}\sum_i^n(log(1+y_i)-log(1+\hat{y)}^2
+\]</span></p>
 <ul>
-<li>A low-probability outcome contains more infomation than a high-probability event. For example, "I won't die" contains more information than "I will die". To some extent, we can regard self-info as the degree we would feel surprise about an certain outcome of an event</li>
-<li>Information quantity must not be negative</li>
-<li>The total imformation of several outcome should be the sum of ther individual information</li>
-<li><span class="math inline">\(I(y=m_1,y=m_2) = I(y=m_1)+I(y=m_2)\)</span></li>
-<li>I(y) must be continuous if P(y) is continuous</li>
+<li>Add one to avoid the appearance of log 0</li>
+<li>MSLE is ideal when we priorly know there's a exponential relationship between Y and some X(e. g. Population). However, in many cases we would transorm data with exponential distribution in data preprocessing so that the exponential relationship would be eliminated. Thus, MSLE is not frequently used</li>
 </ul>
-<p>It can be proved that the only expression that satisfies these properties is <span class="math inline">\(Klog(P(y))\)</span> where K is negative. Set K= 1, we define the self-information of an outcome of an event as: <span class="math display">\[
-I  = log(\frac{1}{P(y=c_m)}) = -log(P(y=c_m))
+<p><strong><span class="math inline">\(R^2\)</span></strong></p>
+<p>Coefficient of Determination <span class="math display">\[
+R^2 = 1-\frac{\sum y-\hat{y}}{y-\bar{y}} = 1-\frac{RSS}{TSS}
 \]</span></p>
-<p><strong>Entrophy</strong></p>
-<p>Entrophy is the expectation of self-info. It represent the mean information of an event related to an random variable y, the greater H is, the more uncertain event y is <span class="math display">\[
-H(Y) = E[I(y)] = -\sum_i^m p(y=c_m)log(p(y=c_m))
-\]</span></p>
-<h2 id="entrophy-measure-for-two-variables">2. Entrophy measure for two variables</h2>
-<h3 id="joint-entrophy">2.1 Joint Entrophy</h3>
-<p>Joint entropy measure the uncertainty of a joint event (X, Y) <span class="math display">\[
-H(T,Y) =-\sum_t\sum_y p(t,y)log(p(t,y))
-\]</span></p>
-<h3 id="conditional-entrophy">2.2 Conditional Entrophy</h3>
-<p>Conditional Entrophy represent the Information recieved of one event when another event is for certain <span class="math display">\[
-H(Y|T) =-\sum_t\sum_y p(t,y)log(p(y|t)) = -\sum_t\sum_y p(y|t)p(t)log(p(y|t))
-\]</span> The higher H(Y|T) is, the less "extra information" about Y is needed when T is certain, which means the corralation between Y and T l is higher</p>
-<p>The relationship between conditional entropy and joint entropy: <span class="math display">\[
-H(Y｜T) = H(Y, T) - H(T)
-\]</span></p>
-<h3 id="inofrmation-gain">2.3 Inofrmation Gain</h3>
-<p>Information gain represent the amount of uncertainty reduction of a variable when another variable is certain <span class="math display">\[
-IG(Y|T) = H(Y) - H(Y| T)
-\]</span> It is usually applied as an impurity metrics in splitting algorithm like Decision Tree</p>
-<h3 id="mutual-information">2.4 Mutual Information</h3>
-<p>The nature of Mutual Information and Information Gain is the same, mutual information is the shared entropy of two variable</p>
-<p><img src="/2022/09/22/information-theory-in-ML/1.png" srcset="/img/loading.gif" lazyload></p>
-<p>First, when we consider two event together, we can rewrite H(Y) as: <span class="math display">\[
-&amp; H(Y) = -\sum_i^m p(y=c_i)log(p(y=c_i) \\
-&amp; = -\sum_j^n p(x = c_j)\sum_i^mp(y=c_i|x_=c_j)log(p(y=c_i)) \\
-&amp;= \sum_x\sum_yp(x,y)log(p(y))
-\]</span></p>
-<p><span class="math display">\[
-MI = H(x,y) - H(x|y) - H(y|x) = \sum_x\sum_yp(x,y)log\frac{p(x,y)}{p(x)p(y)}\\
-IG = H(y)-H(y|x) = \sum_x\sum_yp(x,y)log(p(y)) - \sum_x\sum_yp(x,y)log(p(y|x)) = MI
-\]</span></p>
-<p>MI is usually mentioned when calculating the correlation of two variable, IG is mentioned when calculating the impurity reduction of one variable when splitting another variable</p>
-<h2 id="entrophy-measure-for-two-distribution">3. Entrophy measure for two distribution</h2>
-<h3 id="kl-divergencerelative-entrophy">3.1 KL Divergence(Relative Entrophy)</h3>
-<p>The KL divergence is the expectation(under true distribution) of the difference between information amount under predicted and true distribution <span class="math display">\[
-D_{KL}(p||q) = \sum_{i=1}^mp(y_i)\log(\frac{p(y_i)}{q(y_i)})
-\]</span> Where:</p>
 <ul>
-<li>q is the estimated distribution of y</li>
-<li>p is the real distribution of y</li>
+<li><span class="math inline">\(R^2\)</span> represent how many variance of Y are interpreted by the model</li>
+<li>If <span class="math inline">\(R^2 = 0\)</span>, TSS = RSS, which means the model equals to a model that simply predicted all samples as the average of Y, which indicates the model has a bad performance</li>
+<li><span class="math inline">\(R^2\)</span> is not a true square number, the range of it is <span class="math inline">\((-\infty,1])\)</span></li>
 </ul>
-<p>it can be used to evaluate an estimation of a distribution with the real distribution given</p>
-<h3 id="cross-entrophy">3.2 Cross Entrophy</h3>
-<p>The equation KL divergence can be written as: <span class="math display">\[
-D_{KL}(p||q) = \sum_{i=1}^mp(y_i)\log(\frac{p(y_i)}{q(y_i)}) = -\sum_i^mp(y_i)log(q(y_i)) - (-\sum_i^mp(y_i)log(p(y_i)))
-\]</span> Obviously, the second term of this equation is <span class="math inline">\(H_p(x)\)</span>, which is the entrophy of the real data. In a machine learning problem, since real entrophy is fixed for a dataset, we can only minimize the first term. we call this term Cross entropy: <span class="math display">\[
-CH(p,q) = D_ {KL}(p||q) + H_p(X) = -\sum_i^mp(y_i)log(q(y_i))
-\]</span></p>
+<h2 id="evaluation-of-multicollinearity">2. Evaluation of Multicollinearity</h2>
+<p>Multicollinearity refer to the relationship that a variable's change would cause another variable's change</p>
+<p>In regression, we do not want there to be multicollinearity among input variables.</p>
+<p>For example suppose we have a ideal regression model that <span class="math display">\[
+y = 10x_1+b
+\]</span> Then we introduce a highly correlated variable <span class="math inline">\(x_2 = 2x_1\)</span>, in this case the modle can fit infinite possible combination of these two variables, for example, the model might end up with: <span class="math display">\[
+Y = -100x_1 +55x_2 +b = 10x_1+b
+\]</span> These will cause:</p>
+<ul>
+<li>coefficient might lose its interpretability. Positive coefficient might turn negative, insignificant variable might turn significant</li>
+<li>The model might lose stability since the coefficients are enlarged. Small noises could cause big variance</li>
+</ul>
+<p><strong>VIF</strong></p>
+<p>Variance Inflation Factor <span class="math display">\[
+VIF = \frac{1}{1-R^ 2}
+\]</span> As discussed above, <span class="math inline">\(R^2\)</span> represent the goodness of fitting. Thus we can use an input variable <span class="math inline">\(x_i\)</span> as the output variable, and fit a model with other input variable <span class="math inline">\(x_1,...x_{i-1},x_{i+ 1}...x_m\)</span> being inputs. If the <span class="math inline">\(R^2\)</span> turn out to be high, then it is possible that <span class="math inline">\(x_1\)</span> are highly correlated with other variables. In such case, the VIF would be high</p>
+<p>In practice, if VIF &gt; 10, we can consider as there's a Multicollinearity problem. If VIF &gt; 100, we can consider as there's a serious Multicollinearity problem</p>
+<p>The solution Multicollinearity includes:</p>
+<ul>
+<li><p>Filtering feature selection methods based on correlation</p></li>
+<li><p>Wrapper feature engineering methods like stepwise regression</p></li>
+<li><p>Embedded Feature Engineering methods like Lasso &amp; Ridge Regression</p>
+<p>·</p></li>
+</ul>
 
             </div>
             <hr>
@@ -321,7 +302,7 @@ CH(p,q) = D_ {KL}(p||q) + H_p(X) = -\sum_i^mp(y_i)log(q(y_i))
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/Loss-Function/">Loss Function</a>
+                      <a class="hover-with-bg" href="/tags/Model-Evaluation/">Model Evaluation</a>
                     
                   </div>
                 
@@ -338,18 +319,12 @@ CH(p,q) = D_ {KL}(p||q) + H_p(X) = -\sum_i^mp(y_i)log(q(y_i))
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/09/22/evaluation-for-regression/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">evaluation-for-regression</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/09/22/loss-function/">
-                        <span class="hidden-mobile">Common Loss Function in Machine Learning</span>
+                      <a href="/2022/09/22/information-theory-in-ML/">
+                        <span class="hidden-mobile">Information theory in ML</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
