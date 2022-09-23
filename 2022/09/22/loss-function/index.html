@@ -16,27 +16,27 @@
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
   
-    <meta name="description" content="This article discuss frequently used methods for classification tasj and their suitable situation">
+    <meta name="description" content="This article summaries commonly used loss function in machine learning">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Evaluation Method for Classification">
-<meta property="og:url" content="http://example.com/2022/09/21/Evaluation_Classification/index.html">
+<meta property="og:title" content="Common Loss Function in Machine Learning">
+<meta property="og:url" content="http://example.com/2022/09/22/loss-function/index.html">
 <meta property="og:site_name" content="ZY&#39;s Blog">
-<meta property="og:description" content="This article discuss frequently used methods for classification tasj and their suitable situation">
+<meta property="og:description" content="This article summaries commonly used loss function in machine learning">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/2022/09/21/Evaluation_Classification/confusion-matrix.png">
-<meta property="og:image" content="http://example.com/2022/09/21/Evaluation_Classification/2.png">
-<meta property="og:image" content="http://example.com/2022/09/21/Evaluation_Classification/3.PNG">
-<meta property="og:image" content="http://example.com/2022/09/21/Evaluation_Classification/4.png">
-<meta property="article:published_time" content="2022-09-21T20:14:01.000Z">
-<meta property="article:modified_time" content="2022-09-21T22:18:54.527Z">
+<meta property="og:image" content="http://example.com/2022/09/22/loss-function/1.png">
+<meta property="og:image" content="http://example.com/2022/09/22/loss-function/2.png">
+<meta property="og:image" content="http://example.com/2022/09/22/loss-function/3.png">
+<meta property="og:image" content="http://example.com/2022/09/22/loss-function/4.png">
+<meta property="og:image" content="http://example.com/2022/09/22/loss-function/5.png">
+<meta property="article:published_time" content="2022-09-22T16:11:02.000Z">
+<meta property="article:modified_time" content="2022-09-23T01:08:52.355Z">
 <meta property="article:author" content="John Doe">
-<meta property="article:tag" content="Model Evaluation">
-<meta property="article:tag" content="Classification">
+<meta property="article:tag" content="Loss Function">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/2022/09/21/Evaluation_Classification/confusion-matrix.png">
+<meta name="twitter:image" content="http://example.com/2022/09/22/loss-function/1.png">
   
   
-  <title>Evaluation Method for Classification - ZY&#39;s Blog</title>
+  <title>Common Loss Function in Machine Learning - ZY&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -182,7 +182,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="Evaluation Method for Classification">
+            <span class="h2" id="subtitle" title="Common Loss Function in Machine Learning">
               
             </span>
 
@@ -192,8 +192,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2022-09-21 13:14" pubdate>
-        September 21, 2022 pm
+      <time datetime="2022-09-22 09:11" pubdate>
+        September 22, 2022 am
       </time>
     </span>
   
@@ -203,7 +203,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      4.1k 字
+      3.2k 字
     </span>
   
 
@@ -242,79 +242,103 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Evaluation Method for Classification</h1>
+            <h1 style="display: none">Common Loss Function in Machine Learning</h1>
             
             <div class="markdown-body">
-              <h1 id="evaluation-method-for-classification">Evaluation Method for Classification</h1>
-<h2 id="confusion-matrix">1. Confusion Matrix</h2>
-<p>The confusion matrix is a table that count different cases of the predicted outcome given by a classification model. For a binary classification model, it can be given as:</p>
-<p><img src="/2022/09/21/Evaluation_Classification/confusion-matrix.png" srcset="/img/loading.gif" lazyload></p>
-<p>For a multiple classification case, the confusion matrix can be given as:</p>
-<p><img src="/2022/09/21/Evaluation_Classification/2.png" srcset="/img/loading.gif" lazyload></p>
-<p>For such case, we can define TP, TN, FP, FN for each category by deeming all true “not-bird” samples predicted “not-bird” as TN, etc.</p>
-<h2 id="accuracy-precision-recall-and-f1-score">2. Accuracy, Precision, Recall and F1 score</h2>
-<p>With confusion matrix given, we can now define the following matrix:</p>
-<p><strong>Accuracy</strong></p>
-<p>Accuracy = samples predicted correctly / all predicted samples <span class="math display">\[
-accuracy = \frac{TP+TN}{TP+FP+FN+FP} 
-\]</span> Accuracy is a very intuitive metrics. However, it sometimes cannot directly reflect the predicting performance of the model as it cannot deal with imbalanced data. For example, suppose we have a sample set of 100 sample with 99 positive and 1 negative, even if the model simply predicted all samples as positive without any training, it would still receive an accuracy of 99%.</p>
-<p><strong>Recall and Precision</strong></p>
-<p>Recall = correctly predicted positive samples / all actual positive samples <span class="math display">\[
-racall = \frac{TP}{TP + FN}
-\]</span> Recall represent the ability to find positive samples among all actual postive samples. It can deal with imbalanced data. It is sensitive to FN case, thus is suitable for the business case where FN would bring significant cause(e. g Explosion recognition, vehicle safety judgement). On the other side, recall does not consider FN, a model can simply improved recall by judging all samples as positive, which is not good in some cases.</p>
-<p>Precision = correctly predicted positive samples / all predicted positive samples <span class="math display">\[
-precision = \frac{TP}{TP + FP}
-\]</span> Precision represent the probability that a model's judgment on positive case is correct. It can partly deal with imbalanced data. It is sensitive to FP case, thus is suitable for the business case where FP would bring significant cause(e. g Crime judgment, disease diagnosis).</p>
-<p>Recall and Precision can both deal with imbalanced data. However, there's a trade-off between these two metrics. Thus, which metric to put emphasis on idepends on specific business application. Nevertheless, in most cases, since we can just flip P/N, or 1/0, precision is more like an accompanied constraint of recall to prevent model from foucsing too much on capture the minor category samples, as FN and FP are both bad in most business application.</p>
-<p><strong>F1 Score</strong></p>
-<p>The F-measure is a function that balance Precision and recall <span class="math display">\[
-F_\alpha = \frac{(1+\alpha^2)*P*R}{(\alpha^2*P)+R}
-\]</span> when <span class="math inline">\(\alpha\)</span> = 1, we call this metric F1 score: <span class="math display">\[
-F1 = \frac{2PR}{P+R}
-\]</span> F1 socre combine Recall and Precision to find a balance. It is suitable for many business case where we cannot decide a clear preference.</p>
-<h2 id="p--r-curve-roc-curve-and-auc">3. P- R Curve, ROC Curve and AUC</h2>
-<p><strong>P- R Curve</strong></p>
-<p>P-R Curve is a curve to depict the relationship between Precision and Recall. It's application is similar to F1 score, but lessly used as F1 score is more concise to read( The higher the better)</p>
-<p><img src="/2022/09/21/Evaluation_Classification/3.PNG" srcset="/img/loading.gif" lazyload></p>
-<p>Usually, we can regard model B as a better model if it can completely wrap the curve of A. If that; s not the case, we can mark the point on the curve where precision equals recall(Break Event Point, or BEP). The curve with a BEP closer towards up- right direction is better.</p>
-<p><strong>ROC Curve</strong></p>
-<p>We define:</p>
-<ul>
-<li>True positive rate (sensitivity): the ratio that actual positive samples predicted correctly</li>
-<li>True negative rate (specificity): the ratio that actual negative samples predicted correctly</li>
-<li>False positive rate (1-specificity): the ratio that actual negative samples predicted wrongly</li>
-</ul>
-<p><span class="math display">\[
-TPR = \frac{TP}{TP+FN} = Recall
-\\
-TNR = \frac{TN}{FP+TN} = 1-TNP
-\\
-FPR = \frac{FP}{FP+TN}
+              <h1 id="common-loss-function-in-machine-learning">Common Loss Function in Machine Learning</h1>
+<h2 id="numerical-output">Numerical Output</h2>
+<h3 id="msel2-lossrmse">1. MSE(L2 Loss)/RMSE</h3>
+<p>Mean Squared Error <span class="math display">\[
+MSE = \frac{1}{n}\sum_i^n(y_i-\hat{y})^2
 \]</span></p>
-<p>From a probabilistic aspect:</p>
-<table>
-<tbody>
-<tr class="odd">
-<td>Precision</td>
-<td style="text-align: center;"><span class="math inline">\(P(Y=1|\hat{Y}=1)\)</span></td>
-</tr>
-<tr class="even">
-<td>Recall (sensitivity)</td>
-<td style="text-align: center;"><span class="math inline">\(P(\hat{Y}=1|Y=1)\)</span></td>
-</tr>
-<tr class="odd">
-<td>Specificity</td>
-<td style="text-align: center;"><span class="math inline">\(P(\hat{Y}=0|Y=0)\)</span></td>
-</tr>
-</tbody>
-</table>
-<p>From this interpreation, we found that sensitivity and specificity are condition on Y, which means The influence of P(Y) are blocked whe calculating these two metrics. Therefore, these two metrics are not influenced by the imbalance of data.</p>
-<p>The Reciever Operating Characteristics cureve(ROC curve) take both metrics into consideration by depict the relationship between sensitivity and 1-specificity:</p>
-<p><img src="/2022/09/21/Evaluation_Classification/4.png" srcset="/img/loading.gif" lazyload></p>
-<p><strong>AUC</strong></p>
-<p>Area Under Curve(AUC) is the area beneath the ROC curve.</p>
-<p>Suppose our model completely randomly classifies the samples, the the probability it regard an actual postive sample or an actual negative sample as a positive sample is equal, in this case, AUC would be 0.5. If AUC &gt; 0.5, it means when the model predicts a sample, <span class="math inline">\(P(\hat{Y}=1|Y=1) &gt; P(\hat{Y}=1|Y=0)\)</span> , which means the prediction is effective. Thus, the higher the AUC is, the better the model performs.</p>
-<p>Obviously, AUC is not influenced by imbalanced data, and it's delivery information concisely. Thus, it is one of the most frequently used metrics in classification.</p>
+<ul>
+<li>MSE is differentiable any where, which makes it suitable for gradient descent optimizer</li>
+<li>With gradient decrease, the MSE will decrease, which means MSE is effective with fixed learning rate</li>
+<li>The squared operator gives enlarge the loss, thus MSE is sensitive ti outlier, if outlier is meant to be detected, suing MSE is fine. If the outlier is treat as part of the training data, MSE is not an ideal loss function (e. g. prediction model for sales promotion day)</li>
+</ul>
+<p><img src="/2022/09/22/loss-function/1.png" srcset="/img/loading.gif" lazyload></p>
+<p>RMSE is the square root of MSE <span class="math display">\[
+RMSE = \sqrt{MSE}
+\]</span></p>
+<ul>
+<li>RMSE is on the same scale with MSE, but it make the loss more interpretable in some case(e.g prediction on product price)</li>
+</ul>
+<h3 id="mae-l1-loss">2. MAE (L1 Loss)</h3>
+<p>Mean Absolute Error <span class="math display">\[
+MAE = \frac{1}{n}\sum_i^n|y_i-\hat{y}|
+\]</span></p>
+<ul>
+<li>MAE is not sensitive to outlier, it is less likely to cause gradient explosion</li>
+<li>The gradient for any loss is the same, which means MAE does not converge well with fix learning rate</li>
+<li>MAE is not differentiable at 0</li>
+</ul>
+<p><img src="/2022/09/22/loss-function/2.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="smooth-l1huber-loss">3. Smooth L1(Huber Loss)</h3>
+<p><span class="math display">\[
+L = \frac{1}{n}\sum_i^nz_ i
+\\
+z_i = \left\{
+\begin{aligned}
+MSE \qquad&amp; |y -\hat{y}| &lt; \beta \\
+MAE \qquad &amp; elsewhere \\
+\end{aligned}
+\right.
+\]</span></p>
+<ul>
+<li><span class="math inline">\(\beta\)</span> is a defined threshold for error of outlier. If the error is within <span class="math inline">\(\beta\)</span>, apply MSE, otherwise, apply MAE. Huber Loss combines the advantages of L1 and L2 Loss</li>
+<li>Huber loss is ideal for NN</li>
+</ul>
+<p><img src="/2022/09/22/loss-function/3.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="log-cosh-loss">4. Log-cosh Loss</h3>
+<p><span class="math display">\[
+L = \sum_ i^ nlog(cosh(y_i-\hat{y_i}))
+\]</span></p>
+<ul>
+<li>Log-cosh has almost every virtue of Huber loss, the difference is, it is second-differentiable anywhere, such method is very useful when applying newton-method optimzer</li>
+<li>However, when erro is very big, Log-cosh loss still would have gradient or hessian problem(gradient remains same when loss decrease). Just like MAE</li>
+</ul>
+<h2 id="categoricalprobability-output">Categorical/Probability Output</h2>
+<h3 id="log-losscross-entropy-loss">1. Log Loss/Cross Entropy Loss</h3>
+<p>Log Loss is basically the same concept as the cross entropy, the only difference is that it can be applied at a single sample by replaceing true probability p(x) with 1 if <span class="math inline">\(y_ {true} = m\)</span>. The average loss of all sample is the Log Loss or Cross Entropy Loss.</p>
+<p>For Cross Entropy, refer to <a href>ongoing</a></p>
+<p>When it come to a binary classification scenario, the Log Loss can be written as: <span class="math display">\[
+LogLoss = -\frac{1}{n}\sum_i^n [y_ilog(p(y_i))+(1-y_i)log(1-p(y_i))]
+\]</span></p>
+<ul>
+<li>The gradient would decrease as Log Loss decrease, thus Log Loss can work with fixed learning rate</li>
+<li>Sentive to outlier</li>
+<li>GDBT usually apply Log Loss as loss function(classification)</li>
+</ul>
+<p>The following picture is the log loss of the prediction on a positive sample:</p>
+<p><img src="/2022/09/22/loss-function/4.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="exponential-loss">2. Exponential Loss</h3>
+<p><span class="math display">\[
+L = \frac{1}{n}\sum_i^ne^{-yf(x)}
+\]</span></p>
+<ul>
+<li>Theoretically, the optimal of Exponential Loss and Log Loss is the same(<span class="math inline">\(\frac{1}{2}log\ odds\)</span>), the advantage of exponential loss is that is is easier to calculate, thus can make optimzer update the weight with less cost</li>
+<li>Sentive to outlier</li>
+<li>AdaBoosting usually apply Exponential Loss as loss function(classification)</li>
+</ul>
+<h3 id="hinge-loss">3. Hinge Loss</h3>
+<p><span class="math display">\[
+L = \frac{1}{n}\sum_i^n max(0,1-yf(x))
+\]</span></p>
+<ul>
+<li>If the model label the sample correct, the loss is 0</li>
+<li>Less sensitive to outlier</li>
+<li>SVM usually adopt Hinge Loss as loss function</li>
+</ul>
+<p><img src="/2022/09/22/loss-function/5.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="focal-loss">4. Focal Loss</h3>
+<p>Focal Loss is a improved version of Cross Entrophy Loss <span class="math display">\[
+L_ f = -\frac{1}{n}\sum_i^n\sum_ j^m\alpha_ j(1-p(y ))^\gamma y log(p(y))
+\]</span></p>
+<ul>
+<li>Focal Loss add a focus factor <span class="math inline">\((1-p(y))\)</span>, so that those sample with high predicted probability, which are the ""easy samples", donate less loss. Compare to CE Loss, Focal Loss focus on those "hard samples"</li>
+<li>Focal Loss also add a balance factor(optional), which is the percentage of a certain category of y among all samples. This make focal loss can deal with imbalanced data</li>
+<li><span class="math inline">\(\gamma\)</span> is a influence parameter. When <span class="math inline">\(\gamma = 0\)</span>, the Focal Loss become CE Loss. In preactice, we usually set <span class="math inline">\(\gamma = 2\)</span></li>
+</ul>
 
             </div>
             <hr>
@@ -332,9 +356,7 @@ FPR = \frac{FP}{FP+TN}
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/Model-Evaluation/">Model Evaluation</a>
-                    
-                      <a class="hover-with-bg" href="/tags/Classification/">Classification</a>
+                      <a class="hover-with-bg" href="/tags/Loss-Function/">Loss Function</a>
                     
                   </div>
                 
@@ -351,9 +373,9 @@ FPR = \frac{FP}{FP+TN}
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/09/22/loss-function/">
+                      <a href="/2022/09/22/information-theory-in-ML/">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Common Loss Function in Machine Learning</span>
+                        <span class="hidden-mobile">Information theory in ML</span>
                         <span class="visible-mobile">Previous</span>
                       </a>
                     
@@ -361,8 +383,8 @@ FPR = \frac{FP}{FP+TN}
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/09/19/overfitting/">
-                        <span class="hidden-mobile">Causes and Solutions of Overfitting</span>
+                      <a href="/2022/09/21/Evaluation_Classification/">
+                        <span class="hidden-mobile">Evaluation Method for Classification</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

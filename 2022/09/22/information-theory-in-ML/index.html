@@ -16,27 +16,23 @@
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
   
-    <meta name="description" content="This article discuss frequently used methods for classification tasj and their suitable situation">
+    <meta name="description" content="Some basic information theory concepts that are useful in machine learning">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Evaluation Method for Classification">
-<meta property="og:url" content="http://example.com/2022/09/21/Evaluation_Classification/index.html">
+<meta property="og:title" content="Information theory in ML">
+<meta property="og:url" content="http://example.com/2022/09/22/information-theory-in-ML/index.html">
 <meta property="og:site_name" content="ZY&#39;s Blog">
-<meta property="og:description" content="This article discuss frequently used methods for classification tasj and their suitable situation">
+<meta property="og:description" content="Some basic information theory concepts that are useful in machine learning">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/2022/09/21/Evaluation_Classification/confusion-matrix.png">
-<meta property="og:image" content="http://example.com/2022/09/21/Evaluation_Classification/2.png">
-<meta property="og:image" content="http://example.com/2022/09/21/Evaluation_Classification/3.PNG">
-<meta property="og:image" content="http://example.com/2022/09/21/Evaluation_Classification/4.png">
-<meta property="article:published_time" content="2022-09-21T20:14:01.000Z">
-<meta property="article:modified_time" content="2022-09-21T22:18:54.527Z">
+<meta property="og:image" content="http://example.com/2022/09/22/information-theory-in-ML/1.png">
+<meta property="article:published_time" content="2022-09-22T17:55:42.000Z">
+<meta property="article:modified_time" content="2022-09-22T23:46:00.497Z">
 <meta property="article:author" content="John Doe">
-<meta property="article:tag" content="Model Evaluation">
-<meta property="article:tag" content="Classification">
+<meta property="article:tag" content="Loss Function">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/2022/09/21/Evaluation_Classification/confusion-matrix.png">
+<meta name="twitter:image" content="http://example.com/2022/09/22/information-theory-in-ML/1.png">
   
   
-  <title>Evaluation Method for Classification - ZY&#39;s Blog</title>
+  <title>Information theory in ML - ZY&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -182,7 +178,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="Evaluation Method for Classification">
+            <span class="h2" id="subtitle" title="Information theory in ML">
               
             </span>
 
@@ -192,8 +188,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2022-09-21 13:14" pubdate>
-        September 21, 2022 pm
+      <time datetime="2022-09-22 10:55" pubdate>
+        September 22, 2022 am
       </time>
     </span>
   
@@ -203,7 +199,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      4.1k 字
+      3.2k 字
     </span>
   
 
@@ -242,79 +238,72 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Evaluation Method for Classification</h1>
+            <h1 style="display: none">Information theory in ML</h1>
             
             <div class="markdown-body">
-              <h1 id="evaluation-method-for-classification">Evaluation Method for Classification</h1>
-<h2 id="confusion-matrix">1. Confusion Matrix</h2>
-<p>The confusion matrix is a table that count different cases of the predicted outcome given by a classification model. For a binary classification model, it can be given as:</p>
-<p><img src="/2022/09/21/Evaluation_Classification/confusion-matrix.png" srcset="/img/loading.gif" lazyload></p>
-<p>For a multiple classification case, the confusion matrix can be given as:</p>
-<p><img src="/2022/09/21/Evaluation_Classification/2.png" srcset="/img/loading.gif" lazyload></p>
-<p>For such case, we can define TP, TN, FP, FN for each category by deeming all true “not-bird” samples predicted “not-bird” as TN, etc.</p>
-<h2 id="accuracy-precision-recall-and-f1-score">2. Accuracy, Precision, Recall and F1 score</h2>
-<p>With confusion matrix given, we can now define the following matrix:</p>
-<p><strong>Accuracy</strong></p>
-<p>Accuracy = samples predicted correctly / all predicted samples <span class="math display">\[
-accuracy = \frac{TP+TN}{TP+FP+FN+FP} 
-\]</span> Accuracy is a very intuitive metrics. However, it sometimes cannot directly reflect the predicting performance of the model as it cannot deal with imbalanced data. For example, suppose we have a sample set of 100 sample with 99 positive and 1 negative, even if the model simply predicted all samples as positive without any training, it would still receive an accuracy of 99%.</p>
-<p><strong>Recall and Precision</strong></p>
-<p>Recall = correctly predicted positive samples / all actual positive samples <span class="math display">\[
-racall = \frac{TP}{TP + FN}
-\]</span> Recall represent the ability to find positive samples among all actual postive samples. It can deal with imbalanced data. It is sensitive to FN case, thus is suitable for the business case where FN would bring significant cause(e. g Explosion recognition, vehicle safety judgement). On the other side, recall does not consider FN, a model can simply improved recall by judging all samples as positive, which is not good in some cases.</p>
-<p>Precision = correctly predicted positive samples / all predicted positive samples <span class="math display">\[
-precision = \frac{TP}{TP + FP}
-\]</span> Precision represent the probability that a model's judgment on positive case is correct. It can partly deal with imbalanced data. It is sensitive to FP case, thus is suitable for the business case where FP would bring significant cause(e. g Crime judgment, disease diagnosis).</p>
-<p>Recall and Precision can both deal with imbalanced data. However, there's a trade-off between these two metrics. Thus, which metric to put emphasis on idepends on specific business application. Nevertheless, in most cases, since we can just flip P/N, or 1/0, precision is more like an accompanied constraint of recall to prevent model from foucsing too much on capture the minor category samples, as FN and FP are both bad in most business application.</p>
-<p><strong>F1 Score</strong></p>
-<p>The F-measure is a function that balance Precision and recall <span class="math display">\[
-F_\alpha = \frac{(1+\alpha^2)*P*R}{(\alpha^2*P)+R}
-\]</span> when <span class="math inline">\(\alpha\)</span> = 1, we call this metric F1 score: <span class="math display">\[
-F1 = \frac{2PR}{P+R}
-\]</span> F1 socre combine Recall and Precision to find a balance. It is suitable for many business case where we cannot decide a clear preference.</p>
-<h2 id="p--r-curve-roc-curve-and-auc">3. P- R Curve, ROC Curve and AUC</h2>
-<p><strong>P- R Curve</strong></p>
-<p>P-R Curve is a curve to depict the relationship between Precision and Recall. It's application is similar to F1 score, but lessly used as F1 score is more concise to read( The higher the better)</p>
-<p><img src="/2022/09/21/Evaluation_Classification/3.PNG" srcset="/img/loading.gif" lazyload></p>
-<p>Usually, we can regard model B as a better model if it can completely wrap the curve of A. If that; s not the case, we can mark the point on the curve where precision equals recall(Break Event Point, or BEP). The curve with a BEP closer towards up- right direction is better.</p>
-<p><strong>ROC Curve</strong></p>
-<p>We define:</p>
+              <h1 id="information-theory-in-machine-learning">Information theory in Machine Learning</h1>
+<h2 id="information-and-entrophy">1. Information and Entrophy</h2>
+<p><strong>self-info</strong></p>
+<p>self-information is a measure related to the outcome of a probabilistic event. To quantify the information, we hope the measure would have following properties:</p>
 <ul>
-<li>True positive rate (sensitivity): the ratio that actual positive samples predicted correctly</li>
-<li>True negative rate (specificity): the ratio that actual negative samples predicted correctly</li>
-<li>False positive rate (1-specificity): the ratio that actual negative samples predicted wrongly</li>
+<li>A low-probability outcome contains more infomation than a high-probability event. For example, "I won't die" contains more information than "I will die". To some extent, we can regard self-info as the degree we would feel surprise about an certain outcome of an event</li>
+<li>Information quantity must not be negative</li>
+<li>The total imformation of several outcome should be the sum of ther individual information</li>
+<li><span class="math inline">\(I(y=m_1,y=m_2) = I(y=m_1)+I(y=m_2)\)</span></li>
+<li>I(y) must be continuous if P(y) is continuous</li>
 </ul>
-<p><span class="math display">\[
-TPR = \frac{TP}{TP+FN} = Recall
-\\
-TNR = \frac{TN}{FP+TN} = 1-TNP
-\\
-FPR = \frac{FP}{FP+TN}
+<p>It can be proved that the only expression that satisfies these properties is <span class="math inline">\(Klog(P(y))\)</span> where K is negative. Set K= 1, we define the self-information of an outcome of an event as: <span class="math display">\[
+I  = log(\frac{1}{P(y=c_m)}) = -log(P(y=c_m))
 \]</span></p>
-<p>From a probabilistic aspect:</p>
-<table>
-<tbody>
-<tr class="odd">
-<td>Precision</td>
-<td style="text-align: center;"><span class="math inline">\(P(Y=1|\hat{Y}=1)\)</span></td>
-</tr>
-<tr class="even">
-<td>Recall (sensitivity)</td>
-<td style="text-align: center;"><span class="math inline">\(P(\hat{Y}=1|Y=1)\)</span></td>
-</tr>
-<tr class="odd">
-<td>Specificity</td>
-<td style="text-align: center;"><span class="math inline">\(P(\hat{Y}=0|Y=0)\)</span></td>
-</tr>
-</tbody>
-</table>
-<p>From this interpreation, we found that sensitivity and specificity are condition on Y, which means The influence of P(Y) are blocked whe calculating these two metrics. Therefore, these two metrics are not influenced by the imbalance of data.</p>
-<p>The Reciever Operating Characteristics cureve(ROC curve) take both metrics into consideration by depict the relationship between sensitivity and 1-specificity:</p>
-<p><img src="/2022/09/21/Evaluation_Classification/4.png" srcset="/img/loading.gif" lazyload></p>
-<p><strong>AUC</strong></p>
-<p>Area Under Curve(AUC) is the area beneath the ROC curve.</p>
-<p>Suppose our model completely randomly classifies the samples, the the probability it regard an actual postive sample or an actual negative sample as a positive sample is equal, in this case, AUC would be 0.5. If AUC &gt; 0.5, it means when the model predicts a sample, <span class="math inline">\(P(\hat{Y}=1|Y=1) &gt; P(\hat{Y}=1|Y=0)\)</span> , which means the prediction is effective. Thus, the higher the AUC is, the better the model performs.</p>
-<p>Obviously, AUC is not influenced by imbalanced data, and it's delivery information concisely. Thus, it is one of the most frequently used metrics in classification.</p>
+<p><strong>Entrophy</strong></p>
+<p>Entrophy is the expectation of self-info. It represent the mean information of an event related to an random variable y, the greater H is, the more uncertain event y is <span class="math display">\[
+H(Y) = E[I(y)] = -\sum_i^m p(y=c_m)log(p(y=c_m))
+\]</span></p>
+<h2 id="entrophy-measure-for-two-variables">2. Entrophy measure for two variables</h2>
+<h3 id="joint-entrophy">2.1 Joint Entrophy</h3>
+<p>Joint entropy measure the uncertainty of a joint event (X, Y) <span class="math display">\[
+H(T,Y) =-\sum_t\sum_y p(t,y)log(p(t,y))
+\]</span></p>
+<h3 id="conditional-entrophy">2.2 Conditional Entrophy</h3>
+<p>Conditional Entrophy represent the Information recieved of one event when another event is for certain <span class="math display">\[
+H(Y|T) =-\sum_t\sum_y p(t,y)log(p(y|t)) = -\sum_t\sum_y p(y|t)p(t)log(p(y|t))
+\]</span> The higher H(Y|T) is, the less "extra information" about Y is needed when T is certain, which means the corralation between Y and T l is higher</p>
+<p>The relationship between conditional entropy and joint entropy: <span class="math display">\[
+H(Y｜T) = H(Y, T) - H(T)
+\]</span></p>
+<h3 id="inofrmation-gain">2.3 Inofrmation Gain</h3>
+<p>Information gain represent the amount of uncertainty reduction of a variable when another variable is certain <span class="math display">\[
+IG(Y|T) = H(Y) - H(Y| T)
+\]</span> It is usually applied as an impurity metrics in splitting algorithm like Decision Tree</p>
+<h3 id="mutual-information">2.4 Mutual Information</h3>
+<p>The nature of Mutual Information and Information Gain is the same, mutual information is the shared entropy of two variable</p>
+<p><img src="/2022/09/22/information-theory-in-ML/1.png" srcset="/img/loading.gif" lazyload></p>
+<p>First, when we consider two event together, we can rewrite H(Y) as: <span class="math display">\[
+&amp; H(Y) = -\sum_i^m p(y=c_i)log(p(y=c_i) \\
+&amp; = -\sum_j^n p(x = c_j)\sum_i^mp(y=c_i|x_=c_j)log(p(y=c_i)) \\
+&amp;= \sum_x\sum_yp(x,y)log(p(y))
+\]</span></p>
+<p><span class="math display">\[
+MI = H(x,y) - H(x|y) - H(y|x) = \sum_x\sum_yp(x,y)log\frac{p(x,y)}{p(x)p(y)}\\
+IG = H(y)-H(y|x) = \sum_x\sum_yp(x,y)log(p(y)) - \sum_x\sum_yp(x,y)log(p(y|x)) = MI
+\]</span></p>
+<p>MI is usually mentioned when calculating the correlation of two variable, IG is mentioned when calculating the impurity reduction of one variable when splitting another variable</p>
+<h2 id="entrophy-measure-for-two-distribution">3. Entrophy measure for two distribution</h2>
+<h3 id="kl-divergencerelative-entrophy">3.1 KL Divergence(Relative Entrophy)</h3>
+<p>The KL divergence is the expectation(under true distribution) of the difference between information amount under predicted and true distribution <span class="math display">\[
+D_{KL}(p||q) = \sum_{i=1}^mp(y_i)\log(\frac{p(y_i)}{q(y_i)})
+\]</span> Where:</p>
+<ul>
+<li>q is the estimated distribution of y</li>
+<li>p is the real distribution of y</li>
+</ul>
+<p>it can be used to evaluate an estimation of a distribution with the real distribution given</p>
+<h3 id="cross-entrophy">3.2 Cross Entrophy</h3>
+<p>The equation KL divergence can be written as: <span class="math display">\[
+D_{KL}(p||q) = \sum_{i=1}^mp(y_i)\log(\frac{p(y_i)}{q(y_i)}) = -\sum_i^mp(y_i)log(q(y_i)) - (-\sum_i^mp(y_i)log(p(y_i)))
+\]</span> Obviously, the second term of this equation is <span class="math inline">\(H_p(x)\)</span>, which is the entrophy of the real data. In a machine learning problem, since real entrophy is fixed for a dataset, we can only minimize the first term. we call this term Cross entropy: <span class="math display">\[
+CH(p,q) = D_ {KL}(p||q) + H_p(X) = -\sum_i^mp(y_i)log(q(y_i))
+\]</span></p>
 
             </div>
             <hr>
@@ -332,9 +321,7 @@ FPR = \frac{FP}{FP+TN}
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/Model-Evaluation/">Model Evaluation</a>
-                    
-                      <a class="hover-with-bg" href="/tags/Classification/">Classification</a>
+                      <a class="hover-with-bg" href="/tags/Loss-Function/">Loss Function</a>
                     
                   </div>
                 
@@ -351,18 +338,12 @@ FPR = \frac{FP}{FP+TN}
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/09/22/loss-function/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Common Loss Function in Machine Learning</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/09/19/overfitting/">
-                        <span class="hidden-mobile">Causes and Solutions of Overfitting</span>
+                      <a href="/2022/09/22/loss-function/">
+                        <span class="hidden-mobile">Common Loss Function in Machine Learning</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
