@@ -242,63 +242,57 @@
             <h1 style="display: none">MySQL 基础知识</h1>
             
             <div class="markdown-body">
-              <h1 id="mysql基础知识"><a class="markdownIt-Anchor" href="#mysql基础知识"></a> MySQL基础知识</h1>
-<h2 id="1-数据库三大范式"><a class="markdownIt-Anchor" href="#1-数据库三大范式"></a> 1. 数据库三大范式</h2>
-<ol>
-<li>
-<p>数据库表中，所有字段都是不可分解的原子值，互相不依赖</p>
-</li>
-<li>
-<p>所有非主键字段都依赖于主键</p>
-<p>（学号，姓名，专业名称）其中专业名称不依赖于主键，所以不满足第二范式</p>
-</li>
-<li>
-<p>所有非主键属性都直接依赖于主键</p>
-<p>（学号，姓名，专业id，专业名称）其中包含间接依赖关系 学校-&gt;专业id-&gt;专业名称，不满足第三范式</p>
-</li>
+              <h1 id="mysql基础知识">MySQL基础知识</h1>
+<h2 id="数据库三大范式">1. 数据库三大范式</h2>
+<ol type="1">
+<li><p>数据库表中，所有字段都是不可分解的原子值，互相不依赖</p></li>
+<li><p>所有非主键字段都依赖于主键</p>
+<p>（学号，姓名，专业名称）其中专业名称不依赖于主键，所以不满足第二范式</p></li>
+<li><p>所有非主键属性都直接依赖于主键</p>
+<p>（学号，姓名，专业id，专业名称）其中包含间接依赖关系 学校-&gt;专业id-&gt;专业名称，不满足第三范式</p></li>
 </ol>
-<h2 id="2-mysql的架构"><a class="markdownIt-Anchor" href="#2-mysql的架构"></a> 2. MySQL的架构</h2>
+<h2 id="mysql的架构">2. MySQL的架构</h2>
 <p>MySQL可以分为应用层,逻辑层,数据库引擎层,物理层。</p>
 <p>应用层：负责和客户端，响应客户端请求，建立连接，返回数据</p>
 <p>逻辑层：包括SQK接口，解析器，优化器，Cache与buffer</p>
 <p>数据库引擎层：有常见的MyISAM,InnoDB等等</p>
 <p>物理层：负责文件存储，日志等等</p>
-<h3 id="21-一条sql语句执行的过程"><a class="markdownIt-Anchor" href="#21-一条sql语句执行的过程"></a> 2.1 一条SQL语句执行的过程</h3>
-<ol>
+<h3 id="一条sql语句执行的过程">2.1 一条SQL语句执行的过程</h3>
+<ol type="1">
 <li>客户端首先通过连接器进行身份认证和权限相关</li>
 <li>如果是执行查询语句的时候，会先查询缓存，但MySQL 8.0 版本后该步骤移除。</li>
 <li>没有命中缓存的话，SQL 语句就会经过解析器，分析语句，包括语法检查等等</li>
 <li>通过优化器，将用户的SQL语句按照 MySQL 认为最优的方案去执行。</li>
 <li>执行语句，并从存储引擎返回数据</li>
 </ol>
-<h3 id="22-buffer-与-cache-的对比"><a class="markdownIt-Anchor" href="#22-buffer-与-cache-的对比"></a> 2.2 buffer 与 cache 的对比</h3>
-<ol>
+<h3 id="buffer-与-cache-的对比">2.2 buffer 与 cache 的对比</h3>
+<ol type="1">
 <li>Cache(如Qcache)一般用来把固定语句对应的结果集放在内存，目的是为了提高读取速度</li>
 <li>buffer（如buffer pool）一般用来把页面加载到内存，每次写入时，先更新buffer pool中的日志（redo log），把要修改的页记为脏页。后台进程每隔一段时间将buffer pool中的日志进行刷盘，从而提高了磁盘IO效率，降低了大量写入带来的冲击</li>
 </ol>
-<h2 id="3-mysql的引擎"><a class="markdownIt-Anchor" href="#3-mysql的引擎"></a> 3. MySQL的引擎</h2>
-<h3 id="31-mysql支持的引擎"><a class="markdownIt-Anchor" href="#31-mysql支持的引擎"></a> 3.1 MySQL支持的引擎</h3>
+<h2 id="mysql的引擎">3. MySQL的引擎</h2>
+<h3 id="mysql支持的引擎">3.1 MySQL支持的引擎</h3>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>InnoDB</th>
 <th>MyISAM</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>支持事务</td>
 <td>不支持</td>
 </tr>
-<tr>
+<tr class="even">
 <td>支持外键</td>
 <td>不支持</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>聚集索引</td>
 <td>非聚集索引</td>
 </tr>
-<tr>
+<tr class="even">
 <td>行级锁和表级锁</td>
 <td>表级锁</td>
 </tr>
@@ -306,16 +300,16 @@
 </table>
 <p>Memory 存储引擎：</p>
 <p>Memory存储引擎将所有数据都保存在内存，不需要磁盘 IO。支持哈希索引，因此查找速度极快。Memory 表使用表级锁，因此并发写入的性能较低。</p>
-<h3 id="32-innodb的索引"><a class="markdownIt-Anchor" href="#32-innodb的索引"></a> 3.2 InnoDB的索引</h3>
+<h3 id="innodb的索引">3.2 InnoDB的索引</h3>
 <p>索引是一种数据结构，用于帮助存储引擎快速的找到数据，索引存储在内存上</p>
-<h4 id="321-聚集索引和非聚集索引"><a class="markdownIt-Anchor" href="#321-聚集索引和非聚集索引"></a> 3.2.1 聚集索引和非聚集索引</h4>
+<h4 id="聚集索引和非聚集索引">3.2.1 聚集索引和非聚集索引</h4>
 <p>聚集索引中，索引和数据绑定在一起，通过查找索引可以直接返回数据。主键都是聚集索引。非聚集索引中，数据和索引分离，通过一个或多个非聚集索引的查询，查到对应某一值的主键值/地址，然后再使用主键值找到数据</p>
 <p>有时非聚集索引无法直接找到主键值，只能查到满足非聚集索引某一组值的锁欧聚集索引，此时会回到聚集索引中根据主键值继续查找数据，这一过程称为<strong>回表查询</strong></p>
-<h4 id="322-联合索引和最左匹配原则"><a class="markdownIt-Anchor" href="#322-联合索引和最左匹配原则"></a> <strong>3.2.2 联合索引和最左匹配原则：</strong></h4>
+<h4 id="联合索引和最左匹配原则"><strong>3.2.2 联合索引和最左匹配原则：</strong></h4>
 <p>联合索引是指对表上的多个列的关键词进行索引。</p>
 <p>对于联合索引的查询，如果精确匹配联合索引的左边连续一列或者多列，则mysql会一直向右匹配直到遇到范围查询（&gt;,&lt;,between,like）就停止匹配。where语句中，所有命中的索引被称为匹配列，没有命中但出现在索引中的成为过滤列，所有不在索引中的成为非匹配列</p>
-<p>例如联合索引为（user, age, id), 而范围查询中的谓语为“where id = 1 and age &gt; 10 and user = wang and sex = ‘M’ ”,此时：</p>
-<ol>
+<p>例如联合索引为（user, age, id), 而范围查询中的谓语为“where id = 1 and age &gt; 10 and user = wang and sex = 'M' ”,此时：</p>
+<ol type="1">
 <li>在where语句语句中查找谓语user，命中，user为匹配列</li>
 <li>在where语句语句中查找谓语age，命中，但age为范围查询，因此age后的列无法再命中</li>
 <li>id未命中，但出现在索引中，为过滤列</li>
@@ -325,31 +319,23 @@
 <p>对于id，SQL将在符合user，age条件的子树上遍历，这样的复杂度并不降低，但由于是在内存上执行，速度仍然比回表后快（通过explain可查看查询方式为INDEX）</p>
 <p>对于sex，SQL将先回表，返回所有满足user，age，id条件的数据结果，然后再遍历获得满足sex条件的数据结果（通过explain可查看查询方式为ALL）</p>
 <p>Mysql会对第一个索引字段数据进行排序，在第一个字段基础上，再对第二个字段排序。</p>
-<h3 id="33-索引的数据结构"><a class="markdownIt-Anchor" href="#33-索引的数据结构"></a> 3.3 索引的数据结构</h3>
+<h3 id="索引的数据结构">3.3 索引的数据结构</h3>
 <p>InnoDB采用的是B+Tree索引</p>
 <p>B-Tree：一种自平衡多插树。每个节点都存储key和value。因为每个节点都有数据，所以查询效率较高</p>
 <p>B+Tree：也是自平衡多叉树，但中间节点不存放数据只存放key。只在叶节点存放数据，结构矮胖，出度更大，可以在相同的磁盘空间下容纳更多数据。且在叶节点之间链指针，所以进行范围查询时只需要遍历叶节点即可。</p>
 <p>Hash索引：哈希索引对于每一行数据计算一个哈希码，并将所有的哈希码存储在索引中，同时在哈希表中保存指向每个数据行的指针。只有 Memory 引擎显式支持哈希索引。</p>
 <p><strong>为何不使用红黑树：</strong></p>
 <p>红黑树是二叉查找树，出度为2，因此红黑树存储一张表，高度会比B Tree大很多，IO次数多，检索时间长</p>
-<h2 id="4-mysql的事务"><a class="markdownIt-Anchor" href="#4-mysql的事务"></a> 4. MySQL的事务</h2>
-<h3 id="41-acid"><a class="markdownIt-Anchor" href="#41-acid"></a> 4.1 ACID</h3>
+<h2 id="mysql的事务">4. MySQL的事务</h2>
+<h3 id="acid">4.1 ACID</h3>
 <p>事务满足如下几个特性：</p>
 <ul>
-<li>
-<p>原子性（Atomicity）: 一个事务中的所有操作要么全部完成，要么全部不完成。</p>
-</li>
-<li>
-<p>一致性（Consistency）: 事务执行前后数据库的状态保存一致。</p>
-</li>
-<li>
-<p>隔离性（Isolation） 多个并发事务对数据库进行操作，事务间互不干扰。</p>
-</li>
-<li>
-<p>持久性（Durability） 事务执行完毕，对数据的修改是永久的，即使系统故障也不会丢失</p>
-</li>
+<li><p>原子性（Atomicity）: 一个事务中的所有操作要么全部完成，要么全部不完成。</p></li>
+<li><p>一致性（Consistency）: 事务执行前后数据库的状态保存一致。</p></li>
+<li><p>隔离性（Isolation） 多个并发事务对数据库进行操作，事务间互不干扰。</p></li>
+<li><p>持久性（Durability） 事务执行完毕，对数据的修改是永久的，即使系统故障也不会丢失</p></li>
 </ul>
-<h3 id="42-事务的并发问题和隔离等级"><a class="markdownIt-Anchor" href="#42-事务的并发问题和隔离等级"></a> 4.2 事务的并发问题和隔离等级</h3>
+<h3 id="事务的并发问题和隔离等级">4.2 事务的并发问题和隔离等级</h3>
 <p>并发问题：</p>
 <ul>
 <li>丢失修改</li>
@@ -359,96 +345,88 @@
 </ul>
 <p>隔离等级</p>
 <ul>
-<li>
-<p>读未提交： 一个事务还没提交，它做的变更就能被别的事务看到。</p>
-</li>
-<li>
-<p>读已提交： 一个事务提交后，它做的变更才能被别的事务看到。</p>
-</li>
-<li>
-<p>可重复读： 一个事务执行过程中看到的数据总是和事务启动时看到的数据是一致的。在这个级别下事务未提交，做出的变更其它事务也看不到。</p>
-</li>
-<li>
-<p>串行化： 对于同一行记录进行读写会分别加读写锁，当发生读写锁冲突，后面执行的事务需等前面执行的事务完成才能继续执行。</p>
-</li>
+<li><p>读未提交： 一个事务还没提交，它做的变更就能被别的事务看到。</p></li>
+<li><p>读已提交： 一个事务提交后，它做的变更才能被别的事务看到。</p></li>
+<li><p>可重复读： 一个事务执行过程中看到的数据总是和事务启动时看到的数据是一致的。在这个级别下事务未提交，做出的变更其它事务也看不到。</p></li>
+<li><p>串行化： 对于同一行记录进行读写会分别加读写锁，当发生读写锁冲突，后面执行的事务需等前面执行的事务完成才能继续执行。</p></li>
 </ul>
 <p>并发问题的解决：</p>
-<p><img src="/2022/02/09/MySQL-Basic/img1.PNG" srcset="/img/loading.gif" lazyload alt></p>
-<h2 id="5-mysql的锁innodb"><a class="markdownIt-Anchor" href="#5-mysql的锁innodb"></a> 5. MySQL的锁（InnoDB）</h2>
-<h3 id="51-锁的性质"><a class="markdownIt-Anchor" href="#51-锁的性质"></a> 5.1 锁的性质</h3>
-<h4 id="511-共享性"><a class="markdownIt-Anchor" href="#511-共享性"></a> 5.1.1 共享性</h4>
+<p><img src="/2022/02/09/MySQL-Basic/img1.PNG" srcset="/img/loading.gif" lazyload></p>
+<h2 id="mysql的锁innodb">5. MySQL的锁（InnoDB）</h2>
+<h3 id="锁的性质">5.1 锁的性质</h3>
+<h4 id="共享性">5.1.1 共享性</h4>
 <p>共享锁：其他事务可以读但不能写，又称为读锁</p>
 <p>排他锁：其他事务不能读写，又称为写锁</p>
-<h4 id="512-粒度"><a class="markdownIt-Anchor" href="#512-粒度"></a> 5.1.2 粒度</h4>
+<h4 id="粒度">5.1.2 粒度</h4>
 <p><strong>表级锁:</strong> 对当前操作的整张表加锁,实现简单，加锁快，但并发能力低。</p>
 <p><strong>行锁:</strong> 锁住某一行，如果表存在索引，那么记录锁是锁在索引上的，如果表没有索引，那么 InnoDB 会创建一个隐藏的聚簇索引加锁。行级锁能大大减少数据库操作的冲突。其加锁粒度最小，并发度高，但加锁慢，会出现死锁。</p>
 <p><strong>Gap 锁</strong>：锁住一个间隙以防止插入，但不包括间隙的两端。假设索引列有2, 4, 8 三个值，如果对 4 加行锁，那么也会同时对(2,4)和(4,8)这两个间隙加锁。其他事务无法插入值所对应的索引值在这两个间隙之间的记录</p>
-<p>**next-key-lock：**next-key lock 实际上就是 行锁+这条记录前面的 gap lock 的组合。假设有索引值10,11,13和 20,那么可能的 next-key lock 包括:</p>
+<p><strong>next-key-lock：</strong>next-key lock 实际上就是 行锁+这条记录前面的 gap lock 的组合。假设有索引值10,11,13和 20,那么可能的 next-key lock 包括:</p>
 <p>(负无穷,10],(10,11],(11,13],(13,20],(20,正无穷)</p>
 <p>在 RR 隔离级别下，InnoDB 使用 next-key lock 主要是防止幻读问题产生。</p>
-<h4 id="513-意向锁"><a class="markdownIt-Anchor" href="#513-意向锁"></a> 5.1.3 意向锁</h4>
+<h4 id="意向锁">5.1.3 意向锁</h4>
 <p>意向锁必须是表级锁，可以有共享性和排他性。意向锁的作用在于保护不同级别的锁共享性不冲突，或者说提高检测这一冲突的效率。</p>
 <p>假设事务A正在update表t的某一行r，并给这一行添加了排他锁，同时，事务B想要给表t上一个表级共享锁，为了防止共享性冲突，事务B必须检查表t的每一行，检查是否有A上的锁这样的排他锁，然后才能上锁</p>
 <p>因此，A给表t中的行r上排他锁时，同时还会给表t上一个表级的排他意向锁，此时B所上的表级共享锁将会被阻塞</p>
 <p>注意，意向锁只会阻塞表级锁，上例中，如果有另一事务C试图给另一行r2加共享锁，则A所加的排他意向锁不会对其进行阻塞</p>
-<h4 id="514-死锁"><a class="markdownIt-Anchor" href="#514-死锁"></a> 5.1.4 死锁</h4>
+<h4 id="死锁">5.1.4 死锁</h4>
 <p>两个事物同时上锁进入互相等待的死循环。</p>
 <p>如何解决死锁：</p>
-<ol>
+<ol type="1">
 <li>合理设计索引，尽可能通过索引定位行，防止过多的表和行被锁住，减少竞争</li>
 <li>调整SQL语句顺序，update，delete等长时间持有锁的语句放在后面</li>
 <li>把大事物分解成小事务执行</li>
 <li>必要时，可以使用<code>KILL</code>杀死一些进程，释放其持有的锁</li>
 </ol>
 <p>详细分析方法可参考<a target="_blank" rel="noopener" href="https://z.itpub.net/article/detail/7B944ED17C0084CF672A47D6E938B750">这篇文章</a></p>
-<h4 id="515-乐观性"><a class="markdownIt-Anchor" href="#515-乐观性"></a> 5.1.5 乐观性</h4>
+<h4 id="乐观性">5.1.5 乐观性</h4>
 <p>乐观锁：对于数据冲突保持一种乐观态度，操作数据时不会对操作的数据进行加锁，只有到数据提交的时候才通过一种机制来验证数据是否存在冲突。</p>
 <p>悲观锁：对于数据冲突保持一种悲观态度，在修改数据之前把数据锁住，然后再对数据进行读写，在它释放锁之前任何人都不能对其数据进行操作，直到前面一个人把锁释放后下一个人数据加锁才可对数据进行加锁，然后才可以对数据进行操作，一般数据库的锁都是悲观锁</p>
-<h3 id="52-上锁方式"><a class="markdownIt-Anchor" href="#52-上锁方式"></a> 5.2 上锁方式</h3>
-<h4 id="521-表锁"><a class="markdownIt-Anchor" href="#521-表锁"></a> 5.2.1 表锁</h4>
+<h3 id="上锁方式">5.2 上锁方式</h3>
+<h4 id="表锁">5.2.1 表锁</h4>
 <p>隐式上锁：使用一些关键词时，自动添加自动释放的上锁。如select语句会给表上共享锁，insert，update，delete会给表上排他锁</p>
 <p>显示上锁：</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><pre><code class="hljs SQL">LOCK <span class="hljs-keyword">TABLE</span> t1 READ  <span class="hljs-comment">-- 给t1表上共享锁</span><br>LOCK <span class="hljs-keyword">TABLE</span> t1 WRITE  <span class="hljs-comment">-- 给t1表上排他锁</span><br>UNLOCK <span class="hljs-keyword">TABLE</span> t1 <span class="hljs-comment">-- 解锁t1</span><br>UNLOCK TABLES <span class="hljs-comment">-- 解锁所有表</span><br></code></pre></td></tr></table></figure>
-<h4 id="522-行锁"><a class="markdownIt-Anchor" href="#522-行锁"></a> 5.2.2 行锁</h4>
+<h4 id="行锁">5.2.2 行锁</h4>
 <p>隐式上锁：使用一些关键词时，自动添加自动释放的上锁。insert，update，delete会给选中的行上排他锁。注意select不会给行加锁</p>
 <p>显示上锁：</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> t1 <span class="hljs-keyword">IN</span> SHARE MODE <span class="hljs-comment">-- 给选中的行加共享锁</span><br><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> t1 <span class="hljs-keyword">FOR</span> UPDATE <span class="hljs-comment">-- 给选中的行加排他锁</span><br><span class="hljs-keyword">COMMIT</span><br><span class="hljs-keyword">ROLLBACK</span> <span class="hljs-comment">-- 事务完成或回滚时，会解除事物中所加的行锁</span><br>KILL <span class="hljs-comment">-- 杀死某一进程，会解除这一进程所加的行锁</span><br></code></pre></td></tr></table></figure>
-<h2 id="6-mysql的日志"><a class="markdownIt-Anchor" href="#6-mysql的日志"></a> 6. MySQL的日志</h2>
-<h3 id="61-log种类"><a class="markdownIt-Anchor" href="#61-log种类"></a> 6.1 log种类</h3>
+<h2 id="mysql的日志">6. MySQL的日志</h2>
+<h3 id="log种类">6.1 log种类</h3>
 <p>redo log: 存储引擎级别的log（InnoDB有，MyISAM没有），该log关注于事务的恢复。在重启mysql服务的时候，根据redo log进行重做，从而使事务有持久性。</p>
 <p>undo log：是存储引擎级别的log（InnoDB有，MyISAM没有）保证数据的原子性，该log保存了事务发生之前的数据的一个版本，可以用于回滚，是MVCC的重要实现方法之一。</p>
 <p>如果需要执行事务，使用redo log，执行失败则使用undo log，这样的组合保证了事务的一致性</p>
 <p>bin log：数据库级别的log，关注恢复数据库的数据。有关bin log和redo log的区别</p>
-<ol>
+<ol type="1">
 <li>redo log是InnoDB引擎特有的，只记录该引擎中表的修改记录。binlog是MySQL的Server层实现的，会记录所有引擎对数据库的修改，具有崩溃修复能力。InnoDB通过redo log保证即使数据库发生异常重启，之前提交的记录都不会丢失，这个能力称为crash-safe</li>
 <li>redo log是物理日志，记录的是在具体某个数据页上做了什么修改；binlog是逻辑日志，记录的是这个语句的原始逻辑，例如语句的增删改，并不记录数据页具体发生了什么改变，因此单独的bin log不具备崩溃修复能力。</li>
 <li>redo log是循环写的，空间固定会用完；binlog是可以追加写入的，binlog文件写到一定大小后会切换到下一个，并不会覆盖以前的日志。</li>
 </ol>
-<h3 id="62-wal技术"><a class="markdownIt-Anchor" href="#62-wal技术"></a> 6.2 WAL技术</h3>
+<h3 id="wal技术">6.2 WAL技术</h3>
 <p>WAL的全称是Write-Ahead Logging，它的关键点就是先写日志，再写磁盘。事务在提交写入磁盘前，会先写到redo log里面去。如果直接写入磁盘涉及磁盘的随机I/O访问，涉及磁盘随机I/O访问是非常消耗时间的一个过程，相比之下先写入redo log，后面再找合适的时机批量刷盘能提升性能。</p>
-<h3 id="63-两阶段提交"><a class="markdownIt-Anchor" href="#63-两阶段提交"></a> 6.3 两阶段提交</h3>
+<h3 id="两阶段提交">6.3 两阶段提交</h3>
 <p>为了保证binlog和redo log两份日志的逻辑一致，最终保证恢复到主备数据库的数据是一致的，采用两阶段提交的机制。</p>
-<ol>
+<ol type="1">
 <li>执行器调用存储引擎接口，存储引擎将修改更新到内存中后，将修改操作记录redo log中，此时redo log处于prepare状态。</li>
 <li>存储引擎告知执行器执行完毕，执行器生成这个操作对应的binlog，并把binlog写入磁盘。</li>
 <li>执行器调用引擎的提交事务接口，引擎把刚刚写入的redo log改成提交commit状态，更新完成</li>
 </ol>
-<h3 id="64-mysql-主从机制"><a class="markdownIt-Anchor" href="#64-mysql-主从机制"></a> 6.4 MySQL 主从机制</h3>
-<h4 id="641主从配置"><a class="markdownIt-Anchor" href="#641主从配置"></a> 6.4.1主从配置</h4>
+<h3 id="mysql-主从机制">6.4 MySQL 主从机制</h3>
+<h4 id="主从配置">6.4.1主从配置</h4>
 <p>一个服务器充当主服务器（master），其余的服务器充当从服务器（slave）。从服务器主要用来读，主服务器主要用写，从服务器定期与主服务器进行同步，复制其数据。因为复制是异步进行的，所以从服务器不需要一直连接着主服务器</p>
 <p>主从机制的优点：</p>
-<ol>
+<ol type="1">
 <li>数据存在多个镜像，可以防止单一主机崩溃和数据丢失，如果主机宕机可以切换到从服务器上（由于异步同步，可能数据一致性存在问题）</li>
 <li>从服务器可以分担主服务器的读的压力</li>
 </ol>
 <p>注意，部分数据实时性强，经常会被更新，这类数据不适合放在从服务器上，容易引发错误</p>
-<h4 id="642-主从复制"><a class="markdownIt-Anchor" href="#642-主从复制"></a> 6.4.2 主从复制</h4>
+<h4 id="主从复制">6.4.2 主从复制</h4>
 <p>MySQL主从复制流程：</p>
-<ol>
+<ol type="1">
 <li>在事务完成之前，主库在binlog上记录这些改变，完成binlog写入过程后，主库通知存储引擎提交事物</li>
 <li>从库将主库的binlog复制到对应的中继日志，即开辟一个I/O工作线程，I/O线程在主库上打开一个普通的连接，然后开始binlog dump process，将这些事件写入中继日志。从主库的binlog中读取事件，如果已经读到最新了，线程进入睡眠并等待ma主库产生新的事件。</li>
 </ol>
-<h2 id="7-多版本并发控制mvcc"><a class="markdownIt-Anchor" href="#7-多版本并发控制mvcc"></a> 7. 多版本并发控制(MVCC)</h2>
+<h2 id="多版本并发控制mvcc">7. 多版本并发控制(MVCC)</h2>
 <p><strong>多版本并发控制（MVCC）</strong> 是通过保存数据在某个时间点的快照来实现并发控制的。也就是说，不管事务执行多长时间，事务内部看到的数据是不受其它事务影响的，根据事务开始的时间不同，每个事务对同一张表，同一时刻看到的数据可能是不一样的。</p>
 <p>可以认为MVCC 是行级锁的一个变种，但是它在很多情况下避免了加锁操作，因此可以实现读写并发，并降低死锁概率，IO开销更低。</p>
 <p>MVCC只在 可重复读（REPEATABLE READ） 和读已提交（READ COMMITTED） 两个隔离级别下工作。其他两个隔离级别都和 MVCC 不兼容</p>

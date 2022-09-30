@@ -240,179 +240,134 @@
             <h1 style="display: none">DA Interview Question</h1>
             
             <div class="markdown-body">
-              <h1 id="da-interview-question"><a class="markdownIt-Anchor" href="#da-interview-question"></a> DA Interview Question</h1>
+              <h1 id="da-interview-question">DA Interview Question</h1>
 <p>本文主要梳理国内数据分析师岗位面试中常见的八股文和场景化问题</p>
-<h2 id="1-场景化问题"><a class="markdownIt-Anchor" href="#1-场景化问题"></a> 1. 场景化问题</h2>
-<h3 id="11-异动指标分析"><a class="markdownIt-Anchor" href="#11-异动指标分析"></a> 1.1 异动指标分析</h3>
+<h2 id="场景化问题">1. 场景化问题</h2>
+<h3 id="异动指标分析">1.1 异动指标分析</h3>
 <p>某一指标（DAU，GMV）在某一时间明显下降，试分析原因和解决办法</p>
-<ol>
-<li>
-<p>检查异动是否由统计错误引起</p>
-<ol>
+<ol type="1">
+<li><p>检查异动是否由统计错误引起</p>
+<ol type="1">
 <li>检验数据格式是否正确</li>
 <li>检验数据极值</li>
 <li>通过http请求构造数据日志，对比日志，服务器数据和历史数据，如果是大数据则可采样后再注入日志</li>
-</ol>
-</li>
-<li>
-<p>将影响因子（指标）拆解为外部和内部，首先分析外部：</p>
-<ol>
+</ol></li>
+<li><p>将影响因子（指标）拆解为外部和内部，首先分析外部：</p>
+<ol type="1">
 <li>观察异动指标过去一段时间的趋势，是否本身就处于下降趋势中？</li>
 <li>观察异动指标同期历史数据，是否该时期的指标本身就低？</li>
 <li>观察当下各类时事，是否对指标产生冲击？（对手促销，热点内容，竞品上市）</li>
-</ol>
-</li>
-<li>
-<p>观察内部因素，进一步拆分成若干个维度，例如：</p>
-<ol>
+</ol></li>
+<li><p>观察内部因素，进一步拆分成若干个维度，例如：</p>
+<ol type="1">
 <li>用户新老</li>
 <li>渠道（APP，PC）</li>
 <li>内容</li>
 <li>地域</li>
+</ol></li>
+<li><p>观察不同维度上指标的分布，确定影响系数：</p>
+<p>例如，如果流失用户中新老用户的占比为8:2，则有理由认为用户新老是一重要特征。相对，分布平均的维度可能相对不重要</p></li>
+<li><p>在影响系数较大的维度上继续拆分，并结合两级维度做出假设</p>
+<p>例如新用户在APP和PC断的流失数量为7:3，可以假设新用户不喜欢最近的APP前端设计</p></li>
+<li><p>继续拆分，直到能给出某一个具体可解决的假设</p>
+<p>例如最终假设为，用户不喜欢APP界面上短视频的双排列模式</p></li>
+<li><p>根据此笼统的假设设计实验，定义metrics，给出具体假设，进行假设检验</p></li>
 </ol>
-</li>
-<li>
-<p>观察不同维度上指标的分布，确定影响系数：</p>
-<p>例如，如果流失用户中新老用户的占比为8:2，则有理由认为用户新老是一重要特征。相对，分布平均的维度可能相对不重要</p>
-</li>
-<li>
-<p>在影响系数较大的维度上继续拆分，并结合两级维度做出假设</p>
-<p>例如新用户在APP和PC断的流失数量为7:3，可以假设新用户不喜欢最近的APP前端设计</p>
-</li>
-<li>
-<p>继续拆分，直到能给出某一个具体可解决的假设</p>
-<p>例如最终假设为，用户不喜欢APP界面上短视频的双排列模式</p>
-</li>
-<li>
-<p>根据此笼统的假设设计实验，定义metrics，给出具体假设，进行假设检验</p>
-</li>
-</ol>
-<h3 id="12-费米估计"><a class="markdownIt-Anchor" href="#12-费米估计"></a> 1.2 费米估计</h3>
+<h3 id="费米估计">1.2 费米估计</h3>
 <p>例如，不参考任何资料，估计北京市有多少红色的小轿车</p>
-<ol>
-<li>
-<p>将原问题拆解为多个问题，或者多个因子相乘，直到大多数因子看起来可以用常识进行判断上下界</p>
-<p>北京市红色小车数量 = 北京市人口 * 拥车比例 * 城市因子（城市一般拥车率更高） * 红色比例</p>
-</li>
-<li>
-<p>给出每个因子的上下界，并取均值作为数字</p>
-<p>例如常见的车色有8-10种，红色在中国比较受欢迎，估计红车比例为[1/8,1/4], 取均值约为0.18</p>
-</li>
-<li>
-<p>因子相乘，获得答案</p>
-</li>
+<ol type="1">
+<li><p>将原问题拆解为多个问题，或者多个因子相乘，直到大多数因子看起来可以用常识进行判断上下界</p>
+<p>北京市红色小车数量 = 北京市人口 * 拥车比例 * 城市因子（城市一般拥车率更高） * 红色比例</p></li>
+<li><p>给出每个因子的上下界，并取均值作为数字</p>
+<p>例如常见的车色有8-10种，红色在中国比较受欢迎，估计红车比例为[1/8,1/4], 取均值约为0.18</p></li>
+<li><p>因子相乘，获得答案</p></li>
 </ol>
-<h3 id="13-指标提升方案施工中"><a class="markdownIt-Anchor" href="#13-指标提升方案施工中"></a> 1.3 指标提升方案【施工中】</h3>
+<h3 id="指标提升方案施工中">1.3 指标提升方案【施工中】</h3>
 <p>例如用户培养，用户增长的场景，制定一个计划</p>
-<h3 id="14-用户画像"><a class="markdownIt-Anchor" href="#14-用户画像"></a> 1.4 用户画像</h3>
+<h3 id="用户画像">1.4 用户画像</h3>
 <p>首先进行用户人群的划分，一般为垂直用户和行业用户的比较</p>
-<ol>
-<li>
-<p>根据什么特征划分垂直用户？</p>
+<ol type="1">
+<li><p>根据什么特征划分垂直用户？</p>
 <ul>
-<li>
-<p>随机划分</p>
-</li>
-<li>
-<p>特殊时间段：例如某一时间段的用户转化率特别高</p>
-</li>
-<li>
-<p>平台划分：例如某一平台的指标特别高</p>
-</li>
-</ul>
-</li>
-<li>
-<p>研究用户的什么特征？</p>
+<li><p>随机划分</p></li>
+<li><p>特殊时间段：例如某一时间段的用户转化率特别高</p></li>
+<li><p>平台划分：例如某一平台的指标特别高</p></li>
+</ul></li>
+<li><p>研究用户的什么特征？</p>
 <ul>
 <li>静态特征：例如用户年龄，性别等和用户自身相关的特征</li>
 <li>动态特征：用户7日内的购买量，复购率，好评率等等</li>
 <li>用户行为：是否点赞，收藏，评论等等</li>
-</ul>
-</li>
-<li>
-<p>如何比较用户特征：</p>
+</ul></li>
+<li><p>如何比较用户特征：</p>
 <ul>
 <li>利用可视化的方法做图，比较得出特征的影响系数和相关性</li>
 <li>利用假设检验，检查影响系数和相关性是否显著</li>
 <li>利用模型，对特征间的关系进行建模，并比较特征差异和重要性，例如线性模型，聚类模型，树模型等</li>
-</ul>
-</li>
-<li>
-<p>分析以上结果，最终给出有关用户特征的结论，例如：高转化率的人群一般年龄在a-b岁，x渠道上的复购率比其他渠道高等等</p>
-</li>
-<li>
-<p>将以上结论形成市场策略（结合项目的具体目标，例如广告投放，个性化运营，上线新功能等）</p>
-</li>
+</ul></li>
+<li><p>分析以上结果，最终给出有关用户特征的结论，例如：高转化率的人群一般年龄在a-b岁，x渠道上的复购率比其他渠道高等等</p></li>
+<li><p>将以上结论形成市场策略（结合项目的具体目标，例如广告投放，个性化运营，上线新功能等）</p></li>
 </ol>
-<h2 id="2-业务相关指标和概念"><a class="markdownIt-Anchor" href="#2-业务相关指标和概念"></a> 2. 业务相关指标和概念</h2>
+<h2 id="业务相关指标和概念">2. 业务相关指标和概念</h2>
 <p>以下指标往往有交叉，并不严格属于某一个行业</p>
-<h3 id="21-视频行业"><a class="markdownIt-Anchor" href="#21-视频行业"></a> 2.1 视频行业</h3>
+<h3 id="视频行业">2.1 视频行业</h3>
 <p><strong>播放量</strong></p>
-<p><strong>播完率</strong>：播放时长<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>≥</mo></mrow><annotation encoding="application/x-tex">\ge</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7719400000000001em;vertical-align:-0.13597em;"></span><span class="mrel">≥</span></span></span></span>视频时长的比例</p>
+<p><strong>播完率</strong>：播放时长<span class="math inline">\(\ge\)</span>视频时长的比例</p>
 <p>会话时长：例如人均访问/观看时长</p>
 <p><strong>PV</strong>：用户行为的技术，包括点赞，转发，评论，也可以统计比例</p>
 <p><strong>KOL</strong>：关键意见领袖，例如带货主播，明星等等</p>
 <p>挑选KOL的方法</p>
-<ol>
+<ol type="1">
 <li>计算可选KOL以往带相似产品的ROI，挑选其中较高的</li>
 <li>对这些KOL的用户做用户画像和标签化</li>
 <li>挑选和这些KOL用户群体相似的KOL</li>
 </ol>
 <p><strong>视频热度评价：</strong></p>
-<ol>
-<li>
-<p>播放维度：近期播放量，播完率</p>
-</li>
-<li>
-<p>主播维度：主播关注数量，主播关注近期增量</p>
-</li>
-<li>
-<p>互动维度：近期点赞，收藏，转发，评论</p>
-</li>
-<li>
-<p>时间维度：新鲜度，时事热点关联度</p>
-</li>
+<ol type="1">
+<li><p>播放维度：近期播放量，播完率</p></li>
+<li><p>主播维度：主播关注数量，主播关注近期增量</p></li>
+<li><p>互动维度：近期点赞，收藏，转发，评论</p></li>
+<li><p>时间维度：新鲜度，时事热点关联度</p></li>
 </ol>
 <p>通过机器学习或者基于经验的方式确定这些指标的权重，计算热度</p>
-<h3 id="22-电商行业"><a class="markdownIt-Anchor" href="#22-电商行业"></a> 2.2 电商行业</h3>
-<p>**ROI：**投入回报率</p>
-<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>R</mi><mi>O</mi><mi>I</mi><mo>=</mo><mfrac><mrow><mi mathvariant="normal">收</mi><mi mathvariant="normal">入</mi><mo>−</mo><mi mathvariant="normal">成</mi><mi mathvariant="normal">本</mi></mrow><mrow><mi mathvariant="normal">投</mi><mi mathvariant="normal">入</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">ROI = \frac{收入-成本}{投入}
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.00773em;">R</span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mord mathdefault" style="margin-right:0.07847em;">I</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.9463300000000001em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.2603300000000002em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord cjk_fallback">投</span><span class="mord cjk_fallback">入</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord cjk_fallback">收</span><span class="mord cjk_fallback">入</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord cjk_fallback">成</span><span class="mord cjk_fallback">本</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></p>
-<p>具体计算方法因场景而异，例如在广告投放中</p>
+<h3 id="电商行业">2.2 电商行业</h3>
+<p><strong>ROI：</strong>投入回报率 <span class="math display">\[
+ROI = \frac{收入-成本}{投入}
+\]</span> 具体计算方法因场景而异，例如在广告投放中</p>
 <p>收入：一般为销售收入，如果是为了吸引潜在客户，还要加上潜在用户增加数*转化率</p>
 <p>成本：一般包括生产成本和广告投放成本</p>
 <p>影响广告投放ROI的因素包括：</p>
-<ol>
+<ol type="1">
 <li>投放平台的选择</li>
 <li>广告设计</li>
 <li>推广预算</li>
 </ol>
-<p>**GMV：**商品成交金额，包含已付款，未付款，已取消，退款，拒守等等情况，某种意义上代表了电商平台的市场份额</p>
+<p><strong>GMV：</strong>商品成交金额，包含已付款，未付款，已取消，退款，拒守等等情况，某种意义上代表了电商平台的市场份额</p>
 <p><strong>ARPU：人均付费</strong></p>
 <p><strong>ARPPU：</strong> 付费用户人均付费</p>
-<p>**复购率：**一定时间内购买两次及以上的用户比例</p>
+<p><strong>复购率：</strong>一定时间内购买两次及以上的用户比例</p>
 <p><strong>传统电商与直播电商的区别：</strong></p>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>传统电商</th>
 <th>直播电商</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>营销</td>
 <td>主要是娱乐，次要是营销</td>
 </tr>
-<tr>
+<tr class="even">
 <td>没有KOL，互动弱</td>
 <td>有KOL互动强</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>价格稳定，出了特殊节日促销</td>
 <td>价格不稳定。不同直播间不同，秒杀等</td>
 </tr>
-<tr>
+<tr class="even">
 <td>转化率低</td>
 <td>转化率高</td>
 </tr>
@@ -421,46 +376,38 @@
 <p>直播电商的指标：</p>
 <p>供给侧：补货量，推广份额，推广接单量</p>
 <p>需求侧：购买转化率，GMV，ROI，回购率，退单率</p>
-<h3 id="23-用户增长app"><a class="markdownIt-Anchor" href="#23-用户增长app"></a> 2.3 用户增长APP</h3>
+<h3 id="用户增长app">2.3 用户增长APP</h3>
 <p>DAU： 日活用户</p>
 <p>留存率：某一日的新增用户在之后继续活跃的比例，包括次日留存，7日留存等等</p>
 <p>转化率：用户通过某一商业转化阶段的比例，例如（通过广告进入商店的人数）/（看到广告的人数）</p>
-<h2 id="3-八股文施工中"><a class="markdownIt-Anchor" href="#3-八股文施工中"></a> 3. 八股文【施工中】</h2>
-<h3 id="31-统计"><a class="markdownIt-Anchor" href="#31-统计"></a> 3.1 统计</h3>
-<h3 id="32-概率论"><a class="markdownIt-Anchor" href="#32-概率论"></a> 3.2 概率论</h3>
-<h3 id="33-机器学习"><a class="markdownIt-Anchor" href="#33-机器学习"></a> 3.3 机器学习</h3>
-<h3 id="34-其他问题"><a class="markdownIt-Anchor" href="#34-其他问题"></a> 3.4 其他问题</h3>
-<h2 id="4-简历深挖"><a class="markdownIt-Anchor" href="#4-简历深挖"></a> 4. 简历深挖</h2>
-<h3 id="41-回答思路"><a class="markdownIt-Anchor" href="#41-回答思路"></a> 4.1 回答思路</h3>
+<h2 id="八股文施工中">3. 八股文【施工中】</h2>
+<h3 id="统计">3.1 统计</h3>
+<h3 id="概率论">3.2 概率论</h3>
+<h3 id="机器学习">3.3 机器学习</h3>
+<h3 id="其他问题">3.4 其他问题</h3>
+<h2 id="简历深挖">4. 简历深挖</h2>
+<h3 id="回答思路">4.1 回答思路</h3>
 <p>回答有关项目的问题，一定把逻辑说完整，从<strong>为什么想做这个项目</strong>，一直说道<strong>这个项目能给公司/产品带来什么好处</strong>，另外，在每个叙述中要尽量体现以下逻辑：</p>
-<ol>
+<ol type="1">
 <li>发现某问题</li>
 <li>通过类似指标拆解的方法，给出一个解决方案</li>
 <li>解决问题</li>
 <li>验证解决办法是否有效，有没有更好的办法</li>
 </ol>
-<h3 id="42-其他常见问题包括hr面"><a class="markdownIt-Anchor" href="#42-其他常见问题包括hr面"></a> 4.2 其他常见问题（包括HR面）</h3>
-<ol>
-<li>
-<p>你的项目有没有其他平行组，你的结果与他们相比如何</p>
-</li>
-<li>
-<p>这个项目有没有做的不好的地方，如何改进</p>
-<p>最好主动想一想项目的缺点，回答的时候自己提一下有做的不好的地方，面试官很可能直接就问了</p>
-</li>
-<li>
-<p>你跟更喜欢偏技术和工作还是偏业务的工作</p>
-<p>最好判断一下面试官是做哪方面的，跟着他的工作说</p>
-</li>
-<li>
-<p>说一下你的优点和缺点</p>
+<h3 id="其他常见问题包括hr面">4.2 其他常见问题（包括HR面）</h3>
+<ol type="1">
+<li><p>你的项目有没有其他平行组，你的结果与他们相比如何</p></li>
+<li><p>这个项目有没有做的不好的地方，如何改进</p>
+<p>最好主动想一想项目的缺点，回答的时候自己提一下有做的不好的地方，面试官很可能直接就问了</p></li>
+<li><p>你跟更喜欢偏技术和工作还是偏业务的工作</p>
+<p>最好判断一下面试官是做哪方面的，跟着他的工作说</p></li>
+<li><p>说一下你的优点和缺点</p>
 <p>优点提前编好即可，缺点要注意：</p>
 <ul>
 <li>该缺点不能是你从事工作的致命伤：例如事DA工作，你的缺点不能是逻辑不清晰，对数字不敏感等</li>
 <li>该缺点必须是可以和改正的</li>
 <li>不要说一些其实是优点的缺点，这样会让面试官觉得你自我认知不清晰</li>
-</ul>
-</li>
+</ul></li>
 </ol>
 
             </div>
