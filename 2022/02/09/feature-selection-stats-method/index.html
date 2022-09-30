@@ -23,12 +23,14 @@
 <meta property="og:site_name" content="ZY&#39;s Blog">
 <meta property="og:description" content="Evaluate features on divergence and correlation. set one or more thresholds and select the feature.">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2022/02/09/feature-selection-stats-method/1.PNG">
 <meta property="article:published_time" content="2022-02-10T06:04:00.000Z">
-<meta property="article:modified_time" content="2022-09-23T02:55:55.606Z">
+<meta property="article:modified_time" content="2022-09-30T21:30:01.230Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="Feature Engineering">
 <meta property="article:tag" content="Feature Selection">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2022/02/09/feature-selection-stats-method/1.PNG">
   
   
   <title>Feature Selection: Statistical Method - ZY&#39;s Blog</title>
@@ -198,7 +200,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      6.1k 字
+      8.4k 字
     </span>
   
 
@@ -245,22 +247,77 @@
 <p>Evaluate features on divergence and correlation. set one or more thresholds and select the feature.</p>
 <p><strong>Pro</strong>: fast, scalable, independent of the model</p>
 <p><strong>Con</strong>: ignore the dependence of features</p>
-<h3 id="variance">1.1 Variance</h3>
+<h3 id="varianceskewness">1.1 Variance/Skewness</h3>
+<p>For most models, variables with high variance or skewness would be weighted more and deemed as more important. Thus, we can</p>
 <ol type="1">
 <li>calculate the variance(not STD) of each feature</li>
 <li>set a threshold, select all features whose variance bigger than the threshold</li>
 </ol>
+<p>Calculation of Skewness: <span class="math display">\[
+SK = \frac{n\sum(x_i-\bar{x})^3}{(n-1)(n-2)\sigma^3}
+\]</span> An implementation of feature selection based on variance in Python</p>
 <figure class="highlight python"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.feature_selection <span class="hljs-keyword">import</span> VarianceThreshold<br><span class="hljs-comment">#threshold 是方差的阈值</span><br><span class="hljs-comment">#返回选择后的特征</span><br>data_1 = VarianceThreshold(threshold=<span class="hljs-number">0.25</span>).fit_transform(data_0)<br></code></pre></td></tr></table></figure>
 <h3 id="correlation">1.2 Correlation</h3>
-<h4 id="pearson-r">1.2.1 Pearson R</h4>
 <ol type="1">
 <li>calculate the correlation value between each feature and the target</li>
 <li>select the features with top K biggest correlation value</li>
 </ol>
+<h4 id="pearson-r">1.2.1 Pearson R</h4>
+<p>Pearson R calculates correlation based on covariance. <span class="math display">\[
+p_{X,Y} = \frac{cov(X,Y)}{\sigma_X \sigma_Y} = \frac{E[(X - \mu_X)(Y-\mu_Y)]}{\sigma_X \sigma_Y} = \frac{E[XY]-E[X]E[Y]}{\sqrt{(E[X^2]-E[X])^2} \sqrt{(E[Y^2]-E[Y])^2}}
+\]</span> For a sample with n samples: <span class="math display">\[
+r = \frac{\sum_i^n(X_i-\bar{X})(Y_i-\bar{Y})}{\sqrt{\sum_i^n(X_i-\bar{X})^2} \sqrt{\sum_i^n(Y_i-\bar{Y})^2}} = \frac{\sum XY - \frac{\sum X \sum Y}{n}}{\sqrt{\sum X^2 - \frac{(\sum X)^2 }{n}} \sqrt{\sum Y^2 - \frac{(\sum Y)^2 }{n}}}
+\]</span> The Pearson R has following properties:</p>
+<ul>
+<li>The range of Pearson R is [-1,1], positive numbers indicate positive correlation</li>
+<li>The Pearson R represents the linear correlation between two variables, linear transformation of X or Y does not change Pearson R</li>
+<li>X and Y must be numerical variables and follow normal distribution</li>
+<li>The observations of X and Y are in pairs</li>
+</ul>
+<h4 id="spearman">1.2.2 Spearman</h4>
+<p>Suppose we have samples of X and Y with n observations. Sort the observations X and Y to obtain two new set <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span>, where <span class="math inline">\(a_i,b_i\)</span> is the rank of <span class="math inline">\(X_i,Y_i\)</span> in X,Y</p>
+<p>define Spearman correlation as: <span class="math display">\[
+\rho = \frac{6\sum_i^n(a_i-b_i)^2}{n(n^2-1)}
+\]</span> The Spearman correlation has following properties:</p>
+<ul>
+<li>The range of Spearman correlations is [-1,1], positive numbers indicate positive correlation</li>
+<li>The Spearman correlation represents rank correlation (simply based on size relationship)</li>
+<li>X and Y does not need to follow certain distribution. Aithough the sample must be the same, they do not need to be in pairs<br>
+</li>
+<li>The statistical power of Spearman is relatively lower</li>
+</ul>
+<p><img src="/2022/02/09/feature-selection-stats-method/1.PNG" srcset="/img/loading.gif" lazyload></p>
+<h4 id="kendall">1.2.3 Kendall</h4>
+<p>Suppose we combine variables X and Y into a new element <span class="math inline">\((X,Y)\)</span>. If two elements <span class="math inline">\((X_i, Y_i)\)</span> and <span class="math inline">\(X_j,Y_j\)</span> satisfy either of these two case:</p>
+<ul>
+<li><span class="math inline">\(X_i &gt; X_j\)</span> and <span class="math inline">\(Y_i &gt;Y_j\)</span></li>
+<li><span class="math inline">\(X_i &lt; X_j\)</span> and <span class="math inline">\(Y_i &lt;Y_j\)</span></li>
+</ul>
+<p>Then we call these two elements have consistency</p>
+<p>if <span class="math inline">\(X_i = X_j\)</span> and <span class="math inline">\(Y_i = Y_j\)</span>, we regard these two elements as having neither consistency nor inconsistency. Otherwise, we call these two elements have inconsistency</p>
+<p>define Kendall correlation as: <span class="math display">\[
+\tau = \frac{C-D}{\sqrt{N3-N1}\sqrt{N_3-N_2}{}}
+\]</span> where:</p>
+<ul>
+<li><p>C is number of paris of elements(Two element <span class="math inline">\((X _1,Y_1),(X_2,Y_ 2)\)</span> is one pair) that have consistency</p></li>
+<li><p>D is number of paris of elements that have inconsistency</p></li>
+<li><p><span class="math inline">\(N1 = \sum_i^s \frac{ 1}{2}U_i(U_i-1)\)</span>, where:</p>
+<ul>
+<li>s is the number of values in X that appears more than once</li>
+<li><span class="math inline">\(U_i\)</span> is the number those values appears(For <span class="math inline">\(i^{th}\)</span> Values in s)</li>
+<li>For example, for a X={1,2,2,3,3,3,4}, s=2, <span class="math inline">\(U_1 = 2, U_2 = 3\)</span></li>
+</ul></li>
+<li><p>N2 is calculated same way as N1 on Y</p></li>
+<li><p><span class="math inline">\(N3 = \frac{1}{2}N(N- 1)\)</span>, where is the number of samples</p></li>
+</ul>
+<p>The Kendall correlations have similar conditions as Pearson R. The only difference is it represents rank correlation instead of linear correlation</p>
+<ul>
+<li>The range of Pearson R is [-1,1], positive numbers indicate positive correlation</li>
+<li>X and Y must be numerical variables and follow normal distribution</li>
+<li>The observations of X and Y are in pairs</li>
+</ul>
+<p><strong>An implementation of feature selection based on Pearson R in Python</strong></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.feature_selection <span class="hljs-keyword">import</span> SelectKBest<br><span class="hljs-keyword">from</span> scipy.stats <span class="hljs-keyword">import</span> pearsonr<br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_all_pscore</span>(<span class="hljs-params">x,y</span>):</span><br>    k = np.zeros([<span class="hljs-number">4</span>,<span class="hljs-number">2</span>])<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">0</span>,x.shape[<span class="hljs-number">1</span>]):<br>        temp = pearsonr(x[:,i],y[:,<span class="hljs-number">0</span>])<br>        k[i,:] = np.array(temp)<br>    <span class="hljs-keyword">return</span> [k.T[<span class="hljs-number">0</span>],k.T[<span class="hljs-number">1</span>]]<br><span class="hljs-comment"># 下面的写法有问题理论上应该与上面的函数等价，实际上在调用np.array时，会把最内层的pearsonr系数值变成一个数组对象，导致SelectKBest无法</span><br><span class="hljs-comment"># 遍历，需要用astype把第一列转化为float，但这样很难封装进lambda函数里，不如不用，写这个的人铁nt，害我研究一个多小时</span><br><span class="hljs-comment"># get_all_pscore =  lambda X,Y:np.array(list(map(lambda x:pearsonr(x,Y),X.T))).T</span><br><br><span class="hljs-comment">#第一个参数为一个callable()，该函数以feature，target为输入，输出可以是两种：</span><br><span class="hljs-comment"># 1. 一对数组pearsonr系数-p值（可以是tuple中两个数组，也可以是ndarray，总之第一个维度须为2</span><br><span class="hljs-comment"># 2. 一个单一的数组（只有相关系数）</span><br><span class="hljs-comment"># 第二个参数k，代表选择前k个</span><br>data_1 = SelectKBest(get_all_pscore(),k=<span class="hljs-number">2</span>).fit_transform(data_0,target_0)<br></code></pre></td></tr></table></figure>
-<p>* <em>question: what if I have multiple output feature? how to decide which one to drop?</em></p>
-<p>* <em>Pearson R is a coefficient between [-1,1], and negative value means negative correlation, so I believe I should use abs when applying Pearson R</em></p>
-<p>* <em>Pearson R is a method to find out the linear correlation between two variables, if two variables are non-linearly correlated, then even if the Pearson R is 0, we cannot say they are not correlated. In such case, we should use other correlation method, like distance correlation to make evaluation</em></p>
 <h3 id="hypothesis-testing">1.3 Hypothesis Testing</h3>
 <h4 id="chi-squared-test">1.3.1 Chi-Squared Test</h4>
 <p>chi-squared test is a <strong>supervised</strong> hypothesis testing method to calculate the probability that 2 variables are correlated</p>
@@ -320,28 +377,29 @@
 </ol>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.feature_selection <span class="hljs-keyword">import</span> SelectKBest, chi2<br>X, y = data_0,target_0<br>X_new = SelectKBest(chi2, k=<span class="hljs-number">2</span>).fit_transform(X, y)<br></code></pre></td></tr></table></figure>
 <h3 id="mutual-information">1.4 Mutual Information</h3>
-<h4 id="entropy-and-kl-divergence">1.41 Entropy and KL Divergence</h4>
-<p>Suppose we have a variable X, the information amount of x is give by <span class="math display">\[
-I(X) =-\log_2p(X) =\int-\log_2p(x_i)
-\]</span> We want to know the average information amount X gives, so we define <strong>Entropy </strong> as: <span class="math display">\[
-H(X) = -\int p(X)\log_2p(X)dX
-\]</span> if X is continuous, or <span class="math display">\[
-H(X) = -\sum_i^N p(x_i)\log_2p(x_i)
-\]</span> if X is discrete.</p>
-<p>Suppose we have an approximated distribution of X, p and q, and we want to know how this two distributions are similar , we can calculate the relative Entropy, or <strong>KL Divergence</strong> between two random <span class="math display">\[
-D_{KL}(p||q) = \sum_{i=1}^Np(xi)\log(\frac{p(x_i)}{q(x_i)})
-\]</span></p>
-<h4 id="mutual-information-1">1.4.2 Mutual Information</h4>
-<p>The mutual information is a measurement for the dependency between two variables, it is given by the KL divergence between the joint distribution of X and Y , which is p(X,Y), and the product of p(X) and p(Y). <span class="math display">\[
-MI(X,Y) =D_{KL}(p(x,y)||p(x)p(y)) =  \sum_y \sum_x p(x,y) \log \frac{p(x,y)}{p(x)p(y)}
-\]</span> If MI is big, the two variable are strongly related, if MI = 0, which means p(x,y) = p(x)p(y), than these two variables are independent</p>
+<p>For the theoretical part about Entrophy and Mutual Information, refer to <a target="_blank" rel="noopener" href="http://zhengyuanyang.com/2022/09/22/information-theory-in-ML/">this article</a> <span class="math display">\[
+MI = H(x,y) - H(x|y) - H(y|x) = \sum_x\sum_yp(x,y)log\frac{p(x,y)}{p(x)p(y)}\\
+\]</span> Suppose we have an input variable X with n samples and m unique values {<span class="math inline">\(x_1 = c_ 1,x_2 =c_ 1,...x_n = c_m\)</span>} and an output variable Y with n samples and k unique values {<span class="math inline">\(y_1 = c_ 1,y_2 =c_ 1,...y_n = c_k\)</span>}</p>
+<p>It's easy to calculate <span class="math inline">\(P(X=c_i),P(Y=c_j),P(X=c_i,Y=c_j)\)</span></p>
+<p>Thus the MI can be calculated. The greater MI X and Y share, the greater dependency there exists, and X is thus a more important feature.</p>
+<p>The MI mtheod have the following properties:</p>
+<ul>
+<li>MI method is sometime impractical with two continuous numerical variables, since there are too many unique values</li>
+<li>MI needs some certain metrics to map the original values in to a range(usually [0,1]), so that MI score of different variables can be compared</li>
+</ul>
+<p>An implementation of feature selection based on Mutual Information in Python:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.metrics <span class="hljs-keyword">import</span> mutual_info_score<br>MI_matrix = np.zeros([data_and_target.shape[<span class="hljs-number">1</span>],data_and_target.shape[<span class="hljs-number">1</span>]])<br><span class="hljs-comment"># calculate the MI matrix between each two feature</span><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">0</span>,data_and_target.shape[<span class="hljs-number">1</span>]):<br>    <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">0</span>,data_and_target.shape[<span class="hljs-number">1</span>]):<br>        MI_matrix[i,j] = mutual_info_score(data_and_target[i+<span class="hljs-number">1</span>],data_and_target[j+<span class="hljs-number">1</span>])<br>df = pd.DataFrame(MI_matrix,columns=data_and_target.columns,index=data_and_target.columns)<br><span class="hljs-built_in">print</span>(df)<br></code></pre></td></tr></table></figure>
 <h2 id="wrapper">2.Wrapper</h2>
-<p>Through the Evaluation(like the MSE, AUC) of the model, add or drop some feature each trail.</p>
+<p>Through the evaluation of the model, add or drop some feature each trail to obtain a subset of all features, which is the selected feature.</p>
 <p><strong>Pro</strong>: accurate, model-relevant</p>
 <p><strong>Con</strong>: time-consuming</p>
 <h3 id="recursive-feature-elimination">2.1 Recursive Feature Elimination</h3>
-<p>Construct models, select the best features(or drop the worst feature) based on the weight of the features, put out the selected feature and then repeat this process on the rest of the features, until we reach the max number of feature we want. The put out feature(select best)/remaining feature(drop worst) is the final features we want to preserve</p>
+<ol type="1">
+<li>Train model with all m features</li>
+<li>Select k best features and to take them out(or drop k worst feature from all feature)</li>
+<li>Train the model with the rest feature and repeat step2, until we reach the max/min number of feature we want</li>
+<li>The taken-out/ left-in feature is the final features space we want to preserve</li>
+</ol>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.feature_selection <span class="hljs-keyword">import</span> RFE<br><span class="hljs-keyword">from</span> sklearn.feature_selection <span class="hljs-keyword">import</span> RFECV<br><span class="hljs-keyword">from</span> sklearn.model_selection <span class="hljs-keyword">import</span> StratifiedKFold<br><span class="hljs-keyword">from</span> sklearn.ensemble <span class="hljs-keyword">import</span> RandomForestClassifier<br><span class="hljs-comment"># REF works for all models that have a weight on features</span><br><span class="hljs-comment"># step: the number(or precentage) of feature to eliminate in each iteration</span><br>estimator = RandomForestClassifier(n_estimators=<span class="hljs-number">100</span>)<br>selector = RFE(estimator= estimator, n_features_to_select= <span class="hljs-number">3</span>,step=<span class="hljs-number">1</span>)<br>data_transformed = selector.fit_transform(data_0,target_0)<br><br><span class="hljs-comment"># REFCV</span><br><span class="hljs-comment"># REF with cross validation</span><br>cv = StratifiedKFold(n_splits=<span class="hljs-number">5</span>)<br>selector = RFECV(estimator= estimator, min_features_to_select= <span class="hljs-number">3</span>, cv=cv, step=<span class="hljs-number">1</span>)<br>data_transformed = selector.fit_transform(data_0,target_0)<br></code></pre></td></tr></table></figure>
 <h3 id="step-wise-regression">2.2 Step-wise Regression</h3>
 <h2 id="embedded">3. Embedded</h2>

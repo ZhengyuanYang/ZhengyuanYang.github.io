@@ -29,7 +29,7 @@
 <meta property="og:image" content="http://example.com/2022/09/22/loss-function/4.png">
 <meta property="og:image" content="http://example.com/2022/09/22/loss-function/5.png">
 <meta property="article:published_time" content="2022-09-22T16:11:02.000Z">
-<meta property="article:modified_time" content="2022-09-23T01:31:33.124Z">
+<meta property="article:modified_time" content="2022-09-30T22:49:46.540Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="Loss Function">
 <meta name="twitter:card" content="summary_large_image">
@@ -203,7 +203,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      3.4k 字
+      4k 字
     </span>
   
 
@@ -344,6 +344,24 @@ L_ f = -\frac{1}{n}\sum_i^n\sum_ j^m\alpha_ j(1-p(y ))^\gamma y log(p(y))
 <li>Focal Loss add a focus factor <span class="math inline">\((1-p(y))\)</span>, so that those sample with high predicted probability, which are the ""easy samples", donate less loss. Compare to CE Loss, Focal Loss focus on those "hard samples"</li>
 <li>Focal Loss also add a balance factor(optional), which is the percentage of a certain category of y among all samples. This make focal loss can deal with imbalanced data</li>
 <li><span class="math inline">\(\gamma\)</span> is a influence parameter. When <span class="math inline">\(\gamma = 0\)</span>, the Focal Loss become CE Loss. In preactice, we usually set <span class="math inline">\(\gamma = 2\)</span></li>
+</ul>
+<h3 id="impurity">5.Impurity</h3>
+<p>Impurity is a kind of loss functions usually applied in splitting in decision tree</p>
+<h4 id="gini-impurity">5.1 Gini Impurity</h4>
+<p><span class="math display">\[
+I_G = 1- \sum_{i}^m P(Y=C_i)
+\]</span></p>
+<ul>
+<li>Lower <span class="math inline">\(I_G\)</span> , better classification performance</li>
+<li>For decision tree model, calculate <span class="math inline">\(I_G\)</span> for each split and use combined Gini Impurity(<span class="math inline">\(\sum I_G\)</span>) as loss of the spiltting</li>
+</ul>
+<h4 id="information-gain">5.2 Information Gain</h4>
+<p>For details of Information Gain, refer to <a target="_blank" rel="noopener" href="http://zhengyuanyang.com/2022/09/22/information-theory-in-ML/">here</a> <span class="math display">\[
+IG = H(Y) - H(Y|X)
+\]</span> where X is the feature the spliting based on (X&gt;c,X=1)</p>
+<ul>
+<li>IG is the degree that uncertainty reduce after the spilting, the greater IG is, the better a split is</li>
+<li>We can calculate the Information Gain Rate <span class="math inline">\(IGR = \frac{IG}{H(Y)}\)</span> to present the degress of uncertainty reduction more directly</li>
 </ul>
 
             </div>
