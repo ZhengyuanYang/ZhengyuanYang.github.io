@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>Distance in Machine Learning</title>
+    <link href="/2022/10/08/distance/"/>
+    <url>/2022/10/08/distance/</url>
+    
+    <content type="html"><![CDATA[<h1 id="distance-in-machine-learning">Distance in Machine Learning</h1><h2 id="euclidean-distance">1. Euclidean Distance</h2><p>The Euclidean distance between two data point X and Y is given as: <span class="math display">\[d = \sqrt{\sum(x_i-y_i)^2}\]</span></p><ul><li><p>E Distance is one of the most frequently used distances in machine learning, for its direct and intuitive demonstration.</p></li><li><p>E Distance treat all dimensions as same, thus would be effected by scale of variable. To eliminate that, we can used standard euclidean distance, by replace data values x with: <span class="math display">\[x&#39; = \frac{x-\bar{x}}{s}\]</span></p></li></ul><h2 id="manhattan-distance">2. Manhattan Distance</h2><p><img src="/2022/10/08/distance/MD.png"></p><p>In this demo, the euclidean distance between the beginning and the end in a district shown as the is the green line. However, as we cannot walk through the building straightforward, we must move vertically or horizontally along the blocks. This distance is called Manhattan distance.</p><p>The manhattan distance is the sum of <strong>axis difference</strong> between two data points. It is given as: <span class="math display">\[d = \sum_i^m |x_i-y_i|\]</span></p><ul><li>The manhatten distance only involves summing calculation. So it is faster then float calculation, and it does not generate accuracy lost.</li></ul><h2 id="chebyshev-distance">3. Chebyshev Distance</h2><p><img src="/2022/10/08/distance/2.png"></p><p>The manhattan distance is the maxnium of <strong>axis difference</strong> between two data points. It is given as: <span class="math display">\[D = max |x_i-y_i|\]</span></p><h2 id="minkowski-distance">4.Minkowski Distance</h2><p>Minkowski Distance is the distance between two points in a p norm space <span class="math display">\[d = (\sum|x_i-y_i|^p)^\frac{1}{p}\]</span></p><ul><li>when p = 1, MK distance equals Manhattan Distance</li><li>when p = 2, MK distance equals Euclidean Distance</li><li>when p = <span class="math inline">\(\infty\)</span>, MK distance equals Chebyshev Distance</li></ul><p>The norm p is a hyper-parameter can be adjusted. It is more flexible, but choosing p can be difficult</p><h2 id="mahalanobis-distance">5. Mahalanobis Distance</h2><p>Mahalanobis Distance is the Euclidean distance in a standard principal component space(Space after PC decomposition). <span class="math display">\[D(X) = \sqrt{(X-\mu)^TS^{-1}(X-\mu)}\]</span> where:</p><ul><li>X is the feature vector of a sample</li><li>S is the covariance matrix of all features</li><li><span class="math inline">\(\mu\)</span> is the mean vector of all samples</li></ul><p>The M distance between two data point can be given as: <span class="math display">\[D(X,Y) = \sqrt{(X-Y)^TS^{-1}(X-Y)}\]</span></p><ul><li>The M distance is not effcted my scale of data, and it can avoid the correlation among features. Thus it can be a better metrics for measuring distance between data point and central point</li><li>The M distance is usually applied in outlier detection, combined with Grubb's Test</li><li>when the covariance matrix is a identity matrix, which means the distributions of features are independent to each other, the M distance equals to the E distance</li></ul><p><img src="/2022/10/08/distance/4.png"></p><p><img src="/2022/10/08/distance/5.png"></p><h2 id="cosine-distance">6. Cosine Distance</h2><p>The Cosine Distance uses cos of the inner angle of two vectors to represent their distance <span class="math display">\[d = 1- cos(\theta) = 1- \frac{a\cdot b}{|a|*|b|}\]</span></p><ul><li><p>The rule of cosine similarity of two vector is "according -&gt; 1, Orthogonal -&gt;, inverse -&gt; -1". Such rule remains same even when the dimension is extremely high. Since the Euclidean distance could be effected by the number of dimensions, consine distance can be a better measure when it comes to high-dimension data. FOr example, a long sentence and a short sentence share a same meaning can have large euclidean distance, but small cosine distance</p></li><li><p>cosine distance is not a strictly defined distance for mathematics, as it does not satisfy triangle inequality</p></li></ul><h2 id="jaccard-distance">7. Jaccard Distance</h2><p>The Jaccard Distance uses Jaccard similarity to represent distance: <span class="math display">\[d = 1-J(A,B) = 1-\frac{|A \cap B|}{|A \cup B|}\]</span> Where J(A,B) is the ratio of two set's intersection and their union</p><ul><li>Jaccard distance can represent the similarity of two set instead of to points. For example, it can measure the similarity of two customer's shopping records. It can be applied in user segmentation and recommendation</li></ul><h2 id="string-related-distance">8. String Related Distance</h2><p><strong>Hamming Distance:</strong> For two string s1 and s2, the hamming distance is the minimun times needed to transform s1 to s2 by replacing a single character</p><p><strong>Edit Distance</strong>：For two string s1 and s2, the edit distance is the minimun times needed to transform s1 to s2 by adding,deleting or replacing a single character</p><h2 id="other-measure-similar-to-distance">9. Other Measure similar to Distance</h2><p>Some measures, just like cosine distance, are not strictly defined distance by mathematics, but can take effects in a similar way, including:</p><ul><li>Correlation Distance(for two variables)</li><li>KL divergence(for two distributions)</li><li>Mutual Information(for two variables)</li></ul>]]></content>
+    
+    
+    <categories>
+      
+      <category>Machine Learning</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Distance</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Outlier Detection in Feature Engineering</title>
     <link href="/2022/10/07/outlier/"/>
     <url>/2022/10/07/outlier/</url>
