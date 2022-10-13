@@ -18,16 +18,16 @@
   
     <meta name="description" content="This passage is a summary for different types of hypothesis test">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hypothesis Testing for Data Science">
+<meta property="og:title" content="Hypothesis Testing for AB Testing">
 <meta property="og:url" content="http://example.com/2022/03/25/Hypothesis-Testing/index.html">
 <meta property="og:site_name" content="ZY&#39;s Blog">
 <meta property="og:description" content="This passage is a summary for different types of hypothesis test">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://example.com/2022/03/25/Hypothesis-Testing/img1.png">
 <meta property="og:image" content="http://example.com/2022/03/25/Hypothesis-Testing/img3.png">
-<meta property="og:image" content="http://example.com/2022/03/25/Hypothesis-Testing/img4.png">
+<meta property="og:image" content="http://example.com/2022/03/25/Hypothesis-Testing/img5.png">
 <meta property="article:published_time" content="2022-03-25T23:25:15.000Z">
-<meta property="article:modified_time" content="2022-09-30T01:52:03.425Z">
+<meta property="article:modified_time" content="2022-10-13T02:13:57.212Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="Hypothesis Testing">
 <meta property="article:tag" content="A&#x2F;B Test">
@@ -35,7 +35,7 @@
 <meta name="twitter:image" content="http://example.com/2022/03/25/Hypothesis-Testing/img1.png">
   
   
-  <title>Hypothesis Testing for Data Science - ZY&#39;s Blog</title>
+  <title>Hypothesis Testing for AB Testing - ZY&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -181,7 +181,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="Hypothesis Testing for Data Science">
+            <span class="h2" id="subtitle" title="Hypothesis Testing for AB Testing">
               
             </span>
 
@@ -202,7 +202,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      14k 字
+      13k 字
     </span>
   
 
@@ -241,7 +241,7 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Hypothesis Testing for Data Science</h1>
+            <h1 style="display: none">Hypothesis Testing for AB Testing</h1>
             
             <div class="markdown-body">
               <h1 id="hypothesis-testing">Hypothesis Testing</h1>
@@ -343,7 +343,6 @@ d = \frac{\mu_A - \mu_B }{\sigma_{pooled}}
 <li><p><strong>Cramer's V</strong>: describe the correction of categorical variable <span class="math display">\[
 V = \sqrt{\frac{\chi^2/n}{min(c- 1,r-1)}}
 \]</span></p></li>
-<li></li>
 <li><p>Cohen's h: decribe the differnce of ratio variable of two groups <span class="math display">\[
 h = 2(arcsin \sqrt{p1} - arcsin\sqrt{p2})
 \]</span></p></li>
@@ -352,10 +351,11 @@ h = 2(arcsin \sqrt{p1} - arcsin\sqrt{p2})
 MDE = (t_{\frac{1-\alpha}{2}} + t_ {1-\beta})\sqrt{\frac{\sigma_1^2}{n_ 1} + \frac{\sigma_2^2}{n_ 2}}
 \]</span></p>
 <h2 id="type-of-hypothesis-testing">2. Type of Hypothesis Testing</h2>
+<p>Ther are various type of hypothesis testing fitting different situations. Fot this article, we mainly discuss about four type of tests frequently used in A/B testing</p>
 <h3 id="four-common-types-of-experiment">2.1 Four Common Types of Experiment</h3>
 <p><strong>Z-test</strong>:</p>
 <ol type="1">
-<li>Test statistics should be average value or ratio</li>
+<li>Test statistics should be average value of a group or ratio</li>
 <li>The variance of the population should be given</li>
 <li>If the population does not follow Normal distribution, the sample size should be big</li>
 </ol>
@@ -396,7 +396,7 @@ MDE = (t_{\frac{1-\alpha}{2}} + t_ {1-\beta})\sqrt{\frac{\sigma_1^2}{n_ 1} + \fr
 <li>Non-parameter testing. The population do not need to follow normal distribution</li>
 </ol>
 <h3 id="how-to-choose-experiment-type">2.2 How to choose Experiment Type</h3>
-<p><img src="/2022/03/25/Hypothesis-Testing/img4.png" srcset="/img/loading.gif" lazyload style="zoom:150%;"></p>
+<p><img src="/2022/03/25/Hypothesis-Testing/img5.png" srcset="/img/loading.gif" lazyload style="zoom:150%;"></p>
 <p>where:</p>
 <ul>
 <li><span class="math inline">\(\bar{x}\)</span> is the mean of the sample</li>
@@ -407,176 +407,128 @@ MDE = (t_{\frac{1-\alpha}{2}} + t_ {1-\beta})\sqrt{\frac{\sigma_1^2}{n_ 1} + \fr
 </ul>
 <h2 id="zt-test">3. Z/T-test</h2>
 <h3 id="one-sample-test">3.1 One Sample Test</h3>
-<p>Objective: to test whether the accepted mean or ratio of a population is correct through a sample</p>
-<h4 id="parameter-test">3.1.1 Parameter Test</h4>
-<p>To test whether the accepted mean is correct</p>
-<h5 id="big-sample"><strong>3.1.1.1 Big sample</strong></h5>
-<p>When the sample is big(<span class="math inline">\(n\ge30\)</span>), we can assume the sample ~ Norm(<span class="math inline">\(\mu,\sigma\)</span>), thus we can use z-test</p>
-<p><strong>Make hypothesis:</strong></p>
-<p>Two-tail: <span class="math inline">\(H_0: \mu = \mu_0\)</span>, <span class="math inline">\(H_1:\mu \ne \mu_0\)</span></p>
-<p>One-tail(left side): <span class="math inline">\(H_0: \mu \ge \mu_0\)</span>, <span class="math inline">\(H_1:\mu \lt \mu_0\)</span></p>
-<p><strong>Construct test statistics</strong></p>
-<p><span class="math inline">\(\sigma\)</span> known: <span class="math display">\[
+<p>Objective: to test whether the accepted mean or ratio of a population is correct through a sample. In this case, we can assume <span class="math inline">\(\mu_0\)</span> and <span class="math inline">\(\pi_0\)</span> is given</p>
+<h4 id="sigma-givent-or-z">3.1.1 <span class="math inline">\(\sigma\)</span> Given(T or Z)</h4>
+<p>In most application, the standard deviation of the whole population is unknown. But suppose we have the <span class="math inline">\(\sigma\)</span></p>
+<p><strong>Big Sample</strong></p>
+<p>For big sample, we conduct z-test and give hypothesis as:</p>
+<p><span class="math inline">\(H_0: \mu = \mu_ 0\)</span> or <span class="math inline">\(\pi = \pi_0\)</span> for ratio test</p>
+<p><span class="math inline">\(H_1: \mu \ne \mu_ 0\)</span> or <span class="math inline">\(\pi \ne \pi_0\)</span> for ratio test</p>
+<p>where <span class="math inline">\(\mu_0\)</span> is the accepted value of the parameter and construct z-score as: <span class="math display">\[
 z = \frac{\bar{x}-\mu_0}{\sigma/\sqrt{n}}
-\]</span></p>
-<p><span class="math inline">\(\sigma\)</span> unknown: <span class="math display">\[
-z = \frac{\bar{x}-\mu_0}{s/\sqrt{n}}
-\]</span> where:</p>
+\]</span> for ratio test, construct z as: <span class="math display">\[
+z = \frac{p-\pi_0}{\sqrt{\frac{\pi_0(1-\pi_0)}{n}}}
+\]</span> reject the null hypothesis when:</p>
 <ul>
-<li><span class="math inline">\(\bar{x}\)</span> is the mean of the sample</li>
-<li><span class="math inline">\(\mu_0\)</span> is the mean of population in <span class="math inline">\(H_0\)</span></li>
-<li>s is the standard deviation of sample</li>
-<li><span class="math inline">\(\sigma\)</span> is the standard deviation of population</li>
-<li>n is the number of samples</li>
-</ul>
-<p><strong>Rejection condition</strong>:</p>
-<p>Two-tail:</p>
-<ol type="1">
 <li><span class="math inline">\(|z| &gt; z_{\frac{\alpha}{2}}\)</span><br>
 </li>
 <li><span class="math inline">\(p &lt; \alpha\)</span></li>
-<li><span class="math inline">\(|z-z_0| &gt; mde\)</span></li>
-</ol>
-<p>One-tail(left side):</p>
-<ol type="1">
-<li><span class="math inline">\(z &lt; -z_{\alpha}\)</span></li>
-<li><span class="math inline">\(p &lt; \alpha\)</span></li>
-<li><span class="math inline">\(|z-z_0| &gt; mde\)</span></li>
-</ol>
-<h5 id="small-sample"><strong>3.1.1.2 Small sample</strong></h5>
-<p>When the sample is small(<span class="math inline">\(n\lt30\)</span>), we can assume the sample ~ t distribution</p>
-<p><strong>Make hypothesis:</strong></p>
-<p>Two-tail: <span class="math inline">\(H_0: \mu = \mu_0\)</span>, <span class="math inline">\(H_1:\mu \ne \mu_0\)</span></p>
-<p>One-tail(left side): <span class="math inline">\(H_0: \mu \ge \mu_0\)</span>, <span class="math inline">\(H_1:\mu \lt \mu_0\)</span></p>
-<p><strong>Construct test statistics</strong></p>
-<p><span class="math inline">\(\sigma\)</span> known: <span class="math display">\[
-t = \frac{\bar{x}-\mu_0}{\sigma/\sqrt{n}}
-\]</span></p>
-<p><span class="math inline">\(\sigma\)</span> unknown: <span class="math display">\[
-t = \frac{\bar{x}-\mu_0}{s/\sqrt{n}}
-\]</span> where:</p>
-<ul>
-<li><span class="math inline">\(\bar{x}\)</span> is the mean of the sample</li>
-<li><span class="math inline">\(\mu_0\)</span> is the mean of population in <span class="math inline">\(H_0\)</span></li>
-<li>s is the standard deviation of sample</li>
-<li><span class="math inline">\(\sigma\)</span> is the standard deviation of population</li>
-<li>n is the number of samples</li>
+<li><span class="math inline">\(|z| &gt; mde\)</span></li>
 </ul>
-<p><strong>Rejection condition</strong>:</p>
-<p>Two-tail:</p>
-<ol type="1">
+<p><strong>Small Sample</strong></p>
+<p>When the sample size is small, we can assume the sample ~ t distribution. The construction of the test statistics and reject condition are the same, the only difference is that the test statistics is now following t distribution</p>
+<h4 id="sigma-unknownt">3.1.2 <span class="math inline">\(\sigma\)</span> Unknown(T)</h4>
+<p>When <span class="math inline">\(\sigma\)</span> is unknown, the basic strategy is to replace population std with sample std, and apply t-test</p>
+<p>We can conduct t-test and give hypothesis as:</p>
+<p><span class="math inline">\(H_0: \mu = \mu_ 0\)</span> or <span class="math inline">\(\pi = \pi_0\)</span> for ratio test</p>
+<p><span class="math inline">\(H_1: \mu \ne \mu_ 0\)</span> or <span class="math inline">\(\pi \ne \pi_0\)</span> for ratio test <span class="math display">\[
+t = \frac{\bar{x}-\mu_0}{s/\sqrt{n}}
+\]</span> for ratio test, construct t as: <span class="math display">\[
+t = \frac{p-\pi_0}{\sqrt{\frac{\pi_0(1-\pi_0)}{n}}}
+\]</span></p>
+<p>reject the null hypothesis when:</p>
+<ul>
 <li><span class="math inline">\(|t| &gt; t_{\frac{\alpha}{2}}\)</span><br>
 </li>
 <li><span class="math inline">\(p &lt; \alpha\)</span></li>
-<li><span class="math inline">\(|t-t_0| &gt; mde\)</span></li>
-</ol>
-<p>One-tail(left side):</p>
-<ol type="1">
-<li><span class="math inline">\(t &lt; -t_{\alpha}\)</span></li>
-<li><span class="math inline">\(p &lt; \alpha\)</span></li>
-<li><span class="math inline">\(|t-t_0| &gt; mde\)</span></li>
-</ol>
-<h4 id="ratio-test">3.1.2 Ratio Test</h4>
-<p>To test whether the accepted ratio is correct. The following step is for big sample(n$$5), for small sample, replace z-score with t-score.</p>
-<p><strong>Make hypothesis:</strong></p>
-<p>Two-tail: <span class="math inline">\(H_0: \pi = \pi_0\)</span>, <span class="math inline">\(H_1:\pi \ne \pi_0\)</span></p>
-<p>One-tail(left side): <span class="math inline">\(H_0: \pi \ge \pi_0\)</span>, <span class="math inline">\(H_1:\pi \lt \pi_0\)</span></p>
-<p><strong>Construct test statistics</strong> <span class="math display">\[
-z = \frac{p-\pi_0}{\sqrt{\frac{\pi_0(1-\pi_0)}{n}}}
-\]</span> where</p>
-<ul>
-<li><p>p is the ratio of a kind of observations in the sample and the whole sample</p></li>
-<li><p><span class="math inline">\(\pi\)</span> is the ratio of a kind of case in the population and the whole population</p></li>
-<li><p>n is the size of sample</p></li>
+<li><span class="math inline">\(|t| &gt; mde\)</span></li>
 </ul>
-<p><strong>Rejection condition</strong>:</p>
-<p>Two-tail: <span class="math inline">\(|z| &gt; z_{\frac{\alpha}{2}}\)</span> or <span class="math inline">\(p &lt; \alpha\)</span></p>
-<p>One-tail(left side): <span class="math inline">\(z &lt; -z_{\alpha}\)</span> or <span class="math inline">\(p &lt; \alpha\)</span></p>
 <h3 id="two-sample-test">3.2 Two Sample Test</h3>
 <p>Objective: to test whether a condition would effect a metric through following one group before and after experiment or comparing two groups</p>
-<h4 id="parameter-testmatch">3.2.1 Parameter Test(Match)</h4>
-<p>Testing whether a condition would effect a metric through following one group before and after experiment. In this case, we assume <span class="math inline">\(n_1=n_2, \sigma_1 = \sigma_2\)</span></p>
-<p><strong>Make hypothesis:</strong></p>
-<p>Two-tail: <span class="math inline">\(H_0: \mu_1 = \mu_2\)</span>, <span class="math inline">\(H_1:\mu_1 \ne \mu_2\)</span></p>
-<p>One-tail(left side): <span class="math inline">\(H_0: \mu_1 \ge \mu_2\)</span>, <span class="math inline">\(H_1:\mu_1 \lt \mu_2\)</span></p>
-<p><strong>Construct test statistics</strong></p>
-<p><span class="math inline">\(\sigma\)</span> known: <span class="math display">\[
-z = \frac{(\bar{x_1}-\bar{x_2}) - (\mu_1-\mu_2)}{\sigma\sqrt{\frac{2}{n}}} = \frac{\bar{d}}{\sigma\sqrt{\frac{2}{n}}}
+<h4 id="match-test">3.2.1 Match Test</h4>
+<p>Usually applied when testing treatment on a same group of people in different time(e. g medical treatment). In this context, we can assum the sample size and standard deviation remain as same: <span class="math inline">\(n_ 1 = n_ 2, \sigma_1 = \sigma_2\)</span></p>
+<h5 id="sigma-givenz">3.2.1.1 <span class="math inline">\(\sigma\)</span> Given(Z)</h5>
+<p><span class="math inline">\(H_0: \mu_1 = \mu_ 0\)</span> or <span class="math inline">\(\pi_1 = \pi_0\)</span> for ratio test</p>
+<p><span class="math inline">\(H_1: \mu_1 \ne \mu_ 0\)</span> or <span class="math inline">\(\pi_1 \ne \pi_0\)</span> for ratio test <span class="math display">\[
+z = \frac{(\bar{x_1}-\bar{x_0}) - (\mu_1-\mu_0)}{\sigma\sqrt{\frac{2}{n}}} = \frac{\bar{d}}{\sigma\sqrt{\frac{2}{n}}}
+\]</span> for ratio test, construct z as: <span class="math display">\[
+z = \frac{(p_1-p_0) - (\pi_1 - \pi_0)}{\sqrt{p(1-p)(\frac{2}{n})}}
 \]</span></p>
-<p><span class="math inline">\(\sigma\)</span> unknown: <span class="math display">\[
-t = \frac{\sqrt{n}((\bar{x_1}-\bar{x_2}) - (\mu_1-\mu_2))}{s_d} = \frac{\sqrt{n}\bar{d}}{s_d}
-\]</span> where:</p>
+<p><span class="math display">\[
+p = \frac{p_0+p_1}{2}
+\]</span></p>
+<p>reject the null hypothesis when:</p>
 <ul>
-<li><span class="math inline">\(\bar{x_1},\bar{x_2}\)</span> is the mean of the sample before and after experiment</li>
-<li><span class="math inline">\(\mu_1 - \mu_2\)</span> is 0 under <span class="math inline">\(H_0\)</span></li>
-<li><span class="math inline">\(\bar{d} = \bar{x_1}-\bar{x_2}\)</span></li>
-<li><span class="math inline">\(\sigma\)</span> is the standard deviation of the population</li>
-<li><span class="math inline">\(s_d\)</span> is the standard deviation of <span class="math inline">\(\bar{d}\)</span></li>
-<li>n is the size of the sample</li>
-</ul>
-<p><strong>Rejection condition</strong>:</p>
-<p><span class="math inline">\(\sigma\)</span> known(z-test):</p>
-<p>One-tail(left side):</p>
-<ol type="1">
-<li><span class="math inline">\(t &lt; -t_{\alpha}\)</span></li>
+<li><span class="math inline">\(|z| &gt; z_{\frac{\alpha}{2}}\)</span><br>
+</li>
 <li><span class="math inline">\(p &lt; \alpha\)</span></li>
-<li>effect size &gt; mde</li>
-</ol>
-<p><span class="math inline">\(\sigma\)</span> unknown(t-test):</p>
-<p>replace z-score with t score</p>
-<h4 id="parameter-testindependent">3.2.2 Parameter Test(Independent)</h4>
-<p>Testing whether a condition would effect a metric through comparing two group.</p>
-<p><strong>Make hypothesis:</strong></p>
-<p>Two-tail: <span class="math inline">\(H_0: \mu_1 = \mu_2\)</span>, <span class="math inline">\(H_1:\mu_1 \ne \mu_2\)</span></p>
-<p>One-tail(left side): <span class="math inline">\(H_0: \mu_1 \ge \mu_2\)</span>, <span class="math inline">\(H_1:\mu_1 \lt \mu_2\)</span></p>
-<p><strong>Construct test statistics</strong></p>
-<p><span class="math inline">\(\sigma\)</span> known,and <span class="math inline">\(\sigma_1 = \sigma_2\)</span>:</p>
-<p>z-score is same as Format(3), but replace <span class="math inline">\(s_p\)</span> with <span class="math inline">\(\sigma\)</span></p>
-<p><span class="math inline">\(\sigma\)</span> known,and <span class="math inline">\(\sigma_1 = \sigma_2\)</span>:</p>
-<p>z-score is same as Format(4), but replace <span class="math inline">\(s_1,s_2\)</span> with <span class="math inline">\(\sigma_1,\sigma_2\)</span></p>
-<p><span class="math inline">\(\sigma\)</span> unknown,and <span class="math inline">\(\sigma_1 = \sigma_2\)</span>: <span class="math display">\[
-t = \frac{((\bar{x_1}-\bar{x_2}) - (\mu_1-\mu_2))}{s_p\sqrt{\frac{1}{n_1}+\frac{1}{n_2}}}\\
-s_p = \sqrt{\frac{(n_1-1)s_1^2+(n_2-1)s_2^2}{n_1+n_2-2}}
-\]</span> <span class="math inline">\(\sigma\)</span> unknown,and <span class="math inline">\(\sigma_1 \ne \sigma_2\)</span>: <span class="math display">\[
-t = \frac{((\bar{x_1}-\bar{x_2}) - (\mu_1-\mu_2))}{\sqrt{\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2}}}
-\]</span> where</p>
+<li><span class="math inline">\(|z| &gt; mde\)</span></li>
+</ul>
+<h5 id="sigma-unkownt">3.2.1.2 <span class="math inline">\(\sigma\)</span> Unkown(T)</h5>
+<p><span class="math inline">\(H_0: \mu_1 = \mu_ 0\)</span> or <span class="math inline">\(\pi_1 = \pi_0\)</span> for ratio test</p>
+<p><span class="math inline">\(H_1: \mu_1 \ne \mu_ 0\)</span> or <span class="math inline">\(\pi_1 \ne \pi_0\)</span> for ratio test <span class="math display">\[
+t = \frac{\sqrt{n}((\bar{x_1}-\bar{x_0}) - (\mu_1-\mu_0))}{s_d} = \frac{\sqrt{n}\bar{d}}{s_d}
+\]</span> where <span class="math inline">\(s_d\)</span> is the standard deviation of d</p>
+<p>for ratio test, construct z as: <span class="math display">\[
+t = \frac{(p_1-p_0) - (\pi_1 - \pi_0)}{\sqrt{p(1-p)(\frac{2}{n})}}
+\]</span></p>
+<p><span class="math display">\[
+p = \frac{p_0+p_1}{2}
+\]</span></p>
+<p>Reject when:</p>
 <ul>
-<li><span class="math inline">\(\bar{x_1},\bar{x_2}\)</span> is the mean of the sample before and after experiment</li>
-<li><span class="math inline">\(\mu_1 - \mu_2\)</span> is 0 under <span class="math inline">\(H_0\)</span></li>
-<li><span class="math inline">\(\sigma_1,\sigma_2\)</span> is the standard deviation of the population 1 and population 2</li>
-<li><span class="math inline">\(s_1,s_2\)</span> is the standard deviation of the sample 1 and sample 2</li>
-<li>n is the size of the sample</li>
-</ul>
-<p><strong>Rejection condition</strong>:</p>
-<p><span class="math inline">\(\sigma\)</span> known(z-test):</p>
-<p>One-tail(left side):</p>
-<ol type="1">
-<li><span class="math inline">\(t &lt; -t_{\alpha}\)</span></li>
+<li><span class="math inline">\(|t| &gt; t_{\frac{\alpha}{2}}\)</span><br>
+</li>
 <li><span class="math inline">\(p &lt; \alpha\)</span></li>
-<li>effect size &gt; mde</li>
-</ol>
-<p><span class="math inline">\(\sigma\)</span> unknown(t-test):</p>
-<p>replace z-score with t score</p>
-<h4 id="ratio-test-1">3.2.3 Ratio Test</h4>
-<p>To test whether the change of a condition has an effect on ratio. The following step is for big sample(n$$5), for small sample, replace z-score with t-score.</p>
-<p><strong>Make hypothesis:</strong></p>
-<p>Two-tail: <span class="math inline">\(H_0: \pi_1 = \pi_2\)</span>, <span class="math inline">\(H_1:\pi_1 \ne \pi_2\)</span></p>
-<p>One-tail(left side): <span class="math inline">\(H_0: \pi_1 \ge \pi_2\)</span>, <span class="math inline">\(H_1:\pi_1 \lt \pi_2\)</span></p>
-<p><strong>Construct test statistics</strong> <span class="math display">\[
-z = \frac{(p_1-p_2) - (\pi_1 - \pi_2)}{\sqrt{p(1-p)(\frac{1}{n_1}+\frac{1}{n_2})}}\\
+<li><span class="math inline">\(|t| &gt; mde\)</span></li>
+</ul>
+<h4 id="independent-test">3.2.2 Independent Test</h4>
+<p>Usually applied when evaluation the effect of a treatment by comparing a experiment group and control group, which is A/B Testing</p>
+<h5 id="sigma-givenz-1">3.2.2.1 <span class="math inline">\(\sigma\)</span> Given(Z)</h5>
+<p><span class="math inline">\(H_0: \mu_1 = \mu_ 0\)</span> or <span class="math inline">\(\pi_1 = \pi_0\)</span> for ratio test</p>
+<p><span class="math inline">\(H_1: \mu_1 \ne \mu_ 0\)</span> or <span class="math inline">\(\pi_1 \ne \pi_0\)</span> for ratio test</p>
+<p>if <span class="math inline">\(\sigma_1 = \sigma_2\)</span> <span class="math display">\[
+z = \frac{((\bar{x_1}-\bar{x_2}) - (\mu_1-\mu_2))}{\sigma \sqrt{\frac{1}{n_1}+\frac{1}{n_2}}}
+\]</span></p>
+<p>if <span class="math inline">\(\sigma_1 \ne \sigma_2\)</span> <span class="math display">\[
+z  = \frac{(\bar{x_1}-\bar{x_2}) - (\mu_1-\mu_2)}{\sqrt{\frac{\sigma_1^2}{n_1}+\frac{\sigma_2^2}{n_2}}}
+\]</span> for ratio test: <span class="math display">\[
+z = \frac{(p_1-p_2) - (\pi_1 - \pi_2)}{\sqrt{p(1-p)(\frac{1}{n_1}+\frac{1}{n_2})}}
+\]</span></p>
+<p><span class="math display">\[
 p = \frac{p1*n1+p_2*n_2}{n_1+n_2}
-\]</span> where</p>
+\]</span></p>
+<p>reject the null hypothesis when:</p>
 <ul>
-<li><span class="math inline">\(p_1,p_2\)</span> is the ratio of sample 1 and sample 2</li>
-<li><span class="math inline">\(\pi_1,\pi_2\)</span> is the ratio of population 1 and population 2</li>
-<li><span class="math inline">\(\pi_1 - \pi_2\)</span> equals 0 under Null Hypothesis</li>
-</ul>
-<p><strong>Rejection condition</strong>:</p>
-<ol type="1">
-<li><span class="math inline">\(t &lt; -t_{\alpha}\)</span></li>
+<li><span class="math inline">\(|z| &gt; z_{\frac{\alpha}{2}}\)</span><br>
+</li>
 <li><span class="math inline">\(p &lt; \alpha\)</span></li>
-<li>effect size &gt; mde</li>
-</ol>
+<li><span class="math inline">\(|z| &gt; mde\)</span></li>
+</ul>
+<h5 id="sigma-uknownt">3.2.2.1 <span class="math inline">\(\sigma\)</span> Uknown(T)</h5>
+<p><span class="math inline">\(H_0: \mu_1 = \mu_ 0\)</span> or <span class="math inline">\(\pi_1 = \pi_0\)</span> for ratio test</p>
+<p><span class="math inline">\(H_1: \mu_1 \ne \mu_ 0\)</span> or <span class="math inline">\(\pi_1 \ne \pi_0\)</span> for ratio test</p>
+<p>if <span class="math inline">\(\sigma_1 = \sigma_2\)</span> <span class="math display">\[
+t = \frac{((\bar{x_1}-\bar{x_2}) - (\mu_1-\mu_2))}{s_p\sqrt{\frac{1}{n_1}+\frac{1}{n_2}}}
+\]</span></p>
+<p><span class="math display">\[
+s_p = \sqrt{\frac{(n_1-1)s_1^2+(n_2-1)s_2^2}{n_1+n_2-2}}
+\]</span></p>
+<p>if <span class="math inline">\(\sigma_1 \ne \sigma_2\)</span> <span class="math display">\[
+t = \frac{((\bar{x_1}-\bar{x_2}) - (\mu_1-\mu_2))}{\sqrt{\frac{s_1^2}{n_1}+\frac{s_2^2}{n_2}}}
+\]</span> for ratio test: <span class="math display">\[
+t = \frac{(p_1-p_2) - (\pi_1 - \pi_2)}{\sqrt{p(1-p)(\frac{1}{n_1}+\frac{1}{n_2})}}
+\]</span></p>
+<p><span class="math display">\[
+p = \frac{p1*n1+p_2*n_2}{n_1+n_2}
+\]</span></p>
+<p>reject the null hypothesis when:</p>
+<ul>
+<li><span class="math inline">\(|t| &gt; t_{\frac{\alpha}{2}}\)</span><br>
+</li>
+<li><span class="math inline">\(p &lt; \alpha\)</span></li>
+<li>|t| &gt; mde</li>
+</ul>
 <h3 id="sample-size-and-duration">3.3 Sample size and Duration</h3>
 <h4 id="sample-size">3.3.1 Sample Size</h4>
 <p>In A/B testing, most of time, you can calculate the sample size N using the following equation: <span class="math display">\[
