@@ -4,6 +4,58 @@
   
   
   <entry>
+    <title>Scaler in Machine Learning</title>
+    <link href="/2022/10/21/scaler/"/>
+    <url>/2022/10/21/scaler/</url>
+    
+    <content type="html"><![CDATA[<h1 id="scaler-in-machine-learning">Scaler in Machine Learning</h1><h2 id="about-scaling">1. About Scaling</h2><p>When adopting multiple variables, many models would be effected by the difference of scales of variables. For example, distance-based clustering would enlarge the impact of variables with larger scale. Another example is that Gradient D Descending is harder to converge on unscaled data. Data Scaling can significantly improve the performance and efficiency of some models, while on other models, like tree model or Naive Bayes, data scaling does not make an influence.</p><p>​</p><h2 id="scaler">2. Scaler</h2><p>Scaler is those algorithm used to scaling data. They usually do not change the type of the data distribution. Four types of sclaer are listed as follows:</p><h2 id="standard-scaler">2.1 Standard Scaler</h2><p>The Standard Scaler does the following transformation <span class="math display">\[x&#39; = \frac{x-\bar{x}}{s}\]</span> where</p><ul><li><p><span class="math inline">\(\bar{x}\)</span> is the average of the original data</p></li><li><p>s is the standard deviation of the original data</p></li><li><p>x' is the Z-score of thr original data.</p></li></ul><p>The Standarad Scaler has following properties:</p><ul><li><p>The original data should fit a normal distribution. This is not a necessary hypothesis but the scaler <strong>works better if the original data has strong normality.</strong> After the transformation, the data follows N(0,1)</p></li><li><p>If the original data is not normally distributed, the standard sclater will not change it's type of distribution. In such case, consider distribution transformation methods before applying standard scaler.</p><p><img src="/2022/10/21/scaler/1.PNG"></p></li><li><p>The <strong>range of transformed data is not for fixed</strong>. But most data points should lie in [-3,3].</p></li><li><p>The <strong>Outlier has an significant influence on the scaling</strong>. Consider applying outlier detection method before scaling</p></li></ul><h3 id="minmax-scalermean-normalization">2.2 MinMax Scaler/Mean Normalization</h3><p>The MinMax Scaler does the following transformation <span class="math display">\[x&#39; = \frac{x-x_{min}}{x_{max}-x_{min}}\]</span> The MinMax Scaler has following properties:</p><ul><li>The MinMax scaler is a linear transformation, it does not change the type of distribution, and <strong>it does not have hypothesis on data distribution</strong></li><li>The <strong>range of data after transformation would be [0,1]</strong></li><li>The Outlier has an significant influence on the scaling. Consider applying outlier detection method before scaling</li></ul><p>A variant of MinMax Scaler is the Mean Normalization, which is given as: <span class="math display">\[x&#39; = \frac{x-\bar{x}}{x_{max}-x_{min}}\]</span> The Mean Normalization has similar properties as MinMax Scaler, but the range of transformed data would be [-1,1]</p><h3 id="robust-scaler">2.3 Robust Scaler</h3><p>The Robust Scaler does the following transformation <span class="math display">\[x&#39; = \frac{x-x_{median}}{IQR}\]</span> where IQR is the difference of 75% percentile and 25% percentile</p><p>The MinMax Scaler has following properties:</p><ul><li>The Robust Scaler does not change the type of distribution, and <strong>it does not have hypothesis on data distribution</strong></li><li>The Robust Scaler reduce the influences of the outlier. If the outlier cannot be eliminated due to some reasons, we can consider this scaling method</li><li>The range of the transformed data is not fixed</li></ul><h3 id="l1l2-scaler">2.4 L1/L2 Scaler</h3><p>The L1/L2 Scaler does the following transformation <span class="math display">\[x_i&#39; = \frac{x_i}{|x|}\]</span></p><p><span class="math display">\[x_i&#39; = \frac{x_i }{||x ||}\]</span> where</p><ul><li>x is a feature vector: {<span class="math inline">\(x_1,x_ 2,...x_ n\)</span>}</li><li><span class="math inline">\(|x|,||x||\)</span> is the L1, L2 norm of the feature vector</li></ul><p>The L1/L2 Scaler has following properties:</p><ul><li>The L /L2 Scaler is a sample-level transomation, it can be applied on a single sample</li><li>The range of the transformed data is [-1,1]</li><li>The parameters of the distribution of the transformed data is hard to predict, since the calculated norm of each sample is different</li></ul>]]></content>
+    
+    
+    <categories>
+      
+      <category>Machine Learning</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Feature Engineering</tag>
+      
+      <tag>Scaler</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>AB-Test</title>
+    <link href="/2022/10/17/AB-Test/"/>
+    <url>/2022/10/17/AB-Test/</url>
+    
+    <content type="html"><![CDATA[<h1 id="basic-procedure-of-ab-testing">Basic Procedure of A/B Testing</h1><h2 id="about-ab-testing">1. About A/B Testing</h2><h2 id="section">2.</h2><h2 id="experiment-design">3. Experiment Design</h2><h3 id="define-problem">3.1 Define Problem</h3><p>The first step of conducting an A/B test is to define the objectives, to clarify the business problem we're trying to solve.</p><h3 id="pre-experiment-analysis">3.2 Pre-experiment Analysis</h3><p>After problem definition, we should start to make pre-experiment analysis to discover potential solution. The analysis process can involving attribution, causal inference, EDA and other possible methodologies. The core objective is to find insights and update strategies</p><h3 id="evaluate">3.3 Evaluate</h3><h3 id="section-1">3.4</h3><h3 id="section-2"></h3>]]></content>
+    
+    
+    <categories>
+      
+      <category>Probability &amp; Statistics</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>A/B Testing</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Distance in Machine Learning</title>
     <link href="/2022/10/08/distance/"/>
     <url>/2022/10/08/distance/</url>

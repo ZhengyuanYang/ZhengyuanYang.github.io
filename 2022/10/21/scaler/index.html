@@ -16,22 +16,24 @@
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
   
-    <meta name="description" content="本文主要梳理国内数据分析师岗位面试中常见的八股文和场景化问题">
+    <meta name="description" content="This article discuss four types of scaler in machine learning">
 <meta property="og:type" content="article">
-<meta property="og:title" content="DA Interview Question">
-<meta property="og:url" content="http://example.com/2022/03/15/DA-interview/index.html">
+<meta property="og:title" content="Scaler in Machine Learning">
+<meta property="og:url" content="http://example.com/2022/10/21/scaler/index.html">
 <meta property="og:site_name" content="ZY&#39;s Blog">
-<meta property="og:description" content="本文主要梳理国内数据分析师岗位面试中常见的八股文和场景化问题">
+<meta property="og:description" content="This article discuss four types of scaler in machine learning">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2022-03-15T17:26:06.000Z">
-<meta property="article:modified_time" content="2022-10-18T05:56:16.740Z">
+<meta property="og:image" content="http://example.com/2022/10/21/scaler/1.PNG">
+<meta property="article:published_time" content="2022-10-22T04:02:00.000Z">
+<meta property="article:modified_time" content="2022-10-22T05:16:15.861Z">
 <meta property="article:author" content="John Doe">
-<meta property="article:tag" content="Data Analysis">
-<meta property="article:tag" content="Interview Skill">
+<meta property="article:tag" content="Feature Engineering">
+<meta property="article:tag" content="Scaler">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2022/10/21/scaler/1.PNG">
   
   
-  <title>DA Interview Question - ZY&#39;s Blog</title>
+  <title>Scaler in Machine Learning - ZY&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -177,7 +179,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="DA Interview Question">
+            <span class="h2" id="subtitle" title="Scaler in Machine Learning">
               
             </span>
 
@@ -187,8 +189,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2022-03-15 10:26" pubdate>
-        March 15, 2022 am
+      <time datetime="2022-10-21 21:02" pubdate>
+        October 21, 2022 pm
       </time>
     </span>
   
@@ -198,7 +200,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      2.4k 字
+      2.9k 字
     </span>
   
 
@@ -237,179 +239,71 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">DA Interview Question</h1>
+            <h1 style="display: none">Scaler in Machine Learning</h1>
             
             <div class="markdown-body">
-              <h1 id="da-interview-question">DA Interview Question</h1>
-<p>本文主要梳理国内数据分析师岗位面试中常见的八股文和场景化问题</p>
-<h2 id="场景化问题">1. 场景化问题</h2>
-<h3 id="异动指标分析">1.1 异动指标分析</h3>
-<p>某一指标（DAU，GMV）在某一时间明显下降，试分析原因和解决办法</p>
-<ol type="1">
-<li><p>检查异动是否由统计错误引起</p>
-<ol type="1">
-<li>检验数据格式是否正确</li>
-<li>检验数据极值</li>
-<li>通过http请求构造数据日志，对比日志，服务器数据和历史数据，如果是大数据则可采样后再注入日志</li>
-</ol></li>
-<li><p>将影响因子（指标）拆解为外部和内部，首先分析外部：</p>
-<ol type="1">
-<li>观察异动指标过去一段时间的趋势，是否本身就处于下降趋势中？</li>
-<li>观察异动指标同期历史数据，是否该时期的指标本身就低？</li>
-<li>观察当下各类时事，是否对指标产生冲击？（对手促销，热点内容，竞品上市）</li>
-</ol></li>
-<li><p>观察内部因素，进一步拆分成若干个维度，例如：</p>
-<ol type="1">
-<li>逻辑拆解</li>
-<li>用户新老</li>
-<li>渠道（APP，PC）</li>
-<li>内容</li>
-<li>地域</li>
-</ol></li>
-<li><p>观察不同维度上指标的分布，确定影响系数：</p>
-<p>例如，如果流失用户中新老用户的占比为8:2，则有理由认为用户新老是一重要特征。相对，分布平均的维度可能相对不重要</p></li>
-<li><p>在影响系数较大的维度上继续拆分，并结合两级维度做出假设</p>
-<p>例如新用户在APP和PC断的流失数量为7:3，可以假设新用户不喜欢最近的APP前端设计</p></li>
-<li><p>继续拆分，直到能给出某一个具体可解决的假设</p>
-<p>例如最终假设为，用户不喜欢APP界面上短视频的双排列模式</p></li>
-<li><p>根据此笼统的假设设计实验，定义metrics，给出具体假设，进行假设检验</p></li>
-</ol>
-<h3 id="费米估计">1.2 费米估计</h3>
-<p>例如，不参考任何资料，估计北京市有多少红色的小轿车</p>
-<ol type="1">
-<li><p>将原问题拆解为多个问题，或者多个因子相乘，直到大多数因子看起来可以用常识进行判断上下界</p>
-<p>北京市红色小车数量 = 北京市人口 * 拥车比例 * 城市因子（城市一般拥车率更高） * 红色比例</p></li>
-<li><p>给出每个因子的上下界，并取均值作为数字</p>
-<p>例如常见的车色有8-10种，红色在中国比较受欢迎，估计红车比例为[1/8,1/4], 取均值约为0.18</p></li>
-<li><p>因子相乘，获得答案</p></li>
-</ol>
-<h3 id="指标提升方案施工中">1.3 指标提升方案【施工中】</h3>
-<p>例如用户培养，用户增长的场景，制定一个计划</p>
-<h3 id="用户画像">1.4 用户画像</h3>
-<p>首先进行用户人群的划分，一般为垂直用户和行业用户的比较</p>
-<ol type="1">
-<li><p>根据什么特征划分垂直用户？</p>
+              <h1 id="scaler-in-machine-learning">Scaler in Machine Learning</h1>
+<h2 id="about-scaling">1. About Scaling</h2>
+<p>When adopting multiple variables, many models would be effected by the difference of scales of variables. For example, distance-based clustering would enlarge the impact of variables with larger scale. Another example is that Gradient D Descending is harder to converge on unscaled data. Data Scaling can significantly improve the performance and efficiency of some models, while on other models, like tree model or Naive Bayes, data scaling does not make an influence.</p>
+<p>​</p>
+<h2 id="scaler">2. Scaler</h2>
+<p>Scaler is those algorithm used to scaling data. They usually do not change the type of the data distribution. Four types of sclaer are listed as follows:</p>
+<h2 id="standard-scaler">2.1 Standard Scaler</h2>
+<p>The Standard Scaler does the following transformation <span class="math display">\[
+x&#39; = \frac{x-\bar{x}}{s}
+\]</span> where</p>
 <ul>
-<li><p>随机划分</p></li>
-<li><p>特殊时间段：例如某一时间段的用户转化率特别高</p></li>
-<li><p>平台划分：例如某一平台的指标特别高</p></li>
-</ul></li>
-<li><p>研究用户的什么特征？</p>
+<li><p><span class="math inline">\(\bar{x}\)</span> is the average of the original data</p></li>
+<li><p>s is the standard deviation of the original data</p></li>
+<li><p>x' is the Z-score of thr original data.</p></li>
+</ul>
+<p>The Standarad Scaler has following properties:</p>
 <ul>
-<li>静态特征：例如用户年龄，性别等和用户自身相关的特征</li>
-<li>动态特征：用户7日内的购买量，复购率，好评率等等</li>
-<li>用户行为：是否点赞，收藏，评论等等</li>
-</ul></li>
-<li><p>如何比较用户特征：</p>
+<li><p>The original data should fit a normal distribution. This is not a necessary hypothesis but the scaler <strong>works better if the original data has strong normality.</strong> After the transformation, the data follows N(0,1)</p></li>
+<li><p>If the original data is not normally distributed, the standard sclater will not change it's type of distribution. In such case, consider distribution transformation methods before applying standard scaler.</p>
+<p><img src="/2022/10/21/scaler/1.PNG" srcset="/img/loading.gif" lazyload></p></li>
+<li><p>The <strong>range of transformed data is not for fixed</strong>. But most data points should lie in [-3,3].</p></li>
+<li><p>The <strong>Outlier has an significant influence on the scaling</strong>. Consider applying outlier detection method before scaling</p></li>
+</ul>
+<h3 id="minmax-scalermean-normalization">2.2 MinMax Scaler/Mean Normalization</h3>
+<p>The MinMax Scaler does the following transformation <span class="math display">\[
+x&#39; = \frac{x-x_{min}}{x_{max}-x_{min}}
+\]</span> The MinMax Scaler has following properties:</p>
 <ul>
-<li>利用可视化的方法做图，比较得出特征的影响系数和相关性</li>
-<li>利用假设检验，检查影响系数和相关性是否显著</li>
-<li>利用模型，对特征间的关系进行建模，并比较特征差异和重要性，例如线性模型，聚类模型，树模型等</li>
-</ul></li>
-<li><p>分析以上结果，最终给出有关用户特征的结论，例如：高转化率的人群一般年龄在a-b岁，x渠道上的复购率比其他渠道高等等</p></li>
-<li><p>将以上结论形成市场策略（结合项目的具体目标，例如广告投放，个性化运营，上线新功能等）</p></li>
-</ol>
-<h2 id="业务相关指标和概念">2. 业务相关指标和概念</h2>
-<p>以下指标往往有交叉，并不严格属于某一个行业</p>
-<h3 id="视频行业">2.1 视频行业</h3>
-<p><strong>播放量</strong></p>
-<p><strong>播完率</strong>：播放时长<span class="math inline">\(\ge\)</span>视频时长的比例</p>
-<p>会话时长：例如人均访问/观看时长</p>
-<p><strong>PV</strong>：用户行为的技术，包括点赞，转发，评论，也可以统计比例</p>
-<p><strong>KOL</strong>：关键意见领袖，例如带货主播，明星等等</p>
-<p>挑选KOL的方法</p>
-<ol type="1">
-<li>计算可选KOL以往带相似产品的ROI，挑选其中较高的</li>
-<li>对这些KOL的用户做用户画像和标签化</li>
-<li>挑选和这些KOL用户群体相似的KOL</li>
-</ol>
-<p><strong>视频热度评价：</strong></p>
-<ol type="1">
-<li><p>播放维度：近期播放量，播完率</p></li>
-<li><p>主播维度：主播关注数量，主播关注近期增量</p></li>
-<li><p>互动维度：近期点赞，收藏，转发，评论</p></li>
-<li><p>时间维度：新鲜度，时事热点关联度</p></li>
-</ol>
-<p>通过机器学习或者基于经验的方式确定这些指标的权重，计算热度</p>
-<h3 id="电商行业">2.2 电商行业</h3>
-<p><strong>ROI：</strong>投入回报率 <span class="math display">\[
-ROI = \frac{收入-成本}{投入}
-\]</span> 具体计算方法因场景而异，例如在广告投放中</p>
-<p>收入：一般为销售收入，如果是为了吸引潜在客户，还要加上潜在用户增加数*转化率</p>
-<p>成本：一般包括生产成本和广告投放成本</p>
-<p>影响广告投放ROI的因素包括：</p>
-<ol type="1">
-<li>投放平台的选择</li>
-<li>广告设计</li>
-<li>推广预算</li>
-</ol>
-<p><strong>GMV：</strong>商品成交金额，包含已付款，未付款，已取消，退款，拒守等等情况，某种意义上代表了电商平台的市场份额</p>
-<p><strong>ARPU：人均付费</strong></p>
-<p><strong>ARPPU：</strong> 付费用户人均付费</p>
-<p><strong>复购率：</strong>一定时间内购买两次及以上的用户比例</p>
-<p><strong>传统电商与直播电商的区别：</strong></p>
-<table>
-<thead>
-<tr class="header">
-<th>传统电商</th>
-<th>直播电商</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>营销</td>
-<td>主要是娱乐，次要是营销</td>
-</tr>
-<tr class="even">
-<td>没有KOL，互动弱</td>
-<td>有KOL互动强</td>
-</tr>
-<tr class="odd">
-<td>价格稳定，出了特殊节日促销</td>
-<td>价格不稳定。不同直播间不同，秒杀等</td>
-</tr>
-<tr class="even">
-<td>转化率低</td>
-<td>转化率高</td>
-</tr>
-</tbody>
-</table>
-<p>直播电商的指标：</p>
-<p>供给侧：补货量，推广份额，推广接单量</p>
-<p>需求侧：购买转化率，GMV，ROI，回购率，退单率</p>
-<h3 id="用户增长app">2.3 用户增长APP</h3>
-<p>DAU： 日活用户</p>
-<p>留存率：某一日的新增用户在之后继续活跃的比例，包括次日留存，7日留存等等</p>
-<p>转化率：用户通过某一商业转化阶段的比例，例如（通过广告进入商店的人数）/（看到广告的人数）</p>
-<h2 id="八股文施工中">3. 八股文【施工中】</h2>
-<h3 id="统计">3.1 统计</h3>
-<h3 id="概率论">3.2 概率论</h3>
-<h3 id="机器学习">3.3 机器学习</h3>
-<h3 id="其他问题">3.4 其他问题</h3>
-<h2 id="简历深挖">4. 简历深挖</h2>
-<h3 id="回答思路">4.1 回答思路</h3>
-<p>回答有关项目的问题，一定把逻辑说完整，从<strong>为什么想做这个项目</strong>，一直说道<strong>这个项目能给公司/产品带来什么好处</strong>，另外，在每个叙述中要尽量体现以下逻辑：</p>
-<ol type="1">
-<li>发现某问题</li>
-<li>通过类似指标拆解的方法，给出一个解决方案</li>
-<li>解决问题</li>
-<li>验证解决办法是否有效，有没有更好的办法</li>
-</ol>
-<h3 id="其他常见问题包括hr面">4.2 其他常见问题（包括HR面）</h3>
-<ol type="1">
-<li><p>你的项目有没有其他平行组，你的结果与他们相比如何</p></li>
-<li><p>这个项目有没有做的不好的地方，如何改进</p>
-<p>最好主动想一想项目的缺点，回答的时候自己提一下有做的不好的地方，面试官很可能直接就问了</p></li>
-<li><p>你跟更喜欢偏技术和工作还是偏业务的工作</p>
-<p>最好判断一下面试官是做哪方面的，跟着他的工作说</p></li>
-<li><p>说一下你的优点和缺点</p>
-<p>优点提前编好即可，缺点要注意：</p>
+<li>The MinMax scaler is a linear transformation, it does not change the type of distribution, and <strong>it does not have hypothesis on data distribution</strong></li>
+<li>The <strong>range of data after transformation would be [0,1]</strong></li>
+<li>The Outlier has an significant influence on the scaling. Consider applying outlier detection method before scaling</li>
+</ul>
+<p>A variant of MinMax Scaler is the Mean Normalization, which is given as: <span class="math display">\[
+x&#39; = \frac{x-\bar{x}}{x_{max}-x_{min}}
+\]</span> The Mean Normalization has similar properties as MinMax Scaler, but the range of transformed data would be [-1,1]</p>
+<h3 id="robust-scaler">2.3 Robust Scaler</h3>
+<p>The Robust Scaler does the following transformation <span class="math display">\[
+x&#39; = \frac{x-x_{median}}{IQR}
+\]</span> where IQR is the difference of 75% percentile and 25% percentile</p>
+<p>The MinMax Scaler has following properties:</p>
 <ul>
-<li>该缺点不能是你从事工作的致命伤：例如事DA工作，你的缺点不能是逻辑不清晰，对数字不敏感等</li>
-<li>该缺点必须是可以和改正的</li>
-<li>不要说一些其实是优点的缺点，这样会让面试官觉得你自我认知不清晰</li>
-</ul></li>
-</ol>
+<li>The Robust Scaler does not change the type of distribution, and <strong>it does not have hypothesis on data distribution</strong></li>
+<li>The Robust Scaler reduce the influences of the outlier. If the outlier cannot be eliminated due to some reasons, we can consider this scaling method</li>
+<li>The range of the transformed data is not fixed</li>
+</ul>
+<h3 id="l1l2-scaler">2.4 L1/L2 Scaler</h3>
+<p>The L1/L2 Scaler does the following transformation <span class="math display">\[
+x_i&#39; = \frac{x_i}{|x|}
+\]</span></p>
+<p><span class="math display">\[
+x_i&#39; = \frac{x_i }{||x ||}
+\]</span> where</p>
+<ul>
+<li>x is a feature vector: {<span class="math inline">\(x_1,x_ 2,...x_ n\)</span>}</li>
+<li><span class="math inline">\(|x|,||x||\)</span> is the L1, L2 norm of the feature vector</li>
+</ul>
+<p>The L1/L2 Scaler has following properties:</p>
+<ul>
+<li>The L /L2 Scaler is a sample-level transomation, it can be applied on a single sample</li>
+<li>The range of the transformed data is [-1,1]</li>
+<li>The parameters of the distribution of the transformed data is hard to predict, since the calculated norm of each sample is different</li>
+</ul>
 
             </div>
             <hr>
@@ -419,7 +313,7 @@ ROI = \frac{收入-成本}{投入}
                   <div class="post-meta mr-3">
                     <i class="iconfont icon-category"></i>
                     
-                      <a class="hover-with-bg" href="/categories/Interview/">Interview</a>
+                      <a class="hover-with-bg" href="/categories/Machine-Learning/">Machine Learning</a>
                     
                   </div>
                 
@@ -427,9 +321,9 @@ ROI = \frac{收入-成本}{投入}
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/Data-Analysis/">Data Analysis</a>
+                      <a class="hover-with-bg" href="/tags/Feature-Engineering/">Feature Engineering</a>
                     
-                      <a class="hover-with-bg" href="/tags/Interview-Skill/">Interview Skill</a>
+                      <a class="hover-with-bg" href="/tags/Scaler/">Scaler</a>
                     
                   </div>
                 
@@ -441,6 +335,23 @@ ROI = \frac{收入-成本}{投入}
                   
                 </p>
               
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/10/17/AB-Test/">
+                        <span class="hidden-mobile">AB-Test</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
               
             </div>
 
@@ -581,6 +492,48 @@ ROI = \frac{收入-成本}{投入}
 
 
 
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        loader: {
+          load: ['ui/lazy']
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" ></script>
+
+  
 
 
 
