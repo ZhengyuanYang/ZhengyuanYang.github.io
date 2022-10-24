@@ -16,24 +16,22 @@
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
   
-    <meta name="description" content="This article discuss four types of scaler in machine learning">
+    <meta name="description" content="This article discuss encoding methods for categorical variable">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Scaler in Machine Learning">
-<meta property="og:url" content="http://example.com/2022/10/21/scaler/index.html">
+<meta property="og:title" content="Encoding Methods for Categorical Variable">
+<meta property="og:url" content="http://example.com/2022/10/22/encoding/index.html">
 <meta property="og:site_name" content="ZY&#39;s Blog">
-<meta property="og:description" content="This article discuss four types of scaler in machine learning">
+<meta property="og:description" content="This article discuss encoding methods for categorical variable">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/2022/10/21/scaler/1.PNG">
-<meta property="article:published_time" content="2022-10-22T04:02:00.000Z">
-<meta property="article:modified_time" content="2022-10-22T05:16:15.861Z">
+<meta property="article:published_time" content="2022-10-23T05:01:42.000Z">
+<meta property="article:modified_time" content="2022-10-23T20:59:41.786Z">
 <meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Encoding">
 <meta property="article:tag" content="Feature Engineering">
-<meta property="article:tag" content="Scaler">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/2022/10/21/scaler/1.PNG">
   
   
-  <title>Scaler in Machine Learning - ZY&#39;s Blog</title>
+  <title>Encoding Methods for Categorical Variable - ZY&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -179,7 +177,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="Scaler in Machine Learning">
+            <span class="h2" id="subtitle" title="Encoding Methods for Categorical Variable">
               
             </span>
 
@@ -189,8 +187,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2022-10-21 21:02" pubdate>
-        October 21, 2022 pm
+      <time datetime="2022-10-22 22:01" pubdate>
+        October 22, 2022 pm
       </time>
     </span>
   
@@ -200,7 +198,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      2.9k 字
+      4.1k 字
     </span>
   
 
@@ -239,71 +237,442 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Scaler in Machine Learning</h1>
+            <h1 style="display: none">Encoding Methods for Categorical Variable</h1>
             
             <div class="markdown-body">
-              <h1 id="scaler-in-machine-learning">Scaler in Machine Learning</h1>
-<h2 id="about-scaling">1. About Scaling</h2>
-<p>When adopting multiple variables, many models would be effected by the difference of scales of variables. For example, distance-based clustering would enlarge the impact of variables with larger scale. Another example is that Gradient D Descending is harder to converge on unscaled data. Data Scaling can significantly improve the performance and efficiency of some models, while on other models, like tree model or Naive Bayes, data scaling does not make an influence.</p>
-<p>​</p>
-<h2 id="scaler">2. Scaler</h2>
-<p>Scaler is those algorithm used to scaling data. They usually do not change the type of the data distribution. Four types of sclaer are listed as follows:</p>
-<h2 id="standard-scaler">2.1 Standard Scaler</h2>
-<p>The Standard Scaler does the following transformation <span class="math display">\[
-x&#39; = \frac{x-\bar{x}}{s}
-\]</span> where</p>
+              <h1 id="encoding-methods-for-categorical-variable">Encoding Methods for Categorical Variable</h1>
+<h2 id="about-encoding">1. About Encoding</h2>
+<p>Encoding is a process that map categorical variable to numerical variable. For nost models, untransformed categorical data is not accepted as inputs. Five types of encoder introduced below.</p>
+<h2 id="label-encoder">2. Label Encoder</h2>
+<p>Label Encoder is one of the simplest encoding methods. It gives a label to each category</p>
+<p>A categorical variable before encoding:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Species</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Cat</td>
+</tr>
+<tr class="even">
+<td>Dog</td>
+</tr>
+<tr class="odd">
+<td>Bird</td>
+</tr>
+</tbody>
+</table>
+<p>after encoding:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Species</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+</tr>
+<tr class="even">
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>2</td>
+</tr>
+</tbody>
+</table>
+<p>A Label Encoder has following properties:</p>
 <ul>
-<li><p><span class="math inline">\(\bar{x}\)</span> is the average of the original data</p></li>
-<li><p>s is the standard deviation of the original data</p></li>
-<li><p>x' is the Z-score of thr original data.</p></li>
+<li>It changes a categorical variable into a multivalued discrete variable</li>
+<li>It does not generate extra variable, thus is memory-saving</li>
+<li>The encoded data has a magnitude relationship, thus Label encoder should be applied to ordinal variable instead of nominal variable</li>
+<li>It does not change the number of categories</li>
 </ul>
-<p>The Standarad Scaler has following properties:</p>
+<h2 id="one-hot-encoder">3. One-hot Encoder</h2>
+<p>One-hot encoder expand the categorical variable into c variables, where c is number of categories. For categories, these variables are exclusive.</p>
+<p>A categorical variable before encoding:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Species</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Cat</td>
+</tr>
+<tr class="even">
+<td>Dog</td>
+</tr>
+<tr class="odd">
+<td>Bird</td>
+</tr>
+</tbody>
+</table>
+<p>after encoding:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Cat</th>
+<th>Dog</th>
+<th>Bird</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p>For some kinds of data, the generated variables could also be non-exclusive</p>
+<table>
+<thead>
+<tr class="header">
+<th>Color</th>
+<th>R</th>
+<th>G</th>
+<th>B</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>White</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>Purple</td>
+<td>255</td>
+<td>0</td>
+<td>100</td>
+</tr>
+<tr class="odd">
+<td>Orange</td>
+<td>100</td>
+<td>120</td>
+<td>10</td>
+</tr>
+</tbody>
+</table>
+<p>A One-hot Encoder has following properties:</p>
 <ul>
-<li><p>The original data should fit a normal distribution. This is not a necessary hypothesis but the scaler <strong>works better if the original data has strong normality.</strong> After the transformation, the data follows N(0,1)</p></li>
-<li><p>If the original data is not normally distributed, the standard sclater will not change it's type of distribution. In such case, consider distribution transformation methods before applying standard scaler.</p>
-<p><img src="/2022/10/21/scaler/1.PNG" srcset="/img/loading.gif" lazyload></p></li>
-<li><p>The <strong>range of transformed data is not for fixed</strong>. But most data points should lie in [-3,3].</p></li>
-<li><p>The <strong>Outlier has an significant influence on the scaling</strong>. Consider applying outlier detection method before scaling</p></li>
+<li>It changes a categorical variable into c multivalued/binary discrete variables</li>
+<li>It generates c-1 extra variable, thus is memory-costing when c is big. It suits variable with few categories</li>
+<li>It can be applied to both ordinal and nominal variable</li>
+<li>It does not change the number of categories</li>
+<li>Dummy-variables and True-False encoder are very similar to one-hot encoder, only small differences exist</li>
 </ul>
-<h3 id="minmax-scalermean-normalization">2.2 MinMax Scaler/Mean Normalization</h3>
-<p>The MinMax Scaler does the following transformation <span class="math display">\[
-x&#39; = \frac{x-x_{min}}{x_{max}-x_{min}}
-\]</span> The MinMax Scaler has following properties:</p>
+<h2 id="target-encoder">4. Target-Encoder</h2>
+<p>Target encoder transform the categorical variables according to the output variable.</p>
+<p>For numerical output, the target encoder replace categorical variable with the mean of samples under each category</p>
+<table>
+<thead>
+<tr class="header">
+<th>X(species)</th>
+<th>Y(Weight)</th>
+<th>X'</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>cat</td>
+<td>10</td>
+<td>12.5</td>
+</tr>
+<tr class="even">
+<td>cat</td>
+<td>15</td>
+<td>12.5</td>
+</tr>
+<tr class="odd">
+<td>dog</td>
+<td>20</td>
+<td>25</td>
+</tr>
+<tr class="even">
+<td>dog</td>
+<td>30</td>
+<td>25</td>
+</tr>
+</tbody>
+</table>
+<p>For categorical output, the target encoder replace categorical variable with <span class="math inline">\(P(y= y_i|x=x_i)\)</span></p>
+<table>
+<thead>
+<tr class="header">
+<th>X(species)</th>
+<th>Y(Size)</th>
+<th>X1(size-Small)</th>
+<th>X2(size-medium)</th>
+<th>X3(size-BIG)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>cat</td>
+<td>big</td>
+<td>0.25</td>
+<td>0.25</td>
+<td>0.5</td>
+</tr>
+<tr class="even">
+<td>cat</td>
+<td>big</td>
+<td>0.25</td>
+<td>0.25</td>
+<td>0.5</td>
+</tr>
+<tr class="odd">
+<td>cat</td>
+<td>medium</td>
+<td>0.25</td>
+<td>0.25</td>
+<td>0.5</td>
+</tr>
+<tr class="even">
+<td>cat</td>
+<td>small</td>
+<td>0.25</td>
+<td>0.25</td>
+<td>0.5</td>
+</tr>
+<tr class="odd">
+<td>dog</td>
+<td>big</td>
+<td>0.33</td>
+<td>0</td>
+<td>0.66</td>
+</tr>
+<tr class="even">
+<td>dog</td>
+<td>big</td>
+<td>0.33</td>
+<td>0</td>
+<td>0.66</td>
+</tr>
+<tr class="odd">
+<td>dog</td>
+<td>small</td>
+<td>0.33</td>
+<td>0</td>
+<td>0.66</td>
+</tr>
+</tbody>
+</table>
+<p>A Target Encoder has following properties:</p>
 <ul>
-<li>The MinMax scaler is a linear transformation, it does not change the type of distribution, and <strong>it does not have hypothesis on data distribution</strong></li>
-<li>The <strong>range of data after transformation would be [0,1]</strong></li>
-<li>The Outlier has an significant influence on the scaling. Consider applying outlier detection method before scaling</li>
+<li>It changes a categorical variable into some continuous variables</li>
+<li>For continuous and binary outputs, it does not generate extra variables, for multivalued categorical output, it generate k variables, where k is the number of categories of output variable. When k &lt; c, the target encoder can be more memory-saving than one-hot encoder</li>
+<li>It can be applied to both ordinal and nominal variable</li>
+<li>It does not change the number of categories</li>
+<li>There several improved target encoders like smooth target encoder and bayesian target encoder</li>
 </ul>
-<p>A variant of MinMax Scaler is the Mean Normalization, which is given as: <span class="math display">\[
-x&#39; = \frac{x-\bar{x}}{x_{max}-x_{min}}
-\]</span> The Mean Normalization has similar properties as MinMax Scaler, but the range of transformed data would be [-1,1]</p>
-<h3 id="robust-scaler">2.3 Robust Scaler</h3>
-<p>The Robust Scaler does the following transformation <span class="math display">\[
-x&#39; = \frac{x-x_{median}}{IQR}
-\]</span> where IQR is the difference of 75% percentile and 25% percentile</p>
-<p>The MinMax Scaler has following properties:</p>
+<h2 id="frequency-encoder">5.Frequency Encoder</h2>
+<p>The frequency encoder convert categorical variable into discrete variables by counting each category's frequency in training dataset:</p>
+<p>A categorical variable before encoding:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Species</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Cat</td>
+</tr>
+<tr class="even">
+<td>Cat</td>
+</tr>
+<tr class="odd">
+<td>Dog</td>
+</tr>
+<tr class="even">
+<td>Bird</td>
+</tr>
+</tbody>
+</table>
+<p>after encoding:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Species</th>
+<th>X'</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Cat</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td>Dog</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>Bird</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p>A Frequency Encoder has following properties:</p>
 <ul>
-<li>The Robust Scaler does not change the type of distribution, and <strong>it does not have hypothesis on data distribution</strong></li>
-<li>The Robust Scaler reduce the influences of the outlier. If the outlier cannot be eliminated due to some reasons, we can consider this scaling method</li>
-<li>The range of the transformed data is not fixed</li>
+<li>It changes a categorical variable into a discrete variable</li>
+<li>It does not generate extra variables, thus is memory-saving</li>
+<li>The might be collision of variables, and change the number of categories, thus this endocing method does not fit small dataset</li>
+<li>There would be magnitude in transformed variables</li>
 </ul>
-<h3 id="l1l2-scaler">2.4 L1/L2 Scaler</h3>
-<p>The L1/L2 Scaler does the following transformation <span class="math display">\[
-x_i&#39; = \frac{x_i}{|x|}
-\]</span></p>
-<p><span class="math display">\[
-x_i&#39; = \frac{x_i }{||x ||}
-\]</span> where</p>
+<h2 id="binary-encoder">6. Binary Encoder</h2>
+<p>Binary Encoder use $log_2N $ variables to express the original variable with N categories</p>
+<table>
+<thead>
+<tr class="header">
+<th>Species</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Cat</td>
+</tr>
+<tr class="even">
+<td>Dog</td>
+</tr>
+<tr class="odd">
+<td>Bird</td>
+</tr>
+<tr class="even">
+<td>Snake</td>
+</tr>
+</tbody>
+</table>
+<p>A variable with four categories can be expressed in a 2-dimension vector</p>
+<table>
+<thead>
+<tr class="header">
+<th>Species</th>
+<th>X1</th>
+<th>X2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Cat</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>Dog</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>Bird</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>Snake</td>
+<td>1</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p>The binary encoder has similar properties as One-hot Encoder, but:</p>
 <ul>
-<li>x is a feature vector: {<span class="math inline">\(x_1,x_ 2,...x_ n\)</span>}</li>
-<li><span class="math inline">\(|x|,||x||\)</span> is the L1, L2 norm of the feature vector</li>
+<li>It saves more memory</li>
+<li>The generated variables is less interoperable</li>
 </ul>
-<p>The L1/L2 Scaler has following properties:</p>
+<h2 id="hash-encoder">7. Hash Encoder</h2>
+<p>The Hash Enocder map the original variable into a low-dimension space, and use the length of hash bin as transformed values. It is usually applied in a text processing scenario.</p>
+<p>A text variable before encoding:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Message</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>I love python python is good</td>
+</tr>
+<tr class="even">
+<td>I dont like python</td>
+</tr>
+<tr class="odd">
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>A text variable after encoding:</p>
+<table>
+<thead>
+<tr class="header">
+<th>text</th>
+<th>I</th>
+<th>love</th>
+<th>Python</th>
+<th>is</th>
+<th>good</th>
+<th>dont</th>
+<th>like</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>I love python python is good</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>I dont like python</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>A Hash Encoder has following properties:</p>
 <ul>
-<li>The L /L2 Scaler is a sample-level transomation, it can be applied on a single sample</li>
-<li>The range of the transformed data is [-1,1]</li>
-<li>The parameters of the distribution of the transformed data is hard to predict, since the calculated norm of each sample is different</li>
+<li>It changes a categorical variable into some discrete variables</li>
+<li>Comparing to One-hot Encoder, it saves memory when the original variable is complex and repeatable, like text and graph</li>
+<li>The might be collision of variables, and change the number of categories, thus this endocing method does not fit small dataset</li>
 </ul>
+<h2 id="embedding-encoder">8. Embedding Encoder</h2>
+<p>Embedding methods is a techniques transforms the original categorical variable into a vector that reflect the similarity of the original categories. It is more frequently used in deep learning scenarios like NLP. Generally speaking, it can be regraded as a kind of encoding methods.</p>
+<p>[ongoing]</p>
 
             </div>
             <hr>
@@ -321,9 +690,9 @@ x_i&#39; = \frac{x_i }{||x ||}
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/Feature-Engineering/">Feature Engineering</a>
+                      <a class="hover-with-bg" href="/tags/Encoding/">Encoding</a>
                     
-                      <a class="hover-with-bg" href="/tags/Scaler/">Scaler</a>
+                      <a class="hover-with-bg" href="/tags/Feature-Engineering/">Feature Engineering</a>
                     
                   </div>
                 
@@ -340,18 +709,12 @@ x_i&#39; = \frac{x_i }{||x ||}
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/10/22/distribution-type/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">distribution_type</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/10/17/AB-Test/">
-                        <span class="hidden-mobile">AB-Test</span>
+                      <a href="/2022/10/22/distribution-type/">
+                        <span class="hidden-mobile">distribution_type</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
