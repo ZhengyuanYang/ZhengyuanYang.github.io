@@ -27,7 +27,7 @@
 <meta property="og:image" content="http://example.com/2022/03/25/Hypothesis-Testing/img3.png">
 <meta property="og:image" content="http://example.com/2022/03/25/Hypothesis-Testing/img5.png">
 <meta property="article:published_time" content="2022-03-25T23:25:15.000Z">
-<meta property="article:modified_time" content="2022-10-13T02:13:57.212Z">
+<meta property="article:modified_time" content="2022-11-05T04:58:35.917Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="Hypothesis Testing">
 <meta property="article:tag" content="A&#x2F;B Test">
@@ -202,7 +202,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      13k 字
+      14k 字
     </span>
   
 
@@ -655,15 +655,24 @@ F = \frac{SSR/p}{SSE/(n-p-1)}
 <h2 id="chi-squared-test">5. Chi-squared Test</h2>
 <h4 id="chi-squared-test-for-independence">5.1 Chi-squared Test for Independence</h4>
 <p>chi-squared test is a <strong>supervised</strong> hypothesis testing method to calculate the probability that 2 categorical variables are correlated</p>
+<p>Suppose there are categorical variables X and Y, X has r possible values, with probability <span class="math inline">\((p_{x,1},...p_{x,r})\)</span> and Y has c possible values, with probability <span class="math inline">\((p_{y,1},...p_{y,c})\)</span>.</p>
+<p>Under the null hypothesis, since X and Y are independent, the probability of observing <span class="math inline">\(X=c_{x,i}, Y = c_{y,j}\)</span> would be <span class="math inline">\(p_{i,j} = p_{x,i}p_{y,j}\)</span></p>
+<p>In such case, let <span class="math inline">\(t_{i,j}\)</span> be the observed times that <span class="math inline">\(X=c_{x,i}, Y = c_{y,j}\)</span>, t would follow a binomial distribution <span class="math inline">\(Bin(t;n,p_{ij})\)</span></p>
+<p>According to properties of binomial distribution, when n is big enough, <span class="math inline">\(Bin(t;n,p_{i,j})\)</span> is approximately <span class="math inline">\(N(np_{i,j},np_{i,j}(1-p_{i,j}))\)</span></p>
+<p>According to the definition of <span class="math inline">\(\chi^2\)</span> distribution, let <span class="math display">\[
+\chi^2=\sum_i^r\sum_j^c \frac{(t_{i,j}-E[t_{i,j})^2]}{E[t_{i,j}]}
+\]</span> <span class="math inline">\(\chi^2\)</span> would follow a <span class="math inline">\(\chi^2\)</span> distribution, with the degree of freedom being <span class="math inline">\((r-1)(c-1)\)</span></p>
+<p>We can calculate the <span class="math inline">\(\chi^2\)</span> and obtain its according p value through p value table for <span class="math inline">\(\chi^2\)</span> distribution. If p &lt; 0.05, we can reject the null hypothesis that the two variables is independent</p>
+<p>Note that in a <span class="math inline">\(\chi^2\)</span> testm the probability <span class="math inline">\((p_{x,1},...p_{x,r})\)</span> and <span class="math inline">\((p_{y,1},...p_{y,c})\)</span> is not a hypothesis to test, it is a believed fact. In real application, it needs to be estimated from observations. When number of observations is big enough, the error of estimation can be ignored.</p>
+<p>A example is given below:</p>
 <ol type="1">
 <li><p>According to the observations, make the frequency table</p></li>
 <li><p>calculate the row total and the column total</p></li>
 <li><p>calculate the expectations for each cell by <span class="math inline">\(\frac{R_i*C_j}{total}\)</span> (<span class="math inline">\(\frac{125*310}{600} = 65\)</span>,etc.)</p></li>
-<li><p>the chi2 of each cell and the total chi2 are given by <span class="math display">\[
+<li><p>the <span class="math inline">\(\chi^2\)</span> would be <span class="math display">\[
 \chi_{i,j}^2 = \frac{(O_{i,j} - E_{i,j})^2}{E_{i,j}}\\
 \chi^2 = \sum_{i,j}^{r,c}\chi_{i,j}^2
-\]</span></p></li>
-<li><p>calculate the degree of freedom, <span class="math inline">\(k=(r-1)(c-1)\)</span></p>
+\]</span></p>
 <table>
 <thead>
 <tr class="header">
@@ -706,12 +715,42 @@ F = \frac{SSR/p}{SSE/(n-p-1)}
 </tr>
 </tbody>
 </table></li>
-<li><p>check the significance table of chi distribution to find the value of the random variable under given k and <span class="math inline">\(\alpha\)</span></p></li>
-<li><p>compare the <span class="math inline">\(\chi^2\)</span> with the rejection area, if <span class="math inline">\(\chi^2\)</span> &gt; the found value(which means p value is smaller than <span class="math inline">\(\alpha\)</span>), then reject the null hypothesis</p></li>
+<li><p>calculate the degree of freedom, <span class="math inline">\(k=(r-1)(c-1)\)</span></p></li>
+<li><p>check the significance table of chi distribution to find the threshold of <span class="math inline">\(\chi^2\)</span> given k and <span class="math inline">\(\alpha\)</span></p></li>
+<li><p>compare the <span class="math inline">\(\chi^2\)</span> with the rejection area, if <span class="math inline">\(\chi^2\)</span> is greater than the threshold(which means p value is smaller than <span class="math inline">\(\alpha\)</span>), then reject the null hypothesis</p></li>
 </ol>
 <figure class="highlight python"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.feature_selection <span class="hljs-keyword">import</span> SelectKBest, chi2<br>X, y = data_0,target_0<br>X_new = SelectKBest(chi2, k=<span class="hljs-number">2</span>).fit_transform(X, y)<br></code></pre></td></tr></table></figure>
 <h3 id="chi-squared-test-for-goodness-of-fit">5.2 Chi-squared Test for Goodness of fit</h3>
-<p>The process is basically the same. The rows represent the possible categories of a categorical variable. The columns are observed frequency and predicted frequency of each category.</p>
+<p>The process is basically the same.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Category</th>
+<th>Predicted times</th>
+<th>Observed time</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>C1</td>
+<td>...</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>C2</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>C3</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Construct the <span class="math inline">\(\chi^2\)</span> as: <span class="math display">\[
+\chi^2 = \sum_i^k\frac{O_i-P_i}{P_i}
+\]</span> the <span class="math inline">\(\chi^2\)</span> follows a <span class="math inline">\(\chi^2(k-1)\)</span> when number of observations is big enough</p>
 
             </div>
             <hr>
