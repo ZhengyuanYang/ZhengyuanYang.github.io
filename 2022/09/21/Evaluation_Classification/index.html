@@ -26,9 +26,9 @@
 <meta property="og:image" content="http://example.com/2022/09/21/Evaluation_Classification/confusion-matrix.png">
 <meta property="og:image" content="http://example.com/2022/09/21/Evaluation_Classification/2.png">
 <meta property="og:image" content="http://example.com/2022/09/21/Evaluation_Classification/3.PNG">
-<meta property="og:image" content="http://example.com/2022/09/21/Evaluation_Classification/4.png">
+<meta property="og:image" content="http://example.com/2022/09/21/Evaluation_Classification/4.PNG">
 <meta property="article:published_time" content="2022-09-21T20:14:01.000Z">
-<meta property="article:modified_time" content="2022-09-21T22:18:54.527Z">
+<meta property="article:modified_time" content="2022-11-06T11:11:14.578Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="Model Evaluation">
 <meta property="article:tag" content="Classification">
@@ -310,7 +310,7 @@ FPR = \frac{FP}{FP+TN}
 </table>
 <p>From this interpreation, we found that sensitivity and specificity are condition on Y, which means The influence of P(Y) are blocked whe calculating these two metrics. Therefore, these two metrics are not influenced by the imbalance of data.</p>
 <p>The Reciever Operating Characteristics cureve(ROC curve) take both metrics into consideration by depict the relationship between sensitivity and 1-specificity:</p>
-<p><img src="/2022/09/21/Evaluation_Classification/4.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2022/09/21/Evaluation_Classification/4.PNG" srcset="/img/loading.gif" lazyload></p>
 <p><strong>AUC</strong></p>
 <p>Area Under Curve(AUC) is the area beneath the ROC curve.</p>
 <p>Suppose our model completely randomly classifies the samples, the the probability it regard an actual postive sample or an actual negative sample as a positive sample is equal, in this case, AUC would be 0.5. If AUC &gt; 0.5, it means when the model predicts a sample, <span class="math inline">\(P(\hat{Y}=1|Y=1) &gt; P(\hat{Y}=1|Y=0)\)</span> , which means the prediction is effective. Thus, the higher the AUC is, the better the model performs.</p>
