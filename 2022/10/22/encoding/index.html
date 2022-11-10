@@ -240,26 +240,26 @@
             <h1 style="display: none">Encoding Methods for Categorical Variable</h1>
             
             <div class="markdown-body">
-              <h1 id="encoding-methods-for-categorical-variable">Encoding Methods for Categorical Variable</h1>
-<h2 id="about-encoding">1. About Encoding</h2>
-<p>Encoding is a process that map categorical variable to numerical variable. For nost models, untransformed categorical data is not accepted as inputs. Five types of encoder introduced below.</p>
-<h2 id="label-encoder">2. Label Encoder</h2>
+              <h1 id="encoding-methods-for-categorical-variable"><a class="markdownIt-Anchor" href="#encoding-methods-for-categorical-variable"></a> Encoding Methods for Categorical Variable</h1>
+<h2 id="1-about-encoding"><a class="markdownIt-Anchor" href="#1-about-encoding"></a> 1. About Encoding</h2>
+<p>Encoding is a process that map categorical variable to numerical variable. For nost models, untransformed categorical data is not accepted as inputs.  Five types of encoder introduced below.</p>
+<h2 id="2-label-encoder"><a class="markdownIt-Anchor" href="#2-label-encoder"></a> 2. Label Encoder</h2>
 <p>Label Encoder is one of the simplest encoding methods. It gives a label to each category</p>
 <p>A categorical variable before encoding:</p>
 <table>
 <thead>
-<tr class="header">
+<tr>
 <th>Species</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td>Cat</td>
 </tr>
-<tr class="even">
+<tr>
 <td>Dog</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>Bird</td>
 </tr>
 </tbody>
@@ -267,18 +267,18 @@
 <p>after encoding:</p>
 <table>
 <thead>
-<tr class="header">
+<tr>
 <th>Species</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td>0</td>
 </tr>
-<tr class="even">
+<tr>
 <td>1</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>2</td>
 </tr>
 </tbody>
@@ -290,23 +290,23 @@
 <li>The encoded data has a magnitude relationship, thus Label encoder should be applied to ordinal variable instead of nominal variable</li>
 <li>It does not change the number of categories</li>
 </ul>
-<h2 id="one-hot-encoder">3. One-hot Encoder</h2>
+<h2 id="3-one-hot-encoder"><a class="markdownIt-Anchor" href="#3-one-hot-encoder"></a> 3. One-hot Encoder</h2>
 <p>One-hot encoder expand the categorical variable into c variables, where c is number of categories. For categories, these variables are exclusive.</p>
 <p>A categorical variable before encoding:</p>
 <table>
 <thead>
-<tr class="header">
+<tr>
 <th>Species</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td>Cat</td>
 </tr>
-<tr class="even">
+<tr>
 <td>Dog</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>Bird</td>
 </tr>
 </tbody>
@@ -314,24 +314,24 @@
 <p>after encoding:</p>
 <table>
 <thead>
-<tr class="header">
+<tr>
 <th>Cat</th>
 <th>Dog</th>
 <th>Bird</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td>1</td>
 <td>0</td>
 <td>0</td>
 </tr>
-<tr class="even">
+<tr>
 <td>0</td>
 <td>1</td>
 <td>0</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>0</td>
 <td>0</td>
 <td>1</td>
@@ -341,7 +341,7 @@
 <p>For some kinds of data, the generated variables could also be non-exclusive</p>
 <table>
 <thead>
-<tr class="header">
+<tr>
 <th>Color</th>
 <th>R</th>
 <th>G</th>
@@ -349,19 +349,19 @@
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td>White</td>
 <td>0</td>
 <td>0</td>
 <td>0</td>
 </tr>
-<tr class="even">
+<tr>
 <td>Purple</td>
 <td>255</td>
 <td>0</td>
 <td>100</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>Orange</td>
 <td>100</td>
 <td>120</td>
@@ -377,44 +377,44 @@
 <li>It does not change the number of categories</li>
 <li>Dummy-variables and True-False encoder are very similar to one-hot encoder, only small differences exist</li>
 </ul>
-<h2 id="target-encoder">4. Target-Encoder</h2>
+<h2 id="4-target-encoder"><a class="markdownIt-Anchor" href="#4-target-encoder"></a> 4. Target-Encoder</h2>
 <p>Target encoder transform the categorical variables according to the output variable.</p>
 <p>For numerical output, the target encoder replace categorical variable with the mean of samples under each category</p>
 <table>
 <thead>
-<tr class="header">
+<tr>
 <th>X(species)</th>
 <th>Y(Weight)</th>
-<th>X'</th>
+<th>X’</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td>cat</td>
 <td>10</td>
 <td>12.5</td>
 </tr>
-<tr class="even">
+<tr>
 <td>cat</td>
 <td>15</td>
 <td>12.5</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>dog</td>
 <td>20</td>
 <td>25</td>
 </tr>
-<tr class="even">
+<tr>
 <td>dog</td>
 <td>30</td>
 <td>25</td>
 </tr>
 </tbody>
 </table>
-<p>For categorical output, the target encoder replace categorical variable with <span class="math inline">\(P(y= y_i|x=x_i)\)</span></p>
+<p>For categorical output, the target encoder replace categorical variable with <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>P</mi><mo stretchy="false">(</mo><mi>y</mi><mo>=</mo><msub><mi>y</mi><mi>i</mi></msub><mi mathvariant="normal">∣</mi><mi>x</mi><mo>=</mo><msub><mi>x</mi><mi>i</mi></msub><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">P(y= y_i|x=x_i)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord">∣</span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></p>
 <table>
 <thead>
-<tr class="header">
+<tr>
 <th>X(species)</th>
 <th>Y(Size)</th>
 <th>X1(size-Small)</th>
@@ -423,49 +423,49 @@
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td>cat</td>
 <td>big</td>
 <td>0.25</td>
 <td>0.25</td>
 <td>0.5</td>
 </tr>
-<tr class="even">
+<tr>
 <td>cat</td>
 <td>big</td>
 <td>0.25</td>
 <td>0.25</td>
 <td>0.5</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>cat</td>
 <td>medium</td>
 <td>0.25</td>
 <td>0.25</td>
 <td>0.5</td>
 </tr>
-<tr class="even">
+<tr>
 <td>cat</td>
 <td>small</td>
 <td>0.25</td>
 <td>0.25</td>
 <td>0.5</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>dog</td>
 <td>big</td>
 <td>0.33</td>
 <td>0</td>
 <td>0.66</td>
 </tr>
-<tr class="even">
+<tr>
 <td>dog</td>
 <td>big</td>
 <td>0.33</td>
 <td>0</td>
 <td>0.66</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>dog</td>
 <td>small</td>
 <td>0.33</td>
@@ -482,26 +482,26 @@
 <li>It does not change the number of categories</li>
 <li>There several improved target encoders like smooth target encoder and bayesian target encoder</li>
 </ul>
-<h2 id="frequency-encoder">5.Frequency Encoder</h2>
-<p>The frequency encoder convert categorical variable into discrete variables by counting each category's frequency in training dataset:</p>
+<h2 id="5frequency-encoder"><a class="markdownIt-Anchor" href="#5frequency-encoder"></a> 5.Frequency Encoder</h2>
+<p>The frequency encoder convert categorical variable into discrete variables by counting each category’s frequency in training dataset:</p>
 <p>A categorical variable before encoding:</p>
 <table>
 <thead>
-<tr class="header">
+<tr>
 <th>Species</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td>Cat</td>
 </tr>
-<tr class="even">
+<tr>
 <td>Cat</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>Dog</td>
 </tr>
-<tr class="even">
+<tr>
 <td>Bird</td>
 </tr>
 </tbody>
@@ -509,21 +509,21 @@
 <p>after encoding:</p>
 <table>
 <thead>
-<tr class="header">
+<tr>
 <th>Species</th>
-<th>X'</th>
+<th>X’</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td>Cat</td>
 <td>2</td>
 </tr>
-<tr class="even">
+<tr>
 <td>Dog</td>
 <td>1</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>Bird</td>
 <td>1</td>
 </tr>
@@ -536,25 +536,25 @@
 <li>The might be collision of variables, and change the number of categories, thus this endocing method does not fit small dataset</li>
 <li>There would be magnitude in transformed variables</li>
 </ul>
-<h2 id="binary-encoder">6. Binary Encoder</h2>
+<h2 id="6-binary-encoder"><a class="markdownIt-Anchor" href="#6-binary-encoder"></a> 6. Binary Encoder</h2>
 <p>Binary Encoder use $log_2N $ variables to express the original variable with N categories</p>
 <table>
 <thead>
-<tr class="header">
+<tr>
 <th>Species</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td>Cat</td>
 </tr>
-<tr class="even">
+<tr>
 <td>Dog</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>Bird</td>
 </tr>
-<tr class="even">
+<tr>
 <td>Snake</td>
 </tr>
 </tbody>
@@ -562,29 +562,29 @@
 <p>A variable with four categories can be expressed in a 2-dimension vector</p>
 <table>
 <thead>
-<tr class="header">
+<tr>
 <th>Species</th>
 <th>X1</th>
 <th>X2</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td>Cat</td>
 <td>0</td>
 <td>0</td>
 </tr>
-<tr class="even">
+<tr>
 <td>Dog</td>
 <td>0</td>
 <td>1</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>Bird</td>
 <td>1</td>
 <td>0</td>
 </tr>
-<tr class="even">
+<tr>
 <td>Snake</td>
 <td>1</td>
 <td>1</td>
@@ -596,23 +596,23 @@
 <li>It saves more memory</li>
 <li>The generated variables is less interoperable</li>
 </ul>
-<h2 id="hash-encoder">7. Hash Encoder</h2>
+<h2 id="7-hash-encoder"><a class="markdownIt-Anchor" href="#7-hash-encoder"></a> 7. Hash Encoder</h2>
 <p>The Hash Enocder map the original variable into a low-dimension space, and use the length of hash bin as transformed values. It is usually applied in a text processing scenario.</p>
 <p>A text variable before encoding:</p>
 <table>
 <thead>
-<tr class="header">
+<tr>
 <th>Message</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td>I love python python is good</td>
 </tr>
-<tr class="even">
+<tr>
 <td>I dont like python</td>
 </tr>
-<tr class="odd">
+<tr>
 <td></td>
 </tr>
 </tbody>
@@ -620,7 +620,7 @@
 <p>A text variable after encoding:</p>
 <table>
 <thead>
-<tr class="header">
+<tr>
 <th>text</th>
 <th>I</th>
 <th>love</th>
@@ -632,7 +632,7 @@
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td>I love python python is good</td>
 <td>1</td>
 <td>1</td>
@@ -642,7 +642,7 @@
 <td>0</td>
 <td>0</td>
 </tr>
-<tr class="even">
+<tr>
 <td>I dont like python</td>
 <td>1</td>
 <td>0</td>
@@ -652,7 +652,7 @@
 <td>1</td>
 <td>1</td>
 </tr>
-<tr class="odd">
+<tr>
 <td></td>
 <td></td>
 <td></td>
@@ -670,7 +670,7 @@
 <li>Comparing to One-hot Encoder, it saves memory when the original variable is complex and repeatable, like text and graph</li>
 <li>The might be collision of variables, and change the number of categories, thus this endocing method does not fit small dataset</li>
 </ul>
-<h2 id="embedding-encoder">8. Embedding Encoder</h2>
+<h2 id="8-embedding-encoder"><a class="markdownIt-Anchor" href="#8-embedding-encoder"></a> 8. Embedding Encoder</h2>
 <p>Embedding methods is a techniques transforms the original categorical variable into a vector that reflect the similarity of the original categories. It is more frequently used in deep learning scenarios like NLP. Generally speaking, it can be regraded as a kind of encoding methods.</p>
 <p>[ongoing]</p>
 

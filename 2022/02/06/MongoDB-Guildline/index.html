@@ -199,7 +199,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      7.7k 字
+      7.8k 字
     </span>
   
 
@@ -241,69 +241,66 @@
             <h1 style="display: none">MongoDB Guildbook</h1>
             
             <div class="markdown-body">
-              <h1 id="mongodb">MongoDB</h1>
-<h2 id="about-mongodb">About MongoDB</h2>
-<p>MongoDB is a open- source NoSQL database stroing data in json like documents with schema.</p>
+              <h1 id="mongodb"><a class="markdownIt-Anchor" href="#mongodb"></a> MongoDB</h1>
+<h2 id="about-mongodb"><a class="markdownIt-Anchor" href="#about-mongodb"></a> About MongoDB</h2>
+<p>MongoDB  is a open- source  NoSQL database stroing data in json like documents with schema.</p>
 <p>mongoDB do not have concepts like join.</p>
 <p>mongoDB provides APIs for most programing language</p>
-<h2 id="three-ways-to-access-mongodb">Three ways to access MongoDB</h2>
-<ol type="1">
+<h2 id="three-ways-to-access-mongodb"><a class="markdownIt-Anchor" href="#three-ways-to-access-mongodb"></a> Three ways to access MongoDB</h2>
+<ol>
 <li>Community server</li>
 <li>VS extending</li>
 <li>MongoDB Altas</li>
 </ol>
-<h2 id="concepts-in-mondodb">Concepts in MondoDB:</h2>
-<p><strong>Document:</strong> a set of K-V pairs. Every document has a unique value via key "_id". Documents have dynamic schema, documents in same collection can have different schema. They. Can hold data of any types allowed by mongodb.</p>
-<p><strong>Collection:</strong> a group of mongodb documents, similar to "tables in other database. Unlike tables, collections does nothave any schema definition, and it cannnot be join. Usually, documents with in a collection belonging to a particular subject.</p>
+<h2 id="concepts-in-mondodb"><a class="markdownIt-Anchor" href="#concepts-in-mondodb"></a> Concepts in MondoDB:</h2>
+<p><strong>Document:</strong> a set of K-V pairs. Every document has a unique value via key “_id”. Documents have dynamic schema, documents in same collection can have different schema. They. Can hold data of any types allowed by mongodb.</p>
+<p><strong>Collection:</strong> a group of mongodb documents, similar to &quot;tables  in other database. Unlike tables, collections does nothave any schema definition, and it cannnot be join. Usually, documents with in a collection belonging to a particular subject.</p>
 <p><strong>Database:</strong> A database is a container of collections of data</p>
 <p><strong>Comparison between RDBMS and MongoDB</strong></p>
 <table>
-<colgroup>
-<col style="width: 8%">
-<col style="width: 30%">
-<col style="width: 12%">
-<col style="width: 48%">
-</colgroup>
 <thead>
-<tr class="header">
-<th style="text-align: left;">RDBMS</th>
-<th style="text-align: left;"></th>
+<tr>
+<th style="text-align:left">RDBMS</th>
+<th style="text-align:left"></th>
 <th></th>
 <th></th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td style="text-align: left;">Tables</td>
-<td style="text-align: left;">stand for entity</td>
+<tr>
+<td style="text-align:left">Tables</td>
+<td style="text-align:left">stand for entity</td>
 <td>Collections</td>
 <td>A set of documents representing one object</td>
 </tr>
-<tr class="even">
-<td style="text-align: left;">rows</td>
-<td style="text-align: left;">stand for an actual record</td>
+<tr>
+<td style="text-align:left">rows</td>
+<td style="text-align:left">stand for an actual record</td>
 <td>Documents</td>
 <td>a json objects</td>
 </tr>
-<tr class="odd">
-<td style="text-align: left;">columns</td>
-<td style="text-align: left;">stand for attributes</td>
+<tr>
+<td style="text-align:left">columns</td>
+<td style="text-align:left">stand for attributes</td>
 <td>Fields</td>
 <td>The first level of the schema</td>
 </tr>
 </tbody>
 </table>
-<h2 id="start-with-mongodb">Start with MongoDB</h2>
-<ol type="1">
-<li><p>Build a sever(for Mac)</p>
+<h2 id="start-with-mongodb"><a class="markdownIt-Anchor" href="#start-with-mongodb"></a> Start with MongoDB</h2>
+<ol>
+<li>
+<p>Build a sever(for Mac)</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><pre><code class="hljs bash">mongod --config /opt/homebrew/etc/mongod.conf<br></code></pre></td></tr></table></figure>
 <p>This create a temp mongo server. If you close the session by ctrl+c, he connecttion would be terminated</p>
 <p>Or you can use the command</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">brew services start mongodb/brew/mongodb-community<br></code></pre></td></tr></table></figure>
 <p>This create a back-support mongoDB server, you can still access to it after you close the terminal, to stop the back-support:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">brew services stop mongodb/brew/mongodb-community<br></code></pre></td></tr></table></figure></li>
-<li><p>Start a connection</p>
-<ol type="1">
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">brew services stop mongodb/brew/mongodb-community<br></code></pre></td></tr></table></figure>
+</li>
+<li>
+<p>Start a connection</p>
+<ol>
 <li>After start the server, you can type <code>mongo</code> in bash to start a connection. Use <code>exit</code> to stop the connection</li>
 <li>you can use mongodb compass to start a connection, this is a mongondb management UI</li>
 <li>use Datagrip/Dataspell to build a connection</li>
@@ -311,30 +308,55 @@
 <p>Notes:</p>
 <ul>
 <li>The port for local host is always 27017</li>
-<li>There's no default username and password</li>
-</ul></li>
+<li>There’s no default username and password</li>
+</ul>
+</li>
 </ol>
-<h2 id="data-types-in-mongodb">Data types in MongoDB</h2>
+<h2 id="data-types-in-mongodb"><a class="markdownIt-Anchor" href="#data-types-in-mongodb"></a> Data types in MongoDB</h2>
 <p>Allowed data dytes in mongoDB include:</p>
 <ul>
-<li><p>BSON</p>
-<p>​ A mongoDB data type, it's binary encoded json that can processed faster, it support some types(data, timestamp,object id) that are not supported by json</p></li>
-<li><p>JSON</p></li>
-<li><p>Integer</p></li>
-<li><p>Boolean</p></li>
-<li><p>Double</p></li>
-<li><p>Arrays</p></li>
-<li><p>Objects</p>
-<p>​ Used to store embedded documents. If a documents A contains a K-V pair {"file":B}, where B is another document, the type of B in A's schema is Object</p></li>
-<li><p>Null</p></li>
-<li><p>Date</p></li>
-<li><p>Timestemp</p></li>
-<li><p>Object ID</p>
-<p>​ ObjectIds are small, likely unique, fast to generate, and ordered. It's a usually used as a PK of a document. ObjectId values are 12 bytes in length, consisting of a 4-bytes timestamp value representiong the ObjectId's creation, a 5-bytes random value, a 3-byte incrementing value</p></li>
-<li><p>Code</p>
-<p>​ Like javascript code</p></li>
+<li>
+<p>BSON</p>
+<p>​			A mongoDB data type, it’s binary encoded json that can processed faster, it support some types(data, timestamp,object id) that are not supported by json</p>
+</li>
+<li>
+<p>JSON</p>
+</li>
+<li>
+<p>Integer</p>
+</li>
+<li>
+<p>Boolean</p>
+</li>
+<li>
+<p>Double</p>
+</li>
+<li>
+<p>Arrays</p>
+</li>
+<li>
+<p>Objects</p>
+<p>​			Used to store embedded documents. If a documents A contains a K-V pair {“file”:B}, where B is another document, the type of B in A’s schema is Object</p>
+</li>
+<li>
+<p>Null</p>
+</li>
+<li>
+<p>Date</p>
+</li>
+<li>
+<p>Timestemp</p>
+</li>
+<li>
+<p>Object ID</p>
+<p>​			ObjectIds are small, likely unique, fast to generate, and ordered. It’s a usually used as a PK of a document. ObjectId values are 12 bytes in length, consisting of a 4-bytes timestamp value representiong the ObjectId’s creation, a 5-bytes random value, a 3-byte incrementing value</p>
+</li>
+<li>
+<p>Code</p>
+<p>​			Like javascript code</p>
+</li>
 </ul>
-<h2 id="create-and-drop-database">Create and Drop Database</h2>
+<h2 id="create-and-drop-database"><a class="markdownIt-Anchor" href="#create-and-drop-database"></a> Create and Drop Database</h2>
 <p>you can create databse by:</p>
 <figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs fortran"><span class="hljs-keyword">use</span> &lt;database-<span class="hljs-keyword">name</span>&gt;<br></code></pre></td></tr></table></figure>
 <p>It would select the DB, if not exists, it create the DB</p>
@@ -345,20 +367,20 @@
 <p>Before you drop the DB, makesure you select the DB first.</p>
 <p>Some other commands related to create and drop</p>
 <figure class="highlight nsis"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs nsis"><span class="hljs-literal">show</span> databases -- list <span class="hljs-literal">all</span> visible DB<br>db -- <span class="hljs-literal">show</span> the <span class="hljs-literal">current</span> DB<br></code></pre></td></tr></table></figure>
-<h2 id="create-and-drop-colletions">Create and drop colletions</h2>
+<h2 id="create-and-drop-colletions"><a class="markdownIt-Anchor" href="#create-and-drop-colletions"></a> Create and drop colletions</h2>
 <p>to create a collection in Database:</p>
 <figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">db.create<span class="hljs-constructor">Collection(<span class="hljs-string">&quot;name&quot;</span>,<span class="hljs-params">options</span>)</span><br></code></pre></td></tr></table></figure>
 <p>to drop a collection:</p>
 <figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stata"><span class="hljs-keyword">db</span>.collection_name.<span class="hljs-keyword">drop</span>()<br></code></pre></td></tr></table></figure>
 <p>to show collections in current DB</p>
 <figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs dart"><span class="hljs-keyword">show</span> collections<br></code></pre></td></tr></table></figure>
-<h2 id="insert-documents">Insert documents</h2>
+<h2 id="insert-documents"><a class="markdownIt-Anchor" href="#insert-documents"></a> Insert documents</h2>
 <p>to create one documents:</p>
 <figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">db.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">C1</span>.</span></span>insert<span class="hljs-constructor">One(&#123;<span class="hljs-string">&quot;name&quot;</span>:<span class="hljs-string">&quot;A&quot;</span>&#125;)</span>;<br></code></pre></td></tr></table></figure>
 <p>to create many documents:</p>
 <figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">db.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">C1</span>.</span></span>insert<span class="hljs-constructor">Many([&#123;<span class="hljs-string">&quot;name&quot;</span>:<span class="hljs-string">&quot;B&quot;</span>&#125;,&#123;<span class="hljs-string">&quot;name&quot;</span>:<span class="hljs-string">&quot;C&quot;</span>&#125;])</span><br></code></pre></td></tr></table></figure>
 <p>Note: the input of insertMany() should be a list[]</p>
-<h2 id="update-documents">Update documents</h2>
+<h2 id="update-documents"><a class="markdownIt-Anchor" href="#update-documents"></a> Update documents</h2>
 <p>To update a documents</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs stylus">db<span class="hljs-selector-class">.C1</span><span class="hljs-selector-class">.updateOne</span>(&#123;<span class="hljs-string">&quot;name&quot;</span>:<span class="hljs-string">&quot;B&quot;</span>&#125;,&#123;<br>        <span class="hljs-variable">$set</span>:&#123;<br>            <span class="hljs-string">&quot;mobile&quot;</span>:<span class="hljs-string">&quot;123456&quot;</span><br>        &#125;<br>    &#125;<br>)<br></code></pre></td></tr></table></figure>
 <p>Where:</p>
@@ -369,13 +391,13 @@
 <p>Notes:This command only applies to the first document that meet the search condition(the first pararmeter)</p>
 <p>to update many documents:</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs stylus">db<span class="hljs-selector-class">.C1</span><span class="hljs-selector-class">.updateMany</span>(&#123;<span class="hljs-string">&quot;mobile&quot;</span>:<span class="hljs-string">&quot;123456&quot;</span>&#125;,&#123;<br>        <span class="hljs-variable">$set</span>:&#123;<br>            <span class="hljs-string">&quot;mobile&quot;</span>:<span class="hljs-string">&quot;654321&quot;</span><br>        &#125;<br>    &#125;<br>)<br></code></pre></td></tr></table></figure>
-<h2 id="read-data">Read data</h2>
+<h2 id="read-data"><a class="markdownIt-Anchor" href="#read-data"></a> Read data</h2>
 <p>To read(and modify) data:</p>
 <figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs applescript"><span class="hljs-comment">-- find all documents in the collection</span><br>db.C1.find()<br><br><span class="hljs-comment">--find particular documents </span><br>db.C1.find(&#123;<span class="hljs-string">&quot;name&quot;</span>:<span class="hljs-string">&quot;A&quot;</span>,<span class="hljs-string">&quot;mobile&quot;</span>:<span class="hljs-string">&quot;654321&quot;</span>&#125;) <br><br><span class="hljs-comment">-- find the first documents that fits the condition</span><br>db.C1.findOne(&#123;<span class="hljs-string">&quot;mobile&quot;</span>:<span class="hljs-string">&quot;654321&quot;</span>&#125;)<br><br><span class="hljs-comment">-- find and delete the first documenttaht fits the condition</span><br>db.C1.findOneAndDelete(&#123;<span class="hljs-string">&quot;name&quot;</span>:<span class="hljs-string">&quot;D&quot;</span>&#125;)<br><br><span class="hljs-comment">-- find and replace the first documenttaht fits the condition</span><br><span class="hljs-comment">-- the second parameter gives a whole documents(like the format in insert)</span><br>db.C1.findOneAndReplace(&#123;<span class="hljs-string">&quot;name&quot;</span>:<span class="hljs-string">&quot;A&quot;</span>&#125;,&#123;<span class="hljs-string">&quot;name&quot;</span>:<span class="hljs-string">&quot;E&quot;</span>,<span class="hljs-string">&quot;mobile&quot;</span>:<span class="hljs-string">&quot;23456&quot;</span>&#125;)<br><br><span class="hljs-comment">-- find and update</span><br><span class="hljs-comment">-- the second parameter gives a the operation to apply on the  documents(like the format in update)</span><br>db.C1.findOneAndUpdate(&#123;<span class="hljs-string">&quot;name&quot;</span>:<span class="hljs-string">&quot;E&quot;</span>&#125;,&#123;<br>	$<span class="hljs-keyword">set</span>:&#123;<br>		<span class="hljs-string">&quot;mobile&quot;</span>:<span class="hljs-string">&quot;12345&quot;</span><br>				&#125;<br>			&#125;<br>   )<br>   <br><span class="hljs-comment">-- find and Modify</span><br><span class="hljs-comment">-- pass a json that tell the command to conduct multiple operaions</span><br>db.C1.findAndModify(<br>    &#123;<br>    <span class="hljs-string">&quot;query&quot;</span>: &#123;<span class="hljs-string">&quot;name&quot;</span>:<span class="hljs-string">&quot;E&quot;</span>&#125;,<br>    <span class="hljs-string">&quot;update&quot;</span>:&#123;$<span class="hljs-keyword">set</span>:&#123;<span class="hljs-string">&quot;name&quot;</span>:<span class="hljs-string">&quot;A&quot;</span>&#125;&#125;,<br>    &#125;<br>)<br><br></code></pre></td></tr></table></figure>
-<h2 id="delete-documents">Delete documents</h2>
+<h2 id="delete-documents"><a class="markdownIt-Anchor" href="#delete-documents"></a> Delete documents</h2>
 <p>to delete documents from a collection:</p>
 <figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">-- delete the first documetn fits the condition<br>db.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">C1</span>.</span></span>delete<span class="hljs-constructor">One(&#123;<span class="hljs-string">&quot;mobile&quot;</span>:<span class="hljs-string">&quot;12345&quot;</span>&#125;)</span><br>-- delete all documents fit the condition<br>db.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">C1</span>.</span></span>delete<span class="hljs-constructor">Many(&#123;<span class="hljs-string">&quot;mobile&quot;</span>:<span class="hljs-string">&quot;12345&quot;</span>&#125;)</span><br></code></pre></td></tr></table></figure>
-<h2 id="query">Query</h2>
+<h2 id="query"><a class="markdownIt-Anchor" href="#query"></a> Query</h2>
 <p>The first parameter is called query condition, by passing a json map, you tell the command constraints of fields.</p>
 <figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">db.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">C1</span>.</span></span>find(&#123;<span class="hljs-string">&quot;mobile&quot;</span>:<span class="hljs-string">&quot;12345&quot;</span>,<span class="hljs-string">&quot;name&quot;</span>:<span class="hljs-string">&quot;T&quot;</span>&#125;)<br></code></pre></td></tr></table></figure>
 <p>you can also use the $and operand:</p>
@@ -395,19 +417,19 @@
 <li>eq: equal</li>
 <li>neq: not equal</li>
 </ul>
-<h2 id="select-specific-fields">Select specific fields</h2>
+<h2 id="select-specific-fields"><a class="markdownIt-Anchor" href="#select-specific-fields"></a> Select specific fields</h2>
 <p>to select specific fields:</p>
 <figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs stata"><span class="hljs-keyword">var</span> pipline = [<br>    &#123;<span class="hljs-variable">$sort</span>:&#123;<span class="hljs-string">&quot;name&quot;</span>:1&#125;&#125;<br>]<br><span class="hljs-keyword">db</span>.C1.aggregate(pipline)<br></code></pre></td></tr></table></figure>
 <p>Notes:</p>
 <ul>
 <li>the first parameter explicts the query condition</li>
 <li>the second parameter explicts the fields you want or do not want(Projection)</li>
-<li><strong>You can not mix inclusion and exclusion</strong> in the second parameter like {"name":0,"mobile":1}</li>
-<li>**The only field that can be mixed is "_id"** of documents. {"name":1,"_id":0}</li>
+<li><strong>You can not mix inclusion and exclusion</strong> in the second parameter like {“name”:0,“mobile”:1}</li>
+<li><strong>The only field that can be mixed is “_id”</strong> of documents. {“name”:1,&quot;_id&quot;:0}</li>
 </ul>
-<h2 id="projection">Projection</h2>
+<h2 id="projection"><a class="markdownIt-Anchor" href="#projection"></a> Projection</h2>
 <p>Projection is a mechanism allowing you to select specific fieds, like slice of an array.</p>
-<h2 id="aggregation">Aggregation</h2>
+<h2 id="aggregation"><a class="markdownIt-Anchor" href="#aggregation"></a> Aggregation</h2>
 <p>To perform aggregation on collections:</p>
 <figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs stata"><span class="hljs-keyword">var</span> pipline = [<br>    &#123;<span class="hljs-variable">$sort</span>:&#123;<span class="hljs-string">&quot;name&quot;</span>:1&#125;&#125;,<br>    &#123;<span class="hljs-variable">$limit</span>:4&#125;<br>]<br><span class="hljs-keyword">db</span>.C1.aggregate(pipline)<br></code></pre></td></tr></table></figure>
 <p>where pip line is list of operations,</p>
@@ -423,17 +445,17 @@
 <li>unwind</li>
 <li>unset</li>
 </ul>
-<h2 id="limit-and-skip">Limit and skip</h2>
+<h2 id="limit-and-skip"><a class="markdownIt-Anchor" href="#limit-and-skip"></a> Limit and skip</h2>
 <p>Limit the results returned by:</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stylus">db<span class="hljs-selector-class">.C1</span><span class="hljs-selector-class">.find</span>()<span class="hljs-selector-class">.limit</span>(<span class="hljs-number">3</span>)<br></code></pre></td></tr></table></figure>
 <p>showing the first there results</p>
 <p>Skip the first 2 results and show the rest:</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stylus">db<span class="hljs-selector-class">.C1</span><span class="hljs-selector-class">.find</span>()<span class="hljs-selector-class">.skip</span>(<span class="hljs-number">2</span>)<br></code></pre></td></tr></table></figure>
-<h2 id="sort">Sort</h2>
+<h2 id="sort"><a class="markdownIt-Anchor" href="#sort"></a> Sort</h2>
 <p>to sort results:</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stylus">db<span class="hljs-selector-class">.C1</span><span class="hljs-selector-class">.find</span>()<span class="hljs-selector-class">.sort</span>(&#123;<span class="hljs-string">&quot;name&quot;</span>:-<span class="hljs-number">1</span>&#125;)<br></code></pre></td></tr></table></figure>
 <p>where the json map in sort() specify the sorting depending on which fields. 1 for ascending and -1 for descending. If you pass multiple fields, it sort the next fields in the groups of previous fields.</p>
-<h2 id="create-and-drop-index">Create and Drop index</h2>
+<h2 id="create-and-drop-index"><a class="markdownIt-Anchor" href="#create-and-drop-index"></a> Create and Drop index</h2>
 <p>Create indexes:</p>
 <figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">db.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">C1</span>.</span></span>create<span class="hljs-constructor">Index(&#123;<span class="hljs-string">&quot;name&quot;</span>:1&#125;)</span><br>db.<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">C1</span>.</span></span>create<span class="hljs-constructor">Indexes([&#123;<span class="hljs-string">&quot;name&quot;</span>:1&#125;,&#123;<span class="hljs-string">&quot;mobile&quot;</span>:1&#125;])</span><br></code></pre></td></tr></table></figure>
 <p>Drop index:</p>
@@ -444,23 +466,23 @@
 <p>Where:</p>
 <ul>
 <li>_id is an essential arguments, it explain group by which field</li>
-<li>put a $ before the field to group by, it's necessary</li>
-<li>if you want to group by multiple levels, use _id:["$name","$mobile"]</li>
-<li>the "count" is an alias defined by user</li>
+<li>put a $ before the field to group by, it’s necessary</li>
+<li>if you want to group by multiple levels, use _id:[&quot;$name&quot;,&quot;$mobile&quot;]</li>
+<li>the “count” is an alias defined by user</li>
 <li>{$sum:1} = count(*)</li>
-<li>{$sum:"$field"} = sum(field)</li>
+<li>{$sum:&quot;$field&quot;} = sum(field)</li>
 <li>other operans includes: $avg, $min, $max</li>
 <li>$push: push all values of the given field in the group into one array</li>
 <li>$addToSet: same as $push, but return a unique set</li>
 <li>$first, $last: return the first/last value</li>
-<li>if _id:null, then return all documents in one group</li>
+<li>if  _id:null, then return all documents in one group</li>
 </ul>
-<h2 id="back-up-restore">Back up &amp; Restore</h2>
+<h2 id="back-up-restore"><a class="markdownIt-Anchor" href="#back-up-restore"></a> Back up &amp; Restore</h2>
 <p>to back up all databases</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">-- dump the current database<br>mongodump<br></code></pre></td></tr></table></figure>
-<p>To restore all databases</p>
+<p>To restore  all databases</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">mongorestore<br></code></pre></td></tr></table></figure>
-<h2 id="transaction">Transaction</h2>
+<h2 id="transaction"><a class="markdownIt-Anchor" href="#transaction"></a> Transaction</h2>
 <p>For transation realted content in MongoDB, please refer to <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/71679945">this link</a>.</p>
 
             </div>
