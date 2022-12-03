@@ -4,7 +4,32 @@
   
   
   <entry>
-    <title>Structual Causal Model</title>
+    <title>Basic of Probability Theory</title>
+    <link href="/2022/12/02/Basic-prob/"/>
+    <url>/2022/12/02/Basic-prob/</url>
+    
+    <content type="html"><![CDATA[<h1 id="basic-of-probability-theory">Basic of Probability Theory</h1>]]></content>
+    
+    
+    <categories>
+      
+      <category>Probability &amp; Statistics</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Basic Probability</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Structural Causal Model</title>
     <link href="/2022/11/10/structual-causal-model/"/>
     <url>/2022/11/10/structual-causal-model/</url>
     
@@ -20,7 +45,7 @@
     
     <tags>
       
-      <tag>Structual Causal Model</tag>
+      <tag>Structural Causal Model</tag>
       
       <tag>Introduction</tag>
       
@@ -33,7 +58,7 @@
   
   
   <entry>
-    <title>potential-outcome</title>
+    <title>Potential Outcome Framework</title>
     <link href="/2022/11/07/potential-outcome/"/>
     <url>/2022/11/07/potential-outcome/</url>
     
@@ -58,7 +83,7 @@
   
   
   <entry>
-    <title>basic-causal-inference</title>
+    <title>Introduction of Causal Inference</title>
     <link href="/2022/11/07/basic-causal-inference/"/>
     <url>/2022/11/07/basic-causal-inference/</url>
     
@@ -135,7 +160,7 @@
   
   
   <entry>
-    <title>distribution_type</title>
+    <title>Distribution Type Transformation in Machine Learning</title>
     <link href="/2022/10/22/distribution-type/"/>
     <url>/2022/10/22/distribution-type/</url>
     
@@ -360,7 +385,7 @@
     <link href="/2022/09/22/loss-function/"/>
     <url>/2022/09/22/loss-function/</url>
     
-    <content type="html"><![CDATA[<h1 id="common-loss-function-in-machine-learning">Common Loss Function in Machine Learning</h1><h2 id="numerical-output">Numerical Output</h2><h3 id="msel2-lossrmse">1. MSE(L2 Loss)/RMSE</h3><p>Mean Squared Error <span class="math display">\[MSE = \frac{1}{n}\sum_i^n(y_i-\hat{y})^2\]</span></p><ul><li>MSE is differentiable any where, which makes it suitable for gradient descent optimizer</li><li>With gradient decrease, the MSE will decrease, which means MSE is effective with fixed learning rate</li><li>The squared operator gives enlarge the loss, thus MSE is sensitive ti outlier, if outlier is meant to be detected, suing MSE is fine. If the outlier is treat as part of the training data, MSE is not an ideal loss function (e. g. prediction model for sales promotion day)</li></ul><p><img src="/2022/09/22/loss-function/1.png"></p><p>RMSE is the square root of MSE <span class="math display">\[RMSE = \sqrt{MSE}\]</span></p><ul><li>RMSE is on the same scale with MSE, but it make the loss more interpretable in some case(e.g prediction on product price)</li></ul><h3 id="mae-l1-lossmape">2. MAE (L1 Loss)/MAPE</h3><p>Mean Absolute Error <span class="math display">\[MAE = \frac{1}{n}\sum_i^n|y_i-\hat{y}|\]</span></p><ul><li>MAE is not sensitive to outlier, it is less likely to cause gradient explosion</li><li>The gradient for any loss is the same, which means MAE does not converge well with fix learning rate</li><li>MAE is not differentiable at 0</li></ul><p><img src="/2022/09/22/loss-function/2.png"></p><p>MAPE is the mean percentage absolute error <span class="math display">\[MAE = \frac{1}{n}\sum_i^n\frac{|y_i-\hat{y}|}{y_ i}\]</span></p><ul><li>It can more clearly deliver the degree of deviation rather than the scale of the error</li></ul><h3 id="smooth-l1huber-loss">3. Smooth L1(Huber Loss)</h3><p><span class="math display">\[L = \frac{1}{n}\sum_i^nz_ i\\z_i = \left\{\begin{aligned}MSE \qquad&amp; |y -\hat{y}| &lt; \beta \\MAE \qquad &amp; elsewhere \\\end{aligned}\right.\]</span></p><ul><li><span class="math inline">\(\beta\)</span> is a defined threshold for error of outlier. If the error is within <span class="math inline">\(\beta\)</span>, apply MSE, otherwise, apply MAE. Huber Loss combines the advantages of L1 and L2 Loss</li><li>Huber loss is ideal for NN</li></ul><p><img src="/2022/09/22/loss-function/3.png"></p><h3 id="log-cosh-loss">4. Log-cosh Loss</h3><p><span class="math display">\[L = \sum_ i^ nlog(cosh(y_i-\hat{y_i}))\]</span></p><ul><li>Log-cosh has almost every virtue of Huber loss, the difference is, it is second-differentiable anywhere, such method is very useful when applying newton-method optimzer</li><li>However, when erro is very big, Log-cosh loss still would have gradient or hessian problem(gradient remains same when loss decrease). Just like MAE</li></ul><h2 id="categoricalprobability-output">Categorical/Probability Output</h2><h3 id="log-losscross-entropy-loss">1. Log Loss/Cross Entropy Loss</h3><p>Log Loss is basically the same concept as the cross entropy, the only difference is that it can be applied at a single sample by replaceing true probability p(x) with 1 if <span class="math inline">\(y_ {true} = m\)</span>. The average loss of all sample is the Log Loss or Cross Entropy Loss.</p><p>For Cross Entropy, refer to <a href="http://zhengyuanyang.com/2022/09/22/information-theory-in-ML/">here</a></p><p>When it come to a binary classification scenario, the Log Loss can be written as: <span class="math display">\[LogLoss = -\frac{1}{n}\sum_i^n [y_ilog(p(y_i))+(1-y_i)log(1-p(y_i))]\]</span></p><ul><li>The gradient would decrease as Log Loss decrease, thus Log Loss can work with fixed learning rate</li><li>Sentive to outlier</li><li>GDBT usually apply Log Loss as loss function(classification)</li></ul><p>The following picture is the log loss of the prediction on a positive sample:</p><p><img src="/2022/09/22/loss-function/4.png"></p><h3 id="exponential-loss">2. Exponential Loss</h3><p><span class="math display">\[L = \frac{1}{n}\sum_i^ne^{-yf(x)}\]</span></p><ul><li>Theoretically, the optimal of Exponential Loss and Log Loss is the same(<span class="math inline">\(\frac{1}{2}log\ odds\)</span>), the advantage of exponential loss is that is is easier to calculate, thus can make optimzer update the weight with less cost</li><li>Sentive to outlier</li><li>AdaBoosting usually apply Exponential Loss as loss function(classification)</li></ul><h3 id="hinge-loss">3. Hinge Loss</h3><p><span class="math display">\[L = \frac{1}{n}\sum_i^n max(0,1-yf(x))\]</span></p><ul><li>If the model label the sample correct, the loss is 0</li><li>Less sensitive to outlier</li><li>SVM usually adopt Hinge Loss as loss function</li></ul><p><img src="/2022/09/22/loss-function/5.png"></p><h3 id="focal-loss">4. Focal Loss</h3><p>Focal Loss is a improved version of Cross Entrophy Loss <span class="math display">\[L_ f = -\frac{1}{n}\sum_i^n\sum_ j^m\alpha_ j(1-p(y ))^\gamma y log(p(y))\]</span></p><ul><li>Focal Loss add a focus factor <span class="math inline">\((1-p(y))\)</span>, so that those sample with high predicted probability, which are the ""easy samples", donate less loss. Compare to CE Loss, Focal Loss focus on those "hard samples"</li><li>Focal Loss also add a balance factor(optional), which is the percentage of a certain category of y among all samples. This make focal loss can deal with imbalanced data</li><li><span class="math inline">\(\gamma\)</span> is a influence parameter. When <span class="math inline">\(\gamma = 0\)</span>, the Focal Loss become CE Loss. In preactice, we usually set <span class="math inline">\(\gamma = 2\)</span></li></ul><h3 id="impurity">5.Impurity</h3><p>Impurity is a kind of loss functions usually applied in splitting in decision tree</p><h4 id="gini-impurity">5.1 Gini Impurity</h4><p><span class="math display">\[I_G = 1- \sum_{i}^m P(Y=C_i)\]</span></p><ul><li>Lower <span class="math inline">\(I_G\)</span> , better classification performance</li><li>For decision tree model, calculate <span class="math inline">\(I_G\)</span> for each split and use combined Gini Impurity(<span class="math inline">\(\sum I_G\)</span>) as loss of the spiltting</li></ul><h4 id="information-gain">5.2 Information Gain</h4><p>For details of Information Gain, refer to <a href="http://zhengyuanyang.com/2022/09/22/information-theory-in-ML/">here</a> <span class="math display">\[IG = H(Y) - H(Y|X)\]</span> where X is the feature the spliting based on (X&gt;c,X=1)</p><ul><li>IG is the degree that uncertainty reduce after the spilting, the greater IG is, the better a split is</li><li>We can calculate the Information Gain Rate <span class="math inline">\(IGR = \frac{IG}{H(Y)}\)</span> to present the degress of uncertainty reduction more directly</li></ul>]]></content>
+    <content type="html"><![CDATA[<h1 id="common-loss-function-in-machine-learning">Common Loss Function in Machine Learning</h1><h2 id="numerical-output">Numerical Output</h2><h3 id="msel2-lossrmse">1. MSE(L2 Loss)/RMSE</h3><p>Mean Squared Error <span class="math display">\[MSE = \frac{1}{n}\sum_i^n(y_i-\hat{y})^2\]</span></p><ul><li>MSE is differentiable any where, which makes it suitable for gradient descent optimizer</li><li>With gradient decrease, the MSE will decrease, which means MSE is effective with fixed learning rate</li><li>The squared operator gives enlarge the loss, thus MSE is sensitive ti outlier, if outlier is meant to be detected, suing MSE is fine. If the outlier is treat as part of the training data, MSE is not an ideal loss function (e. g. prediction model for sales promotion day)</li></ul><p><img src="/2022/09/22/loss-function/1.png"></p><p>RMSE is the square root of MSE <span class="math display">\[RMSE = \sqrt{MSE}\]</span></p><ul><li>RMSE is on the same scale with MSE, but it make the loss more interpretable in some case(e.g prediction on product price)</li></ul><h3 id="mae-l1-lossmape">2. MAE (L1 Loss)/MAPE</h3><p>Mean Absolute Error <span class="math display">\[MAE = \frac{1}{n}\sum_i^n|y_i-\hat{y}|\]</span></p><ul><li>MAE is not sensitive to outlier, it is less likely to cause gradient explosion</li><li>The gradient for any loss is the same, which means MAE does not converge well with fix learning rate</li><li>MAE is not differentiable at 0</li></ul><p><img src="/2022/09/22/loss-function/2.png"></p><p>MAPE is the mean percentage absolute error <span class="math display">\[MAPE = \frac{1}{n}\sum_i^n\frac{|y_i-\hat{y}|}{y_ i}\]</span></p><ul><li>It can more clearly deliver the degree of deviation rather than the scale of the error</li></ul><h3 id="smooth-l1huber-loss">3. Smooth L1(Huber Loss)</h3><p><span class="math display">\[L = \frac{1}{n}\sum_i^nz_ i\\z_i = \left\{\begin{aligned}MSE \qquad&amp; |y -\hat{y}| &lt; \beta \\MAE \qquad &amp; elsewhere \\\end{aligned}\right.\]</span></p><ul><li><span class="math inline">\(\beta\)</span> is a defined threshold for error of outlier. If the error is within <span class="math inline">\(\beta\)</span>, apply MSE, otherwise, apply MAE. Huber Loss combines the advantages of L1 and L2 Loss</li><li>Huber loss is ideal for NN</li></ul><p><img src="/2022/09/22/loss-function/3.png"></p><h3 id="log-cosh-loss">4. Log-cosh Loss</h3><p><span class="math display">\[L = \sum_ i^ nlog(cosh(y_i-\hat{y_i}))\]</span></p><ul><li>Log-cosh has almost every virtue of Huber loss, the difference is, it is second-differentiable anywhere, such method is very useful when applying newton-method optimzer</li><li>However, when erro is very big, Log-cosh loss still would have gradient or hessian problem(gradient remains same when loss decrease). Just like MAE</li></ul><h2 id="categoricalprobability-output">Categorical/Probability Output</h2><h3 id="log-losscross-entropy-loss">1. Log Loss/Cross Entropy Loss</h3><p>Log Loss is basically the same concept as the cross entropy, the only difference is that it can be applied at a single sample by replaceing true probability p(x) with 1 if <span class="math inline">\(y_ {true} = m\)</span>. The average loss of all sample is the Log Loss or Cross Entropy Loss.</p><p>For Cross Entropy, refer to <a href="http://zhengyuanyang.com/2022/09/22/information-theory-in-ML/">here</a></p><p>When it come to a binary classification scenario, the Log Loss can be written as: <span class="math display">\[LogLoss = -\frac{1}{n}\sum_i^n [y_ilog(p(y_i))+(1-y_i)log(1-p(y_i))]\]</span></p><ul><li>The gradient would decrease as Log Loss decrease, thus Log Loss can work with fixed learning rate</li><li>Sentive to outlier</li><li>GDBT usually apply Log Loss as loss function(classification)</li></ul><p>The following picture is the log loss of the prediction on a positive sample:</p><p><img src="/2022/09/22/loss-function/4.png"></p><h3 id="exponential-loss">2. Exponential Loss</h3><p><span class="math display">\[L = \frac{1}{n}\sum_i^ne^{-yf(x)}\]</span></p><ul><li>Theoretically, the optimal of Exponential Loss and Log Loss is the same(<span class="math inline">\(\frac{1}{2}log\ odds\)</span>), the advantage of exponential loss is that is is easier to calculate, thus can make optimzer update the weight with less cost</li><li>Sentive to outlier</li><li>AdaBoosting usually apply Exponential Loss as loss function(classification)</li></ul><h3 id="hinge-loss">3. Hinge Loss</h3><p><span class="math display">\[L = \frac{1}{n}\sum_i^n max(0,1-yf(x))\]</span></p><ul><li>If the model label the sample correct, the loss is 0</li><li>Less sensitive to outlier</li><li>SVM usually adopt Hinge Loss as loss function</li></ul><p><img src="/2022/09/22/loss-function/5.png"></p><h3 id="focal-loss">4. Focal Loss</h3><p>Focal Loss is a improved version of Cross Entrophy Loss <span class="math display">\[L_ f = -\frac{1}{n}\sum_i^n\sum_ j^m\alpha_ j(1-p(y ))^\gamma y log(p(y))\]</span></p><ul><li>Focal Loss add a focus factor <span class="math inline">\((1-p(y))\)</span>, so that those sample with high predicted probability, which are the ""easy samples", donate less loss. Compare to CE Loss, Focal Loss focus on those "hard samples"</li><li>Focal Loss also add a balance factor(optional), which is the percentage of a certain category of y among all samples. This make focal loss can deal with imbalanced data</li><li><span class="math inline">\(\gamma\)</span> is a influence parameter. When <span class="math inline">\(\gamma = 0\)</span>, the Focal Loss become CE Loss. In preactice, we usually set <span class="math inline">\(\gamma = 2\)</span></li></ul><h3 id="impurity">5.Impurity</h3><p>Impurity is a kind of loss functions usually applied in splitting in decision tree</p><h4 id="gini-impurity">5.1 Gini Impurity</h4><p><span class="math display">\[I_G = 1- \sum_{i}^m P(Y=C_i)\]</span></p><ul><li>Lower <span class="math inline">\(I_G\)</span> , better classification performance</li><li>For decision tree model, calculate <span class="math inline">\(I_G\)</span> for each split and use combined Gini Impurity(<span class="math inline">\(\sum I_G\)</span>) as loss of the spiltting</li></ul><h4 id="information-gain">5.2 Information Gain</h4><p>For details of Information Gain, refer to <a href="http://zhengyuanyang.com/2022/09/22/information-theory-in-ML/">here</a> <span class="math display">\[IG = H(Y) - H(Y|X)\]</span> where X is the feature the spliting based on (X&gt;c,X=1)</p><ul><li>IG is the degree that uncertainty reduce after the spilting, the greater IG is, the better a split is</li><li>We can calculate the Information Gain Rate <span class="math inline">\(IGR = \frac{IG}{H(Y)}\)</span> to present the degress of uncertainty reduction more directly</li></ul>]]></content>
     
     
     <categories>
