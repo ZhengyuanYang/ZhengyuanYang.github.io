@@ -200,31 +200,6 @@
   
   
   <entry>
-    <title>AB-Test</title>
-    <link href="/2022/10/17/AB-Test/"/>
-    <url>/2022/10/17/AB-Test/</url>
-    
-    <content type="html"><![CDATA[<h1 id="basic-procedure-of-ab-testing">Basic Procedure of A/B Testing</h1><h2 id="about-ab-testing">1. About A/B Testing</h2><h2 id="section">2.</h2><h2 id="experiment-design">3. Experiment Design</h2><h3 id="define-problem">3.1 Define Problem</h3><p>The first step of conducting an A/B test is to define the objectives, to clarify the business problem we're trying to solve.</p><h3 id="pre-experiment-analysis">3.2 Pre-experiment Analysis</h3><p>After problem definition, we should start to make pre-experiment analysis to discover potential solution. The analysis process can involving attribution, causal inference, EDA and other possible methodologies. The core objective is to find insights and update strategies</p><h3 id="evaluate">3.3 Evaluate</h3><h3 id="section-1">3.4</h3><h3 id="section-2"></h3>]]></content>
-    
-    
-    <categories>
-      
-      <category>Probability &amp; Statistics</category>
-      
-    </categories>
-    
-    
-    <tags>
-      
-      <tag>A/B Testing</tag>
-      
-    </tags>
-    
-  </entry>
-  
-  
-  
-  <entry>
     <title>Distance in Machine Learning</title>
     <link href="/2022/10/08/distance/"/>
     <url>/2022/10/08/distance/</url>
