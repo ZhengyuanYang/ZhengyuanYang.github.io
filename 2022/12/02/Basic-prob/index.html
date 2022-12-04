@@ -16,21 +16,21 @@
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
   
-    <meta name="description" content="This article introduce basic terminology and concerns of Probability Theory">
+    <meta name="description" content="This article introduce basic terminology and concerns of Probability Theory needed for data science">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Basic of Probability Theory">
+<meta property="og:title" content="Basic of Probability Theory for Data Science">
 <meta property="og:url" content="http://example.com/2022/12/02/Basic-prob/index.html">
 <meta property="og:site_name" content="ZY&#39;s Blog">
-<meta property="og:description" content="This article introduce basic terminology and concerns of Probability Theory">
+<meta property="og:description" content="This article introduce basic terminology and concerns of Probability Theory needed for data science">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-12-03T02:19:15.000Z">
-<meta property="article:modified_time" content="2022-12-03T02:22:07.679Z">
+<meta property="article:modified_time" content="2022-12-04T21:27:22.002Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="Basic Probability">
 <meta name="twitter:card" content="summary_large_image">
   
   
-  <title>Basic of Probability Theory - ZY&#39;s Blog</title>
+  <title>Basic of Probability Theory for Data Science - ZY&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
@@ -176,7 +176,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="Basic of Probability Theory">
+            <span class="h2" id="subtitle" title="Basic of Probability Theory for Data Science">
               
             </span>
 
@@ -197,7 +197,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      24 字
+      6.2k 字
     </span>
   
 
@@ -236,10 +236,179 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Basic of Probability Theory</h1>
+            <h1 style="display: none">Basic of Probability Theory for Data Science</h1>
             
             <div class="markdown-body">
-              <h1 id="basic-of-probability-theory">Basic of Probability Theory</h1>
+              <h1 id="basic-of-probability-theory-for-data-science">Basic of Probability Theory for Data Science</h1>
+<h2 id="basic-concepts-for-probability">1. Basic Concepts for Probability</h2>
+<p><strong>Random Experiment</strong>:</p>
+<ul>
+<li>A trail that can have more than one possible outcome.</li>
+<li>The trail should be replicable under fixed conditions</li>
+<li>The outcome of the trail is unpredictable</li>
+</ul>
+<p><strong>Event </strong>: A specific outcome of a random experiment(e.g X=1)</p>
+<p><strong>Fundamental Event</strong>: The minimum grain of event defined according to the objective of the random experiment(Not possible or necessary to split into smaller grain). For example, for a throw of dice, the fundamental events would be face = 1,2,...6.</p>
+<p><strong>Compound Event</strong>: A event consists of multiple fundamental events(e. g, for a throw of dice: Face &lt; 5)</p>
+<p><strong>Sample Space</strong>: A collection consists of all possible fundamental events. (e. g, for two flips of a coin <span class="math inline">\(\Omega = \{(face,face),(back,face),(face,back),(back,back)\}\)</span>)</p>
+<p><strong>Random Variable</strong>: A function that map each sample point <span class="math inline">\(\omega\)</span> in the sample space <span class="math inline">\(\Omega\)</span> into a real number <span class="math inline">\(X = X(\omega)\)</span> . strictly, the definition of a event is a collection <span class="math inline">\(\{\omega | X(\omega = a)\}\)</span>, but in most real implementation, just understand event as an outcome.</p>
+<h2 id="interpretation-of-probability">2. Interpretation of Probability</h2>
+<p>Probability describe how likely a event would happen. In the probability theory, the following axiom are give: <span class="math display">\[
+0 \le P(A) \le 1
+\]</span></p>
+<p><span class="math display">\[
+P(\Omega) = 1
+\]</span></p>
+<p><span class="math display">\[
+P( A_1+A_2) = P(A_1)+P(A_ 2)
+\]</span></p>
+<p>Where <span class="math inline">\(\Omega\)</span> is a definite event(containing all fundamental events), <span class="math inline">\(A_1\)</span> and <span class="math inline">\(A_2\)</span> are exclusive</p>
+<h3 id="classical-model-of-probability">2.1 Classical Model of Probability</h3>
+<p>In Classical Interpretation of probability, two assumptions are considered satisfied:</p>
+<ol type="1">
+<li>The sample space contains finite fundamental events</li>
+<li>The happening of each fundamental event are equally likely</li>
+</ol>
+<p>Under such assumptions, the probability of an event A can be defined as <span class="math display">\[
+P(A) = \frac{n_a}{n_s}
+\]</span> where <span class="math inline">\(n_ s\)</span> is the number of fundamental events in the sample space, and <span class="math inline">\(n_ a\)</span> is the number of fundamental events in event A.</p>
+<p>For most classical probability case, <span class="math inline">\(n_s\)</span> and <span class="math inline">\(n_ a\)</span> can be calculated from permutation and combination: <span class="math display">\[
+P_n^m = \frac{n! }{(n- m)!}
+\]</span></p>
+<p><span class="math display">\[
+C_m^n = \frac{n! }{m!(n- m)!}
+\]</span></p>
+<h3 id="geometric-model-of-probability">2.2 Geometric Model of Probability</h3>
+<p>Define a geometric measure of a event(e. g length of line segment, area) <span class="math display">\[
+P(A) = \frac{M(A)}{M(S)}
+\]</span></p>
+<h3 id="frequency-and-statistical-probability">2.3 Frequency and Statistical Probability</h3>
+<p>Suppose n times of random experiment are conducted, and event A happened m times, the define the frequency of event A as: <span class="math display">\[
+\omega(A) = \frac{m}{n}
+\]</span> Then the Statistical Probability of event A is: <span class="math display">\[
+P(A) = \lim_{n\to\infty}w(A)
+\]</span> Note that probability is a inner properties of a random variable. Statistical Probability is a mathematic approximation of th real probability</p>
+<h2 id="baisc-theroms-in-probability-theory">3. Baisc Theroms in Probability Theory</h2>
+<p><span class="math display">\[
+P(A) = 1-P(\bar{A})
+\]</span></p>
+<p><span class="math display">\[
+P(A-B) = P(A) - P(A\cap B)
+\]</span></p>
+<p><span class="math display">\[
+P(A+B) = P(A) +P(B) - P(A\cap B)
+\]</span></p>
+<h2 id="conditional-probability-joint-probability-and-independency">4. Conditional Probability, Joint Probability and Independency</h2>
+<h3 id="conditional-probability">4.1 Conditional Probability</h3>
+<p>Let A, B be two events in sample space <span class="math inline">\(\Omega\)</span>, the probability of the A given the condition that B has happened is called conditional probability, denoted as <span class="math inline">\(P(A| B)\)</span></p>
+<p>The sample sapce of <span class="math inline">\(P(A| B)\)</span> is B, not <span class="math inline">\(\Omega\)</span>. Conditioning means "Compression" on the sample spcae. According to the axiom of probability theory, the probability of the whole sample space is 1. Thus, let A be the random variable X = a: <span class="math display">\[
+\sum_a P(A|B) = 1
+\]</span> A and B can be two events of a same variable, or each be a event for a separate variable.</p>
+<h3 id="law-of-total-probability">4.2 Law of Total Probability</h3>
+<p>Let <span class="math inline">\(B_1,B_ 2,...,B_n\)</span> be a series of collectively exhaustive events, A be another event: <span class="math display">\[
+P(A) = \sum_i^n P(B_i)P(A|B_i)
+\]</span></p>
+<h3 id="joint-probability">4.3 Joint Probability</h3>
+<p>Assume a two-dimension sample space is determined by two random experiment, which means we have two random variables X and Y for a sample space. Let A, B be a certain outcome of variable X and Y respectively, the probability taht events A and B both happen is called the joint probability of A and B, denoted as <span class="math inline">\(P(A, B)\)</span>. The joint probability has the following properties: <span class="math display">\[
+\sum_x\sum_y P(X=x,Y =y) = 1
+\]</span> If X and Y are independent: <span class="math display">\[
+P(X,Y) = P(X)P(Y)
+\]</span> For such a sample sapce: <span class="math display">\[
+P(A| B ) = \frac{P(A,B)}{P(B)}
+\]</span> associated with the Law of Total Probability: <span class="math display">\[
+P(A)= \sum_i^n P(B_i)P(A|B_i) = \sum_i^n P(A,B_i)
+\]</span></p>
+<h3 id="bayesian-law">4.4 Bayesian Law</h3>
+<p>Let <span class="math inline">\(A_1,A_ 2,...,A_n\)</span> be a series of collectively exhaustive events, B be another event: <span class="math display">\[
+P(A_i|B) = \frac{P(A_i)P(B|A_i)}{P(B)}=\frac{P(A_i)P(B|A_i)}{\sum_i^nP(A_i)P(B|A_i)}
+\]</span> where we call:</p>
+<ul>
+<li><span class="math inline">\(A_i\)</span>: hypothesis event, an event we want to attest its probability distribution through observations on evidence</li>
+<li>B: evidence, an event used to update knowledge on the hypothesis event</li>
+<li><span class="math inline">\(P(A)\)</span>: prior probability, representing the knowledge before the evidence emerge</li>
+<li><span class="math inline">\(P(B|A)\)</span>: likehood, representing the probability of B under events A</li>
+<li><span class="math inline">\(P( A_i|B)\)</span>: posterior probability, representing the updated knowledge after evidence emerge</li>
+</ul>
+<p>Specific examples of bayesian inference can be referred via this <a target="_blank" rel="noopener" href="http://zhengyuanyang.com/2022/09/29/bayes-inference/#%E5%B8%B8%E8%A7%81%E9%A2%98%E5%9E%8B%E5%92%8C%E4%BE%8B%E9%A2%98%E8%A7%A3%E6%9E%90">article</a></p>
+<h3 id="independency-of-events">4.5 Independency of Events</h3>
+<p>If the probability of A is not affected by whether event B happen, then A is independent to B. In conditional probability form: <span class="math display">\[
+P(A) = P(A|B)
+\]</span></p>
+<p><span class="math display">\[
+P(A,B) = P(A)P(B)
+\]</span></p>
+<p>Note that <span class="math inline">\(A \perp \!\!\! \perp B\)</span> and <span class="math inline">\(A\cap B\)</span> cannot be both true</p>
+<h2 id="probability-distribution-probability-density-function">5. Probability Distribution &amp; Probability Density Function</h2>
+<h3 id="discrete-random-variable-and-probability-distribution">5.1 Discrete Random Variable and Probability Distribution</h3>
+<p>If the possible value of a random variable is countable, then it is a discrete random variable. The probability distribution of a discrete random variable X is defined as a <strong>function</strong>: <span class="math display">\[
+P(X) = P(X=x_k)
+\]</span> The PDF has the following properties: <span class="math display">\[
+P(X) \ge 0
+\]</span></p>
+<p><span class="math display">\[
+\sum_k P(X) = 1
+\]</span></p>
+<h3 id="continuous-random-variable-and-probability-density">5.2 Continuous Random Variable and Probability Density</h3>
+<p>If a randome variable can be any value on a range <span class="math inline">\([a , b]\)</span> and there exists a integratable function <span class="math inline">\(f( x)\)</span>, so that: <span class="math display">\[
+P( a&lt; X \le b  ) = \int_a^ b f(x)dx
+\]</span> Then X is called a continuous random variable, <span class="math inline">\(f(x )\)</span> is called the probability density function of X.</p>
+<p>For a continuous random variable, the probability of each single sample point would be 0. Instead of an actual probability, the distribution of a continuous random variable is described by the probability density of each data point. The value of <span class="math inline">\(f(x)\)</span> on a specific point represents the probability density of that sample point: <span class="math display">\[
+f(x= a) = \lim_{\Delta \to \infty } P(a&lt;X \le a+ \Delta  )
+\]</span></p>
+<h3 id="distribution-type">5.3 Distribution Type</h3>
+<p>For details about distribution type, refer to <a target="_blank" rel="noopener" href="http://zhengyuanyang.com/2022/11/04/distribution/">here</a></p>
+<h2 id="expectation-and-variance">6. Expectation and Variance</h2>
+<h3 id="expectation">6.1 Expectation</h3>
+<p>For discrete variable: <span class="math display">\[
+E[X] = \sum_i^n x_iP(X=x_i)
+\]</span></p>
+<p>For discrete variable: <span class="math display">\[
+E[X] = \int_{-\infty}^\infty xf(x)dx
+\]</span> if E[X] can converge</p>
+<p>Properties of Expectation: <span class="math display">\[
+E[X+C] = E[X]+C
+\]</span></p>
+<p><span class="math display">\[
+E[CX] = CE[X]
+\]</span></p>
+<p><span class="math display">\[
+E[X + Y] = E[X]+E[Y] \qquad \forall X, Y
+\]</span></p>
+<p><span class="math display">\[
+E[XY] = E[X]E[Y] \qquad if \ X \perp \! \! \perp Y
+\]</span></p>
+<p><span class="math display">\[
+E[g(X)] = \sum_i^n g(x_i)P(X=x_i) \qquad or \qquad \int_{-\infty}^\infty g(x)f(x)dx
+\]</span></p>
+<p><span class="math display">\[
+E[X|Y=y] = \sum_i^nx_iP(X=x_i|Y=y) \qquad or \qquad \int_{-\infty}^\infty xf(x|y)dx
+\]</span></p>
+<h3 id="variance">6.2 Variance</h3>
+<p><span class="math display">\[
+V[X] = E[(X-E[X])^2] = E[ X^ 2]-(E[X])^2
+\]</span></p>
+<p>Properties of Variance: <span class="math display">\[
+V[C] = 0
+\]</span></p>
+<p><span class="math display">\[
+V[X+C] = V[X]
+\]</span></p>
+<p><span class="math display">\[
+V[CX] = C^2V[X]
+\]</span></p>
+<p><span class="math display">\[
+V[X\pm Y] = V[X]+V[Y] \pm 2Cov[X, Y]
+\]</span></p>
+<p><span class="math display">\[
+V[g(X)] = g&#39;(E[X])^2V[X]
+\]</span></p>
+<h3 id="covariance">6.3 Covariance</h3>
+<p><span class="math display">\[
+Cov[X, Y] = E[(X-E[X])(Y- E[Y])] = E[XY]-E[X]E[Y]
+\]</span></p>
+<p>Covariance is a measure of the joint variability of two random variables, it represent thedegree that two variables variate samely in directions. If two variable are independent: <span class="math display">\[
+Cov[X,Y] = 0 \qquad if \ X \perp \! \! \perp Y
+\]</span></p>
 
             </div>
             <hr>
