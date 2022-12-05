@@ -25,15 +25,21 @@
 <meta name="twitter:card" content="summary_large_image">
   
   
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
   <title>ZY&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
 
 
-<!-- 主题依赖的图标库，不要自行修改 -->
 
-<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
 
 
 
@@ -42,21 +48,42 @@
 
 <link  rel="stylesheet" href="/css/main.css" />
 
-<!-- 自定义样式保持在最底部 -->
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
 
 
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
   </script>
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
 <meta name="generator" content="Hexo 6.0.0"></head>
 
 
 <body>
-  <header style="height: 100vh;">
-    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 100vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
       <strong>ZY&#39;s Blog</strong>
@@ -138,6 +165,7 @@
               &nbsp;<i class="iconfont icon-search"></i>&nbsp;
             </a>
           </li>
+          
         
         
           <li class="nav-item" id="color-toggle-btn">
@@ -150,34 +178,40 @@
   </div>
 </nav>
 
-    <div class="banner" id="banner" parallax=true
-         style="background: url('/img/test.gif') no-repeat center center;
-           background-size: cover;">
-      <div class="full-bg-img">
-        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.25)">
-          <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="Hi, this is the personal blog of Zhengyuan">
-              
-            </span>
+  
 
-            
-          </div>
-
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/test.gif') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.25)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
           
-            <div class="scroll-down-bar">
-              <i class="iconfont icon-arrowdown"></i>
-            </div>
+            <span id="subtitle" data-typed-text="Hi, this is the personal blog of Zhengyuan"></span>
           
         </div>
+
+        
       </div>
+
+      
+        <div class="scroll-down-bar">
+          <i class="iconfont icon-arrowdown"></i>
+        </div>
+      
     </div>
+  </div>
+</div>
+
+</div>
+
   </header>
 
   <main>
     
       <div class="container nopadding-x-md">
-        <div class="py-5" id="board"
-          style=margin-top:0>
+        <div id="board"
+          style="margin-top: 0">
           
           <div class="container">
             <div class="row">
@@ -196,12 +230,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2022/12/02/Basic-prob/" target="_self">
-          
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/12/02/Basic-prob/" target="_self">
+        <div>
           This article introduce basic terminology and concerns of Probability Theory needed for data science
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -213,18 +247,32 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Probability-Statistics/">Probability & Statistics</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Probability-Statistics/" class="category-chain-item">Probability &amp; Statistics</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/Basic-Probability/">Basic Probability</a>
+              <a href="/tags/Basic-Probability/">#Basic Probability</a>
             
           </div>
         
@@ -243,12 +291,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2022/11/10/structual-causal-model/" target="_self">
-          
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/11/10/structual-causal-model/" target="_self">
+        <div>
           This article introduce basic idea and terminology of Structual Causal Model in Causal Inference
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -260,22 +308,36 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Causal-Inference/">Causal Inference</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Causal-Inference/" class="category-chain-item">Causal Inference</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/Structural-Causal-Model/">Structural Causal Model</a>
+              <a href="/tags/Structural-Causal-Model/">#Structural Causal Model</a>
             
-              <a href="/tags/Introduction/">Introduction</a>
+              <a href="/tags/Introduction/">#Introduction</a>
             
-              <a href="/tags/Causal-Graph/">Causal Graph</a>
+              <a href="/tags/Causal-Graph/">#Causal Graph</a>
             
           </div>
         
@@ -294,12 +356,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2022/11/07/potential-outcome/" target="_self">
-          
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/11/07/potential-outcome/" target="_self">
+        <div>
           This article discuss about basic knowledge of causal inference
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -311,18 +373,32 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Causal-Inference/">Causal Inference</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Causal-Inference/" class="category-chain-item">Causal Inference</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/Distribution/">Distribution</a>
+              <a href="/tags/Distribution/">#Distribution</a>
             
           </div>
         
@@ -341,12 +417,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2022/11/07/basic-causal-inference/" target="_self">
-          
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/11/07/basic-causal-inference/" target="_self">
+        <div>
           This article discuss about basic knowledge of causal inference
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -358,18 +434,32 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Causal-Inference/">Causal Inference</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Causal-Inference/" class="category-chain-item">Causal Inference</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/Distribution/">Distribution</a>
+              <a href="/tags/Distribution/">#Distribution</a>
             
           </div>
         
@@ -388,12 +478,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2022/11/04/distribution/" target="_self">
-          
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/11/04/distribution/" target="_self">
+        <div>
           This article discuss about common distribution types in Machine Learning
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -405,18 +495,32 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Probability-Statistics/">Probability & Statistics</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Probability-Statistics/" class="category-chain-item">Probability &amp; Statistics</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/Distribution/">Distribution</a>
+              <a href="/tags/Distribution/">#Distribution</a>
             
           </div>
         
@@ -435,12 +539,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2022/10/22/encoding/" target="_self">
-          
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/10/22/encoding/" target="_self">
+        <div>
           This article discuss encoding methods for categorical variable
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -452,20 +556,34 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Machine-Learning/">Machine Learning</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Machine-Learning/" class="category-chain-item">Machine Learning</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/Encoding/">Encoding</a>
+              <a href="/tags/Encoding/">#Encoding</a>
             
-              <a href="/tags/Feature-Engineering/">Feature Engineering</a>
+              <a href="/tags/Feature-Engineering/">#Feature Engineering</a>
             
           </div>
         
@@ -484,12 +602,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2022/10/22/distribution-type/" target="_self">
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/10/22/distribution-type/" target="_self">
+        <div>
           
-          
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -517,12 +635,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2022/10/21/scaler/" target="_self">
-          
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/10/21/scaler/" target="_self">
+        <div>
           This article discuss four types of scaler in machine learning
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -534,20 +652,34 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Machine-Learning/">Machine Learning</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Machine-Learning/" class="category-chain-item">Machine Learning</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/Feature-Engineering/">Feature Engineering</a>
+              <a href="/tags/Feature-Engineering/">#Feature Engineering</a>
             
-              <a href="/tags/Scaler/">Scaler</a>
+              <a href="/tags/Scaler/">#Scaler</a>
             
           </div>
         
@@ -566,12 +698,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2022/10/08/distance/" target="_self">
-          
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/10/08/distance/" target="_self">
+        <div>
           This article discuss about distance metrics used in machine learning
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -583,18 +715,32 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Machine-Learning/">Machine Learning</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Machine-Learning/" class="category-chain-item">Machine Learning</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/Distance/">Distance</a>
+              <a href="/tags/Distance/">#Distance</a>
             
           </div>
         
@@ -613,12 +759,12 @@
         </a>
       </h1>
 
-      <p class="index-excerpt">
-        <a href="/2022/10/07/outlier/" target="_self">
-          
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2022/10/07/outlier/" target="_self">
+        <div>
           This article discusses outlier detection methodology
-        </a>
-      </p>
+        </div>
+      </a>
 
       <div class="index-btm post-metas">
         
@@ -630,20 +776,34 @@
           </div>
         
         
-          <div class="post-meta mr-3">
+          <div class="post-meta mr-3 d-flex align-items-center">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/Machine-Learning/">Machine Learning</a>
-            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Machine-Learning/" class="category-chain-item">Machine Learning</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
           </div>
         
         
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/Outlier/">Outlier</a>
+              <a href="/tags/Outlier/">#Outlier</a>
             
-              <a href="/tags/Data-Preprocess/">Data Preprocess</a>
+              <a href="/tags/Data-Preprocess/">#Data Preprocess</a>
             
           </div>
         
@@ -688,32 +848,34 @@
       <div class="modal-body mx-3">
         <div class="md-form mb-5">
           <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v"
-                 for="local-search-input">keyword</label>
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
         </div>
         <div class="list-group" id="local-search-result"></div>
       </div>
     </div>
   </div>
 </div>
+
     
 
     
   </main>
 
-  <footer class="text-center mt-5 py-3">
-  <div class="footer-content">
-     <!-- <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> --> <i class="iconfont icon-bug"></i> <a href="/report/" target="_blank" rel="nofollow noopener"><span>Report Bug</span></a> 
-  </div>
+  <footer>
+    <div class="footer-inner">
   
-
+    <div class="footer-content">
+       <!-- <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> --> <i class="iconfont icon-bug"></i> <a href="/report/" target="_blank" rel="nofollow noopener"><span>Report Bug</span></a> 
+    </div>
   
-
   
-</footer>
+  
+  
+</div>
 
+  </footer>
 
-  <!-- SCRIPTS -->
+  <!-- Scripts -->
   
   <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
@@ -732,10 +894,22 @@
 <script  src="/js/events.js" ></script>
 <script  src="/js/plugins.js" ></script>
 
-<!-- Plugins -->
 
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
 
-  <script  src="/js/local-search.js" ></script>
 
 
 
@@ -745,45 +919,22 @@
 
 
 
-  
+
+  <script  src="/js/local-search.js" ></script>
 
 
 
 
 
-  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
-
-
-
-
-  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
-  <script>
-    (function (window, document) {
-      var typing = Fluid.plugins.typing;
-      var title = document.getElementById('subtitle').title;
-      
-        typing(title);
-      
-    })(window, document);
-  </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- 主题的启动项 保持在最底部 -->
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
 <script  src="/js/boot.js" ></script>
 
 
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
 </body>
 </html>
