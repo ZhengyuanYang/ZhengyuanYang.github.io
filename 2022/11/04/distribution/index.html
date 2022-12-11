@@ -30,7 +30,7 @@
 <meta property="og:image" content="http://example.com/2022/11/04/distribution/4.png">
 <meta property="og:image" content="http://example.com/2022/11/04/distribution/5.png">
 <meta property="article:published_time" content="2022-11-04T23:03:41.000Z">
-<meta property="article:modified_time" content="2022-12-04T21:26:25.672Z">
+<meta property="article:modified_time" content="2022-12-11T09:02:25.367Z">
 <meta property="article:author" content="Zhengyuan Yang">
 <meta property="article:tag" content="Distribution">
 <meta name="twitter:card" content="summary_large_image">
@@ -228,7 +228,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          9.1k words
+          9.3k words
         
       </span>
     
@@ -239,7 +239,7 @@
         
         
         
-          77 mins
+          78 mins
         
       </span>
     
@@ -508,7 +508,9 @@ F_Y(y) = F_X(t^{-1}(y))
 <p><span class="math display">\[
 f_Y(y) = F&#39;_Y(y) = (t^{-1}(y))&#39;f_X(t^{-1}(y))
 \]</span></p>
-<p>With Such rules：</p>
+<p>With Such rules , let <span class="math inline">\(Y = F(X)\)</span> <span class="math display">\[
+f_Y(y) = (F^{-1}(y))&#39;f_X(F^{-1}(y)) = F(F^{-1}(y))&#39;F^{-1}(y) = F(F^{-1}(y))&#39; = y&#39; = 1
+\]</span> Thus, if a randam variable <span class="math inline">\(u = CDF(X)\)</span>, then $u U(0,1) $</p>
 <table style="width:100%;">
 
 <thead>
@@ -521,7 +523,7 @@ f_Y(y) = F&#39;_Y(y) = (t^{-1}(y))&#39;f_X(t^{-1}(y))
 <tbody>
 <tr class="odd">
 <td><span class="math inline">\(Expo(\lambda)\)</span></td>
-<td><span class="math inline">\(Y = 1-e^{\lambda x}\)</span></td>
+<td><span class="math inline">\(Y = 1-e^{-\lambda x}\)</span></td>
 <td>U(0,1)</td>
 </tr>
 <tr class="even">
