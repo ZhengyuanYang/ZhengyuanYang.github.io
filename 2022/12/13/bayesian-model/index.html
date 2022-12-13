@@ -16,24 +16,25 @@
   <meta name="author" content="Zhengyuan Yang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="This article introduce basic and improved sampling methods frequently used in machine learning">
+    <meta name="description" content="This article discuss bayesian model in supervised machine learning">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Sampling Methods for Machine Learning">
-<meta property="og:url" content="http://example.com/2022/12/05/sampling/index.html">
+<meta property="og:title" content="Bayesian Model in Machine Learning">
+<meta property="og:url" content="http://example.com/2022/12/13/bayesian-model/index.html">
 <meta property="og:site_name" content="Data Shore">
-<meta property="og:description" content="This article introduce basic and improved sampling methods frequently used in machine learning">
+<meta property="og:description" content="This article discuss bayesian model in supervised machine learning">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2022-12-05T20:53:54.000Z">
-<meta property="article:modified_time" content="2022-12-13T13:31:04.905Z">
+<meta property="article:published_time" content="2022-12-13T13:10:08.000Z">
+<meta property="article:modified_time" content="2022-12-13T13:35:39.759Z">
 <meta property="article:author" content="Zhengyuan Yang">
-<meta property="article:tag" content="Sampling">
+<meta property="article:tag" content="Bayesian Model">
+<meta property="article:tag" content="Learning Model">
 <meta name="twitter:card" content="summary_large_image">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Sampling Methods for Machine Learning - Data Shore</title>
+  <title>Bayesian Model in Machine Learning - Data Shore</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -198,7 +199,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Sampling Methods for Machine Learning"></span>
+            <span id="subtitle" data-typed-text="Bayesian Model in Machine Learning"></span>
           
         </div>
 
@@ -209,8 +210,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-12-05 12:53" pubdate>
-          December 5, 2022 pm
+        <time datetime="2022-12-13 05:10" pubdate>
+          December 13, 2022 am
         </time>
       </span>
     
@@ -221,7 +222,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.2k words
+          83 words
         
       </span>
     
@@ -232,7 +233,7 @@
         
         
         
-          27 mins
+          1 mins
         
       </span>
     
@@ -288,73 +289,15 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Sampling Methods for Machine Learning</h1>
+            <h1 style="display: none">Bayesian Model in Machine Learning</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="sampling-and-simulation-for-machine-learning">Sampling and Simulation for Machine Learning</h1>
-<h2 id="about-sampling-and-simulation">1. About Sampling and Simulation</h2>
-<p>The word "Sampling" can be used in different context in ML. From a statistical perspective, Sampling is a process that collect a subset of units from the real sample population. The objective of sampling is to describe characteristics of sampling through statistics on the sample.</p>
-<p>From a computational perspective, however, the word sampling means "Given a probability distribution, generate scenarios to represent the distribution", which means "Sampling", in a computer context, actually means "Simulation". To make a difference, in this article, sampling for a statistical context is called "Sampling", sampling for a computational context is called "simulation".</p>
-<p><strong>For Sampling</strong></p>
-<p>There are various sampling method that have each different application. Sampling methods can be categorized as:</p>
-<ol type="1">
-<li><strong>Probability Sampling</strong>: Every Single unit in the population has a chance to be selected as a sample point</li>
-<li><strong>Non- Probability Sampling</strong>: Some units in the population does not have a chance to be selected as a sample point</li>
-</ol>
-<p>From another dimension sampling methods can be categorized as:</p>
-<ol type="1">
-<li><strong>Without Replacement </strong>: when a unit is selected, it would be taken out from the sample population</li>
-<li><strong>With Replacement</strong>: when a unit is selected, it would not be taken out from the sample population</li>
-</ol>
-<p>This article focuses on sampling methods that has application in machine learning.</p>
-<h2 id="sampling-method">2. Sampling Method</h2>
-<h3 id="simple-random-sampling"><strong>2.1 Simple Random Sampling</strong></h3>
-<p>In a random sampling, each unit in the sample population has a equal probability to be selected.</p>
-<p><strong>Pros</strong>:</p>
-<ul>
-<li>Easy to apply</li>
-</ul>
-<p><strong>Cons</strong></p>
-<ul>
-<li>If the selection strategy is by any way associated with statistics through a confounder, a <strong>simpson paradox</strong> would be created</li>
-<li>If the researcher has any interests on the group differences among partition of the sample frame, SRS is not accommodate to it</li>
-</ul>
-<h3 id="systematic-sampling">2.2 Systematic Sampling</h3>
-<p>Systematic Sampling arranges all units in the population into some order, and then selecting elements at regular intervals through that ordered list.</p>
-<p><strong>Pros</strong>:</p>
-<ul>
-<li>It help avoid selection bias. The sample point are uniformly distributed on the section sorted by a particular order</li>
-</ul>
-<p><strong>Cons</strong></p>
-<ul>
-<li>If there exists periodicity, and inner period of the order list is a multiple or factor of the interval we selected, the sample would be unrepresentative</li>
-</ul>
-<h3 id="stratified-sampling">2.3 Stratified Sampling</h3>
-<p>Stratified Sampling separates units into some "Strata" according to some categorical characteristics. The percentage of these strata is called a <strong>sampling fraction</strong>. A subsection of the sample is then assigned to each strata so that the proportion of each category of sample points is still the sample as sampling fraction. In each strata, sample are selected through SRS or systematic sampling.</p>
-<p><strong>Pros</strong>:</p>
-<ul>
-<li>It help avoid selection bias. The proportion of the category remains the same after sampling</li>
-<li>Researcher can apply different sampling method on different subgroup. This allow them to choose most suitable method for a subgroup</li>
-</ul>
-<p><strong>Cons</strong></p>
-<ul>
-<li>Time-consuming and hard to design when a sample point has multiple characteristics</li>
-</ul>
-<p>Stratified Sampling is the basic idea of many over-sampling and under sampling methods.</p>
-<h2 id="monte-carlo-simulation">3. Monte Carlo Simulation</h2>
-<h3 id="inverse-transformation-sampling">3.1 Inverse Transformation Sampling</h3>
-<p>We know that if a randam variable <span class="math inline">\(u = CDF(X)\)</span>, then $u U(0,1) $ (refer to this <a target="_blank" rel="noopener" href="http://zhengyuanyang.com/2022/11/04/distribution/#distribution-transformation">article</a>). The Inverse Transformation Sampling generate such a uniformly distributed random variab <span class="math inline">\(u \sim U(0,1)\)</span>. Then the sample value X for each u would be <span class="math display">\[
-X = CDF^{-1}(u )
-\]</span> <strong>Pros:</strong> easy to apply</p>
-<p><strong>Cons</strong>: given <span class="math inline">\(P(X)\)</span>,$ CDF^{-1}(X)$ cannot always been easily obtained</p>
-<h2 id="mcmc-sampling">4. MCMC Sampling</h2>
-<p>[WIP]</p>
-<p>​</p>
-<h2 id="oversampling-and-undersampling">5. Oversampling and Undersampling</h2>
-<p>Oversampling and Undersampling are not specific sampling or simulation methods. They are two topics in Data Processing. The objective of these two techniques is to solve the problem of the <strong>Imbalanced Sample</strong></p>
-<p>[WIP]</p>
+                <h1 id="bayesian-model-in-machine-learning">Bayesian Model in Machine Learning</h1>
+<h2 id="naive-bayesian">1. Naive Bayesian</h2>
+<h2 id="maximum-entropy-model">2. Maximum Entropy Model</h2>
+<h2 id="bayesian-network">3. Bayesian Network</h2>
 
                 
               </div>
@@ -373,7 +316,7 @@ X = CDF^{-1}(u )
     
       <span class="category-chain">
         
-  <a href="/categories/Probability-Statistics/" class="category-chain-item">Probability &amp; Statistics</a>
+  <a href="/categories/Machine-Learning/" class="category-chain-item">Machine Learning</a>
   
   
 
@@ -388,7 +331,9 @@ X = CDF^{-1}(u )
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Sampling/">#Sampling</a>
+        <a href="/tags/Bayesian-Model/">#Bayesian Model</a>
+      
+        <a href="/tags/Learning-Model/">#Learning Model</a>
       
     </div>
   
@@ -400,8 +345,8 @@ X = CDF^{-1}(u )
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Sampling Methods for Machine Learning</div>
-      <div>http://example.com/2022/12/05/sampling/</div>
+      <div>Bayesian Model in Machine Learning</div>
+      <div>http://example.com/2022/12/13/bayesian-model/</div>
     </div>
     <div class="license-meta">
       
@@ -413,7 +358,7 @@ X = CDF^{-1}(u )
       
         <div class="license-meta-item license-meta-date">
           <div>Posted on</div>
-          <div>December 5, 2022</div>
+          <div>December 13, 2022</div>
         </div>
       
       
@@ -445,18 +390,12 @@ X = CDF^{-1}(u )
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/12/13/bayesian-model/" title="Bayesian Model in Machine Learning">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Bayesian Model in Machine Learning</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/12/02/Basic-prob/" title="Basic of Probability Theory for Data Science">
-                        <span class="hidden-mobile">Basic of Probability Theory for Data Science</span>
+                      <a href="/2022/12/05/sampling/" title="Sampling Methods for Machine Learning">
+                        <span class="hidden-mobile">Sampling Methods for Machine Learning</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
