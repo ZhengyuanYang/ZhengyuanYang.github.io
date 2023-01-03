@@ -32,8 +32,9 @@
 <meta property="og:image" content="http://example.com/2022/09/30/SQL-problems/7.PNG">
 <meta property="og:image" content="http://example.com/2022/09/30/SQL-problems/8.PNG">
 <meta property="og:image" content="http://example.com/2022/09/30/SQL-problems/9.PNG">
+<meta property="og:image" content="http://example.com/2022/09/30/SQL-problems/10.PNG">
 <meta property="article:published_time" content="2022-09-30T18:36:21.000Z">
-<meta property="article:modified_time" content="2022-11-06T11:09:56.282Z">
+<meta property="article:modified_time" content="2023-01-03T03:11:25.425Z">
 <meta property="article:author" content="Zhengyuan Yang">
 <meta property="article:tag" content="SQL">
 <meta property="article:tag" content="Interview">
@@ -232,7 +233,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4.8k words
+          5.2k words
         
       </span>
     
@@ -243,7 +244,7 @@
         
         
         
-          40 mins
+          44 mins
         
       </span>
     
@@ -440,6 +441,13 @@
 <p>concat()的作用是把两个列连接成一个列，当要使用类似如下语句时</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> <span class="hljs-keyword">table</span> <span class="hljs-keyword">where</span> concat(a,b) <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> (<span class="hljs-keyword">select</span> concat(c,d) <span class="hljs-keyword">from</span> cte)<br></code></pre></td></tr></table></figure>
 <p>此语句逻辑为：只要a,b不同时等于某些特定组合，就可以选择</p>
+<h2 id="累积求和差">10. 累积求和/差</h2>
+<p>如图，若干位乘客要登上大巴，每位乘客有一登车次序，乘客的体重列在表中，大巴车能容纳1000KG的重量，要求返回最后一名能够上车的乘客的姓名</p>
+<p><img src="/2022/09/30/SQL-problems/10.PNG" srcset="/img/loading.gif" lazyload></p>
+<p>思路：按照登车顺序，计算登车乘客体重的running total：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs SQL"><span class="hljs-keyword">with</span> cte <span class="hljs-keyword">as</span> (<br><span class="hljs-keyword">select</span> <span class="hljs-operator">*</span>, <br>  <span class="hljs-built_in">sum</span>(weight) <span class="hljs-keyword">over</span>(<span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> turn <span class="hljs-keyword">rows</span> <span class="hljs-keyword">BETWEEN</span> UNBOUNDED PRECEDING <span class="hljs-keyword">and</span> <span class="hljs-keyword">CURRENT</span> <span class="hljs-type">ROW</span>) <span class="hljs-keyword">as</span> roll_sum<br><span class="hljs-keyword">from</span> Quene <span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> turn<br></code></pre></td></tr></table></figure>
+<p>筛选体重running total小于等于1000的乘客，并获取最后一位乘客的姓名</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs SQL"><span class="hljs-keyword">with</span> allow <span class="hljs-keyword">as</span> (<br>    <span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <br><span class="hljs-keyword">from</span> cte <br><span class="hljs-keyword">where</span> roll_sum <span class="hljs-operator">&lt;=</span><span class="hljs-number">1000</span><br>)<br><span class="hljs-keyword">select</span> person_name <br><span class="hljs-keyword">from</span> allow <br><span class="hljs-keyword">where</span> turn <span class="hljs-operator">=</span> (<span class="hljs-keyword">select</span> <span class="hljs-built_in">max</span>(turn) <span class="hljs-keyword">from</span> allow)<br></code></pre></td></tr></table></figure>
 
                 
               </div>
