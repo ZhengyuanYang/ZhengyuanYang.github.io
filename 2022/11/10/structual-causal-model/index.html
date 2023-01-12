@@ -30,8 +30,10 @@
 <meta property="og:image" content="http://example.com/2022/11/10/structual-causal-model/5.png">
 <meta property="og:image" content="http://example.com/2022/11/10/structual-causal-model/7.png">
 <meta property="og:image" content="http://example.com/2022/11/10/structual-causal-model/8.png">
+<meta property="og:image" content="http://example.com/2022/11/10/structual-causal-model/9.png">
+<meta property="og:image" content="http://example.com/2022/11/10/structual-causal-model/10.png">
 <meta property="article:published_time" content="2022-11-10T22:53:16.000Z">
-<meta property="article:modified_time" content="2022-12-15T05:15:31.992Z">
+<meta property="article:modified_time" content="2023-01-11T20:58:45.409Z">
 <meta property="article:author" content="Zhengyuan Yang">
 <meta property="article:tag" content="Structural Causal Model">
 <meta property="article:tag" content="Introduction">
@@ -231,7 +233,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4.3k words
+          6.5k words
         
       </span>
     
@@ -242,7 +244,7 @@
         
         
         
-          36 mins
+          55 mins
         
       </span>
     
@@ -325,9 +327,12 @@
 Y = f(X)
 \]</span> note that there's a time order for the happenings of X and Y. We cannot regard the cause as <span class="math inline">\(X= f^{-1}(Y)\)</span></p>
 <p>We call X a <strong>indirect cause</strong> of Y is X is a cause of any cause(direct or indirect) of Y.</p>
-<p>In SCM, the relationship of a direct cause X, an outcome Y and their causality f is presented with a parent node. a child node and the directed edge between them</p>
+<p>In SCM, the relationship of a direct cause X, an outcome Y and their causality f is presented with a parent node. a child node and the directed edge between them.</p>
+<p>In most case, a causility would demonstrate statistical dependence on observations. From a probability aspect, we can also interpret this correlation as a joint probability. For an causal graph: <span class="math display">\[
+P(X_1,X_2,...X_n) = \prod_i^n P(X_i|par(X_i))
+\]</span> where <span class="math inline">\(par(X_i)\)</span> is all parent nodes of <span class="math inline">\(X_i\)</span>. If <span class="math inline">\(X_i\)</span> does not have a parent node(Exogenous), then just apply<span class="math inline">\(P(X_i)\)</span></p>
 <h3 id="exogenousendogenous-variable">3.2 Exogenous/Endogenous Variable</h3>
-<p>In SCM, the exogenous variables, usually denoted as U, are variables considered external to the model, and we would not explained jow these variables are caused. Oppositely, the endogenous variable,usually denoted as V, are variables considered a descendant of at least one exogenous variable. Exogenous variables have no ancestors, only descendants, while endogenous variables have both ancestors and descendants.</p>
+<p>In SCM, the exogenous variables, usually denoted as U, are variables considered external to the model, and we would not explained how these variables are caused. Oppositely, the endogenous variable,usually denoted as V, are variables considered a descendant of at least one exogenous variable. Exogenous variables have no ancestors, only descendants, while endogenous variables have both ancestors and descendants.</p>
 <p>With such assumption, we can represent the causality of variables with a DAG.</p>
 <p><img src="/2022/11/10/structual-causal-model/3.png" srcset="/img/loading.gif" lazyload></p>
 <p>In a causality DAG, only when there's a directed path between two variables can we regard as there exists a direct or indirect causality between these two variable.</p>
@@ -348,11 +353,33 @@ Y = f(X)
 <ul>
 <li>For a chain, before conditioning, <span class="math inline">\(X_3 = f(X_2,u_3) = f(g(X_1),u_3)\)</span>, after conditioning, <span class="math inline">\(X_3 = f(u_3)\)</span></li>
 <li>For a fork, before conditioning, <span class="math inline">\(X_3 = f(X_2,u_3), X_1 = f(X_2,u_1)\)</span>, after conditioning, <span class="math inline">\(X_3 = f(u_3), X_1 = f(u_1)\)</span></li>
-<li>For a chain, befote conditioning, <span class="math inline">\(X_1 = f(u_1),X_ 3=f(u_ 3)\)</span>, after conditioning, although the cause of <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_3\)</span> remains the same, we now have <span class="math inline">\(X_ 2 = f(X_1,X_3) = c\)</span>, so statistical dependence would appear between <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_3\)</span></li>
+<li>For a colider, before conditioning, <span class="math inline">\(X_1 = f(u_1),X_ 3=f(u_ 3)\)</span>, after conditioning on <span class="math inline">\(X_2\)</span> or any of its descendants, although the cause of <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_3\)</span> remains the same, we now have <span class="math inline">\(X_ 2 = f(X_1,X_3) = c\)</span>, so statistical dependence would appear between <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_3\)</span></li>
 </ul>
 <p><img src="/2022/11/10/structual-causal-model/7.png" srcset="/img/loading.gif" lazyload></p>
 <p><img src="/2022/11/10/structual-causal-model/8.png" srcset="/img/loading.gif" lazyload></p>
 <h4 id="d-separate">3.4.2 D-separate</h4>
+<p>D-separation is a method used to determine whether two nodes in a causal graph is statistically independent.</p>
+<ul>
+<li><span class="math inline">\(X \ and \ Y \ are \ d-sep \iff X \ and \ Y \ are \ statistically \ indepentdent\)</span></li>
+<li>$X  d-sep  Y | Z X  and  Y  are  statistically  indepentdent | Z $</li>
+</ul>
+<p>From the previous section we know that in a V structure,</p>
+<ol type="1">
+<li>If the cenral node are not conditioned, two nodes are blockd by a colider and unblocked(d-connected) by a chain or a fork.</li>
+<li>If the cenral node are conditioned, two nodes are blockd by a chain or a fork and unblocked by a colider.</li>
+</ol>
+<p>If every paths between two nodes X and Y are blocked, we called X and Y d-separated.</p>
+<h2 id="causality-search">4. Causality Search</h2>
+<h3 id="test-on-causality-model">4.1 Test on Causality Model</h3>
+<p>With the definition of the D-separation, we can test the causal model we assume by examine where the statistical independence inferred from the model can be validated through data. For example, for such a causal model:</p>
+<p><img src="/2022/11/10/structual-causal-model/9.png" srcset="/img/loading.gif" lazyload></p>
+<p>The path <span class="math inline">\(W \to X \to Z_1\)</span> should be blocked if we conditioned on X, which means this model implies: <span class="math inline">\(Z_1 \perp \!\!\! \perp W\ |X\)</span></p>
+<p>We can then regress a linaer model <span class="math inline">\(Z_1 = r_1W + r_2X\)</span>, if <span class="math inline">\(r_ 1\)</span> is obviously greater than 0, we can regard as the assumed causal model is incorrect. We can also apply other statistical method to test correlation.</p>
+<p>Through this kind of ideas, we can infer the true causal model by testing potential causal models based on dataset</p>
+<h3 id="equivalent-class">4.2 Equivalent Class</h3>
+<p>For some causal relationship, we may found two different potential causal graph of it appears to have same statistical independent on data. For example, a fork and a chain have same relationship on statistical independence. When we try to infer the causal relationship, we might found some causility, or we can say the directions of some edgs in the DAG, cannot be decided through data. In this case, we call these potential models with same statistical independence appearance <strong>Equivalent Classes</strong></p>
+<p><img src="/2022/11/10/structual-causal-model/10.png" srcset="/img/loading.gif" lazyload></p>
+<p>A intuitive method to judge whether two graph are equivalent classes is to check each V-structure in for both graph and earse the direction of the edges if the two V-struture are equivalent. If there are no directions left, then the two classes are equivalent. If there are remaining directed edges or V-structure that are different, then the two graphs are not equivalent.</p>
 
                 
               </div>
