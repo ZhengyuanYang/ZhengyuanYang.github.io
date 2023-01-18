@@ -16,19 +16,18 @@
   <meta name="author" content="Zhengyuan Yang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="This passage is a summary for different types of hypothesis test">
+    <meta name="description" content="This passage is a summary for different types of hypothesis testings">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hypothesis Testing for AB Testing">
+<meta property="og:title" content="Hypothesis Testing">
 <meta property="og:url" content="http://example.com/2022/03/25/Hypothesis-Testing/index.html">
 <meta property="og:site_name" content="Data Shore">
-<meta property="og:description" content="This passage is a summary for different types of hypothesis test">
+<meta property="og:description" content="This passage is a summary for different types of hypothesis testings">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://example.com/2022/03/25/Hypothesis-Testing/img1.png">
 <meta property="og:image" content="http://example.com/2022/03/25/Hypothesis-Testing/img3.PNG">
 <meta property="og:image" content="http://example.com/2022/03/25/Hypothesis-Testing/5.png">
-<meta property="og:image" content="http://example.com/2022/03/25/Hypothesis-Testing/img5.png">
 <meta property="article:published_time" content="2022-03-25T23:25:15.000Z">
-<meta property="article:modified_time" content="2023-01-10T22:40:55.162Z">
+<meta property="article:modified_time" content="2023-01-18T21:23:41.292Z">
 <meta property="article:author" content="Zhengyuan Yang">
 <meta property="article:tag" content="Hypothesis Testing">
 <meta property="article:tag" content="A&#x2F;B Test">
@@ -39,7 +38,7 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Hypothesis Testing for AB Testing - Data Shore</title>
+  <title>Hypothesis Testing - Data Shore</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -204,7 +203,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Hypothesis Testing for AB Testing"></span>
+            <span id="subtitle" data-typed-text="Hypothesis Testing"></span>
           
         </div>
 
@@ -238,7 +237,7 @@
         
         
         
-          125 mins
+          124 mins
         
       </span>
     
@@ -294,14 +293,14 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Hypothesis Testing for AB Testing</h1>
+            <h1 style="display: none">Hypothesis Testing</h1>
             
             
               <div class="markdown-body">
                 
                 <h1 id="hypothesis-testing">Hypothesis Testing</h1>
-<h2 id="terms-and-definition">1. Terms and Definition</h2>
-<h3 id="terms-in-hypothesis-testing">1.1 Terms in Hypothesis Testing</h3>
+<h2 id="definition-and-terms">1. Definition and Terms</h2>
+<p>Hypothesis testing is a kind of statistical inference method.</p>
 <table>
 
 <thead>
@@ -348,7 +347,7 @@
 <td style="text-align: center;">The degree the test statistics differ from the accepted value</td>
 </tr>
 <tr class="even">
-<td style="text-align: center;">Significance Level(<span class="math inline">\(\alpha\)</span>)</td>
+<td style="text-align: center;">Significance Level(1-<span class="math inline">\(\alpha\)</span>)</td>
 <td style="text-align: center;">A decided threshold of <span class="math inline">\(\alpha\)</span>. <span class="math inline">\(\alpha\)</span> is the probability of rejecting <span class="math inline">\(H_ 0\)</span> when <span class="math inline">\(H_ 0\)</span> is ture(Type I Error)</td>
 </tr>
 <tr class="odd">
@@ -379,101 +378,75 @@
 <td style="text-align: center;">MDE</td>
 <td style="text-align: center;">The minimum detectable effect size of a experiment when <span class="math inline">\(1-\alpha\)</span> and <span class="math inline">\(\beta\)</span> is given. If detected effect size <span class="math inline">\(d &lt; mde\)</span>, it might be caused by random factor, and we cannot reject <span class="math inline">\(H_ 0\)</span></td>
 </tr>
+<tr class="even">
+<td style="text-align: center;">PSB</td>
+<td style="text-align: center;">Practical Significance Boundary</td>
+</tr>
 </tbody>
 </table>
 <p><img src="/2022/03/25/Hypothesis-Testing/img1.png" srcset="/img/loading.gif" lazyload></p>
 <p><strong>Power and Error</strong></p>
 <p><img src="/2022/03/25/Hypothesis-Testing/img3.PNG" srcset="/img/loading.gif" lazyload></p>
+<h2 id="basic-procedure-of-hypothesis-testing">2. Basic Procedure of Hypothesis Testing</h2>
+<h3 id="propose-hypothesis">2.1 Propose Hypothesis</h3>
+<p>Clarify the null hypothesis and alternative hypothesis to test on</p>
+<h3 id="test-type">2.2 Test Type</h3>
 <p><img src="/2022/03/25/Hypothesis-Testing/5.png" srcset="/img/loading.gif" lazyload></p>
-<h3 id="formula">1.2 Formula</h3>
-<p><strong>Calculation of effect size:</strong></p>
-<ol type="1">
-<li><p><strong>Cohen's d:</strong> describe the difference of average variables of two group <span class="math display">\[
-d = \frac{\mu_A - \mu_B }{\sigma_{pooled}}
-\\
-\sigma_{pooled} = \sqrt{\frac{(n_1-1)s_ 1^2+(n_2-1)s_ 2^2}{(n_ 1-1)+(n_ 2-1)}}
-\]</span></p></li>
-<li><p><strong>Cramer's V</strong>: describe the correction of categorical variable <span class="math display">\[
-V = \sqrt{\frac{\chi^2/n}{min(c- 1,r-1)}}
-\]</span></p></li>
-<li><p><strong>Cohen's h</strong>: decribe the differnce of ratio variable of two groups <span class="math display">\[
+<h3 id="construct-test-statistics">2.3 Construct Test Statistics</h3>
+<p>For differential test, we usually want to test the difference between a parameter. In most case, we want to test the statistics based on a normal distribution. To do so, we would aggregate the measure though an additive way so that the parameter follows a normal distribution no matter what type of distribution the original measure follows. Thus, the parameter can should be concluded into 2 types: mean and ratio.</p>
+<p>Since the parameter follows the normal distribution, we can construct the test statistics through <strong>Cohen's d</strong>: <span class="math display">\[
+d = \frac{(\theta_1-\hat{\theta_1})-(\theta_2-\hat{\theta_2})}{\sigma_{SE,pooled}}
+\]</span> where <span class="math inline">\(\sigma_{SE}\)</span> measures the variance of a parameters <span class="math inline">\(V[\theta]\)</span>.</p>
+<p>For a mean test, <span class="math inline">\(\theta\)</span> is a mean <span class="math inline">\(\bar{ X }\)</span> <span class="math display">\[
+V[\bar{X}] = V[\frac{(X_1+X_2+...X_n)}{n}] = \frac{1}{n^2}\sum_i^nV[X_i]=\frac{1}{n}V[X_i] = \frac{\sigma^2_X}{n}
+\]</span> For a ratio test, <span class="math inline">\(\theta\)</span> is a ratio R <span class="math display">\[
+V[R] = V[\frac{B_1+B_2+...+B_n}{n}] = \frac{1}{n^2}\sum_i^nV[B_i]=\frac{1}{n}p(1-p)
+\]</span> The calculation of pooled standard error would be discussed in the following sections</p>
+<p>For ratio test, there's also another way to construct the test statistics called <strong>Cohen's h</strong>: <span class="math display">\[
 h = 2(arcsin \sqrt{p1} - arcsin\sqrt{p2})
-\]</span></p></li>
-</ol>
-<p><strong>Sample size calculation for T/Z test:</strong></p>
+\]</span> For the correlation test between categorical variable, we can use <strong>Cramer's V</strong> to construct the test statistics <span class="math display">\[
+V = \sqrt{\frac{\chi^2/n}{min(c- 1,r-1)}}
+\]</span></p>
+<h3 id="decide-testing-parameters">2.4 Decide Testing Parameters</h3>
+<p><strong>Significance Level</strong></p>
+<p>Decided by the preset <span class="math inline">\(\alpha\)</span> in the testing. <span class="math inline">\(1-\alpha\)</span> is the significance level, represent the strictness degree on judging significance.</p>
+<p><strong>Statistical Power </strong></p>
+<p>Decided by the preset <span class="math inline">\(\beta\)</span> in the testing. Statistical Power represents the probability of rejecting <span class="math inline">\(H_0\)</span> if it is indeed false, in other word, the probability of avoiding type II error. For example, in an one-tail differential Z test, let <span class="math inline">\(\beta&#39;\)</span> denote the real-time statistical power: <span class="math display">\[
+\beta&#39; = P(d \le Z_{1-\alpha/2}|H_0 \ False) = P(\frac{\theta_1 - \theta_2-\Delta}{\sigma_E} \le Z_{1-\alpha/2} - \frac{\Delta}{\sigma_E})
+\]</span> where <span class="math inline">\(\Delta = \theta_1 - \theta_2\)</span> is the real differential that exists. Let <span class="math inline">\(Z = \frac{\Delta}{\sigma_E}\)</span> <span class="math display">\[
+1 - \beta&#39; = 1-\Phi(Z_{1-\alpha/2}-Z) = \Phi(Z- Z_{1-\alpha/2})
+\]</span> For a two-tail Z test: <span class="math display">\[
+1 - \beta&#39; =  \Phi(Z- Z_{1-\alpha/2}) + \Phi(-Z-Z_{1-\alpha/2})
+\]</span> <strong>Practical Significance Boundary</strong></p>
+<p>The preset <span class="math inline">\(\delta\)</span> decided based on business goal. It is the minimum level of difference on metrics that we cares about. The PSB serve as an initial MDE used to decided minimum sample size.</p>
+<p><strong>Vairance of Population</strong>: The estimation on <span class="math inline">\(\sigma^2\)</span> from the historical data of the population</p>
+<p><strong>Estimate the sample size</strong></p>
+<p>From the definition of the statistical power we can find that the minimum sample size required is associated with the expected statistical power. Given a fixed sensitivity(MDE), the higer power we want, the more sample we need. We can deduce the formula of minimum sample size as follows:</p>
 <p>Mean Test: <span class="math display">\[
-n = \frac{(\sigma_1^2+\sigma_2^2)(z_{\alpha/2}+z_{\beta})^2}{\delta^2}
-\]</span> Where:</p>
-<ul>
-<li><span class="math inline">\(\delta\)</span>, or mde, is the smallest absolute difference between control and treatment groups that is meaningful to business, in real implementation, it is usually calculated based on the baseline of historical data and expected relative change rate.</li>
-<li><span class="math inline">\(\sigma\)</span> is the actual standard error of the population, usually calculated from historical data. If there is no historical data available, we can run a A/A test to obtain it</li>
-<li><span class="math inline">\(\alpha, \beta\)</span> are parameters manually set</li>
-</ul>
-<p>Ratio Test: <span class="math display">\[
-n = \frac{Z_{\alpha/2}\sqrt{\frac{p_1+p_2}{2}(1-\frac{p_1+p_2}{2})}+Z_\beta\sqrt{p_1(1-p_1)+p_2(1-p_2)}}{p_1-p_2}
+n&#39; = \frac{(\sigma_1^2+\sigma_2^2)(z_{\alpha/2}+z_{\beta})^2}{\delta^2}
+\]</span> Ratio Test: <span class="math display">\[
+n&#39;= \frac{Z_{\alpha/2}\sqrt{\frac{p_1+p_0}{2}(1-\frac{p_1+p_0}{2})}+Z_\beta\sqrt{p_1(1-p_1)+p_0(1-p_0)}}{p_1-p_0}
 \]</span></p>
 <ul>
-<li>where <span class="math inline">\(p_1,p_2\)</span> are the expected and baseline ratio</li>
+<li>where <span class="math inline">\(p_0\)</span> is the baseline of the ratio</li>
+<li><span class="math inline">\(p_1\)</span> is the expected level of the ratio, <span class="math inline">\(p_1 = p_0 + \delta\)</span></li>
 </ul>
-<p>Caluclation of MDE <span class="math display">\[
-MDE = (t_{\frac{1-\alpha}{2}} + t_ {1-\beta})\sqrt{\frac{\sigma_1^2}{n_ 1} + \frac{\sigma_2^2}{n_ 2}}
+<h3 id="results-analysis">2.5 Results Analysis</h3>
+<p>After the testing duration is reached, we can decide whether there is a statistical significance. Examine the p value of the observed results. If <span class="math inline">\(p &lt; \alpha\)</span> reject the Null hypothesis.</p>
+<p>Also, check the sensitivity(the real-time mde). If the mde is greater than the preser <span class="math inline">\(\delta\)</span>, it is likely that the testing is underpower and needs more samples.</p>
+<p>TO calculate real-time MDE <span class="math display">\[
+MDE = (t_{\frac{1-\alpha}{2}} + t_ {1-\beta})\sqrt{\frac{s_1^2}{n_ 1} + \frac{s_2^2}{n_ 2}}
 \]</span></p>
-<h2 id="type-of-hypothesis-testing">2. Type of Hypothesis Testing</h2>
-<p>Ther are various type of hypothesis testing fitting different situations. Fot this article, we mainly discuss about four type of tests frequently used in A/B testing</p>
-<h3 id="four-common-types-of-experiment">2.1 Four Common Types of Experiment</h3>
-<p><strong>Z-test</strong>:</p>
-<ol type="1">
-<li>Test statistics should be average value of a group or ratio</li>
-<li>The variance of the population should be given</li>
-<li>If the population does not follow Normal distribution, the sample size should be big</li>
-</ol>
-<p>In most application, the variance of the population is unknown. In addition,we usually cannot estimate the distribution of the total population, which requires the sample size of a Z-test to be big. Thus, z-test is not frequently used comparing to t-test</p>
-<p><strong>T- test</strong></p>
-<p>T- test is used to examine</p>
-<ol type="1">
-<li>whether the accepted average or ratio of a population is correct(One sample)</li>
-<li>Whether there's a difference on a statistics between two group(Two sample)</li>
-</ol>
-<p>The following condidtions should be guaranteed:</p>
-<ol type="1">
-<li>Test statistics sould be average value or ratio</li>
-<li>The variance of the population is not needed</li>
-<li>If the population does not follow Normal distribution, the sample size should be big</li>
-<li>The variance of the populations should be same</li>
-</ol>
-<p><strong>F-test</strong>:</p>
-<p>F-test is used to examine</p>
-<ol type="1">
-<li>whether the standard deviation of two or more population are same</li>
-<li>whether a categorical variable has an effect on the average of a population</li>
-</ol>
 <p>The following condidtions should be guaranteed:</p>
 <ol type="1">
 <li>The two population should both follows normal distribution</li>
 <li>The variance of the populations should be same</li>
 </ol>
-<p><strong>chi-test</strong></p>
-<p>chi-squared test is used to examine:</p>
-<ol type="1">
-<li>Whether the observed frequency of a variable in the sample is aligned with the expected frequency</li>
-<li>Whether two categorical variables are correlated</li>
-</ol>
-<p>The following condidtions should be guaranteed:</p>
-<ol type="1">
-<li>Test statistics should be frequency or categorical variable</li>
-<li>Non-parameter testing. The population do not need to follow normal distribution</li>
-</ol>
-<h3 id="how-to-choose-experiment-type">2.2 How to choose Experiment Type</h3>
-<p><img src="/2022/03/25/Hypothesis-Testing/img5.png" srcset="/img/loading.gif" lazyload style="zoom:150%;"></p>
-<p>where:</p>
-<ul>
-<li><span class="math inline">\(\bar{x}\)</span> is the mean of the sample</li>
-<li><span class="math inline">\(\mu_0\)</span> is the mean of population in <span class="math inline">\(H_0\)</span></li>
-<li>s is the standard deviation of sample</li>
-<li><span class="math inline">\(\sigma\)</span> is the standard deviation of population</li>
-<li>n is the number of samples</li>
-</ul>
 <h2 id="zt-test">3. Z/T-test</h2>
+<p><strong>Z Test</strong>:</p>
+<p>A Z-test examine a statistics assuming it follow a standard normal distribution(distribution). Thus the construction of z statistics is <span class="math inline">\(Z = \frac{X-\mu}{\sigma}\)</span></p>
+<p><strong>T-test</strong></p>
+<p>A T-test construct a statistics like: <span class="math inline">\(t = \frac{X}{\sqrt{Y/n}}\)</span> where <span class="math inline">\(X\sim N(0,1)\)</span> and <span class="math inline">\(Y \sim \chi^2(n)\)</span> . In a mean test <span class="math inline">\(\sqrt{Y/n}\)</span> could be the standard error. The advantage of T test is, while it have similar testing capability as Z test when n is greater than 30, it does not require the population variance <span class="math inline">\(\sigma\)</span> to be given. Meanwhile, it has stronger testing capability when n is smaller than 30</p>
 <h3 id="one-sample-test">3.1 One Sample Test</h3>
 <p>Objective: to test whether the accepted mean or ratio of a population is correct through a sample. In this case, we can assume <span class="math inline">\(\mu_0\)</span> and <span class="math inline">\(\pi_0\)</span> is given</p>
 <h4 id="sigma-givent-or-z">3.1.1 <span class="math inline">\(\sigma\)</span> Given(T or Z)</h4>
@@ -486,14 +459,7 @@ MDE = (t_{\frac{1-\alpha}{2}} + t_ {1-\beta})\sqrt{\frac{\sigma_1^2}{n_ 1} + \fr
 z = \frac{\bar{x}-\mu_0}{\sigma/\sqrt{n}}
 \]</span> for ratio test, construct z as: <span class="math display">\[
 z = \frac{p-\pi_0}{\sqrt{\frac{\pi_0(1-\pi_0)}{n}}}
-\]</span> reject the null hypothesis when:</p>
-<ul>
-<li><span class="math inline">\(|z| &gt; z_{\frac{\alpha}{2}}\)</span><br>
-</li>
-<li><span class="math inline">\(p &lt; \alpha\)</span></li>
-<li><span class="math inline">\(|z| &gt; mde\)</span></li>
-</ul>
-<p><strong>Small Sample</strong></p>
+\]</span> <strong>Small Sample</strong></p>
 <p>When the sample size is small, we can assume the sample ~ t distribution. The construction of the test statistics and reject condition are the same, the only difference is that the test statistics is now following t distribution</p>
 <h4 id="sigma-unknownt">3.1.2 <span class="math inline">\(\sigma\)</span> Unknown(T)</h4>
 <p>When <span class="math inline">\(\sigma\)</span> is unknown, the basic strategy is to replace population std with sample std, and apply t-test</p>
@@ -504,13 +470,6 @@ t = \frac{\bar{x}-\mu_0}{s/\sqrt{n}}
 \]</span> for ratio test, construct t as: <span class="math display">\[
 t = \frac{p-\pi_0}{\sqrt{\frac{\pi_0(1-\pi_0)}{n}}}
 \]</span></p>
-<p>reject the null hypothesis when:</p>
-<ul>
-<li><span class="math inline">\(|t| &gt; t_{\frac{\alpha}{2}}\)</span><br>
-</li>
-<li><span class="math inline">\(p &lt; \alpha\)</span></li>
-<li><span class="math inline">\(|t| &gt; mde\)</span></li>
-</ul>
 <h3 id="two-sample-test">3.2 Two Sample Test</h3>
 <p>Objective: to test whether a condition would effect a metric through following one group before and after experiment or comparing two groups</p>
 <h4 id="match-test">3.2.1 Match Test</h4>
@@ -525,13 +484,6 @@ z = \frac{(p_1-p_0) - (\pi_1 - \pi_0)}{\sqrt{p(1-p)(\frac{2}{n})}}
 <p><span class="math display">\[
 p = \frac{p_0+p_1}{2}
 \]</span></p>
-<p>reject the null hypothesis when:</p>
-<ul>
-<li><span class="math inline">\(|z| &gt; z_{\frac{\alpha}{2}}\)</span><br>
-</li>
-<li><span class="math inline">\(p &lt; \alpha\)</span></li>
-<li><span class="math inline">\(|z| &gt; mde\)</span></li>
-</ul>
 <h5 id="sigma-unkownt">3.2.1.2 <span class="math inline">\(\sigma\)</span> Unkown(T)</h5>
 <p><span class="math inline">\(H_0: \mu_1 = \mu_ 0\)</span> or <span class="math inline">\(\pi_1 = \pi_0\)</span> for ratio test</p>
 <p><span class="math inline">\(H_1: \mu_1 \ne \mu_ 0\)</span> or <span class="math inline">\(\pi_1 \ne \pi_0\)</span> for ratio test <span class="math display">\[
@@ -543,13 +495,6 @@ t = \frac{(p_1-p_0) - (\pi_1 - \pi_0)}{\sqrt{p(1-p)(\frac{2}{n})}}
 <p><span class="math display">\[
 p = \frac{p_0+p_1}{2}
 \]</span></p>
-<p>Reject when:</p>
-<ul>
-<li><span class="math inline">\(|t| &gt; t_{\frac{\alpha}{2}}\)</span><br>
-</li>
-<li><span class="math inline">\(p &lt; \alpha\)</span></li>
-<li><span class="math inline">\(|t| &gt; mde\)</span></li>
-</ul>
 <h4 id="independent-test">3.2.2 Independent Test</h4>
 <p>Usually applied when evaluation the effect of a treatment by comparing a experiment group and control group, which is A/B Testing</p>
 <h5 id="sigma-givenz-1">3.2.2.1 <span class="math inline">\(\sigma\)</span> Given(Z)</h5>
@@ -566,13 +511,6 @@ z = \frac{(p_1-p_2) - (\pi_1 - \pi_2)}{\sqrt{p(1-p)(\frac{1}{n_1}+\frac{1}{n_2})
 <p><span class="math display">\[
 p = \frac{p1*n1+p_2*n_2}{n_1+n_2}
 \]</span></p>
-<p>reject the null hypothesis when:</p>
-<ul>
-<li><span class="math inline">\(|z| &gt; z_{\frac{\alpha}{2}}\)</span><br>
-</li>
-<li><span class="math inline">\(p &lt; \alpha\)</span></li>
-<li><span class="math inline">\(|z| &gt; mde\)</span></li>
-</ul>
 <h5 id="sigma-uknownt">3.2.2.1 <span class="math inline">\(\sigma\)</span> Uknown(T)</h5>
 <p><span class="math inline">\(H_0: \mu_1 = \mu_ 0\)</span> or <span class="math inline">\(\pi_1 = \pi_0\)</span> for ratio test</p>
 <p><span class="math inline">\(H_1: \mu_1 \ne \mu_ 0\)</span> or <span class="math inline">\(\pi_1 \ne \pi_0\)</span> for ratio test</p>
@@ -590,33 +528,11 @@ t = \frac{(p_1-p_2) - (\pi_1 - \pi_2)}{\sqrt{p(1-p)(\frac{1}{n_1}+\frac{1}{n_2})
 <p><span class="math display">\[
 p = \frac{p1*n1+p_2*n_2}{n_1+n_2}
 \]</span></p>
-<p>reject the null hypothesis when:</p>
-<ul>
-<li><span class="math inline">\(|t| &gt; t_{\frac{\alpha}{2}}\)</span><br>
-</li>
-<li><span class="math inline">\(p &lt; \alpha\)</span></li>
-<li>|t| &gt; mde</li>
-</ul>
-<h3 id="sample-size-and-duration">3.3 Sample size and Duration</h3>
-<h4 id="sample-size">3.3.1 Sample Size</h4>
-<p>In A/B testing, most of time, you can calculate the sample size N using the following equation: <span class="math display">\[
-N = \frac{(t_{(1-\alpha)/2} + t_{1-\beta})^2\sigma^2}{mde^2}
-\]</span> Where:</p>
-<ul>
-<li><p><span class="math inline">\(\sigma\)</span> is the standard error of the two sample</p></li>
-<li><p>N is the sample size of <strong>one sample</strong>, the total sample size is 2N</p></li>
-<li><p>The greater the mde is(which means the sensitivity of a experiment is lower), the smaller sample size is need</p></li>
-<li><p>Note: the mde in the formular is the expected mde to calculated the minimum sample size. The actual mde of a experiment should be calculated after the experiment is launched by the following formula: <span class="math display">\[
-MDE = (t_{(1-\alpha)/2} + t_{1-\beta})\sqrt{\frac{\sigma_ 1}{n_ 1}+\frac{\sigma_ 2}{n_ 2}}
-\]</span></p></li>
-</ul>
-<p><a target="_blank" rel="noopener" href="https://www.evanmiller.org/ab-testing/">here</a> are some useful tools for calculate the sample size A/B</p>
-<h4 id="duration">3.3.2 Duration</h4>
-<p>You can calculate the duration by calculating sample size/daily processed samples. For example, If the sample size of a web A/B test is 1000, and the daily view of the webpage is 500, than you can run it foe two days. However, in real world problems, this calculation is not reliable, as there might be other factors like holiday or events that can affect the experiment. Thus, the specific process to decide the duration of a test remain to be discussed by experts.</p>
 <h2 id="f-test">4. F-test</h2>
+<p>An F-test construct the test statistics like <span class="math inline">\(\frac{U_1/d_1}{U_2/d_2}\)</span>, where <span class="math inline">\(U1 \sim \chi^2(d_1)\)</span> and <span class="math inline">\(U_2\sim \chi^2(d_2)\)</span>. In testing for Equality of Variances, the <span class="math inline">\(\frac{U}{d}\)</span> can be the standard error</p>
 <h3 id="equality-of-variances">4.1 Equality of Variances</h3>
-<p>Through F-test, we can examine the equality of variance</p>
-<p>Let <span class="math inline">\(X_1,X- 2\)</span> be two independent variables, where: <span class="math display">\[
+<p>Through F-test, we can examine the equality of the variances of two normally distributed varaible</p>
+<p>Let <span class="math inline">\(X_1,X_2\)</span> be two independent variables, where: <span class="math display">\[
 X_1~N(\mu_1,\sigma_1^2),  X_2~N(\mu_2,\sigma_2^2)
 \]</span> Get a sample from each variable: <span class="math inline">\(x_1, x_2\)</span>, the sample sizes are <span class="math inline">\(n_1,n_2\)</span></p>
 <p>Let <span class="math inline">\(\bar{x}_1,\bar{x}_2\)</span> be the mean of the samples, <span class="math inline">\(s_1,s_2\)</span> be the standard error of the samples</p>
@@ -706,9 +622,8 @@ SSR = ||\hat{y}-\bar{y}1_n||^2
 \]</span> Where:</p>
 <ul>
 <li><span class="math inline">\(\hat{y}\)</span> is the prediction of y</li>
-<li>{ y } is the average of true y</li>
+<li><span class="math inline">\(\bar{ y }\)</span> is the average of true y</li>
 <li>1n is a vector with all one</li>
-<li></li>
 </ul>
 <p>Define SSE as: <span class="math display">\[
 SSR = ||y- \hat{y}||^2
@@ -720,7 +635,8 @@ F = \frac{SSR/p}{SSE/(n-p-1)}
 <li><p>p is number of variables(x)</p></li>
 </ul>
 <p>Look up the F score table, if <span class="math inline">\(F &gt; F_{\alpha}\)</span>, reject <span class="math inline">\(H_0\)</span>. In such case, the linear model is significant to the change of the x and y, thus the linear hypothesis is acceptable. Otherwise, consider a non-linear model</p>
-<h2 id="chi-squared-test">5. Chi-squared Test</h2>
+<h2 id="chi2-test">5. <span class="math inline">\(\chi^2\)</span> Test</h2>
+<p>A <span class="math inline">\(\chi^2\)</span> Test construct the test statistics as a function of a <span class="math inline">\(\chi^2\)</span> variable. The degree of freedom are usually involved in the construction of such a statistics</p>
 <h4 id="chi-squared-test-for-independence">5.1 Chi-squared Test for Independence</h4>
 <p>chi-squared test is a <strong>supervised</strong> hypothesis testing method to calculate the probability that 2 categorical variables are correlated</p>
 <p>Suppose there are categorical variables X and Y, X has r possible values, with probability <span class="math inline">\((p_{x,1},...p_{x,r})\)</span> and Y has c possible values, with probability <span class="math inline">\((p_{y,1},...p_{y,c})\)</span>.</p>
@@ -866,7 +782,7 @@ F = \frac{SSR/p}{SSE/(n-p-1)}
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Hypothesis Testing for AB Testing</div>
+      <div>Hypothesis Testing</div>
       <div>http://example.com/2022/03/25/Hypothesis-Testing/</div>
     </div>
     <div class="license-meta">

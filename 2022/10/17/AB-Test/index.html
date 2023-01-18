@@ -16,24 +16,29 @@
   <meta name="author" content="Zhengyuan Yang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="This article discuss about basic process of conducting A&#x2F;B Testing">
+    <meta name="description" content="This article discuss about basic procedure of conducting A&#x2F;B Testing">
 <meta property="og:type" content="article">
-<meta property="og:title" content="AB-Test">
+<meta property="og:title" content="Basic Procedure of A&#x2F;B Testing">
 <meta property="og:url" content="http://example.com/2022/10/17/AB-Test/index.html">
 <meta property="og:site_name" content="Data Shore">
-<meta property="og:description" content="This article discuss about basic process of conducting A&#x2F;B Testing">
+<meta property="og:description" content="This article discuss about basic procedure of conducting A&#x2F;B Testing">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2022/10/17/AB-Test/1.png">
+<meta property="og:image" content="http://example.com/2022/10/17/AB-Test/2.png">
+<meta property="og:image" content="http://example.com/2022/10/17/AB-Test/3.png">
+<meta property="og:image" content="http://example.com/2022/10/17/AB-Test/4.png">
 <meta property="article:published_time" content="2022-10-18T04:02:24.000Z">
-<meta property="article:modified_time" content="2023-01-10T22:44:10.091Z">
+<meta property="article:modified_time" content="2023-01-18T21:16:28.653Z">
 <meta property="article:author" content="Zhengyuan Yang">
 <meta property="article:tag" content="A&#x2F;B Testing">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2022/10/17/AB-Test/1.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>AB-Test - Data Shore</title>
+  <title>Basic Procedure of A/B Testing - Data Shore</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -198,7 +203,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="AB-Test"></span>
+            <span id="subtitle" data-typed-text="Basic Procedure of A/B Testing"></span>
           
         </div>
 
@@ -221,7 +226,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          455 words
+          7.5k words
         
       </span>
     
@@ -232,7 +237,7 @@
         
         
         
-          4 mins
+          63 mins
         
       </span>
     
@@ -288,22 +293,104 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">AB-Test</h1>
+            <h1 style="display: none">Basic Procedure of A/B Testing</h1>
             
             
               <div class="markdown-body">
                 
                 <h1 id="basic-procedure-of-ab-testing">Basic Procedure of A/B Testing</h1>
-<h2 id="about-ab-testing">1. About A/B Testing</h2>
-<h2 id="section">2.</h2>
-<h2 id="experiment-design">3. Experiment Design</h2>
-<h3 id="define-problem">3.1 Define Problem</h3>
-<p>The first step of conducting an A/B test is to define the objectives, to clarify the business problem we're trying to solve.</p>
-<h3 id="pre-experiment-analysis">3.2 Pre-experiment Analysis</h3>
-<p>After problem definition, we should start to make pre-experiment analysis to discover potential solution. The analysis process can involving attribution, causal inference, EDA and other possible methodologies. The core objective is to find insights and update strategies</p>
-<h3 id="evaluate">3.3 Evaluate</h3>
-<h3 id="section-1">3.4</h3>
-<h3 id="section-2"></h3>
+<h2 id="about-ab-testing">About A/B Testing</h2>
+<p>A/B testing is a user research technology. It is a random controlled experiment usually involves two variants: treatment group and control group. From a hypothesis perspective, an A/B test is a two-sample independent test for difference.</p>
+<h2 id="step1-problem-statement">Step1: Problem Statement</h2>
+<p>An A/B test should always have an business drive. This can usually be concluded into several product sense framework like AAARR and STAR</p>
+<p><a href>ongoing</a></p>
+<h2 id="step-2-pre-experiment-analysis">Step 2: Pre-experiment Analysis</h2>
+<p>The purpose of pre-experiment analysis is to figure out an specific solution for the problem stated, in other words, the treatment. Common techniques include EDA, user segmentation and machine learning.</p>
+<p>In a A/B testing case interview, the treatment are usually provided by the interviewer. The task for the interviewee would be to infer the business drive beneath the treatment and find according metrics to measure success.</p>
+<h2 id="step-3-metrics-selection">Step 3: Metrics Selection</h2>
+<p>This task is vert similar to another type of case <a href>"measure success"</a>. However, for an A/B test, the following facts about a metric should be considered:</p>
+<ul>
+<li>Sensitivity: The metrics should be sentitive and timely. Avoid metrics that needs a long time to demonstrate changes.</li>
+<li>Attributable: Avoid those metrics associated with high-level business goal. These metrics are impacted by many facotrs. They can be insensitive to a particular experiment or be hard for us to attribute the significance on a single treatment.</li>
+<li>Aggregated: The metric should be defined on an aggregation of a measure that is meaningful to every unit. Only by doing that can be regard the meaure on a single unit as a random variable and apply CLT.</li>
+<li>Measurable : The metrics should be clearly defined and measurable. They should not exceed the time or space frame of the experiment</li>
+</ul>
+<h2 id="step-4-experiment-design">Step 4: Experiment Design</h2>
+<h3 id="define-experiment-groups">Define Experiment Groups</h3>
+<p><strong>Randomized Unit</strong></p>
+<p>The randomized unit is the smallest grain that the metrics defined on. In most applications, the randomized unit is a user. Options for finer grains exists:</p>
+<ul>
+<li>Page Level: the smallest unit is a page view</li>
+<li>Session Level: the smallest unit is a group of web page viewed in a single visit</li>
+<li>User Level: the smallest unit is a user. The minimal grain of the metrics should be associated with a user ID, device ID or coockies, such as a UV. Shared account/device can lead to undercounting, while multiple account/device by one user can lead to overcounting. Cookies can be erased, leading to overcounting of users</li>
+</ul>
+<p>Finer grain can increase the number of available units and lower the varianve. Nevertheless, do not use finer grain if the objective of the feature is meant for the user level, such as user experience or user engagement. The analysis unit and the randomized unit is not on the same level if we do so. This can lead to misinterpretation on user-level infomation.</p>
+<p>For example we want to know the probability a user clicked a new button. If we use CTR, based on a PV, then the effect can be overestimated as a user can click the button multiple times when there is lags. The CTP, based on UV, might be a more suitable metric. We can select a UV as a randomized unit</p>
+<p><strong>Target Group</strong></p>
+<p>The target population the feature meant for. This is usually a subset of all users conditioned on the following dimensions:</p>
+<ul>
+<li>Region: Country, Province</li>
+<li>New/Old User</li>
+<li>Language: English, Chinese</li>
+<li>Industry: Cloth/Furniture/...</li>
+<li>Conversion Stage: We should focus on the users that the feature are meant to perform on. If a user have not yet gome through the user funnel and do not hold a chance to experience the feature, they should not be selected for the experiment</li>
+</ul>
+<h3 id="from-historical-data">From Historical Data</h3>
+<p>Some parameters need to gathered from historical data:</p>
+<p><strong>Baseline of Metrics</strong>: The historical level of metrics on control group and treatment group. The value should be the same(or very close). If there's a difference, conduct a pre-difference analysis(A/A test, metric decomposition)</p>
+<p><strong>Variance</strong>: The estimation of variance on the target population. Since we have not calculate the sample size and split the samples into control and treatment group, it is difficult to estimate the vairiances for two different population from samples. A solution is to assume the variance of both population are the same and estimate the variance through the variance of all samples. If there are any histroical split, like a previous A/B test or A/A test, we can consider estimate both variance.</p>
+<h3 id="from-business-goal">From Business Goal</h3>
+<p><strong>Practical Significance Boundary</strong></p>
+<p>The minimal extent of difference of interest from a business aspect. Usually the researcher first define a minimal relative difference(MRD, usually 1%~5%), and calculate PSB through baseline*MRD. The PSB is taken as an expected MDE to calculate the minimum sample size</p>
+<h3 id="for-hypothesis-testing">For Hypothesis Testing</h3>
+<p>The details of the hypothesis testing can be found in <a target="_blank" rel="noopener" href="http://zhengyuanyang.com/2022/03/25/Hypothesis-Testing/#formula">this article</a>.</p>
+<p><strong><span class="math inline">\(\alpha \ and \ \beta\)</span></strong></p>
+<p>Decide the significance level and statistical power. Usually, we set <span class="math inline">\(\alpha = 0.05\)</span> and <span class="math inline">\(\beta = 0.8\)</span> as an initial value</p>
+<p><strong>Minimum Sample Size</strong></p>
+<p>The sample size is decided throguh experience formula. For A/B testing:</p>
+<p>A mean test: <span class="math display">\[
+n = \frac{(\sigma_1^2+\sigma_2^2)(z_{\alpha/2}+z_{\beta})^2}{\delta^2}
+\]</span> A ratio test: <span class="math display">\[
+n = \frac{Z_{\alpha/2}\sqrt{\frac{p_1+p_2}{2}(1-\frac{p_1+p_2}{2})}+Z_\beta\sqrt{p_1(1-p_1)+p_2(1-p_2)}}{p_1-p_2}
+\]</span> In real applications, for a mean test, if we feel like the respective variances are hard to obtian or we can't decide whether we would apply a Z-test, we can simply apply the <strong>rule of thumb</strong>: <span class="math display">\[
+n = 16\frac{s^2}{\delta^2 } \qquad for \quad  two-tail
+\]</span></p>
+<p><span class="math display">\[
+n = 8\frac{s^2}{\delta^2 } \qquad for \quad  one-tail
+\]</span></p>
+<p><strong>Test Duration</strong></p>
+<p>The longer the experiment runs, the more sample we can obtained. Usually the sample size can be calculated from: <span class="math display">\[
+Days \ of \ test = \frac{ Minimum \ sample \ size}{Daily \ available \ unit \ traffics}
+\]</span></p>
+<p>However, the following aspects need to be considered when deciding the test duration</p>
+<ul>
+<li><strong>Day of week effect:</strong> Weekends might lead to different user behavior had raise up the metrics. It's important to ensure that your experiment capture the weekly cycle</li>
+<li><strong>Seasonality:</strong> Holidays or annual events that can have a impact on the metrics. Try to avoid or correct the effect of these events if the test are for plain time</li>
+<li><strong>Primacy and novelty effects:</strong> Some existing users might tend to be reluctant to change(Primacy Effect), while other existing users might tend to welcome change. Both effects will diminish as time growing. To ensure the stability of the test, the duration should cover the period when these two effects are working</li>
+</ul>
+<p><strong>Experiment Type</strong></p>
+<p>An A/B testing is an test to examine differential of metrics between control group and treatment group. Thus, in most case we selecte a T/Z test.</p>
+<p>For an A/B testing, the experiment should be a two-sample independent test. If the <span class="math inline">\(\sigma\)</span> of the population is unknown, we should consider a T test. If the <span class="math inline">\(\sigma\)</span> is known, for example it is a ratio test, we should apply a Z-test if available samples are more than 30, and a T test if the number is less than 30.</p>
+<p><img src="/2022/10/17/AB-Test/1.png" srcset="/img/loading.gif" lazyload></p>
+<p><strong>Construct Test Statistics</strong></p>
+<p>The construction of test statistics is decided by the type of experiment and the assumption that whether the variance of the two group are the same. We can consider examining the equality of variance through a F-test based on the experiment samples or any historical data.</p>
+<h2 id="step-5-experiment-deployment">Step 5: <strong>Experiment Deployment</strong></h2>
+<p><strong>Traffic Distribution</strong></p>
+<p>As an A/B test is a random controlled experiment, the randomness of assignment of units must be ensured. The simplest method to ensure concurrent experiments for different tratments do not influence eanch other is the Simple Layer Method, which is to divide all traffic with each experiment variant receiving a specified fraction of the total traffic:</p>
+<p><img src="/2022/10/17/AB-Test/2.png" srcset="/img/loading.gif" lazyload></p>
+<p>Nevertheless, this method requires that the total needed sample size for all concurrent experiments does not exceed the total available traffics. This put limits on the number of concurrent experiments</p>
+<p>To handle with numerous concurrent experiments cases, we can apply multiple-layer orthogonal traffic method, where each layer is a copy of all or a fraction of total traffic. The re-assignment of a unit accross two layers are random. The groups of experiments are allocated on this layers and each group are expected to receive units randomly from all groups of the above layer.</p>
+<p><img src="/2022/10/17/AB-Test/3.png" srcset="/img/loading.gif" lazyload></p>
+<p><strong>When to Stop</strong></p>
+<p>The typical rule for experiment stopping is <strong>No Data Peeking</strong>: wait until the experiment reach its duration and then analyze the results. However, in real applications, we might need to monitor the experiment and decide whether to end an experiment after the duration is reached. When the duration is reached:</p>
+<p><img src="/2022/10/17/AB-Test/4.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="step-6-experiment-results-analysis">Step 6: Experiment Results Analysis</h2>
+<p>The analysis process of the experiment results can be found in <a href>this article</a></p>
+<h2 id="step-7-lauch-decision">Step 7: Lauch Decision</h2>
+<p>After we are assured that the effect of the treatment is significant and truthworthy, there's still some aspects we need to consider before we deciding to lauch the new feature</p>
+<p><strong>Metrics Trade-off</strong></p>
+<p><strong>Lauch Costs</strong></p>
+<p><strong>Rampling Process</strong></p>
 
                 
               </div>
@@ -349,7 +436,7 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>AB-Test</div>
+      <div>Basic Procedure of A/B Testing</div>
       <div>http://example.com/2022/10/17/AB-Test/</div>
     </div>
     <div class="license-meta">
@@ -389,6 +476,29 @@
 
 
 
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/10/21/scaler/" title="Scaler in Machine Learning">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Scaler in Machine Learning</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/10/08/distance/" title="Distance in Machine Learning">
+                        <span class="hidden-mobile">Distance in Machine Learning</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
               
             </div>
 
