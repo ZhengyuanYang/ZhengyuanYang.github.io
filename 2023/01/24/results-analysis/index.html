@@ -16,29 +16,28 @@
   <meta name="author" content="Zhengyuan Yang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="This article discuss about basic knowledge regarding Probability Graph Model">
+    <meta name="description" content="This article discuss about the experiment results analysis process of an A&#x2F;B testing">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Probability Graphical Model">
-<meta property="og:url" content="http://example.com/2023/01/10/PGM/index.html">
+<meta property="og:title" content="A&#x2F;B Testing: Results Analysis">
+<meta property="og:url" content="http://example.com/2023/01/24/results-analysis/index.html">
 <meta property="og:site_name" content="Data Shore">
-<meta property="og:description" content="This article discuss about basic knowledge regarding Probability Graph Model">
+<meta property="og:description" content="This article discuss about the experiment results analysis process of an A&#x2F;B testing">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/2023/01/10/PGM/1.png">
-<meta property="og:image" content="http://example.com/2023/01/10/PGM/2.png">
-<meta property="og:image" content="http://example.com/2023/01/10/PGM/3.png">
-<meta property="og:image" content="http://example.com/2023/01/10/PGM/4.png">
-<meta property="article:published_time" content="2023-01-10T22:48:11.000Z">
-<meta property="article:modified_time" content="2023-01-12T23:49:13.060Z">
+<meta property="og:image" content="http://example.com/2023/01/24/results-analysis/1.png">
+<meta property="og:image" content="http://example.com/2023/01/24/results-analysis/2.png">
+<meta property="article:published_time" content="2023-01-24T22:49:40.000Z">
+<meta property="article:modified_time" content="2023-01-25T12:45:10.257Z">
 <meta property="article:author" content="Zhengyuan Yang">
-<meta property="article:tag" content="Probability Graph Models">
+<meta property="article:tag" content="A&#x2F;B Testing">
+<meta property="article:tag" content="Results Analysis">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/2023/01/10/PGM/1.png">
+<meta name="twitter:image" content="http://example.com/2023/01/24/results-analysis/1.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Probability Graphical Model - Data Shore</title>
+  <title>A/B Testing: Results Analysis - Data Shore</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -203,7 +202,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Probability Graphical Model"></span>
+            <span id="subtitle" data-typed-text="A/B Testing: Results Analysis"></span>
           
         </div>
 
@@ -214,8 +213,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-01-10 14:48" pubdate>
-          January 10, 2023 pm
+        <time datetime="2023-01-24 14:49" pubdate>
+          January 24, 2023 pm
         </time>
       </span>
     
@@ -226,7 +225,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4.5k words
+          3.1k words
         
       </span>
     
@@ -237,7 +236,7 @@
         
         
         
-          38 mins
+          26 mins
         
       </span>
     
@@ -293,84 +292,46 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Probability Graphical Model</h1>
+            <h1 style="display: none">A/B Testing: Results Analysis</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="probability-graphical-model-basis">Probability Graphical Model: Basis</h1>
-<h2 id="about-probability-graphical-model">1. About Probability Graphical Model</h2>
-<p>The Probability Graphical Models are a series model that express the dependency/ joint distribution in a graphic way(edges and nodes). The apllications of PGM includes:</p>
-<ul>
-<li>PGM representation: present the correlation or causality relationship among variables in a graphical way</li>
-<li>PGM learning: including parameter learning and structural learning</li>
-<li>PGM inference: reasoning the correlation/causality structure of variables</li>
-</ul>
-<h2 id="terminology">2. Terminology</h2>
-<p><strong>Factor</strong></p>
-<p>A factor is a funtion of one or more variables <span class="math display">\[
-\phi(X_1,..X_n)
-\]</span> where <span class="math inline">\(\phi: Val(X_1,...X_n) \to R\)</span></p>
-<p><strong>Scope</strong></p>
-<p>The list of variables included in a factor: <span class="math inline">\(\{ X_1, ...X_n\}\)</span></p>
-<p><strong>Factor Product</strong></p>
-<p><img src="/2023/01/10/PGM/1.png" srcset="/img/loading.gif" lazyload></p>
-<p><strong>Factor Marginalization</strong></p>
-<p><img src="/2023/01/10/PGM/2.png" srcset="/img/loading.gif" lazyload></p>
-<p><strong>Factor Reduction(Conditioning)</strong></p>
-<p><img src="/2023/01/10/PGM/3.png" srcset="/img/loading.gif" lazyload></p>
-<h2 id="categories-of-pgm">3. Categories of PGM</h2>
-<h3 id="bayesian-network">2.1 Bayesian Network</h3>
-<p>The Bayesian Network use directed acyclic graph to represent the causally of random variables.</p>
-<p>Each node <span class="math inline">\(X_i\)</span> has a contional probability distribution(CPD) <span class="math inline">\(P(X_i|Par(X_i))\)</span></p>
-<p>where par returns all parent nodes of <span class="math inline">\(Xi\)</span> in the graph. If <span class="math inline">\(X_i\)</span>does not has parent nodes, then replace the CPD with <span class="math inline">\(P(X_i)\)</span></p>
-<p>A BN represent the JPD of all variables included, which can be calculated from: <span class="math display">\[
-P(X_1,X_2,...X_n) = \prod_i^n P(X_i|par(X_i))
-\]</span> We can say a joint probability P factorize over a graph G, if P can be represented by the above equation.</p>
-<p>The Naive Bayes Model is an example of the simplistic BN. In naive bayes, assumptions are made that each feature are caused by a categorical variables, while the features remain independent to each other</p>
-<p><img src="/2023/01/10/PGM/4.png" srcset="/img/loading.gif" lazyload></p>
-<h3 id="markov-random-field">2.2 Markov Random Field</h3>
-<h4 id="markov-chain-and-transition-probability-matrix">2.2.1 Markov Chain and <strong>Transition Probability Matrix</strong></h4>
-<p><strong>Markov Chain</strong></p>
-<p>For a series of random variable <span class="math inline">\(X_1,X_2,..X_n\)</span> we call this series a markov chain if: <span class="math display">\[
-P(X_m+1 = i_m+1| X_0=i_0,X_1=i_1,...X_m=i_m)  = P(X_m+1 = i_m+1|X_m=i_m)
-\]</span> In other word, the state of <span class="math inline">\(X_m+1\)</span> depends only on the previous one state, which is the value of <span class="math inline">\(X_m\)</span></p>
-<p>In many applications, we can use a markov chain to model the transition of states over time for a single random variable.</p>
-<p><strong>Transition Matrix</strong></p>
-<p>For any moment n, if the probability <span class="math inline">\(P(X_{n+1} = j|X_n =i)\)</span> is independent to n, then we can this probability the one-step transition probability between state i and j, denoted as <span class="math inline">\(p_{i,j}\)</span></p>
-<p>For all possible states of the random variable, the one-step probabilities between each two combinations consist the transition matrix. The sum of each row would be 1. Note that the sum of each column does not necessarily have to be 1.</p>
-<h4 id="random-field-and-clique">2.2.2 Random Field and Clique</h4>
-<p>In a random field, each position(node) represent a random variable and can be assigned with a value.</p>
-<p>In a graph, a clique is a subset of nodes that each two nodes in this subset are connected</p>
-<p>If adding any nodes to a clique would no longer make that subset a clique, we call sucn a clique a maximal clique</p>
-<h4 id="markov-property-of-random-field">2.2.3 Markov property of Random Field</h4>
-<p><strong>Global Markov Assumption</strong></p>
-<p>For any two subsets of nodes S and T(S and T are not overlapped), given a separating subset C(a subset of nodes that all paths between S and T need to travel through this subset), if S and T are conditionally independent on C(<span class="math inline">\(P(S|T,C) = P(S| C)\)</span>)</p>
-<p><strong>Local Markov Assumption</strong></p>
-<p>Let V be any nodes in the graph, W be the adjacent nodes of V, O be other nodes in the graph. Given random variables <span class="math inline">\(X_W\)</span>, <span class="math inline">\(X_V\)</span> and <span class="math inline">\(X_O\)</span> are conditonally independent.</p>
-<p><strong>Pairwise Markov Assumption</strong></p>
-<p>Let U and V be two disconnected nodes in a graph, O be other nodes. Given random variables <span class="math inline">\(X_O\)</span>, <span class="math inline">\(X_U\)</span> and <span class="math inline">\(X_V\)</span> are conditionally independent</p>
-<p>If any of the three assumption are satisfied in a random field, we call such a random field a Markov Random Field(MRF)</p>
-<p>The Global Markov Assumption is the strongest one, the satisfaction of it implies the other two assumption</p>
-<h4 id="potential-function-of-mrf">2.2.4 Potential Function of MRF</h4>
-<p><strong>Potential Function</strong></p>
-<p>The potential function is defined on a clique in a MRF. It measure the correlation among the variables in the clique. the potenial function should be a non-negative function, and it should have greater value where one feels two variable correlated. For example, we can define a potential function that have maximum when to factors are equal.</p>
-<p>Usually, we would define the potential function as a exponential function. <span class="math display">\[
-\phi_Q(X_Q) = e^{-H_Q(X_Q)}
-\]</span> Where <span class="math inline">\(H_Q\)</span> is called an energy function. The reason to adopt an exponential potential is that we can add the energy functions together when we multiply a potential function with another.</p>
-<p>The usually format of a energy function: <span class="math display">\[
-H_Q(X_Q) = \sum_{u,v\in Q,u \ne v} \alpha_{u,v}t(x_u,x_v) + \sum_{v \in Q}\beta_{u,v}s(x_v)
+                <h1 id="ab-testing-results-analysis">A/B Testing: Results Analysis</h1>
+<h2 id="sanity-check">1. Sanity Check</h2>
+<p>After we obtained the results data and before we make any analysis, we want to do some sanity check to ensure the experiment are running correctly and any differences are caused by the treatment instead of any other changes. A Sanity check refer to the simple process to verify the resutls by checking the consistency of those metrcis that are not supposed to be affected by the treatment(Invariant Metrics). There are two types of invariant metrics:</p>
+<ol type="1">
+<li>Trust-related guardrail metrics: Metrics related to the business process but should not be effected by the treatment or should be configured the same for both group(e.g search amount for a watch-time duration test, cache hit rate, Telemetry fidelity)</li>
+<li>Organiztional guradrail metrics: metrics that are important to the organization and expected to be an invariant for many experiments.(e. g. latency, GMV, PV)</li>
+</ol>
+<p>If these sanity checks fail, there is probably a problem with the underlying experiment design, infrastructure, or data processing.</p>
+<h2 id="judgment-on-significance">2. Judgment on Significance</h2>
+<h3 id="judgement-on-statistical-significance">2.1 Judgement on Statistical Significance</h3>
+<p>The judgement on statistical significance should be based on p value calculated from the test results.</p>
+<p><img src="/2023/01/24/results-analysis/1.png" srcset="/img/loading.gif" lazyload></p>
+<p>Note that the MDE is the real-time sensitivity estimated from the experiment results</p>
+<h3 id="judgement-on-practical-significance">2.2 Judgement on Practical Significance</h3>
+<p><strong>Confidence Interval</strong></p>
+<p>From a frequentist probability theory POV, the confidence interval is a section describe how often the true value of a parameter would lie in the section given a significance level. In a testing we regard the observed difference as an estimation of the mean of the true difference, following a normal distribution. We can then calculated the CI through: <span class="math display">\[
+CI = [\mu- Z_{\frac{\alpha}{2}}*\sigma_{SE},\  \mu+ Z_{\frac{\alpha}{2}}*\sigma_{SE}]
 \]</span> where:</p>
 <ul>
-<li><span class="math inline">\(\alpha, \beta\)</span> are hyper parameters</li>
-<li>t, s are functions to measure the energy between two nodes and asingle nodes. The could be just <span class="math inline">\(t(x_u,x_v) = x_ux_v, \ s(x_v)= x_v\)</span></li>
+<li><span class="math inline">\(\mu\)</span> is the observed difference</li>
+<li><span class="math inline">\(\sigma_{SE}\)</span> is the standard error estimated from the standard deviation from the sample</li>
 </ul>
-<p><strong>Joint Probability</strong></p>
-<p>The joint probability a MRF represent can be calculated from a series of product of potential functions: <span class="math display">\[
-P(X_1,X_2,...X_n) = \frac{1}{Z} \prod_{Q \in C} \phi_Q(X_Q)
-\]</span> Where Z is a scaling constant to ensure the probability is legal. In real application, the calculation of Z is very difficult because the number of cliques can be huge. We can instead calculate P based on maximal cliques: <span class="math display">\[
-P(X_1,X_2,...X_n) = \frac{1}{Z^*} \prod_{Q \in C^*} \phi_Q(X_Q)
-\]</span> where <span class="math inline">\(C^*\)</span> is the collections of all maximal clique in the MRF or subset of MRF</p>
+<p><strong>Practical Significance</strong></p>
+<p>When checking on CI, the following situations may occur:</p>
+<p><img src="/2023/01/24/results-analysis/2.png" srcset="/img/loading.gif" lazyload></p>
+<ol type="1">
+<li>The result is not statistically significant. It is also clear that there is no practical significance. This suggests that the change does not do much. You may either decide to iterate or abandon this idea.</li>
+<li>The result is statistically and practically significant, which suggests lauching the feature.</li>
+<li>The result is statistically significant but not practically significant. In this case, you are confident about the magnitude of change, but that magnitude may not be sufficient to outweigh other factors such as cost and thrive you business goal.</li>
+<li>The boundry of the CI does exceed the PSB but it happens in both way. This ethier suggest the treatment effect is very unstable or the experiment is underpowered. Consider running a follow-up test with more units, providing greater statistical power</li>
+<li>The result is likely practically significant but not statistically significant.There is a good chance that there is no impact at all. From a measurement perspective, the best recommendation would be to repeat this test but with greater power to gain more precision in the result.</li>
+<li>The result is statistically significant, and likely practically significant. There is still a chance that the impact is not sufficient from a business perspective. While we still should consider repeating the test with more power, choosing to launch is a reasonable decision from a launch/no-launch decision</li>
+</ol>
+<p>From the analysis above we found only scenarios 2 and 6 could be considered launchable. Whether we should stick to scenario 2 depends on our preference. In most business practice we would presue scenario 2.</p>
+<h2 id="validity-checktruthworthyness-analysis">3. Validity Check(Truthworthyness Analysis)</h2>
 
                 
               </div>
@@ -389,7 +350,7 @@ P(X_1,X_2,...X_n) = \frac{1}{Z^*} \prod_{Q \in C^*} \phi_Q(X_Q)
     
       <span class="category-chain">
         
-  <a href="/categories/Probability-Statistics/" class="category-chain-item">Probability &amp; Statistics</a>
+  <a href="/categories/A-B-Testing-Case-Interview/" class="category-chain-item">A/B Testing &amp; Case Interview</a>
   
   
 
@@ -404,7 +365,9 @@ P(X_1,X_2,...X_n) = \frac{1}{Z^*} \prod_{Q \in C^*} \phi_Q(X_Q)
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Probability-Graph-Models/">#Probability Graph Models</a>
+        <a href="/tags/A-B-Testing/">#A/B Testing</a>
+      
+        <a href="/tags/Results-Analysis/">#Results Analysis</a>
       
     </div>
   
@@ -416,8 +379,8 @@ P(X_1,X_2,...X_n) = \frac{1}{Z^*} \prod_{Q \in C^*} \phi_Q(X_Q)
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Probability Graphical Model</div>
-      <div>http://example.com/2023/01/10/PGM/</div>
+      <div>A/B Testing: Results Analysis</div>
+      <div>http://example.com/2023/01/24/results-analysis/</div>
     </div>
     <div class="license-meta">
       
@@ -429,7 +392,7 @@ P(X_1,X_2,...X_n) = \frac{1}{Z^*} \prod_{Q \in C^*} \phi_Q(X_Q)
       
         <div class="license-meta-item license-meta-date">
           <div>Posted on</div>
-          <div>January 10, 2023</div>
+          <div>January 24, 2023</div>
         </div>
       
       
@@ -461,18 +424,12 @@ P(X_1,X_2,...X_n) = \frac{1}{Z^*} \prod_{Q \in C^*} \phi_Q(X_Q)
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/01/24/results-analysis/" title="A/B Testing: Results Analysis">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">A/B Testing: Results Analysis</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/12/25/case-interview/" title="Case Interview in Data Science">
-                        <span class="hidden-mobile">Case Interview in Data Science</span>
+                      <a href="/2023/01/10/PGM/" title="Probability Graphical Model">
+                        <span class="hidden-mobile">Probability Graphical Model</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

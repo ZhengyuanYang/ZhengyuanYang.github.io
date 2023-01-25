@@ -26,8 +26,9 @@
 <meta property="og:image" content="http://example.com/2022/03/25/Hypothesis-Testing/img1.png">
 <meta property="og:image" content="http://example.com/2022/03/25/Hypothesis-Testing/img3.PNG">
 <meta property="og:image" content="http://example.com/2022/03/25/Hypothesis-Testing/5.png">
+<meta property="og:image" content="http://example.com/2022/03/25/Hypothesis-Testing/8.png">
 <meta property="article:published_time" content="2022-03-25T23:25:15.000Z">
-<meta property="article:modified_time" content="2023-01-18T21:23:41.292Z">
+<meta property="article:modified_time" content="2023-01-25T12:21:02.221Z">
 <meta property="article:author" content="Zhengyuan Yang">
 <meta property="article:tag" content="Hypothesis Testing">
 <meta property="article:tag" content="A&#x2F;B Test">
@@ -226,7 +227,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          15k words
+          16k words
         
       </span>
     
@@ -237,7 +238,7 @@
         
         
         
-          124 mins
+          131 mins
         
       </span>
     
@@ -417,7 +418,8 @@ V = \sqrt{\frac{\chi^2/n}{min(c- 1,r-1)}}
 1 - \beta&#39; = 1-\Phi(Z_{1-\alpha/2}-Z) = \Phi(Z- Z_{1-\alpha/2})
 \]</span> For a two-tail Z test: <span class="math display">\[
 1 - \beta&#39; =  \Phi(Z- Z_{1-\alpha/2}) + \Phi(-Z-Z_{1-\alpha/2})
-\]</span> <strong>Practical Significance Boundary</strong></p>
+\]</span></p>
+<p><strong>Practical Significance Boundary</strong></p>
 <p>The preset <span class="math inline">\(\delta\)</span> decided based on business goal. It is the minimum level of difference on metrics that we cares about. The PSB serve as an initial MDE used to decided minimum sample size.</p>
 <p><strong>Vairance of Population</strong>: The estimation on <span class="math inline">\(\sigma^2\)</span> from the historical data of the population</p>
 <p><strong>Estimate the sample size</strong></p>
@@ -437,11 +439,18 @@ n&#39;= \frac{Z_{\alpha/2}\sqrt{\frac{p_1+p_0}{2}(1-\frac{p_1+p_0}{2})}+Z_\beta\
 <p>TO calculate real-time MDE <span class="math display">\[
 MDE = (t_{\frac{1-\alpha}{2}} + t_ {1-\beta})\sqrt{\frac{s_1^2}{n_ 1} + \frac{s_2^2}{n_ 2}}
 \]</span></p>
-<p>The following condidtions should be guaranteed:</p>
-<ol type="1">
-<li>The two population should both follows normal distribution</li>
-<li>The variance of the populations should be same</li>
-</ol>
+<p>According to the definition of the statistical power, the sensitivity of the testing is associated with the preset statistical power.</p>
+<p><img src="/2022/03/25/Hypothesis-Testing/8.png" srcset="/img/loading.gif" lazyload></p>
+<p>In the this figure</p>
+<ul>
+<li>the orange area is the preset <span class="math inline">\(\beta\)</span></li>
+<li>the green area represent the true type II error <span class="math inline">\(\beta&#39;\)</span></li>
+<li><span class="math inline">\(\mu_0\)</span> is the mean of the test statements under <span class="math inline">\(H_0\)</span>, which is 0</li>
+<li><span class="math inline">\(\mu^*\)</span> is the mean where the statistical power is exactly <span class="math inline">\(1-\beta\)</span>. <span class="math inline">\(\mu^*\)</span> decides the MDE of the experiment</li>
+<li><span class="math inline">\(\mu_1\)</span> is the true value of the statistics estimated from the sample</li>
+</ul>
+<p>From the figure we can find out that if the true difference is bigger than MDE, than the ture statistical power is greater then we demands, and the experiment is overpowered. On the opposite, if the true difference is smaller than the MDE, than we cannot detect the difference with enough power, and the experiment is underpowered</p>
+<p>When the sample size remains the same, higer power, which means lower type II error, demands the right-forward shift of mean of the parameter and leads to greater mde(lower sensitivity). If we want to improve sensity while maintaining the power, we would need more samples or find a way to lower the variance of the metrics</p>
 <h2 id="zt-test">3. Z/T-test</h2>
 <p><strong>Z Test</strong>:</p>
 <p>A Z-test examine a statistics assuming it follow a standard normal distribution(distribution). Thus the construction of z statistics is <span class="math inline">\(Z = \frac{X-\mu}{\sigma}\)</span></p>
