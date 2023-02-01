@@ -24,7 +24,7 @@
 <meta property="og:description" content="This article discuss about the procedure of handling metircs diagnosis problem in data science interview">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-12-25T20:57:56.000Z">
-<meta property="article:modified_time" content="2023-02-01T00:08:21.786Z">
+<meta property="article:modified_time" content="2023-02-01T00:12:52.196Z">
 <meta property="article:author" content="Zhengyuan Yang">
 <meta property="article:tag" content="Case Interview">
 <meta name="twitter:card" content="summary_large_image">
@@ -221,7 +221,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.8k words
+          2k words
         
       </span>
     
@@ -232,7 +232,7 @@
         
         
         
-          32 mins
+          18 mins
         
       </span>
     
@@ -320,70 +320,6 @@
 <li><p><strong>Segment the metric by user demographic channel, or user behavior</strong></p></li>
 </ol>
 <p>Segment the metric by dimensions like region, new/old user, platform, content category. For each subgroup, calculate its contributions ot the decline of the metrics. For example, if you find some facts like 90% of the decline are caused by new user, than you probably would suspect there's a association, like the gui is not friendly to new user</p></li>
-</ol>
-<h2 id="measure-success">3. Measure Success</h2>
-<p>This type of cases usually come as "find a metric to measure the extent.....(how good a new feature/strategy/product is)". IT evaluates one's ability to design a measure according to certain business objectives</p>
-<ol type="1">
-<li><p><strong>Clarify the objective</strong>:</p>
-<p>Ask questions about:</p>
-<ul>
-<li>How this feature works?</li>
-<li>who is it for</li>
-</ul></li>
-<li><p><strong>Confirm the business objective</strong></p>
-<p>according to the explanation from the interviewer, conclude the objective of the feature to the following aspects:</p>
-<ul>
-<li>Acquisition: bring in more user, help them discover the product</li>
-<li>Activation: make user taking actions we want them to, keep users engaged</li>
-<li>conversion and retention: keep user continuing to use the product, convert them from free-user to paid user</li>
-<li>Money: make revenue from users</li>
-</ul></li>
-<li><p><strong>Select metrics according to objective</strong></p>
-<table>
-
-<thead>
-<tr class="header">
-<th>Objective</th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Acquisition</td>
-<td>DAU/MAU, DNU by platform,</td>
-</tr>
-<tr class="even">
-<td>Activation</td>
-<td>ACU/PCU, PV/UV, time spending, interaction behaviour</td>
-</tr>
-<tr class="odd">
-<td>Conversion and Retention</td>
-<td>CTR,CO, pay rate, 7 day retention rate/churn rate</td>
-</tr>
-<tr class="even">
-<td>Money</td>
-<td>ROI,GMV, AOV, ACV, ARPU/ARPPU</td>
-</tr>
-<tr class="odd">
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li><p>Select 1 main success metric, this metric should be directly relevant to the business objective</p></li>
-<li><p>Select 1 second success metrics, this metrics should be a supplement. It improve the completeness of the logic relationship of the key metrics and business goal. To fing the second goal, consider the following questions:</p>
-<ul>
-<li>Can the change of key metrics be caused by factors other than the feature?</li>
-<li>Is the key metric equivalent to the business goal? Is there any intermediate process</li>
-<li>If the key metrics changes on a group level, should we have same changes on single user level?</li>
-</ul>
-<p>Alternatively, we can do a funnel analysis to find the secondary success metrics</p></li>
-<li><p>Select 1 guardrail metric, this metric is critical to the main goal of the whole product. The feature should not have significant negative effect on it</p></li>
-</ul></li>
-<li><p><strong>structure the answer</strong></p>
-<p>if the guardrail metric shift towards a negative direction, the feature is probably not success.</p>
-<p>Otherwise, if the key success metric and the second both shift towards a positive direction, the feature is successful.</p></li>
 </ol>
 
                 
