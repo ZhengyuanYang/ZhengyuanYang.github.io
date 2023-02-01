@@ -16,25 +16,26 @@
   <meta name="author" content="Zhengyuan Yang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="本文总结数据分析面试中常见的贝叶斯推断（后验概率计算问题）">
+    <meta name="description" content="This article discuss about the procedure of handling measure success problem in data science interview">
 <meta property="og:type" content="article">
-<meta property="og:title" content="面试中的贝叶斯推断问题">
-<meta property="og:url" content="http://example.com/2022/09/29/bayes-inference/index.html">
+<meta property="og:title" content="Case Interview: Measure Success">
+<meta property="og:url" content="http://example.com/2023/01/31/measure-success/index.html">
 <meta property="og:site_name" content="Data Shore">
-<meta property="og:description" content="本文总结数据分析面试中常见的贝叶斯推断（后验概率计算问题）">
+<meta property="og:description" content="This article discuss about the procedure of handling measure success problem in data science interview">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2022-09-30T01:46:54.000Z">
-<meta property="article:modified_time" content="2023-01-10T22:43:41.497Z">
+<meta property="article:published_time" content="2023-02-01T00:05:47.000Z">
+<meta property="article:modified_time" content="2023-02-01T00:11:50.187Z">
 <meta property="article:author" content="Zhengyuan Yang">
-<meta property="article:tag" content="Interview">
-<meta property="article:tag" content="Bayesian Inference">
+<meta property="article:tag" content="Measure Success">
+<meta property="article:tag" content="Case">
+<meta property="article:tag" content="Metric Selection">
 <meta name="twitter:card" content="summary_large_image">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>面试中的贝叶斯推断问题 - Data Shore</title>
+  <title>Case Interview: Measure Success - Data Shore</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -199,7 +200,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="面试中的贝叶斯推断问题"></span>
+            <span id="subtitle" data-typed-text="Case Interview: Measure Success"></span>
           
         </div>
 
@@ -210,8 +211,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-09-29 18:46" pubdate>
-          September 29, 2022 pm
+        <time datetime="2023-01-31 16:05" pubdate>
+          January 31, 2023 pm
         </time>
       </span>
     
@@ -222,7 +223,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.8k words
+          1.8k words
         
       </span>
     
@@ -233,7 +234,7 @@
         
         
         
-          24 mins
+          15 mins
         
       </span>
     
@@ -289,154 +290,77 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">面试中的贝叶斯推断问题</h1>
+            <h1 style="display: none">Case Interview: Measure Success</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="面试中的贝叶斯推断问题">面试中的贝叶斯推断问题</h1>
-<h2 id="有关贝叶斯推断">1. 有关贝叶斯推断</h2>
-<p>贝叶斯推断是一项统计技术，基于贝叶斯定理，通过观察证据来更新假设的概率。贝叶斯推断将参数看作一个变量，因此可以用于参数估计，但是在数据岗位面试中，一般以计算后验概率的方式考察</p>
-<p>定义：</p>
-<ul>
-<li>H：假设变量，代表某一事件各种可能结果，服从特定分布，其概率密度函数为<span class="math inline">\(f_H\)</span>（先验概率分布）</li>
-<li>E：证据变量，用于更新先验概率，服从特定分布，其概率密度函数为<span class="math inline">\(f_E\)</span>（边际似然函数，证据分布）</li>
-<li><span class="math inline">\(f_{E|H}\)</span>： 似然函数，即在固定H的前提下，E的概率密度函数</li>
-</ul>
-<p>根据贝叶斯定理及全概率公式： <span class="math display">\[
-f_{post}(H=\hat{H}|E=\hat{E}) = \frac{f_{E|H=\hat{H}}(E=\hat{E})f_H(H=\hat{H})}{f_E(E=\hat{E})} = \frac{f_{E|H=\hat{H}}(E=\hat{E})f_H(H=\hat{H})}{\int_{-\infty}^\infty f_{E|H}(E=\hat{E})f_H(H)\mathrm{d}H}
-\]</span> 其中：</p>
-<ul>
-<li><span class="math inline">\(f_{post}\)</span> 称作后验概率分布，是基于证据更新后的先验概率分布</li>
-<li><span class="math inline">\(\hat{H}\)</span> 为假设的某一特定取值</li>
-<li><span class="math inline">\(\hat{E}\)</span> 为证据的观测值</li>
-</ul>
-<p>式（1）可以简写为： <span class="math display">\[
-P(H|E)= \frac{P(E|H)P(H)}{P(E)} = \frac{P(E|H)P(H)}{\sum_i^m P(E|H_i)P(H_i)} = \frac{P(E|H)P(H)}{P(E|H_i)P(H_i)+P(E|\bar{H_i})P(\bar{H_i})}
-\]</span></p>
-<h2 id="后验概率计算的基本框架">2. 后验概率计算的基本框架</h2>
-<p>数据分析及数据科学面试中，大多数的贝叶斯推断问题都是具体取值下的后验概率计算问题，且一般假设变量的样本空间有限，先验分布是离散的，因此其基本做题框架可以归结如下：</p>
+                <h1 id="case-interview-measure-success">Case Interview: Measure Success</h1>
+<h2 id="procedure-of-measure-success-problem">1. Procedure of Measure Success Problem</h2>
+<p>This type of cases usually come as "find a metric to measure the extent.....(how good a new feature/strategy/product is)". IT evaluates one's ability to design a measure according to certain business objectives</p>
 <ol type="1">
-<li>明确问题中的假设变量和证据变量分别是什么, 对于假设变量，确定一个完备事件组</li>
-<li>根据要求的结果，确定关心的假设事件<span class="math inline">\(A_ k\)</span>和证据事件B, 并确定先验概率P(A)</li>
-<li>对于完备事件组中每一个假设事件<span class="math inline">\(A_ i\)</span>, 计算相应的似然性<span class="math inline">\(P(B| A_i)\)</span></li>
-<li>根据贝叶斯定理及全概率公式计算后验概率<span class="math inline">\(P(A_i| B)\)</span>， 如果有多轮迭代，把前一轮的后验概率当作后一轮的先验概率</li>
+<li><p><strong>Clarify the objective</strong>:</p>
+<p>Ask questions about:</p>
+<ul>
+<li>How this feature works?</li>
+<li>who is it for</li>
+</ul></li>
+<li><p><strong>Confirm the business objective</strong></p>
+<p>according to the explanation from the interviewer, conclude the objective of the feature to the following aspects:</p>
+<ul>
+<li>Acquisition: bring in more user, help them discover the product</li>
+<li>Activation: make user taking actions we want them to, keep users engaged</li>
+<li>conversion and retention: keep user continuing to use the product, convert them from free-user to paid user</li>
+<li>Money: make revenue from users</li>
+</ul></li>
+<li><p><strong>Select metrics according to objective</strong></p>
+<table>
+
+<thead>
+<tr class="header">
+<th>Objective</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Acquisition</td>
+<td>DAU/MAU, DNU by platform,</td>
+</tr>
+<tr class="even">
+<td>Activation</td>
+<td>ACU/PCU, PV/UV, time spending, interaction behaviour</td>
+</tr>
+<tr class="odd">
+<td>Conversion and Retention</td>
+<td>CTR,CO, pay rate, 7 day retention rate/churn rate</td>
+</tr>
+<tr class="even">
+<td>Money</td>
+<td>ROI,GMV, AOV, ACV, ARPU/ARPPU</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><p>Select 1 main success metric, this metric should be directly relevant to the business objective</p></li>
+<li><p>Select 1 second success metrics, this metrics should be a supplement. It improve the completeness of the logic relationship of the key metrics and business goal. To fing the second goal, consider the following questions:</p>
+<ul>
+<li>Can the change of key metrics be caused by factors other than the feature?</li>
+<li>Is the key metric equivalent to the business goal? Is there any intermediate process</li>
+<li>If the key metrics changes on a group level, should we have same changes on single user level?</li>
+</ul>
+<p>Alternatively, we can do a funnel analysis to find the secondary success metrics</p></li>
+<li><p>Select 1 guardrail metric, this metric is critical to the main goal of the whole product. The feature should not have significant negative effect on it</p></li>
+</ul></li>
+<li><p><strong>structure the answer</strong></p>
+<p>if the guardrail metric shift towards a negative direction, the feature is probably not success.</p>
+<p>Otherwise, if the key success metric and the second both shift towards a positive direction, the feature is successful.</p></li>
 </ol>
-<h2 id="常见题型和例题解析">3. 常见题型和例题解析</h2>
-<h3 id="检测问题">3.1 检测问题</h3>
-<p><strong>例题</strong>：已知某肺炎的患病率为0.01%。现在需要做检测，如果被测者患病则被检测为阳性的概率为99%。如果被测者没有病则被检测为阴性的概率为99.9%。现在一个人检查结果是阳性。问真正得病的概率是多少？</p>
-<p>此类问题的特点为：先验分布和证据分布都为二值/多值分布</p>
-<ul>
-<li>假设变量：患者真正得病，有得病和不得病两种结果</li>
-<li>证据变量：患者被检测出得病，有检测出得病和检测出不得病两种结果</li>
-</ul>
-<p>令：</p>
-<ul>
-<li>A事件为患者真正得病 <span class="math inline">\(P(A) = P(H=true\ positive)\)</span></li>
-<li>B事件为患者诊断得病<span class="math inline">\(P(B) = P(E = diagnosed \ positive)\)</span></li>
-</ul>
-<p><span class="math display">\[
-P(A) = 0.01\%
-\]</span></p>
-<p><span class="math display">\[
-P(B|A) = 99\%\\
-\]</span></p>
-<p><span class="math display">\[
-P(B) = P(B|A)P(A)+P(B|\bar{A})P(\bar{A}) = 99\%*0.01\% + 0.1\%*99.99\%
-\]</span></p>
-<p>可计算得到后验概率为： <span class="math display">\[
-P(A|B) = 9.01\%
-\]</span> 可见诊断后后，患者得病概率上升，原本认为得病概率为0.01%，经过一个只包含一个人的样本重新计算，更新为了9.01%</p>
-<h3 id="硬币问题">3.2 硬币问题</h3>
-<p>假设有100枚硬币，其中70枚为正常，30枚为缺陷，从中取出1枚投掷10次，10次中9次为正面，1次为负面。当硬币正常时，投出正面的概率为0.5，当硬币缺陷时，投出正面的概率为0.8。求硬币缺陷的概率</p>
-<p>此类问题的特点为，先验分布是二值分布，证据分布是伯努利分布</p>
-<ul>
-<li>假设变量：硬币有缺陷，有是否两种可能</li>
-<li>证据变量：投出n次正面，其概率为<span class="math inline">\(p^n*q^{1-n}\)</span></li>
-</ul>
-<p>令：</p>
-<ul>
-<li>A事件为硬币有缺陷 <span class="math inline">\(P(A) = P(H = defective)\)</span></li>
-<li>B事件为投出9次正面<span class="math inline">\(P(B) = P(E = 9 \ head)\)</span></li>
-</ul>
-<p><span class="math display">\[
-P(A) = 0.3
-\]</span></p>
-<p><span class="math display">\[
-P(B|A) = 0.8^9*0.2^1\\
-\]</span></p>
-<p><span class="math display">\[
-P(B) = P(B|A)P(A)+P(B|\bar{A})P(\bar{A}) = 0.8^9*0.2^1 *0.3 + 0.5^9*0.5^1*0.7
-\]</span></p>
-<p>可计算得到后验概率为： <span class="math display">\[
-P(A|B) = 91.2\%
-\]</span> 与此类似的问题有朋友说谎问题等</p>
-<h4 id="朋友说谎问题">3.2.1 朋友说谎问题</h4>
-<p>假设某地今天下雨的概率是<span class="math inline">\(\frac{1}{2}\)</span>，你在前往某地前向3个当地的朋友询问是否下雨，所有人都该诉你下雨了，但是每个人都有<span class="math inline">\(\frac{1}{3}\)</span>的概率说谎， 求某地今天真正下雨的概率</p>
-<ul>
-<li>A：某地下雨</li>
-<li>B：三个朋友都告诉你下雨</li>
-</ul>
-<p><span class="math display">\[
-P(A) = \frac{1}{2}
-\]</span></p>
-<p><span class="math display">\[
-P(B|A) = \frac{2}{3}^3\\
-\]</span></p>
-<p><span class="math display">\[
-P(B) = \frac{2}{3}^3*\frac{1}{2}+\frac{1}{3}^3*\frac{1}{2}
-\]</span></p>
-<h3 id="三门问题">3.3 三门问题</h3>
-<p>有A，B，C三扇门，其中一扇背后有奖品，当玩家选择一扇门以后，主持人会打开另一扇后面是空的门，请问玩家是否要改变自己的选择？</p>
-<p>此类问题特点为：</p>
-<ul>
-<li>共出现3个随机变量，都是多值分布，但是这三者之间是互斥的，如果A为1，则B，C不为1</li>
-<li>此时先验变量为“某一变量为一特定值”，证据变量为“另一个变量被揭晓不为该值”，最后一个变量仅用于计算全概率，或者用于比较选择</li>
-</ul>
-<p>令：</p>
-<ul>
-<li>A事件为门后有奖的是A门<span class="math inline">\(P(A) = P(H = A)\)</span></li>
-<li>D事件为B门被打开且为空<span class="math inline">\(P(B) = P(H_D= B)\)</span></li>
-</ul>
-<p>则： <span class="math display">\[
-P(A) = \frac{1}{3}
-\]</span></p>
-<p>$$</p>
-<p><span class="math display">\[
-当A门后有车，B，C门被打开的概率是一样的
-\]</span> P(D|A) =  $$ 当B门后有车，主持人不会打开B门，因此<span class="math inline">\(P(D|B) = 0\)</span></p>
-<p>当C门后有车，主持人只能打开B门，因此<span class="math inline">\(P(D|C) = 1\)</span></p>
-<p>因此，<span class="math inline">\(P(D) = P(A)*P(D|A)+P(B)*P(D|B)+P(C)P(D|C) = \frac{1}{3}*\frac{1}{2}+0+\frac{1}{3}*1 = \frac{1}{2}\)</span></p>
-<p>由此可以计算得到： <span class="math display">\[
-P(A|D) = \frac{1}{3}
-\\
-P(C|D) = \frac{2}{3}
-\]</span> 因此，应该选择C门</p>
-<h4 id="赦免问题">3.3.1 赦免问题</h4>
-<p>有A，B，C三个囚犯，其中一个人将被赦免，另外两个将被杀死，如果有囚犯问看守，看守只能告诉他某一个人将被处死，而且看守不能告诉问他的人是否被处死。A问看守，看守回答B要被处死，求这种情况下，A和C被赦免的概率</p>
-<p>令：</p>
-<ul>
-<li>A事件为被赦免的是A</li>
-<li>D事件为看守回答B被处死</li>
-</ul>
-<p><span class="math display">\[
-P(A) = \frac{1}{3}
-\]</span></p>
-<p><span class="math display">\[
-P(D|A) = \frac{1}{2}\\
-\]</span></p>
-<p><span class="math display">\[
-P(D|B) = 0
-\]</span></p>
-<p><span class="math display">\[
-P(D|C) = 1
-\]</span></p>
-<p>则计算可得： <span class="math display">\[
-P(A|D) = \frac{1}{3}
-\]</span></p>
-<p><span class="math display">\[
-P(C|D) = \frac{2}{3}
-\]</span></p>
+<h2 id="metrics-selection-in-ab-testing">2. Metrics Selection in A/B Testing</h2>
 
                 
               </div>
@@ -455,7 +379,7 @@ P(C|D) = \frac{2}{3}
     
       <span class="category-chain">
         
-  <a href="/categories/Probability-Statistics/" class="category-chain-item">Probability &amp; Statistics</a>
+  <a href="/categories/A-B-Testing-Case-Interview/" class="category-chain-item">A/B Testing &amp; Case Interview</a>
   
   
 
@@ -470,9 +394,11 @@ P(C|D) = \frac{2}{3}
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Interview/">#Interview</a>
+        <a href="/tags/Measure-Success/">#Measure Success</a>
       
-        <a href="/tags/Bayesian-Inference/">#Bayesian Inference</a>
+        <a href="/tags/Case/">#Case</a>
+      
+        <a href="/tags/Metric-Selection/">#Metric Selection</a>
       
     </div>
   
@@ -484,8 +410,8 @@ P(C|D) = \frac{2}{3}
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>面试中的贝叶斯推断问题</div>
-      <div>http://example.com/2022/09/29/bayes-inference/</div>
+      <div>Case Interview: Measure Success</div>
+      <div>http://example.com/2023/01/31/measure-success/</div>
     </div>
     <div class="license-meta">
       
@@ -497,7 +423,7 @@ P(C|D) = \frac{2}{3}
       
         <div class="license-meta-item license-meta-date">
           <div>Posted on</div>
-          <div>September 29, 2022</div>
+          <div>January 31, 2023</div>
         </div>
       
       
@@ -529,18 +455,12 @@ P(C|D) = \frac{2}{3}
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/09/30/SQL-problems/" title="笔试中较难SQL考题总结">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">笔试中较难SQL考题总结</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/09/22/evaluation-for-regression/" title="Evaluation for Regression">
-                        <span class="hidden-mobile">Evaluation for Regression</span>
+                      <a href="/2023/01/24/results-analysis/" title="A/B Testing: Results Analysis">
+                        <span class="hidden-mobile">A/B Testing: Results Analysis</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
