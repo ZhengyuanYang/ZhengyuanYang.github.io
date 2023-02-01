@@ -25,8 +25,9 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://example.com/2023/01/24/results-analysis/1.png">
 <meta property="og:image" content="http://example.com/2023/01/24/results-analysis/2.png">
+<meta property="og:image" content="http://example.com/2023/01/24/results-analysis/3.png">
 <meta property="article:published_time" content="2023-01-24T22:49:40.000Z">
-<meta property="article:modified_time" content="2023-01-25T12:45:10.257Z">
+<meta property="article:modified_time" content="2023-02-01T00:00:46.996Z">
 <meta property="article:author" content="Zhengyuan Yang">
 <meta property="article:tag" content="A&#x2F;B Testing">
 <meta property="article:tag" content="Results Analysis">
@@ -225,7 +226,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.1k words
+          13k words
         
       </span>
     
@@ -236,7 +237,7 @@
         
         
         
-          26 mins
+          108 mins
         
       </span>
     
@@ -331,7 +332,139 @@ CI = [\mu- Z_{\frac{\alpha}{2}}*\sigma_{SE},\  \mu+ Z_{\frac{\alpha}{2}}*\sigma_
 <li>The result is statistically significant, and likely practically significant. There is still a chance that the impact is not sufficient from a business perspective. While we still should consider repeating the test with more power, choosing to launch is a reasonable decision from a launch/no-launch decision</li>
 </ol>
 <p>From the analysis above we found only scenarios 2 and 6 could be considered launchable. Whether we should stick to scenario 2 depends on our preference. In most business practice we would presue scenario 2.</p>
+<h3 id="judge-of-significance-in-multiple-testing-scenarios">2.3 Judge of Significance in Multiple Testing Scenarios</h3>
+<h4 id="multiple-testing-scenarios">2.3.1 Multiple Testing Scenarios</h4>
+<p><strong>Multiple Variants</strong></p>
+<p>There are more then two variants. For example, suppose we want to examine the imporvement on CTR by changing the color of a button, but we have three alternative treatments. In this case we creat three tests. For each test, let <span class="math inline">\(\alpha = 0.05\)</span>, then: <span class="math display">\[
+P(no\ false  \ positive  \ in \ all \ three \ tests) = (1-\alpha)^3 = 0.857
+\]</span> The type I error of the <strong>overall experiment hypothesis</strong>, which is "changing color improves CTR" is high.</p>
+<p><strong>Multiple Metrics</strong></p>
+<p>Suppose we have only one 1 treatment but 100 metrics to test. Set <span class="math inline">\(\alpha = 0.05\)</span>, same as the multiple variants scenario, around 5 metrics would fall into the pitfall of type I error, which means they will be false positive, and this could mislead.</p>
+<h4 id="corrections-of-significance-level-under-multiple-testing">2.3.2 Corrections of Significance Level under Multiple Testing</h4>
+<p><strong>Bonferroni Correction</strong></p>
+<p>Bonferroni Correction is a simple way to lower type I error by having smaller <span class="math inline">\(\alpha\)</span> for each test: <span class="math display">\[
+\alpha_i  = \frac{\alpha}{n}
+\]</span> where n is the number of tests(number of variants, number of metrics, or the product of them)</p>
+<p>The bonferroni correction is easy to apply, but it is also to conservative. It increase the difficulty to reject the null hypothesis in each test.</p>
+<p><strong>Control False Discovery Rate</strong></p>
+<p>Define FDR as: <span class="math display">\[
+FDR  = E[\frac{n_{FP}}{n_{rej}}]
+\]</span> FDR tells in all tests that we judge as significant, how many of them are false positive. For example, suppose we have 1000 testing and reject 200 of them, and the FDR = 0.05, then we can expect around 10 metrics to be false positive. If we take this results as acceptable, we can move on to analysis. Otherwise, we should consider lower <span class="math inline">\(\alpha\)</span></p>
+<p>In real application, the judgement of false positive can be difficult to detect. Thus, controlling PDR can be sometimes unaccessible.</p>
+<p><strong>Benjaminiand Hochberg's Method</strong></p>
+<p>Suppose we have n tests, each has a p value as a result. First, we can rank the list in a ascending order by P values. Then we correct the p value with: <span class="math display">\[
+q_i = p_i * \frac{n}{k}
+\]</span> Where k is the ranking of the <span class="math inline">\(i^{th}\)</span> test</p>
+<table>
+<thead>
+<tr class="header">
+<th>T</th>
+<th>P value</th>
+<th>Q</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>T2</td>
+<td>0.001</td>
+<td>0.005</td>
+</tr>
+<tr class="even">
+<td>T5</td>
+<td>0.003</td>
+<td>0.0075</td>
+</tr>
+<tr class="odd">
+<td>T1</td>
+<td>0.12</td>
+<td>0.4</td>
+</tr>
+<tr class="even">
+<td>T3</td>
+<td>0.045</td>
+<td>0.54</td>
+</tr>
+<tr class="odd">
+<td>T4</td>
+<td>0.048</td>
+<td>0.048</td>
+</tr>
+</tbody>
+</table>
+<p>we then comepare the Q value with <span class="math inline">\(\alpha\)</span> to judge the significance.</p>
+<p>This process can lower the overall type I error. However, we may also notice that through this method, alternatives with greater p value can pass while alternatives with smaller p values can fail, which sometimes may mislead.</p>
+<p><strong>Two-step Rule-of-thumb</strong></p>
+<p>Another method when dealing with multiple metrics is to segment the metrics in serval tiers, such as:</p>
+<ul>
+<li>First-order metrics: those you expect to be impacted by the experiment</li>
+<li>Second-order metrics: those potentially to be impacted</li>
+<li>Third-order metrics: those unlikely to be impacted</li>
+</ul>
+<p>and apply tiered significance levels to each group (e.g., 0.05, 0.01 and 0.001 respectively).</p>
 <h2 id="validity-checktruthworthyness-analysis">3. Validity Check(Truthworthyness Analysis)</h2>
+<p>The Validity Check is a process is a procedure to find out if the results are truthworthy. It is usually an analysis to rule out some potential effects that could threat the validity. Such analysis can be decomposed on two dimensions:</p>
+<p><strong>Internal Threats/External Treats</strong>:</p>
+<ul>
+<li>internal: Making the testing results itself is incorrect without attempting to generalize the results to other population or time periods</li>
+<li>external: Making the conclusion incorrect when trying to generalize it to other population or time periods</li>
+</ul>
+<p><strong>Overestimate/Underestimate</strong></p>
+<ul>
+<li>Overestimate: The testing results is significant but the real effect or generalized effect is not so</li>
+<li>Underestimate: The testing results is insignificant but the real effect or generalized effect is not so</li>
+</ul>
+<h3 id="threats-to-internal-validity">3.1 Threats to Internal Validity</h3>
+<h4 id="violation-of-sutva">3.1.1 Violation of SUTVA</h4>
+<p>A random controlled experiment requires Stable Unit Treatment Value Assumption (SUTVA). It states that experiment units (e.g., users) do not interfere with one another. In some cases, this assumption could be violated</p>
+<p><strong>Network Effect</strong></p>
+<p>A feature might spillover to other user through the social network of treatment unit. This usually undermine the difference between control and treatment group. If the treatment is applied to all users, the real effect can be bigger. To deal with this kind of effects, we can implemented social network clustering and select randomized unit for control and treatment group in different clusters. There is also a method called ego-network randomization</p>
+<p><strong>Two-sided marketplaces:</strong> For two-sided platform like auctions platform or Uber. The treatment on the unit might affect other unit through the "other-side". For example, lowering prices for riders in Treatment group make them more attractive to drivers, and there would be less drivers available for control group. In this case, the GMV difference between two groups are overestimated. The real differences between when the treatment applied to all users might be lower. To deal with this kind of effects, we can make geo-based or time-based isolation on treatment and control group</p>
+<p><strong>Shared Resources:</strong> If the Treatment leaks memory and causes processes to slow down due to garbage collection and possibly swapping of resources to disk, all variants suffer.This could lead to underestimating of real effect. For example, the Treatment crashed the machine in certain scenarios. Those crashes also took down users who were in Control, so the delta on key metrics was not different —both populations suffered similarly.</p>
+<h4 id="violation-of-intention-to-treatment">3.1.2 Violation of Intention-to-Treatment</h4>
+<p>In an online experiment, the treatment group shoud be those whose treatment are "delivered" rather than "fulfilled". Our measuring is based on the offer, or intention to treatment, not whether it was actually applied. Analyzing only those who participate, results in selection bias and commonly overstates the Treatment effect. For example, if our treatment is "adding an subscribe button" and our target is to increase revenue, then our treatment group should be those who are demonstrated with the button instead of those who actually click the button. We can add a second success metric "CTR" to track the effectiveness of the button though.</p>
+<h4 id="sample-ratio-mismatch"><strong>3.1.3 Sample Ratio Mismatch</strong></h4>
+<p>If the ratio of users (or any randomization unit) between the variants is not close to the designed ratio, the experiment suffers from a Sample Ratio Mismatch (SRM). A SRM indicates the decision of exposing a unit to the treatment is not independent to treatment effect. This could lead to either overestimate or underestimate.</p>
+<p>For example, the ratio designed for treatment and controlled group is one-to-one. Suppose the decision is randomly obtained through a coin flip, then the expected sample ratio should be 0.5. We can regard the sample ratio as a parameter and test it if through t distribution. If the p value is samll enough, we can make the claim that there's some problem with the coin that lead to a sample ratio mismatch.</p>
+<p>The cause of the SMR, in most cases, is for the developer to worry. Debugging SRMs requires the developer to examine their randomization strategy during experiment configuration.</p>
+<h3 id="threats-to-external-validity">3.2 Threats to External Validity</h3>
+<h4 id="primacy-and-novelty-effect">3.2.1 Primacy and Novelty Effect</h4>
+<p><strong>Primacy Effect:</strong> When a change is introduced, users may need time to adopt, as they are <em>primed</em> in the old feature, that is, used to the way it works. In other word, users are reluctant to changes. This effect would diminish over time, but if we made the conclusions while the primacy effect still exists, than we may underestimate the real treatment effect</p>
+<p><strong>Novelty Effect:</strong> Being opposite to the primacy effect, the novelty effect refer to that a new feature might be attractive for the users at first, but not so interesting after the users try them for the first time. This effect would diminish over time, but if we made the conclusions while the novelty effect still exists, than we may overestimate the real treatment effect</p>
+<p>Solutions for these two effects:</p>
+<ul>
+<li>ensure the experiment run long enough so that these two effects vanish over time</li>
+<li>rule out these effects by constraining the target group in only first-day user</li>
+<li>compare the CATE of first- time and existing user to see if the effects do exist</li>
+</ul>
+<p><img src="/2023/01/24/results-analysis/3.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="segmentation-difference">4. Segmentation Difference</h2>
+<p>Analyzing a metric by different segments can provide interesting insights and lead to discoveries. Things we can do about segmentation includes:</p>
+<p><strong>Segmental View on Metrics</strong>: Inspecting the segmentation metrics values before and after the experiment. If the metrics are distinctly different for a group, then this group may have a strong difference comparing to other groups. We can dive in to the problem and make debugging or take this group out of the target group</p>
+<p><strong>Segmental View on Effect</strong>: Inspecting the CATE of the segmentations. For any strongly distinct CATE, we can doubt that the treatment takes effect with a special mechanism on this particular group. We can dive in to the problem and make debugging or take this group out of the target group</p>
+<p><strong>Migration Among Segmentations</strong> :</p>
+<p>Suppose we want to examine the improvement of CTR of users brought by a treatment. We find the CTR of treatment and control group are respectively 25 v.s. 20 for Chinese users, and 15 v.s. 10 for non-Chinese users .Can we know make the conclusion that the treatment is effective?</p>
+<p>The answer is no. We need to first ensure there are no unit migrations among segmentation. If the assignment of the feature make some chinese decide to change their language options and turn them to non-Chinese users. The overall treatment effect may go down</p>
+<p>This indicates that analysis on segmentations can mislead due to migration. The segmentation should be done based on the status of units before the experiment. Otherwise, migrations among groups can happen</p>
+<h2 id="improvement-of-experiment">5. Improvement of Experiment</h2>
+<h3 id="improvement-of-sensitivity">5.1 Improvement of Sensitivity</h3>
+<p>If you expected there to be an significance effect but the results turn out to be insignificant, there's a chance that the sensitivity of the experiment is not big enough. Suppose we want to maintain the desired statistical power, according to the formula: <span class="math display">\[
+MDE = (t_{\frac{1-\alpha}{2}} + t_ {1-\beta})\sqrt{\frac{\sigma_1^2}{n_ 1} + \frac{\sigma_2^2}{n_ 2}}
+\]</span> there are two ways to lower mde: more sample or less variance</p>
+<p><strong>More Sample</strong></p>
+<p>To collect more sample, we can bring in more data by acquiring additional units or increase test duration. However, in real application this can be difficult to implement.</p>
+<p><strong>Less Varaince</strong></p>
+<p>According to the equation of <span class="math inline">\(n&#39;, \delta, \beta\)</span>, we know that if the variance of the population is lower, we would need less sample to detect identical effect, given desired fixed statistical power. One method to lower variance is "Controlled-experiment Using Pre-Experiment Data(CUPED)"</p>
+<p>Let X denots the value of the metric we want to test before the experiment, Y denots the value after the experiment. For an A/B test, we expect that <span class="math inline">\(E[X_T] = E[X_C], E[Y_T] \ne E[Y_C]\)</span>. Now construct two variables: <span class="math inline">\(\hat{Y_T} = Y_T - \theta X_T\)</span>, $  = Y_C - X_C$, where <span class="math inline">\(\theta\)</span> is a hyperparameter we can adjust. We know that: <span class="math display">\[
+E[ \hat{Y_T}-\hat{Y_C}] = E[(Y_T - \theta X_T) - (Y_C - \theta X_C)] = E[Y_T]-E[Y_C]
+\]</span> thus, estimate the treatment effect on CUPED variable is equivalent to estimate the effect on original metrics. Meanwhile: <span class="math display">\[
+V[\hat{Y_T}-\hat{Y_C}] =V [(Y_T - \theta X_T) - (Y_C - \theta X_C)] = V[Y_T- Y_C] +\theta^2V[X_T-X_C]-2\theta Cov[(Y_T-Y_C),(X_T-X_C)]
+\]</span> we can than regard <span class="math inline">\(V[\hat{Y_T}-\hat{Y_C}]\)</span> as a quadratic function of <span class="math inline">\(\theta\)</span>, where: <span class="math display">\[
+\Delta = 4Cov[(Y_T-Y_C),(X_T-X_C)]^2 - 4V[(Y_T - Y_ C)]V[X_T-X_C]
+\]</span> as we know: <span class="math display">\[
+Cov[X_1,X_2] \le \sqrt{V[X_1]V[X_2]}
+\]</span> we have that <span class="math inline">\(\Delta \ge 0\)</span>, thus: <span class="math display">\[
+V[\hat{Y_T}-\hat{Y_C}] \in [0,V[Y_T- Y_C]] \qquad \theta \ge 0
+\]</span> we have minimum <span class="math inline">\(V[\hat{Y_T}-\hat{Y_C}]\)</span> when <span class="math inline">\(\theta =\frac{Cov[(Y_T-Y_C),(X_T-X_C)]}{V[X_T-X_C]}\)</span></p>
 
                 
               </div>
