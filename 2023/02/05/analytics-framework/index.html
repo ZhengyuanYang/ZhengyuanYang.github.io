@@ -16,29 +16,28 @@
   <meta name="author" content="Zhengyuan Yang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="This article go through the basic knowledge of statistics, for details on applied statistics topics, please refer to other articles">
+    <meta name="description" content="This article discuss about the common analytics model and analysis framework">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Basic Statistics for Data Science">
-<meta property="og:url" content="http://example.com/2022/02/09/statistics-for-ds/index.html">
+<meta property="og:title" content="Analytics: Models and Framework">
+<meta property="og:url" content="http://example.com/2023/02/05/analytics-framework/index.html">
 <meta property="og:site_name" content="Data Shore">
-<meta property="og:description" content="This article go through the basic knowledge of statistics, for details on applied statistics topics, please refer to other articles">
+<meta property="og:description" content="This article discuss about the common analytics model and analysis framework">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/2022/02/09/statistics-for-ds/1.PNG">
-<meta property="og:image" content="http://example.com/2022/02/09/statistics-for-ds/3.PNG">
-<meta property="og:image" content="http://example.com/2022/02/09/statistics-for-ds/2.PNG">
-<meta property="article:published_time" content="2022-02-10T01:56:47.000Z">
-<meta property="article:modified_time" content="2023-02-02T09:15:16.591Z">
+<meta property="og:image" content="http://example.com/Users/kenny_yang/blog/source/_posts/1.png">
+<meta property="og:image" content="http://example.com/2023/02/05/analytics-framework/2.png">
+<meta property="article:published_time" content="2023-02-05T22:01:19.000Z">
+<meta property="article:modified_time" content="2023-02-05T22:19:15.402Z">
 <meta property="article:author" content="Zhengyuan Yang">
-<meta property="article:tag" content="Basic Knowledge">
-<meta property="article:tag" content="Statistics">
+<meta property="article:tag" content="Analytics Model">
+<meta property="article:tag" content="Analysis Framework">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/2022/02/09/statistics-for-ds/1.PNG">
+<meta name="twitter:image" content="http://example.com/Users/kenny_yang/blog/source/_posts/1.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Basic Statistics for Data Science - Data Shore</title>
+  <title>Analytics: Models and Framework - Data Shore</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -203,7 +202,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Basic Statistics for Data Science"></span>
+            <span id="subtitle" data-typed-text="Analytics: Models and Framework"></span>
           
         </div>
 
@@ -214,8 +213,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-02-09 17:56" pubdate>
-          February 9, 2022 pm
+        <time datetime="2023-02-05 14:01" pubdate>
+          February 5, 2023 pm
         </time>
       </span>
     
@@ -226,7 +225,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4.9k words
+          1.2k words
         
       </span>
     
@@ -237,7 +236,7 @@
         
         
         
-          41 mins
+          11 mins
         
       </span>
     
@@ -293,107 +292,39 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Basic Statistics for Data Science</h1>
+            <h1 style="display: none">Analytics: Models and Framework</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="statistics-for-data-science">Statistics for Data Science</h1>
-<h2 id="basic-concepts-for-statistics">1. Basic Concepts for Statistics</h2>
-<p><strong>Statistics</strong>: Statistics gather, describe and analyze sample data in a numerical way to understand the whole population</p>
-<p><strong>Target Population</strong>: A particular group of interest, the distribution of the target population is called</p>
-<p><strong>Sample Population</strong>: A group which the sample is taken from. In most cases it equals to the target population</p>
-<p><strong>Sample</strong>: A subset of the sample population from which data are collected, Doing statistics is a process trying to learn information of the target population through samples. Ideally, sample should be representative to sample population, the sample population should be the same or representative to target population.</p>
-<p><img src="/2022/02/09/statistics-for-ds/1.PNG" srcset="/img/loading.gif" lazyload alt style="zoom:80%;"></p>
-<p><strong>Variable</strong>: A dimension of a sample representing a specific measure. A sample can contain multiple variables</p>
-<p><strong>Data </strong>: the actual counts, measurements or observation about the variables that markdown with samples</p>
-<p><strong>Data Point and Sample Size</strong>: Data point is a single record of data in the sample. Sample size is the number of data point in the sample</p>
-<p><strong>Parameter</strong>: A numerical description of a population characteristic. Note that a parameter of target population and sample is not the same. We cannot construct statistics with unknown parameters of the whole population</p>
-<p><strong>Sample Statistics</strong>: A function constructed from the sample. A statistics should containing no <strong>unknown</strong> parameters. Common sample statistics includes:</p>
-<table>
-<thead>
-<tr class="header">
-<th>Sample Statistics</th>
-<th>Format</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>mean</td>
-<td><span class="math inline">\(\bar{X} = \frac{1}{n}\sum_i^nX_i\)</span></td>
-</tr>
-<tr class="even">
-<td>biased variance</td>
-<td><span class="math inline">\(S_0^2 = \frac{1}{n}\sum_i^n(X_i - \bar{X})^2\)</span></td>
-</tr>
-<tr class="odd">
-<td>unbiased variance</td>
-<td><span class="math inline">\(S^2 = \frac{1}{n-1}\sum_i^n(X_i - \bar{X})\)</span></td>
-</tr>
-<tr class="even">
-<td>standard deviation</td>
-<td><span class="math inline">\(S = \sqrt{S^ 2}\)</span></td>
-</tr>
-<tr class="odd">
-<td>moment</td>
-<td><span class="math inline">\(A_k = \frac{1}{n}\sum_i^nX_i^k\)</span></td>
-</tr>
-<tr class="even">
-<td>central moment</td>
-<td><span class="math inline">\(B_ k = \frac{1}{n}\sum_i^n(X_i - \bar{X})^k\)</span></td>
-</tr>
-</tbody>
-</table>
-<h2 id="data-classification">2. Data Classification</h2>
-<h3 id="categorical-numeric">2.1 Categorical &amp; Numeric</h3>
-<p><strong>Categorical</strong>: consist of labels or description of traits. It's meaning less to apply quantitative calculation on it</p>
-<p><strong>Numeric</strong>: consist of counts and measurement, it have meanings when you apply quantitative calculations</p>
-<h3 id="discrete-continuous">2.2 Discrete &amp; Continuous</h3>
-<p><strong>Discrete</strong>: numeric data that can take only particular values(counts, rate stars)</p>
-<p><strong>Continuous</strong>: numeric data that can take any values in an interval</p>
-<p><img src="/2022/02/09/statistics-for-ds/3.PNG" srcset="/img/loading.gif" lazyload></p>
-<h3 id="noir">2.3 NOIR</h3>
-<p><strong>Nominal level data</strong>: description of categorical data that order do not matters</p>
-<p><strong>Ordinal level data</strong>: categorical data that have a meaningful order(still not meaningful to add or divide)</p>
-<p><strong>Interval level data</strong>: numeric data that can be arranged in a meaningful order, and the different between data entries are meaningful(timestamp, shoe size, temperature degree)</p>
-<p><strong>Ratio level data</strong>: Interval data where zero indicates absence of something(like body height, 0 inch body high do not have a actual meaning, it means the data are not collected, where 0 degree do have an actual meaning, so it is not a ratio data.) As ratio data cannot participate calculation if data is not included, it must be non-zero in a calculation, thus it can divide other numeric data, that is why it is called ratio data</p>
-<p><img src="/2022/02/09/statistics-for-ds/2.PNG" srcset="/img/loading.gif" lazyload></p>
-<h2 id="two-important-theorem">3. Two Important Theorem</h2>
-<p>There are two important probability theorem for statistics:</p>
-<h3 id="law-of-large-number">3.1 Law of Large Number</h3>
-<p><strong>Chebyshev's inequality</strong></p>
-<p>For a random variable X, if E[X] and V[X] both exist: <span class="math display">\[
-P(|X-X[x ]| \ge \epsilon ) \le \frac{D[X]}{\epsilon^2}
-\]</span> This inequality implies taht the probability of an observation fall far from the expectation is small. The greater <span class="math inline">\(\epsilon\)</span> is, the smaller this probability is.</p>
-<p><strong>Chebyshev's Law of Large Number</strong></p>
-<p>Let a sequence <span class="math inline">\(X_n \to a\)</span>: <span class="math display">\[
-\lim_{n\to \infty} P(|X_n - a| &lt; \epsilon) = 1 \qquad \forall \epsilon
-\]</span> This law implies that a statistics on a sample would approaches the same statistics on the population as the sample size is big. In other word, the sample can represent the population when n is big.</p>
-<h3 id="central-limit-theorem">3.2 Central Limit Theorem</h3>
-<p>If a random phenomenon is caused by numerous factors that have same distribution but are independent to each other, then the limit of thu sum of these factors, which is the phenomenon, follows a normal distribution.</p>
-<p>The CLT can be expressed in the following format:</p>
-<p><strong>Lindeberg–Lévy CLT</strong></p>
-<p>Let <span class="math inline">\(X_1, X_2,..X_n\)</span> be a series of independent random variables following same distribution, <span class="math inline">\(E[X_i] = \mu, V[X_ i] = \sigma^2\)</span>, then <span class="math display">\[
-\lim_{n\to \infty}P(\frac{ \sum_i^n X_ i-n\mu}{\sqrt{n}\sigma } \le X) = \Phi_0(X)
-\]</span> where <span class="math inline">\(\Phi_0\)</span> is a standard normal distribution</p>
-<p>This theorem implies that when n is big enough, let <span class="math inline">\(Y = \sum_i^nX_i\)</span>, we can regarding Y as following a normal distribution <span class="math inline">\(N(n\mu, n\sigma)\)</span></p>
-<p>Such a conclusion has very important meaning to hypothesis testing. It indicates that, if a statistics is constructed through through adding up sample point, lilke mean, then this statistics should follow a normal distribution no matter what distribution each sample follows. In hypothesis test, if we want to test on the mean of a measure of the population, we can regard that measure of each sample point as a random variable, these variables are independent and same-distributed, so no matter what distribution that measure follows, the mean of it on the total should follow a normal distribution. According to law of large number, as long as n is big enough, the mean on the sample should also follow normal distribution. Thus CLT make hypothesis testing on mean statistics possible.</p>
-<p>Let <span class="math inline">\(\mu, \sigma^2\)</span> be the mean and variance of the population, <span class="math inline">\(\bar{X},S^2\)</span> be the mean and variance of the sample. According to Law of Large Number and CLT: <span class="math display">\[
-E[\bar{ X}] = \mu
-\]</span></p>
-<p><span class="math display">\[
-V[\bar{X}] = \frac{1}{n}\sigma^2
-\]</span></p>
-<p><span class="math display">\[
-E[S^2] = \sigma^2
-\]</span></p>
-<h2 id="topic-in-applied-statistics">4. Topic in Applied Statistics</h2>
-<p>Some topics in statistics are widely applied in domains like machine learning and A/B Test</p>
-<h3 id="sampling">1.Sampling</h3>
-<h3 id="probability-density-estimation">2. Probability Density Estimation</h3>
-<h3 id="statistical-learning-and-machine-learning">3. Statistical Learning and Machine Learning</h3>
-<h3 id="experiment-and-hypothesis-testing">4. Experiment and Hypothesis Testing</h3>
-<h3 id="observational-study-and-causal-inference">5. Observational Study and Causal Inference</h3>
+                <h1 id="analytics-models-and-framework">Analytics: Models and Framework</h1>
+<p>Data analysts build models to perform various analytics jobs. Each type of models are designed to figure out a certain problem. For specification, in this article, we call the general categories of these models as <strong>Analytics Model</strong> and specific example of the model as <strong>Analysis Framework</strong>.</p>
+<h2 id="user-model">1. User Model</h2>
+<h2 id="event-model">2. Event Model</h2>
+<h2 id="funnel-analysis-model">3. Funnel Analysis Model</h2>
+<h3 id="aarrr">3.1 AARRR</h3>
+<p>The AARRR is a framework for product analysis. It consists of 5 ordinal objectives:</p>
+<ol type="1">
+<li>Acquisition: Let user be aware of the product<br>
+</li>
+<li>Activation: Let user do what we want them to do</li>
+<li>Retention: Keep user active, engaged and exhibiting sticky behavior</li>
+<li>Revenue: generate businesses outcome. Usually money but can vary from the business model</li>
+<li>Referral: Let user spread the product</li>
+</ol>
+<h3 id="sean-elliss-startup-growth-pyramid">3.2 Sean Ellis’s Startup growth Pyramid</h3>
+<p>The Startup growth Pyramid is a framework for starting up and enlarge business. It segment the business lifecycle into threee stages and discuss what we should do in each stage:</p>
+<p><img src="/Users/kenny_yang/blog/source/_posts/1.png" srcset="/img/loading.gif" lazyload></p>
+<p>The judgement on moving from the current stage to the next is based on user satisfaction. If 40% of people (or more) say they’d be very disappointed to lose the service, you’ve found a fit, and now it’s time to scale</p>
+<h3 id="other-framework-and-comparison-table">3.3 Other Framework and Comparison Table</h3>
+<p>Other Frameworks include Lean Analytics Stage, Maurya Lean Canvas and Lean Startup</p>
+<p>The comparison of them are listed below</p>
+<p><img src="/2023/02/05/analytics-framework/2.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="heatmap-model">4. HeatMap Model</h2>
+<h2 id="customized-retention-analysis">5. Customized Retention Analysis</h2>
+<h2 id="stickiness-analysis">6. Stickiness Analysis</h2>
+<h2 id="full-behavior-route-analysis">7. Full Behavior Route Analysis</h2>
+<h2 id="user-segmentation">8. User Segmentation</h2>
 
                 
               </div>
@@ -412,7 +343,7 @@ E[S^2] = \sigma^2
     
       <span class="category-chain">
         
-  <a href="/categories/Probability-Statistics/" class="category-chain-item">Probability &amp; Statistics</a>
+  <a href="/categories/A-B-Testing-Case-Interview/" class="category-chain-item">A/B Testing &amp; Case Interview</a>
   
   
 
@@ -427,9 +358,9 @@ E[S^2] = \sigma^2
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Basic-Knowledge/">#Basic Knowledge</a>
+        <a href="/tags/Analytics-Model/">#Analytics Model</a>
       
-        <a href="/tags/Statistics/">#Statistics</a>
+        <a href="/tags/Analysis-Framework/">#Analysis Framework</a>
       
     </div>
   
@@ -441,8 +372,8 @@ E[S^2] = \sigma^2
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Basic Statistics for Data Science</div>
-      <div>http://example.com/2022/02/09/statistics-for-ds/</div>
+      <div>Analytics: Models and Framework</div>
+      <div>http://example.com/2023/02/05/analytics-framework/</div>
     </div>
     <div class="license-meta">
       
@@ -454,7 +385,7 @@ E[S^2] = \sigma^2
       
         <div class="license-meta-item license-meta-date">
           <div>Posted on</div>
-          <div>February 9, 2022</div>
+          <div>February 5, 2023</div>
         </div>
       
       
@@ -486,18 +417,12 @@ E[S^2] = \sigma^2
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/02/09/MySQL-Basic/" title="MySQL 基础知识">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">MySQL 基础知识</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/02/06/MongoDB-Guildline/" title="MongoDB Guildbook">
-                        <span class="hidden-mobile">MongoDB Guildbook</span>
+                      <a href="/2023/01/31/measure-success/" title="Case Interview: Measure Success">
+                        <span class="hidden-mobile">Case Interview: Measure Success</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

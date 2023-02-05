@@ -4,11 +4,38 @@
   
   
   <entry>
+    <title>Analytics: Models and Framework</title>
+    <link href="/2023/02/05/analytics-framework/"/>
+    <url>/2023/02/05/analytics-framework/</url>
+    
+    <content type="html"><![CDATA[<h1 id="analytics-models-and-framework">Analytics: Models and Framework</h1><p>Data analysts build models to perform various analytics jobs. Each type of models are designed to figure out a certain problem. For specification, in this article, we call the general categories of these models as <strong>Analytics Model</strong> and specific example of the model as <strong>Analysis Framework</strong>.</p><h2 id="user-model">1. User Model</h2><h2 id="event-model">2. Event Model</h2><h2 id="funnel-analysis-model">3. Funnel Analysis Model</h2><h3 id="aarrr">3.1 AARRR</h3><p>The AARRR is a framework for product analysis. It consists of 5 ordinal objectives:</p><ol type="1"><li>Acquisition: Let user be aware of the product<br></li><li>Activation: Let user do what we want them to do</li><li>Retention: Keep user active, engaged and exhibiting sticky behavior</li><li>Revenue: generate businesses outcome. Usually money but can vary from the business model</li><li>Referral: Let user spread the product</li></ol><h3 id="sean-elliss-startup-growth-pyramid">3.2 Sean Ellis’s Startup growth Pyramid</h3><p>The Startup growth Pyramid is a framework for starting up and enlarge business. It segment the business lifecycle into threee stages and discuss what we should do in each stage:</p><p><img src="/Users/kenny_yang/blog/source/_posts/1.png"></p><p>The judgement on moving from the current stage to the next is based on user satisfaction. If 40% of people (or more) say they’d be very disappointed to lose the service, you’ve found a fit, and now it’s time to scale</p><h3 id="other-framework-and-comparison-table">3.3 Other Framework and Comparison Table</h3><p>Other Frameworks include Lean Analytics Stage, Maurya Lean Canvas and Lean Startup</p><p>The comparison of them are listed below</p><p><img src="/2023/02/05/analytics-framework/2.png"></p><h2 id="heatmap-model">4. HeatMap Model</h2><h2 id="customized-retention-analysis">5. Customized Retention Analysis</h2><h2 id="stickiness-analysis">6. Stickiness Analysis</h2><h2 id="full-behavior-route-analysis">7. Full Behavior Route Analysis</h2><h2 id="user-segmentation">8. User Segmentation</h2>]]></content>
+    
+    
+    <categories>
+      
+      <category>A/B Testing &amp; Case Interview</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Analytics Model</tag>
+      
+      <tag>Analysis Framework</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Case Interview: Measure Success</title>
     <link href="/2023/01/31/measure-success/"/>
     <url>/2023/01/31/measure-success/</url>
     
-    <content type="html"><![CDATA[<h1 id="case-interview-measure-success">Case Interview: Measure Success</h1><h2 id="procedure-of-measure-success-problem">1. Procedure of Measure Success Problem</h2><p>This type of cases usually come as "find a metric to measure the extent.....(how good a new feature/strategy/product is)". IT evaluates one's ability to design a measure according to certain business objectives</p><ol type="1"><li><p><strong>Clarify the objective</strong>:</p><p>Ask questions about:</p><ul><li>How this feature works?</li><li>who is it for</li></ul></li><li><p><strong>Confirm the business objective</strong></p><p>according to the explanation from the interviewer, conclude the objective of the feature to the following aspects:</p><ul><li>Acquisition: bring in more user, help them discover the product</li><li>Activation: make user taking actions we want them to, keep users engaged</li><li>conversion and retention: keep user continuing to use the product, convert them from free-user to paid user</li><li>Money: make revenue from users</li></ul></li><li><p><strong>Select metrics according to objective</strong></p><table><thead><tr class="header"><th>Objective</th><th></th></tr></thead><tbody><tr class="odd"><td>Acquisition</td><td>DAU/MAU, DNU by platform,</td></tr><tr class="even"><td>Activation</td><td>ACU/PCU, PV/UV, time spending, interaction behaviour</td></tr><tr class="odd"><td>Conversion and Retention</td><td>CTR,CO, pay rate, 7 day retention rate/churn rate</td></tr><tr class="even"><td>Money</td><td>ROI,GMV, AOV, ACV, ARPU/ARPPU</td></tr><tr class="odd"><td></td><td></td></tr></tbody></table><ul><li><p>Select 1 main success metric, this metric should be directly relevant to the business objective</p></li><li><p>Select 1 second success metrics, this metrics should be a supplement. It improve the completeness of the logic relationship of the key metrics and business goal. To fing the second goal, consider the following questions:</p><ul><li>Can the change of key metrics be caused by factors other than the feature?</li><li>Is the key metric equivalent to the business goal? Is there any intermediate process</li><li>If the key metrics changes on a group level, should we have same changes on single user level?</li></ul><p>Alternatively, we can do a funnel analysis to find the secondary success metrics</p></li><li><p>Select 1 guardrail metric, this metric is critical to the main goal of the whole product. The feature should not have significant negative effect on it</p></li></ul></li><li><p><strong>structure the answer</strong></p><p>if the guardrail metric shift towards a negative direction, the feature is probably not success.</p><p>Otherwise, if the key success metric and the second both shift towards a positive direction, the feature is successful.</p></li></ol><h2 id="metrics-selection-in-ab-testing">2. Metrics Selection in A/B Testing</h2>]]></content>
+    <content type="html"><![CDATA[<h1 id="case-interview-measure-success">Case Interview: Measure Success</h1><h2 id="analytics-framework">1. Analytics Framework</h2><p>For metrics selection, the funnel anaysis model is the most frequently applied type of frameworks. In this case, we commonly applied the AARRR framework to allocate proper metrics. For details on models and frameworks, refer to <a href>ongoing</a></p><p>The according metrics of each objectives under various business models are listed below:</p><table><thead><tr class="header"><th>Business Model</th><th>Acquisition</th><th>Activation</th><th>retention</th><th>Revenue</th><th>referral</th></tr></thead><tbody><tr class="odd"><td>E-commerce</td><td></td><td></td><td></td><td></td><td></td></tr><tr class="even"><td>SaaS</td><td></td><td></td><td></td><td></td><td></td></tr><tr class="odd"><td>Free Mobile APP</td><td></td><td></td><td></td><td></td><td></td></tr><tr class="even"><td>Media Site</td><td></td><td></td><td></td><td></td><td></td></tr><tr class="odd"><td>UGC</td><td></td><td></td><td></td><td></td><td></td></tr><tr class="even"><td>TS Marketplace</td><td></td><td></td><td></td><td></td><td></td></tr><tr class="odd"><td>For all</td><td>DAU/MAU, DNU by platform</td><td></td><td></td><td></td><td></td></tr></tbody></table><h2 id="criterion-for-metrcis-selection">2. Criterion for Metrcis Selection</h2><h2 id="procedure-of-measure-success-problem">3. Procedure of Measure Success Problem</h2><p>This type of cases usually come as "find a metric to measure the extent.....(how good a new feature/strategy/product is)". IT evaluates one's ability to design a measure according to certain business objectives</p><ol type="1"><li><p><strong>Clarify the objective</strong>:</p><p>Ask questions about:</p><ul><li>How this feature works?</li><li>who is it for</li></ul></li><li><p><strong>Confirm the business objective</strong></p><p>according to the explanation from the interviewer, conclude the objective of the feature to the following aspects:</p><ul><li>Acquisition: bring in more user, help them discover the product</li><li>Activation: make user taking actions we want them to, keep users engaged</li><li>conversion and retention: keep user continuing to use the product, convert them from free-user to paid user</li><li>Money: make revenue from users</li></ul></li><li><p><strong>Select metrics according to objective</strong></p><table><thead><tr class="header"><th>Objective</th><th></th></tr></thead><tbody><tr class="odd"><td>Acquisition</td><td>DAU/MAU, DNU by platform,</td></tr><tr class="even"><td>Activation</td><td>ACU/PCU, PV/UV, time spending, interaction behaviour</td></tr><tr class="odd"><td>Conversion and Retention</td><td>CTR,CO, pay rate, 7 day retention rate/churn rate</td></tr><tr class="even"><td>Money</td><td>ROI,GMV, AOV, ACV, ARPU/ARPPU</td></tr><tr class="odd"><td></td><td></td></tr></tbody></table><ul><li><p>Select 1 main success metric, this metric should be directly relevant to the business objective</p></li><li><p>Select 1 second success metrics, this metrics should be a supplement. It improve the completeness of the logic relationship of the key metrics and business goal. To fing the second goal, consider the following questions:</p><ul><li>Can the change of key metrics be caused by factors other than the feature?</li><li>Is the key metric equivalent to the business goal? Is there any intermediate process</li><li>If the key metrics changes on a group level, should we have same changes on single user level?</li></ul><p>Alternatively, we can do a funnel analysis to find the secondary success metrics</p></li><li><p>Select 1 guardrail metric, this metric is critical to the main goal of the whole product. The feature should not have significant negative effect on it</p></li></ul></li><li><p><strong>structure the answer</strong></p><p>if the guardrail metric shift towards a negative direction, the feature is probably not success.</p><p>Otherwise, if the key success metric and the second both shift towards a positive direction, the feature is successful.</p></li></ol>]]></content>
     
     
     <categories>
@@ -178,7 +205,9 @@
     
     <tags>
       
-      <tag>Basic Probability</tag>
+      <tag>Probability</tag>
+      
+      <tag>Basic Knowledge</tag>
       
     </tags>
     
@@ -257,7 +286,7 @@
     
     <tags>
       
-      <tag>Distribution</tag>
+      <tag>Basic Knowledge</tag>
       
     </tags>
     
@@ -686,8 +715,6 @@
       
       <tag>Hypothesis Testing</tag>
       
-      <tag>A/B Test</tag>
-      
     </tags>
     
   </entry>
@@ -749,7 +776,7 @@
   
   
   <entry>
-    <title>Statistics for Data Science</title>
+    <title>Basic Statistics for Data Science</title>
     <link href="/2022/02/09/statistics-for-ds/"/>
     <url>/2022/02/09/statistics-for-ds/</url>
     
@@ -765,7 +792,9 @@
     
     <tags>
       
-      <tag>Basic Statistics</tag>
+      <tag>Basic Knowledge</tag>
+      
+      <tag>Statistics</tag>
       
     </tags>
     
