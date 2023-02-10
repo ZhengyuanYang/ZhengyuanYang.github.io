@@ -27,7 +27,7 @@
 <meta property="og:image" content="http://example.com/2022/11/07/potential-outcome/2.PNG">
 <meta property="og:image" content="http://example.com/2022/11/07/potential-outcome/3.PNG">
 <meta property="article:published_time" content="2022-11-08T03:29:57.000Z">
-<meta property="article:modified_time" content="2022-12-03T02:15:51.782Z">
+<meta property="article:modified_time" content="2023-02-10T00:47:05.233Z">
 <meta property="article:author" content="Zhengyuan Yang">
 <meta property="article:tag" content="Distribution">
 <meta name="twitter:card" content="summary_large_image">
@@ -225,7 +225,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4.7k words
+          4.8k words
         
       </span>
     
@@ -236,7 +236,7 @@
         
         
         
-          40 mins
+          41 mins
         
       </span>
     
@@ -320,12 +320,22 @@ Y|do(T=1) \ - Y|do( T =0) = Y(1)-Y(0)
 <p>For a specific unit, suppose we applied treatment T=t on it, we call the observed outcome <span class="math inline">\(Y^F= Y(T=t)\)</span> the factual outcome. The potential outcome that not applying T=t, <span class="math inline">\(Y^{CF} = Y(T\ne t)\)</span> is called the counterfactual outcome. <span class="math inline">\(Y^{CF }(T =1) = Y^F(T=0)\)</span></p>
 <h3 id="average-treatment-effect">1.3 Average Treatment Effect</h3>
 <p>Due to the problem discussed in 1.2, we usually cannot get the ITE of a treatment directly. However, if we do not put specific emphasis on the effect of individual, we can obtain the overall effect size by calculating the <strong>Average Treatment Effect(</strong>ATE) of a treatment on a population: <span class="math display">\[
-ATE = \Epsilon[ITE] =E[Y^F(T=1)] - E[Y^{CF}(T=1)] = E[Y(1)] - E[Y(0)]
-\]</span> Note that when there are any confounders X so that <span class="math inline">\((Y(1),Y(0)) \not \! \perp \!\!\! \perp T\)</span>: <span class="math display">\[
-E[Y(1)] = E_X[E[Y|T=1,X=x]] \ne E[Y|T=1]
-\]</span> In such case, the ATE is now: <span class="math display">\[
-ATE =E_X[E[Y|T=1,X=x]-E[Y|T=0,X=x]]=E_X[E[Y|T=1,X=x]] - E_X[E[Y|T=0,X=x]]
-\]</span> In most real application cases, there are multiple confounders in the causal inference process. To estimate the ATE, we need to "block" the effects of confounder. We call the treatment effect under a group condidsa</p>
+ATE = E[ITE] =E[Y^F(T=1)] - E[Y^{CF}(T=1)] = E[Y(1)] - E[Y(0)]
+\]</span> When there exists no confounders: <span class="math display">\[
+E[Y(1)] = E[Y|T=1]
+\]</span></p>
+<p>When there exists any confounders: <span class="math display">\[
+E[Y(1)] = E_X[E[Y|T=1,X=x]]
+\]</span> here the X follows its original distribution <span class="math inline">\(X \sim D(\theta)\)</span></p>
+<p>However, when we try to interpret the effect size from observational data, what we actually obtained is <span class="math display">\[
+E[Y|T=1] - E[Y|T=0] = E_{X_1}[E[Y|T=1,X_1]] - E_{X_0}[E[Y|T=0,X_0]]
+\]</span> Here <span class="math inline">\(X_T\)</span> and <span class="math inline">\(X_C\)</span> follow conditional probability distributions given T instead of X's original distribution: <span class="math inline">\(X_1 = (X| T =1), X_0 = (X|T=0)\)</span>, <span class="math inline">\(X_1 \sim D(\theta_1), X_0 \sim D(\theta_0)\)</span></p>
+<p>when confounder exists, X would have different distribution on the treatment and control group, thus <span class="math display">\[
+P(X_1) \ne^d P(X_0)
+\]</span> Thus, when confounder exists: <span class="math display">\[
+E[Y(1) - Y(0)] = E_X[E[(Y|T=1,X)] - E[(Y|T=0,X)]] \ne E[Y|T=1] - E[Y|T=0]
+\]</span></p>
+<p>In most real application cases, there are multiple confounders in the causal inference process. To estimate the ATE, we need to "block" the effects of confounder. We call the treatment effect under a segmentation a Conditional Average Treatment Effect(CATE) and calculate the weighted average of the CATE as the ATE estimation. The weight is the probability of the segmentation in the whole population. Such kind of methods are called <strong>Backdoor Adjustment</strong></p>
 <h3 id="basic-assumptions-about-potential-outcomes">1.4 Basic Assumptions about Potential Outcomes</h3>
 <p><strong>Stable Unit Treatment Value Assumption(SUTVA)</strong>: The potential outcome of any unit won't be changed by treatment on other units. This assumption emphasize the independency of units</p>
 <p><strong>Positivity Assumption</strong>: For units of any possible values of background variable, any assigned treatment is possible. <span class="math display">\[
@@ -349,18 +359,6 @@ E[Y(1)|X=x_i] = E[Y(1)|T=1,X=x_i] = E[Y| T=1,X=x_i]
 <li><p>If RCT is not implementable, we can condition on the confounder to satisfy the conditional ignorability assumption and estimate the CATE, then we may estimate the distribution of the confounders and calculate the exception of the CATE to obtain ATE</p>
 <p><img src="/2022/11/07/potential-outcome/3.PNG" srcset="/img/loading.gif" lazyload></p></li>
 </ul>
-<h3 id="randomized-control-trail">1.5 Randomized Control Trail</h3>
-<p>A Randomized Control Trail is a trail that whether to apply a treatment on a unit is decided only by a coin flip(A random event). Since the determination of each unit is randomized, we can state that Ignorability Assumption is satisfied if there are no omitted confounders, and <span class="math inline">\((Y(1),Y(0)) \perp \!\!\! \perp T\)</span></p>
-<p>Under such assumption: <span class="math display">\[
-E[Y(1)] = E[Y(1)|T=1] = E[Y^F |T=1]
-\]</span></p>
-<p><span class="math display">\[
-E[Y^{CF}(T= 1)] = E[ Y^F (T= 0)] = E[Y|T=0]
-\]</span></p>
-<p><span class="math display">\[
-ATE = E[Y(1)] - E[Y(0)] = E[Y|T=1] - E[Y|T=0]
-\]</span></p>
-<p>Thus, we can estimate the ATE through a RCT. An RCT make the determination of the treatment randomized and blocked the influence of the confounders</p>
 
                 
               </div>

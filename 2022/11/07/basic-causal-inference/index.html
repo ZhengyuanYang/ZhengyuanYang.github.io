@@ -23,11 +23,19 @@
 <meta property="og:site_name" content="Data Shore">
 <meta property="og:description" content="This article discuss about basic knowledge of causal inference">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2022/11/07/basic-causal-inference/1.png">
+<meta property="og:image" content="http://example.com/2022/11/07/basic-causal-inference/2.png">
+<meta property="og:image" content="http://example.com/2022/11/07/basic-causal-inference/3.png">
+<meta property="og:image" content="http://example.com/2022/11/07/basic-causal-inference/4.png">
+<meta property="og:image" content="http://example.com/2022/11/07/basic-causal-inference/5.png">
+<meta property="og:image" content="http://example.com/2022/11/07/basic-causal-inference/6.png">
+<meta property="og:image" content="http://example.com/2022/11/07/basic-causal-inference/7.png">
 <meta property="article:published_time" content="2022-11-08T03:11:36.000Z">
-<meta property="article:modified_time" content="2023-02-02T09:15:42.928Z">
+<meta property="article:modified_time" content="2023-02-10T00:20:54.099Z">
 <meta property="article:author" content="Zhengyuan Yang">
 <meta property="article:tag" content="Basic Knowledge">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2022/11/07/basic-causal-inference/1.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -221,7 +229,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          51 words
+          6.7k words
         
       </span>
     
@@ -232,7 +240,7 @@
         
         
         
-          1 mins
+          56 mins
         
       </span>
     
@@ -294,8 +302,129 @@
               <div class="markdown-body">
                 
                 <h1 id="introduction-of-causal-inference">Introduction of Causal Inference</h1>
-<h2 id="section">1.</h2>
+<h2 id="about-causal-inference">1. About Causal Inference</h2>
+<p>Causal Inference refer to the process that we want to discover the real causality between variables based on data. Specifically, there are two domains of causal inference:</p>
+<ul>
+<li>Causality Discovery: find the causal structure among variables</li>
+<li>Causal Effect Estimation: give a quantitative evaluation on the causal effect of a variable to another</li>
+</ul>
 <h2 id="why-causal-inference">2. Why Causal Inference</h2>
+<p>The core reason why we cannot discover causal realtionship and estimate causal effect through traditional statistical methods is that: <strong>Correlation does not imply Causality</strong>. Use traditional Statistics methodology, which is basically based on statistical dependence, on causal reasoning would lead to bias</p>
+<h3 id="simpson-paradox-confounder">2.1 Simpson Paradox: Confounder</h3>
+<p>Suppose we have two treatment A and B for a certain disease and want to evaluate if A has better effect by cure rate. There are two categories pf patients: mild patients and severe patients. Suppose the truth is condition of patients have effects on both the selection of treatment and the cure rate:</p>
+<p><img src="/2022/11/07/basic-causal-inference/1.png" srcset="/img/loading.gif" lazyload></p>
+<p>However, since we failded to recognize the ture causal relationship among these variables, we assume there's no other facor other than treatment and effect:</p>
+<p><img src="/2022/11/07/basic-causal-inference/2.png" srcset="/img/loading.gif" lazyload></p>
+<p>Under these assumption, we obtained the following data:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Treatment</th>
+<th>Mild</th>
+<th>Severe</th>
+<th>Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A</td>
+<td><span class="math inline">\(\frac{30}{100} = 30\%\)</span></td>
+<td><span class="math inline">\(\frac{210}{1400} = 15\%\)</span></td>
+<td><span class="math inline">\(\frac{240}{100} = 16\%\)</span></td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td><span class="math inline">\(\frac{100}{500} = 20\%\)</span></td>
+<td><span class="math inline">\(\frac{5}{50} = 10\%\)</span></td>
+<td><span class="math inline">\(\frac{105}{550} = 19\%\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Here a simpson paradox appears: treatment A is better than treatment B on every segments, but the overall effect of A is actually lower.</p>
+<p>The occurrence of simpson paradox usually suggest the existence of <strong>confounder</strong> variables. If one or more variables have causal effects on both of two variable, we call these variables confounders of the two variables. In this case, the condition is a confounder.</p>
+<p>Let Y denote the cure rate, X denote the condition of patients, and T denote the selection of treatment. For these data, what we observed is: <span class="math display">\[
+E[Y|T= A] - E[Y| T= B] = 16\%-19\% = -3\%
+\]</span> under the wrong assumption that there's no confounding variables, we believe: <span class="math display">\[
+E[Y(A) - Y(B)] =E[(Y|T=A) - (Y|T=B)] = E[Y|T= A] - E[Y| T= B] = -3\%
+\]</span> and we draw the conclusion that A has negative effect.</p>
+<p>However, the truth is, the when there are confounders, the true interpretation of the results ought to be: <span class="math display">\[
+E[Y(A) - Y(B)] = E_x[E[(Y|T=A,C) - (Y|T=B,C)]] = \sum_i P(C=i)E[(Y|T=A,C) - (Y|T=B,C)]
+\]</span></p>
+<p><span class="math display">\[
+E[Y(A) - Y(B)] = \frac{600}{2050}*(0.3-0.2)+\frac{215}{2050}(0.15-0.1) = 3.4\%
+\]</span></p>
+<p>What we obtained from the data is: <span class="math display">\[
+E[Y|T= A] - E[Y| T= B] = E_x[E[Y|T=A,X]] - E_x[E[Y|T=B,X]] = -3\%
+\]</span> Note that the X here follows a conditional probability distribution given T instead of its original distribution: <span class="math display">\[
+E_x[E[Y|T=A,X]] = \sum_iP(X = i|T=A)E[Y|T=A,X=i]
+\]</span> As the conditional probability distribution of X given <span class="math inline">\(T = A\)</span> and <span class="math inline">\(T=B\)</span> are different <span class="math display">\[
+E_x[E[(Y|T = A,X) - (Y|T=B,X)] \ne E_X[Y|T= A,X] - E_X[Y| T= B,X]
+\]</span> When there's confounder, the statistical denpendy can not accurately represent the causality. In this case, treatment A has positive effect on cure rate. However, since the patients who choose cure A are mostly severe patients and has lower cure rate, the condition variable create a negative association between T and Y. Thus the statistical correction of T and Y are undermined because of X.</p>
+<p>When there exists confounders: <span class="math display">\[
+E[Y|do(T= A)] - E[Y|do(T=B)] \ne E[Y|T= A] - E[Y| T= B]
+\]</span></p>
+<h3 id="berkson-paradox-selection-bias">2.2 Berkson Paradox: Selection Bias</h3>
+<p>Suppose X and Y represent the academic performance and professional experience of a student, and we want to know if X has a causality on Y. Suppose the real situation is X and Y are independent. Also, there's a fact that students with high academic scores and outstanding work experience are more likely to be admitted by a university. Let Z donate the probability of a student being admitted by a university, the true causal structure of the problem is:</p>
+<p><img src="/2022/11/07/basic-causal-inference/3.png" srcset="/img/loading.gif" lazyload></p>
+<p>However, we failed to recognize such a variable Z that both caused by X and Y. When we draw the sample, we go to a university to investigate the academic performance and professional experience of its students. Thus, all samples drawn are student admitted by university.</p>
+<p><img src="/2022/11/07/basic-causal-inference/4.png" srcset="/img/loading.gif" lazyload></p>
+<p>To make it easy, consider X, Y and Z as binary variables. Suppose we have following data:</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>Y = high</th>
+<th>Y =low</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>X = high</td>
+<td><span class="math inline">\(\frac{130}{150}\)</span></td>
+<td><span class="math inline">\(\frac{40}{155}\)</span></td>
+</tr>
+<tr class="even">
+<td>X= low</td>
+<td><span class="math inline">\(\frac{50}{155}\)</span></td>
+<td><span class="math inline">\(\frac{5}{150}\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>In each cell, the numerator and the denominator respectively represent the number of admitted students and all students. Its easy to find that X and Y are independent by conducting a <span class="math inline">\(\chi^2\)</span> test based on the denominator values.</p>
+<p>Suppose there exists no confounders. The real ATE should be: <span class="math display">\[
+E[Y|X= high] - E[Y|X=low] = (150+155) - (155+150) = 0
+\]</span> However, as we conditioned on Z, the ATE we know observed become: <span class="math display">\[
+E[Y| X =high, Z = admitted] - E[Y|X=low,Z = admitted] = (130-40)-(50-5) = 45
+\]</span> We draw incorrect conclusions that X have positive causal effects on Y. The reason is that the the admitted student cannot represent the whole population. In this case, Z is a selection variable, it is caused by both X and Y. If we condition on Z, then association is created between X and Y, and we cannot accurately estimate the causal effect from X to Y through statistical dependency. This is called a selection bias.</p>
+<h3 id="reverse-causation">2.3 Reverse Causation</h3>
+<p>Suppose we want to discover the causal relationship from longer marriage to longer life. The truth is that having a longer marriage has no positive on one's longevity. However, on the other hand, elder people usually have longer marriage as they spent more time. Thus, the true causal relationship between X(longevity) and Y(marriage length) is:</p>
+<p><img src="/2022/11/07/basic-causal-inference/5.png" srcset="/img/loading.gif" lazyload></p>
+<p>However, according to our assumption, the causality is reversed, we expected to test the following structure:</p>
+<p><img src="/2022/11/07/basic-causal-inference/6.png" srcset="/img/loading.gif" lazyload></p>
+<p>without any doubts, we would find a statistical dependency between X and Y as statistical association is not directed. However, letting people have longer marriage does not help extend thei lifetime. The causality we discovered is wrong as it is reversed.</p>
+<h2 id="basic-methodology-of-causal-inference">3. Basic Methodology of Causal Inference</h2>
+<h3 id="experimental-data-and-observational-data">3.1 Experimental data and Observational Data</h3>
+<p><strong>Observational Data</strong></p>
+<p>Data are observed and collected for each subjects. No manipulations(intervening) on these subjects occur. We can condition on certain variables, but what we have would then be a subset of the original data</p>
+<p><strong>Experimental Data</strong></p>
+<p>Subjects are manipulated(intervened). The mechanism the data generated are artificially changed.</p>
+<p>Causal inference is very easy on experimental data, while can be much more difficult on observational data.</p>
+<h3 id="randomized-control-experiment">3.2 Randomized Control Experiment</h3>
+<p>We can estimate causality based on Experimental Data through Randomized Control Experiment(RCT).</p>
+<p>Suppose we want to explore the causal relationship from increasing exercise to physical health. Let</p>
+<ul>
+<li>T: denote whether increase exercise</li>
+<li>Y: physical condition of a unit</li>
+<li>X: any confounder that can create a statistical correction between T and Y, such as gender, weight and age</li>
+<li>Z: any common results of Y and T, such as physical condition evaluation score</li>
+</ul>
+<p>To collect observational data, we just record the T, Y and X of units we can observed</p>
+<p>To collect experimental data, we need to split all subject into treatment group(increase exercise) and control group(not increase exercise). The process of deciding which group to assign for a subject should be completely randomized. This means X should have same distribution for treatment group and control group. We can such a scenario Covariate Balance <span class="math display">\[
+P(X|T=1)=^d P(X|T=0)
+\]</span></p>
+<p>Under such intervention, we can regard as the causality from X to T are <strong>blocked</strong>(cannot demonstrate dependency). Also, such a randomized selection ensure that there's no conditioning on Z.</p>
+<p><img src="/2022/11/07/basic-causal-inference/7.png" srcset="/img/loading.gif" lazyload></p>
+<p>The randomized process ensured there's no other floating association from T to Y other than the directed chain path, which is the one we care about. Under this scenarios, we can estimate causal effect directly from</p>
 
                 
               </div>
@@ -396,8 +525,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/11/04/distribution/" title="Common Distribution Types in Machine Learning">
-                        <span class="hidden-mobile">Common Distribution Types in Machine Learning</span>
+                      <a href="/2022/11/04/distribution/" title="Common Distribution Types">
+                        <span class="hidden-mobile">Common Distribution Types</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

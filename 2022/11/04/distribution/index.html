@@ -18,7 +18,7 @@
   
     <meta name="description" content="This article discuss about common distribution types in Machine Learning">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Common Distribution Types in Machine Learning">
+<meta property="og:title" content="Common Distribution Types">
 <meta property="og:url" content="http://example.com/2022/11/04/distribution/index.html">
 <meta property="og:site_name" content="Data Shore">
 <meta property="og:description" content="This article discuss about common distribution types in Machine Learning">
@@ -31,7 +31,7 @@
 <meta property="og:image" content="http://example.com/2022/11/04/distribution/5.png">
 <meta property="og:image" content="http://example.com/2022/11/04/distribution/7.png">
 <meta property="article:published_time" content="2022-11-04T23:03:41.000Z">
-<meta property="article:modified_time" content="2023-01-18T21:25:44.334Z">
+<meta property="article:modified_time" content="2023-02-09T19:35:17.549Z">
 <meta property="article:author" content="Zhengyuan Yang">
 <meta property="article:tag" content="Distribution">
 <meta name="twitter:card" content="summary_large_image">
@@ -41,7 +41,7 @@
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Common Distribution Types in Machine Learning - Data Shore</title>
+  <title>Common Distribution Types - Data Shore</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -206,7 +206,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Common Distribution Types in Machine Learning"></span>
+            <span id="subtitle" data-typed-text="Common Distribution Types"></span>
           
         </div>
 
@@ -229,7 +229,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          9.3k words
+          9.5k words
         
       </span>
     
@@ -240,7 +240,7 @@
         
         
         
-          78 mins
+          80 mins
         
       </span>
     
@@ -296,7 +296,7 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Common Distribution Types in Machine Learning</h1>
+            <h1 style="display: none">Common Distribution Types</h1>
             
             
               <div class="markdown-body">
@@ -349,19 +349,18 @@ Var[X] = np(1-p)
 <p>The PDF of a Geometric Distribution: <span class="math display">\[
 f(X=k) = (1-p)^{k-1}p
 \]</span> <img src="/2022/11/04/distribution/6.PNG" srcset="/img/loading.gif" lazyload></p>
-<p>The expectation of a binomial distribution is: <span class="math display">\[
+<p>The expectation of a Geometric Distribution is: <span class="math display">\[
 E[X] = \frac{1}{p}
 \]</span></p>
-<p>The variance of a binomial distribution is: <span class="math display">\[
+<p>The variance of a Geometric Distribution is: <span class="math display">\[
 Var[X] = \frac{1-p}{p^2}
-\]</span> Property of binomial distribution:</p>
+\]</span> Property of Geometric Distribution:</p>
 <ul>
-<li>Memoryless: if <span class="math inline">\(x \sim Geom(p)\)</span>, then <span class="math inline">\(P(T&gt;t+s|T&gt;t) = P(T&gt;s)\)</span></li>
+<li>Memoryless: if <span class="math inline">\(x \sim Geom(p)\)</span>, then <span class="math inline">\(P(T&gt;t+s|T&gt;t) = P(T&gt;s)\)</span>. This suggests no matter how many previous failures happened, the variable representing the time to succeed from the current moment still follows a <span class="math inline">\(\sim Geom(p)\)</span></li>
 </ul>
-<h3 id="section"></h3>
 <h3 id="possion-distribution">2.4 Possion Distribution</h3>
 <p>Suppose an event(X = x) happens with a certain probability(usually low probability), let X be the times that event happens in a unit time, then X follows a Possion Distribution. <span class="math inline">\(\lambda\)</span> is the only parameter for a Possion Distrbution, which is the expectation of X.</p>
-<p>The PDF of a binomial distribution: <span class="math display">\[
+<p>The PDF of a Possion Distribution: <span class="math display">\[
 f_X(X = k,\lambda) = \frac{e^ {-\lambda}\lambda^k}{k!}
 \]</span> where k = 0,1,2...<span class="math inline">\(\infty\)</span></p>
 <p><img src="/2022/11/04/distribution/2.png" srcset="/img/loading.gif" lazyload></p>
@@ -394,7 +393,7 @@ Var[X] = \sigma^2
 </ul>
 <h3 id="exponential-distribution">3.2 Exponential Distribution</h3>
 <p>The Exponential Distribution describe same story as poisson distribution, exception the random variable X now donates the time interval between two occurrence of the events. The only parameter for exponential distribution is <span class="math inline">\(\beta\)</span>, where <span class="math inline">\(\beta = \frac{1}{\lambda}\)</span>, representing the probability of occurrence of the event in a unit time.</p>
-<p>The PDF of a exponential distribution: <span class="math display">\[
+<p>The PDF of an exponential distribution: <span class="math display">\[
 f(x) = 
 f(x) = \left\{
              \begin{array}{lr}
@@ -407,19 +406,18 @@ f(x) = \left\{
 \lambda = \frac{1}{\beta}
 \]</span></p>
 <p><img src="/2022/11/04/distribution/3.png" srcset="/img/loading.gif" lazyload></p>
-<p>The expectation of a normal distribution is: <span class="math display">\[
+<p>The expectation of an exponential distribution is: <span class="math display">\[
 E[X] = \beta
 \]</span></p>
-<p>The variance of a normal distribution is: <span class="math display">\[
+<p>The variance of an exponential distribution is: <span class="math display">\[
 Var[X] = \beta^2
-\]</span> Some properties of normal distribution:</p>
+\]</span> Some properties of an exponential distribution:</p>
 <ul>
 <li>Memoryless: if <span class="math inline">\(x \sim Expo(\beta)\)</span>, then <span class="math inline">\(P(T&gt;t+s|T&gt;t) = P(T&gt;s)\)</span></li>
 <li>if <span class="math inline">\(X \sim Expo(\lambda)\)</span>, then <span class="math inline">\(\lambda X \sim Expo(1)\)</span></li>
 <li>if we have independent <span class="math inline">\(X_i \sim Expo( \lambda_ i)\)</span>, then <span class="math inline">\(min(X_1,X_2,..X_k) \sim Expo(\lambda_1+\lambda_2+...+\lambda_k)\)</span></li>
 <li>if we have independent <span class="math inline">\(X_i \sim Expo( \lambda)\)</span>, then <span class="math inline">\(max(X_1,X_2,..X_k) \sim Expo(\lambda)+Expo(2\lambda)+...+Expo(k\lambda)\)</span></li>
 </ul>
-<h3 id="section-1"></h3>
 <h3 id="gamma-distribution">3.3 Gamma Distribution</h3>
 <p>Suppose in the exponential distribution scenario, you want to observe the event for <span class="math inline">\(\alpha\)</span> times before you stop, then the time you need to do that would follows a Gamma distribution <span class="math display">\[
 f(x) = \frac{x^{\alpha-1}\lambda^\alpha e^{-\lambda x}}{\Gamma(\alpha) }
@@ -604,7 +602,7 @@ f_Y(y) = (F^{-1}(y))&#39;f_X(F^{-1}(y)) = F(F^{-1}(y))&#39;F^{-1}(y) = F(F^{-1}(
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Common Distribution Types in Machine Learning</div>
+      <div>Common Distribution Types</div>
       <div>http://example.com/2022/11/04/distribution/</div>
     </div>
     <div class="license-meta">
