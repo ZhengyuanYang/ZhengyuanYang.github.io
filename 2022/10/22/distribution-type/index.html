@@ -16,21 +16,27 @@
   <meta name="author" content="Zhengyuan Yang">
   <meta name="keywords" content="">
   
-    <meta property="og:type" content="article">
-<meta property="og:title" content="Distribution Type Transformation in Machine Learning">
+    <meta name="description" content="This article discuss about distributions type transformation techniques in Machine Learning">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Normality Test and Distribution Type Transformation">
 <meta property="og:url" content="http://example.com/2022/10/22/distribution-type/index.html">
 <meta property="og:site_name" content="Data Shore">
+<meta property="og:description" content="This article discuss about distributions type transformation techniques in Machine Learning">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2022/10/22/distribution-type/1.png">
 <meta property="article:published_time" content="2022-10-23T04:02:05.000Z">
-<meta property="article:modified_time" content="2022-12-03T02:17:14.690Z">
+<meta property="article:modified_time" content="2023-02-12T22:02:10.978Z">
 <meta property="article:author" content="Zhengyuan Yang">
+<meta property="article:tag" content="Distribution Type Transformation">
+<meta property="article:tag" content="Feature Engineering">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2022/10/22/distribution-type/1.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Distribution Type Transformation in Machine Learning - Data Shore</title>
+  <title>Normality Test and Distribution Type Transformation - Data Shore</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -195,7 +201,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Distribution Type Transformation in Machine Learning"></span>
+            <span id="subtitle" data-typed-text="Normality Test and Distribution Type Transformation"></span>
           
         </div>
 
@@ -218,7 +224,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          0 words
+          4.9k words
         
       </span>
     
@@ -229,7 +235,7 @@
         
         
         
-          1 mins
+          41 mins
         
       </span>
     
@@ -285,12 +291,88 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Distribution Type Transformation in Machine Learning</h1>
+            <h1 style="display: none">Normality Test and Distribution Type Transformation</h1>
             
             
               <div class="markdown-body">
                 
-                
+                <h1 id="normality-test-and-distribution-type-transformation">Normality Test and Distribution Type Transformation</h1>
+<h2 id="normality-and-distribution-type-transformation">1. Normality and Distribution Type Transformation</h2>
+<p>In feature engineering, sometimes we need to transform the distribution type to make the data fit the model. In most scenarios, we want to transform a non-normal distributed variable into a normal distributed variable.</p>
+<h2 id="normality-test">2. Normality Test</h2>
+<p>Before transformation, we need first to examine the normality of the data to decide which features to transform.</p>
+<h3 id="visualized-method">2.1 Visualized Method</h3>
+<p><strong>Histogram</strong></p>
+<p>The histogram is one of the simplest method to test normality. If the histogram are bimodal cureve or a trailing curve, then there is a normality problem</p>
+<p><strong>P-P Plot and Q-Q Plot</strong></p>
+<p>P-P plot use the cumulative frequency of the sample as a X -axis, the cumulative probability of the variable under a normal distribution assumption as a Y-axis</p>
+<p><img src="/2022/10/22/distribution-type/1.png" srcset="/img/loading.gif" lazyload></p>
+<p>If the points in the graph are approximately around a line from (0,0) to (1,1), then sample reflect a normal distribution. Otherwise, there is a normality problem</p>
+<p>The Q-Q Plot is a variant of P-P Plot. The only difference is the axis is now the quantile instead of the cumulative probability.</p>
+<h3 id="hypothesis-testing-method">2.2 Hypothesis Testing Method</h3>
+<p><strong>Skewness and Kurtosis</strong></p>
+<p>Skewness and Kurtosis are both statistics.</p>
+<p>Skewness is the standardized 3rd central moment of the sample: <span class="math display">\[
+S = \frac{1}{n-1}\sum_{i=1}^n(x_i-\bar{x}^3)/s^3
+\]</span> The kurtosis is the standardized 4rd central moment. In calculation we usually minus 3 to let the kurtosis of normal distribution be 0 <span class="math display">\[
+K = \frac{1}{n-1}\frac{\sum_{i=1}^n(x_i-\bar{x}^4)}{s^4}-3
+\]</span> where s is the standard deviation</p>
+<p>When the variable folllows a normal distribution, both statistics should be 0. Thus we can use a hypothesis testing on these two parameters two decide normality. Let <span class="math inline">\(SE_S, SE_K\)</span> denote the standard error: <span class="math display">\[
+SE_S = \frac{6N(N-1)}{(N-2)(N+1)(N+3)}
+\]</span></p>
+<p><span class="math display">\[
+SE_K = \frac{4(N^2-1)SE_s}{(N-3)(N+5)}
+\]</span></p>
+<p>Construct Z score :<span class="math inline">\(Z_S = \frac{S}{SE_s}, Z_K = \frac{K}{SE_K}\)</span>. Given <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span>, we can do a Z test to decide normality.</p>
+<p>A improved version of testing based on Skewness and Kurtosis is <strong>D'Agostino's K-squared test</strong>, which construct a <span class="math inline">\(\chi^2\)</span> test statistics by combining skewness and kurtosi. It is a common and powerful method for normality test.</p>
+<p><strong>K-S Testing</strong></p>
+<p>Kolmogorov–Smirnov test is method to test if a empiric distribution is different from a theoretical distribution. In other word, if the variable distributed as we want.</p>
+<p>Let <span class="math inline">\(F_n,F_0\)</span> respectively represent the CDF of the empiric distribution and the theoretical distribution. n is the sample size. Construct test statistics as <span class="math display">\[
+D_n = sup_x \ |F_n(x) - F_0(x)|
+\]</span> where sup represent the supremum. If <span class="math inline">\(F_n = F_0\)</span> , the limit of <span class="math inline">\(D_n\)</span> should be zero. Given significance level <span class="math inline">\(\alpha\)</span>, find <span class="math inline">\(t_\alpha\)</span> such that <span class="math inline">\(P( \sqrt{n}D_n \ge t_\alpha) = \alpha\)</span>, the rejection area then would be <span class="math inline">\([\frac{t_\alpha}{\sqrt{n}},+\infty)\)</span></p>
+<p>In normality test, we can use K-S test to decided whether the variable follows a normal distribution by replacing supreme with maximum. <span class="math inline">\(F_n,F_0\)</span> would be the observed cumulative frequency of sample and cumulatively probability under normal distribution assumption</p>
+<p><strong><span class="math inline">\(\chi^2\)</span> Test for fitness</strong></p>
+<p>The <span class="math inline">\(\chi^2\)</span> Test for fitness works similarly like the K-S test in normality test. Construct the <span class="math inline">\(\chi^2\)</span> test statistics with observed cumulative frequency of sample and cumulatively probability. <span class="math inline">\(\chi^2\)</span> Test for fitness is easier when the test statistics are discrete. For continuous variable, we need to discretize the variable</p>
+<h2 id="distribution-type-transformation">3. Distribution Type Transformation</h2>
+<h3 id="monte-carlo-integral">3.1 Monte Carlo Integral</h3>
+<p>A theoretical method to inverse the CDF of the variable and transform the distribution into a normal distribution, for specific details, refer to <a target="_blank" rel="noopener" href="http://zhengyuanyang.com/2022/11/04/distribution/#distribution-transformation">this article</a></p>
+<p><strong>Box-Muller</strong></p>
+<p>A simpler way to obtain normal-distributed vairable from uniformly distributed variable is the Box-Muller. Given two uniformly distributed variables <span class="math inline">\(U_1, U_2\)</span>: <span class="math display">\[
+Z_1 = \sqrt{-2lnU_1}cos(2\pi U2)
+\]</span></p>
+<p><span class="math display">\[
+Z_2 \ \sqrt{-2 lnU1} sin(2\pi U2)
+\]</span></p>
+<p>It can be proved that <span class="math inline">\(Z_1, Z_2 \sim N(0,1)\)</span>. Through this method, we can transform pairwise variable without knowing the error function of the single variable. However, the CDF of both variables should still be known.</p>
+<p>In real application, it is difficult to obtain the accurate cumulative density function. Thus, MC method only works well when the CDF of the variable is given in a closed form. In most scenarios, we would use other transformation to approximate a normal distribution</p>
+<h3 id="log-transformation">3.2 Log Transformation</h3>
+<p>We can try to approximate normal distribution through log transformation: <span class="math display">\[
+X&#39; = log_a(X+k)
+\]</span> Where a and k are parameterswe can adjust. Greater a has stronger power to correct skewness. Usually we would try <span class="math inline">\([e, 10]\)</span>. K is a positive correction term ensuring there's no negative, zerr or extreme small values in the data.</p>
+<h3 id="power-transformation">3.3 Power Transformation</h3>
+<p>We can try to approximate normal distribution through power transformation: <span class="math display">\[
+X&#39; = X^a
+\]</span> when the vairable is a ratio, we can also add a arcsin transformation: <span class="math display">\[
+X&#39; = arcsin(X^a)
+\]</span> Improved power transformer includes:</p>
+<p><strong>Box-Cox</strong> <span class="math display">\[
+X&#39; = \left\{
+\begin{aligned}
+\frac{X^\lambda-1}{\lambda} \qquad&amp;  \lambda \ne0\\
+ln(X) \qquad &amp; \lambda = 0 \\
+\end{aligned}
+\right.
+\]</span> <strong>Yeo-Johnson</strong></p>
+<p><span class="math display">\[
+X&#39; = \left\{
+\begin{aligned}
+&amp;\frac{(X+1)^\lambda-1}{\lambda} \qquad&amp;  \lambda \ne0, X\ge 0\\
+&amp;ln(X)+1 \qquad &amp; \lambda = 0, X \ge 0\\
+&amp;\frac{-[(-X+1)^{2-\lambda}-1]}{2-\lambda} \qquad&amp; \lambda \ne 2, X&lt;0\\
+&amp;-ln(-X+1) \qquad&amp;\lambda=2, X&lt;0
+\end{aligned}
+\right.
+\]</span> where<span class="math inline">\(\lambda\)</span> is a parameter that can be optimized through Maximum Likelihood Estimation(MLE). The Box-Cox transformer requires X to be strictly positive, while the Yeo-Johnson transformer can accept any numbers.</p>
 
                 
               </div>
@@ -299,6 +381,36 @@
             <div>
               <div class="post-metas my-3">
   
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Machine-Learning/" class="category-chain-item">Machine Learning</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Distribution-Type-Transformation/">#Distribution Type Transformation</a>
+      
+        <a href="/tags/Feature-Engineering/">#Feature Engineering</a>
+      
+    </div>
   
 </div>
 
@@ -308,7 +420,7 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Distribution Type Transformation in Machine Learning</div>
+      <div>Normality Test and Distribution Type Transformation</div>
       <div>http://example.com/2022/10/22/distribution-type/</div>
     </div>
     <div class="license-meta">
