@@ -4,6 +4,33 @@
   
   
   <entry>
+    <title>prob_dense_estimation</title>
+    <link href="/2023/02/13/prob-dense-estimation/"/>
+    <url>/2023/02/13/prob-dense-estimation/</url>
+    
+    <content type="html"><![CDATA[<h1 id="probability-density-estimation">Probability Density Estimation</h1><h2 id="about-probability-density-estimation">1. About Probability Density Estimation</h2><p>Probability Density Estimation(PDE) is a techniques used for estimating probability distribution of a variable through samples. Specifically, it can be categorized as:</p><ul><li>Parameter Estimation: Assuming the variable follows a type of distribution and estimating the parameter of that distribution through samples</li><li>Non-parameter Estimation: Trying to obtain the distribution of the variables directly from the data without any distribution type assumptions</li></ul><p>For PDE, we usually assume that all samples are i.i.d</p><h2 id="parameter-estimation">2. Parameter Estimation</h2><h3 id="maximum-likelihood-estimation">2.1 Maximum Likelihood Estimation</h3><p>Consider the Bayesian's Law: <span class="math display">\[P(X=x|Y=y) = \frac{P(Y=y|X=x)P(X=x)}{P(Y=y)}\]</span> One <strong>critical</strong> thing to remember is the way to interpret the parameter <span class="math inline">\(\theta\)</span>.</p><p>According to Bayesian, the parameter <span class="math inline">\(\theta\)</span> itself sollows some kinds of distribution. Thus, the likelihood and posterior distribution in bayesian's law is exchangeable, <span class="math inline">\(\theta\)</span> is nothing but a random variable just like X and Y in equation 1. In such scenarios, likelihood and probability is the same thing <span class="math display">\[P(\theta|E) = \frac{P(E|\theta)P(\theta)}{P(E)}\]</span> where E represents the evidence variable.</p><p>However, according to frequentist, <span class="math inline">\(\theta\)</span> is a unknown constant values, and it does not have a distribution. Thus, there's <span class="math inline">\(\theta\)</span> cannot be put into the Bayesian's Law like a random variable. In this scenario, likelihood and probability is not one thing. Probability is for random variable, while likelihood is for parameter, which is a constant values. According to frequentist, given the i.i.d. assumption: <span class="math display">\[L(\theta| D) = P(D|\theta) = \prod_iP(d_i=x_i|\theta)\]</span> where D represents the results of all samples.</p><p>The MLE is a product of the frequentist. Thus, in MLE, to find best <span class="math inline">\(\theta\)</span>, we just need to find the <span class="math inline">\(\hat{\theta}\)</span> that maximize the likelihood function. For calculation, do average log operation on both sides: <span class="math display">\[\iota(\theta|D) = \frac{1}{n}lnL(\theta| D)\]</span></p><p><span class="math display">\[\hat{\theta} = argmax \ \iota(\theta|D)\]</span></p><p>The best parameter <span class="math inline">\(\theta\)</span> can thus be obtained calculating the zero point of the derivation function of the <span class="math inline">\(\iota(\theta|D)\)</span></p><h3 id="bayesian-estimation">2.2 Bayesian Estimation</h3><p>The Bayesian is the other side of view on probability. According to format (2): <span class="math display">\[P(\theta|E) = \frac{P(E|\theta)P(\theta)}{P(E)} = \frac{P(E|\Theta = \theta)P(\Theta = \theta)}{\sum_i P(E|\Theta =\theta_i)P(\Theta=\theta_i)}\]</span> In this equation:</p><ul><li><span class="math inline">\(P(\theta)\)</span> follows the prior distribution, which is decided by prior knowledge regardless of the sample information</li><li><span class="math inline">\(P(E|\Theta=\theta_i)\)</span> is the likelihood function decide by the knowledge of the mechanism between <span class="math inline">\(\theta\)</span> and <span class="math inline">\(E\)</span> regardless of sample information</li></ul><p>The bayesian estimation is a process of updating the prior knowledge through sample information. The updated posterior distribution can be the new prior distribution. In real application, the accurate understanding of the likelihood function can be difficult, besides, the calculation can also be quiet difficult.</p><h3 id="maximum-a-posterior-estimation">2.3 Maximum A Posterior Estimation</h3><p>The Maximum A Posterior Estimation is an approximation of the bayesian estimation. it assume the marginal distribution <span class="math inline">\(P(E)\)</span> is independent of the parameter distribution <span class="math inline">\(P(\theta)\)</span>. It calculate the best <span class="math inline">\(\theta\)</span> by maximize the posterior probability <span class="math inline">\(P(\theta|E)\)</span> <span class="math display">\[\hat{\theta} = argmax \ f(D|\theta)g(\theta) = \prod_iP(d_i=x_i|\theta)P(\theta)\]</span> Such assumption make the calculation of the posterior probability much more easier. The MAP allows to add the prior distribution of <span class="math inline">\(\theta\)</span> into the estimation. It is a simpler version of Bayesian Estimation.</p><h2 id="non-parameter-estimation">3. Non-parameter Estimation</h2><h3 id="histogram">3.1 Histogram</h3><h3 id="kernel-density-estimation">3.2 Kernel Density Estimation</h3><h3 id="parzen-windows-k_n-neighbors">3.2 Parzen Windows &amp; <span class="math inline">\(K_n\)</span> Neighbors</h3>]]></content>
+    
+    
+    <categories>
+      
+      <category>Probability &amp; Statistics</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Parameter Estimation</tag>
+      
+      <tag>Probability Density Estimation</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Analytics: Models and Framework</title>
     <link href="/2023/02/05/analytics-framework/"/>
     <url>/2023/02/05/analytics-framework/</url>

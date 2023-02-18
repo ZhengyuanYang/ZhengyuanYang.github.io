@@ -16,26 +16,25 @@
   <meta name="author" content="Zhengyuan Yang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="This article discuss about the procedure of handling measure success problem in data science interview">
+    <meta name="description" content="This article discussed probability density estimation methods">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Case Interview: Measure Success">
-<meta property="og:url" content="http://example.com/2023/01/31/measure-success/index.html">
+<meta property="og:title" content="prob_dense_estimation">
+<meta property="og:url" content="http://example.com/2023/02/13/prob-dense-estimation/index.html">
 <meta property="og:site_name" content="Data Shore">
-<meta property="og:description" content="This article discuss about the procedure of handling measure success problem in data science interview">
+<meta property="og:description" content="This article discussed probability density estimation methods">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2023-02-01T00:05:47.000Z">
-<meta property="article:modified_time" content="2023-02-12T22:04:42.132Z">
+<meta property="article:published_time" content="2023-02-13T20:36:40.000Z">
+<meta property="article:modified_time" content="2023-02-16T20:49:51.571Z">
 <meta property="article:author" content="Zhengyuan Yang">
-<meta property="article:tag" content="Measure Success">
-<meta property="article:tag" content="Case">
-<meta property="article:tag" content="Metric Selection">
+<meta property="article:tag" content="Parameter Estimation">
+<meta property="article:tag" content="Probability Density Estimation">
 <meta name="twitter:card" content="summary_large_image">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Case Interview: Measure Success - Data Shore</title>
+  <title>prob_dense_estimation - Data Shore</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -200,7 +199,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Case Interview: Measure Success"></span>
+            <span id="subtitle" data-typed-text="prob_dense_estimation"></span>
           
         </div>
 
@@ -211,8 +210,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-01-31 16:05" pubdate>
-          January 31, 2023 pm
+        <time datetime="2023-02-13 12:36" pubdate>
+          February 13, 2023 pm
         </time>
       </span>
     
@@ -223,7 +222,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.2k words
+          3.2k words
         
       </span>
     
@@ -234,7 +233,7 @@
         
         
         
-          19 mins
+          27 mins
         
       </span>
     
@@ -290,150 +289,54 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Case Interview: Measure Success</h1>
+            <h1 style="display: none">prob_dense_estimation</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="case-interview-measure-success">Case Interview: Measure Success</h1>
-<h2 id="analytics-framework">1. Analytics Framework</h2>
-<p>For metrics selection, the funnel anaysis model is the most frequently applied type of frameworks. In this case, we commonly applied the AARRR framework to allocate proper metrics. For details on models and frameworks, refer to <a href>ongoing</a></p>
-<p>The according metrics of each objectives under various business models are listed below:</p>
-<table>
-<thead>
-<tr class="header">
-<th>Business Model</th>
-<th>Acquisition</th>
-<th>Activation</th>
-<th>retention</th>
-<th>Revenue</th>
-<th>referral</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>E-commerce</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td>SaaS</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>Free Mobile APP</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td>Media Site</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>UGC</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td>TS Marketplace</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>For all</td>
-<td>DAU/MAU, DNU by platform</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<h2 id="criterion-for-metrcis-selection">2. Criterion for Metrcis Selection</h2>
-<h2 id="procedure-of-measure-success-problem">3. Procedure of Measure Success Problem</h2>
-<p>This type of cases usually come as "find a metric to measure the extent.....(how good a new feature/strategy/product is)". IT evaluates one's ability to design a measure according to certain business objectives</p>
-<ol type="1">
-<li><p><strong>Clarify the objective</strong>:</p>
-<p>Ask questions about:</p>
+                <h1 id="probability-density-estimation">Probability Density Estimation</h1>
+<h2 id="about-probability-density-estimation">1. About Probability Density Estimation</h2>
+<p>Probability Density Estimation(PDE) is a techniques used for estimating probability distribution of a variable through samples. Specifically, it can be categorized as:</p>
 <ul>
-<li>How this feature works?</li>
-<li>who is it for</li>
-</ul></li>
-<li><p><strong>Confirm the business objective</strong></p>
-<p>according to the explanation from the interviewer, conclude the objective of the feature to the following aspects:</p>
-<ul>
-<li>Acquisition: bring in more user, help them discover the product</li>
-<li>Activation: make user taking actions we want them to, keep users engaged</li>
-<li>conversion and retention: keep user continuing to use the product, convert them from free-user to paid user</li>
-<li>Money: make revenue from users</li>
-</ul></li>
-<li><p><strong>Select metrics according to objective</strong></p>
-<table>
-
-<thead>
-<tr class="header">
-<th>Objective</th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Acquisition</td>
-<td>DAU/MAU, DNU by platform,</td>
-</tr>
-<tr class="even">
-<td>Activation</td>
-<td>ACU/PCU, PV/UV, time spending, interaction behaviour</td>
-</tr>
-<tr class="odd">
-<td>Conversion and Retention</td>
-<td>CTR,CO, pay rate, 7 day retention rate/churn rate</td>
-</tr>
-<tr class="even">
-<td>Money</td>
-<td>ROI,GMV, AOV, ACV, ARPU/ARPPU</td>
-</tr>
-<tr class="odd">
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li><p>Select 1 main success metric, this metric should be directly relevant to the business objective</p></li>
-<li><p>Select 1 second success metrics, this metrics should be a supplement. It improve the completeness of the logic relationship of the key metrics and business goal. To fing the second goal, consider the following questions:</p>
-<ul>
-<li>Can the change of key metrics be caused by factors other than the feature?</li>
-<li>Is the key metric equivalent to the business goal? Is there any intermediate process</li>
-<li>If the key metrics changes on a group level, should we have same changes on single user level?</li>
+<li>Parameter Estimation: Assuming the variable follows a type of distribution and estimating the parameter of that distribution through samples</li>
+<li>Non-parameter Estimation: Trying to obtain the distribution of the variables directly from the data without any distribution type assumptions</li>
 </ul>
-<p>Alternatively, we can do a funnel analysis to find the secondary success metrics</p></li>
-<li><p>Select 1 guardrail metric, this metric is critical to the main goal of the whole product. The feature should not have significant negative effect on it</p></li>
-</ul></li>
-<li><p><strong>structure the answer</strong></p>
-<p>if the guardrail metric shift towards a negative direction, the feature is probably not success.</p>
-<p>Otherwise, if the key success metric and the second both shift towards a positive direction, the feature is successful.</p></li>
-</ol>
+<p>For PDE, we usually assume that all samples are i.i.d</p>
+<h2 id="parameter-estimation">2. Parameter Estimation</h2>
+<h3 id="maximum-likelihood-estimation">2.1 Maximum Likelihood Estimation</h3>
+<p>Consider the Bayesian's Law: <span class="math display">\[
+P(X=x|Y=y) = \frac{P(Y=y|X=x)P(X=x)}{P(Y=y)}
+\]</span> One <strong>critical</strong> thing to remember is the way to interpret the parameter <span class="math inline">\(\theta\)</span>.</p>
+<p>According to Bayesian, the parameter <span class="math inline">\(\theta\)</span> itself sollows some kinds of distribution. Thus, the likelihood and posterior distribution in bayesian's law is exchangeable, <span class="math inline">\(\theta\)</span> is nothing but a random variable just like X and Y in equation 1. In such scenarios, likelihood and probability is the same thing <span class="math display">\[
+P(\theta|E) = \frac{P(E|\theta)P(\theta)}{P(E)}
+\]</span> where E represents the evidence variable.</p>
+<p>However, according to frequentist, <span class="math inline">\(\theta\)</span> is a unknown constant values, and it does not have a distribution. Thus, there's <span class="math inline">\(\theta\)</span> cannot be put into the Bayesian's Law like a random variable. In this scenario, likelihood and probability is not one thing. Probability is for random variable, while likelihood is for parameter, which is a constant values. According to frequentist, given the i.i.d. assumption: <span class="math display">\[
+L(\theta| D) = P(D|\theta) = \prod_iP(d_i=x_i|\theta)
+\]</span> where D represents the results of all samples.</p>
+<p>The MLE is a product of the frequentist. Thus, in MLE, to find best <span class="math inline">\(\theta\)</span>, we just need to find the <span class="math inline">\(\hat{\theta}\)</span> that maximize the likelihood function. For calculation, do average log operation on both sides: <span class="math display">\[
+\iota(\theta|D) = \frac{1}{n}lnL(\theta| D)
+\]</span></p>
+<p><span class="math display">\[
+\hat{\theta} = argmax \ \iota(\theta|D)
+\]</span></p>
+<p>The best parameter <span class="math inline">\(\theta\)</span> can thus be obtained calculating the zero point of the derivation function of the <span class="math inline">\(\iota(\theta|D)\)</span></p>
+<h3 id="bayesian-estimation">2.2 Bayesian Estimation</h3>
+<p>The Bayesian is the other side of view on probability. According to format (2): <span class="math display">\[
+P(\theta|E) = \frac{P(E|\theta)P(\theta)}{P(E)} = \frac{P(E|\Theta = \theta)P(\Theta = \theta)}{\sum_i P(E|\Theta =\theta_i)P(\Theta=\theta_i)}
+\]</span> In this equation:</p>
+<ul>
+<li><span class="math inline">\(P(\theta)\)</span> follows the prior distribution, which is decided by prior knowledge regardless of the sample information</li>
+<li><span class="math inline">\(P(E|\Theta=\theta_i)\)</span> is the likelihood function decide by the knowledge of the mechanism between <span class="math inline">\(\theta\)</span> and <span class="math inline">\(E\)</span> regardless of sample information</li>
+</ul>
+<p>The bayesian estimation is a process of updating the prior knowledge through sample information. The updated posterior distribution can be the new prior distribution. In real application, the accurate understanding of the likelihood function can be difficult, besides, the calculation can also be quiet difficult.</p>
+<h3 id="maximum-a-posterior-estimation">2.3 Maximum A Posterior Estimation</h3>
+<p>The Maximum A Posterior Estimation is an approximation of the bayesian estimation. it assume the marginal distribution <span class="math inline">\(P(E)\)</span> is independent of the parameter distribution <span class="math inline">\(P(\theta)\)</span>. It calculate the best <span class="math inline">\(\theta\)</span> by maximize the posterior probability <span class="math inline">\(P(\theta|E)\)</span> <span class="math display">\[
+\hat{\theta} = argmax \ f(D|\theta)g(\theta) = \prod_iP(d_i=x_i|\theta)P(\theta)
+\]</span> Such assumption make the calculation of the posterior probability much more easier. The MAP allows to add the prior distribution of <span class="math inline">\(\theta\)</span> into the estimation. It is a simpler version of Bayesian Estimation.</p>
+<h2 id="non-parameter-estimation">3. Non-parameter Estimation</h2>
+<h3 id="histogram">3.1 Histogram</h3>
+<h3 id="kernel-density-estimation">3.2 Kernel Density Estimation</h3>
+<h3 id="parzen-windows-k_n-neighbors">3.2 Parzen Windows &amp; <span class="math inline">\(K_n\)</span> Neighbors</h3>
 
                 
               </div>
@@ -452,7 +355,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/A-B-Testing-Case-Interview/" class="category-chain-item">A/B Testing &amp; Case Interview</a>
+  <a href="/categories/Probability-Statistics/" class="category-chain-item">Probability &amp; Statistics</a>
   
   
 
@@ -467,11 +370,9 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Measure-Success/">#Measure Success</a>
+        <a href="/tags/Parameter-Estimation/">#Parameter Estimation</a>
       
-        <a href="/tags/Case/">#Case</a>
-      
-        <a href="/tags/Metric-Selection/">#Metric Selection</a>
+        <a href="/tags/Probability-Density-Estimation/">#Probability Density Estimation</a>
       
     </div>
   
@@ -483,8 +384,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Case Interview: Measure Success</div>
-      <div>http://example.com/2023/01/31/measure-success/</div>
+      <div>prob_dense_estimation</div>
+      <div>http://example.com/2023/02/13/prob-dense-estimation/</div>
     </div>
     <div class="license-meta">
       
@@ -496,7 +397,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Posted on</div>
-          <div>January 31, 2023</div>
+          <div>February 13, 2023</div>
         </div>
       
       
@@ -528,18 +429,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/02/05/analytics-framework/" title="Analytics: Models and Framework">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Analytics: Models and Framework</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/01/24/results-analysis/" title="A/B Testing: Results Analysis">
-                        <span class="hidden-mobile">A/B Testing: Results Analysis</span>
+                      <a href="/2023/02/05/analytics-framework/" title="Analytics: Models and Framework">
+                        <span class="hidden-mobile">Analytics: Models and Framework</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
