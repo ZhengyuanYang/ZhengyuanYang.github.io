@@ -16,25 +16,25 @@
   <meta name="author" content="Zhengyuan Yang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="This article discuss about the experiment results analysis process of an A&#x2F;B testintechniques regarding to Experiment Sensitivity Improvement.">
+    <meta name="description" content="This article discuss four types of scaler in machine learning">
 <meta property="og:type" content="article">
-<meta property="og:title" content="A&#x2F;B Testing: Experiment Sensitivity Improvement">
-<meta property="og:url" content="http://example.com/2023/02/18/sensitivity-improvement/index.html">
+<meta property="og:title" content="linear-regression">
+<meta property="og:url" content="http://example.com/2023/02/23/linear-regression/index.html">
 <meta property="og:site_name" content="Data Shore">
-<meta property="og:description" content="This article discuss about the experiment results analysis process of an A&#x2F;B testintechniques regarding to Experiment Sensitivity Improvement.">
+<meta property="og:description" content="This article discuss four types of scaler in machine learning">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2023-02-18T23:48:48.000Z">
-<meta property="article:modified_time" content="2023-02-20T21:08:26.938Z">
+<meta property="article:published_time" content="2023-02-23T20:44:18.000Z">
+<meta property="article:modified_time" content="2023-02-24T06:22:06.498Z">
 <meta property="article:author" content="Zhengyuan Yang">
-<meta property="article:tag" content="A&#x2F;B Testing">
-<meta property="article:tag" content="Sensitivity Improvement">
+<meta property="article:tag" content="Feature Engineering">
+<meta property="article:tag" content="Scaler">
 <meta name="twitter:card" content="summary_large_image">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>A/B Testing: Experiment Sensitivity Improvement - Data Shore</title>
+  <title>linear-regression - Data Shore</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -199,7 +199,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="A/B Testing: Experiment Sensitivity Improvement"></span>
+            <span id="subtitle" data-typed-text="linear-regression"></span>
           
         </div>
 
@@ -210,8 +210,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-02-18 15:48" pubdate>
-          February 18, 2023 pm
+        <time datetime="2023-02-23 12:44" pubdate>
+          February 23, 2023 pm
         </time>
       </span>
     
@@ -222,7 +222,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          6.7k words
+          1.8k words
         
       </span>
     
@@ -233,7 +233,7 @@
         
         
         
-          57 mins
+          16 mins
         
       </span>
     
@@ -289,81 +289,35 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">A/B Testing: Experiment Sensitivity Improvement</h1>
+            <h1 style="display: none">linear-regression</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="ab-testing-experiment-sensitivity-improvement">A/B Testing: Experiment Sensitivity Improvement</h1>
-<h2 id="about-sensitivity-improvement">1. About Sensitivity Improvement</h2>
-<p>If you expected there to be an significance effect but the results turn out to be insignificant, there's a chance that the sensitivity of the experiment is not big enough. In other word, given current sample size, your experiment can not perform enough statistical power as your demand. The sensitivity is usually measured by the Minimum Detectable E Effect(MDE).</p>
-<p>Recall the formula of MDE: <span class="math display">\[
-MDE = (t_{\frac{1-\alpha}{2}} + t_ {1-\beta})\sqrt{\frac{\sigma_1^2}{n_ 1} + \frac{\sigma_2^2}{n_ 2}}
-\]</span> The formula suggests that if we want to maintain the desired statistical power, there are only two way to improve sensitivity:</p>
-<p><strong>More Sample</strong></p>
-<p>To collect more sample, we can:</p>
+                <h1 id="linear-regression-and-its-derived-models">Linear Regression and its Derived Models</h1>
+<h2 id="about-linear-regression">1. About Linear Regression</h2>
+<p>The Linear Regression is a statistical model used to discover the correlation between an output variable Y and a set of input variable X. Basically, a linear regression model should follow such hypothesis space: <span class="math display">\[
+Y = \beta _1X+\beta_0 +\epsilon
+\]</span> where <span class="math inline">\(\beta_1\)</span> is a vector consists of parameters for each feature. <span class="math inline">\(\beta_0\)</span> is a constant, <span class="math inline">\(\epsilon\)</span> represents the random error of the observation.</p>
+<p>To modeling the data with a linear regression model, five assumption should be fulfilled:</p>
+<p><strong>1. Linearity</strong></p>
+<p>Linearity Assumption requires there to has a linear mapping relationship between Y and X. That is, the real mapping relationship should be consistent with the hypothesis space. Otherwise, there would be bais in the model.</p>
+<p><strong>2. <span class="math inline">\(\epsilon\)</span> Independency</strong></p>
+<p>The linear model assume the <span class="math inline">\(\epsilon\)</span> is a completely randomized error. That is, a sample's <span class="math inline">\(\epsilon\)</span> shoud not be correlated with other samples. If this assumption cannot be satisfied, we say there exists autocorrelation in the data. Autocorrelation would make the model underestimate the randomized error and increase bias. It usually happened when there exists time-sequence influence among the samples.</p>
+<p><strong>3. X Independency</strong></p>
+<p>The features should be independent to each other, otherwise we said there exists multicollinearity. Multicollinearity would increase the variance of the model and cause overfitting</p>
+<p><strong>4.<span class="math inline">\(\epsilon\)</span> Homoskedasticity</strong></p>
+<p>The variance of <span class="math inline">\(\epsilon\)</span> should be same on different scale of Y. Otherwise, we said there is a Heteroskedasticity. Heteroskedasticity.increase the variance of the model and make the learned parameter unstable.</p>
+<p><strong>5. <span class="math inline">\(\epsilon\)</span> Normality</strong></p>
+<p><span class="math inline">\(\epsilon \sim N(0,\sigma^2)\)</span> . If the randomzied error are not normally distributed, the data points with high error would make the learned parameter unstable and increase the variances of the model.</p>
+<p>The detection techniques and solutions for the violation of the above assumptions can be found in <a target="_blank" rel="noopener" href="http://zhengyuanyang.com/2022/09/22/evaluation-for-regression/">this article</a></p>
+<p>Linear Regression is:</p>
 <ul>
-<li>bring in more data by acquiring additional units</li>
-<li>increase test duration</li>
-<li>randomized on finer grain to increase sample size</li>
+<li>A supervised learning model</li>
+<li>A parameter learning model</li>
+<li>A non-probability learning model</li>
+<li>A discriminative model</li>
 </ul>
-<p><strong>Less Varaince</strong></p>
-<p>According to the equation of <span class="math inline">\(n&#39;, \delta, \beta\)</span>, we know that if the variance of the population is lower, we would need less sample to detect identical effect, given desired fixed statistical power, that is, the real-time statistical power would get higher while the sampe size remains the same.</p>
-<p>In real application this can be difficult to implement extra sample acquisition. Thus, for this article, we focusing on techniques that can lowering the variance to improve experiment Sensitivity</p>
-<h2 id="variance-estimation">2. Variance Estimation</h2>
-<p>Before lowering variance, first we need to make sure the variance of the parameters is estimated from the sample correctly. If the variance is incorrectly estimated, the p value and the confidence interval we calculated are both wrong.</p>
-<p>As discussed in <a target="_blank" rel="noopener" href="http://zhengyuanyang.com/2022/03/25/Hypothesis-Testing/#zt-test">this article</a>, when estimating the standard error, we would usually assume the variable for the results of single units are i.i.d. However, such assumption are not always fulfilled. For example, there might exist network effects. We need to expel these effects before variance estimation</p>
-<p>For some metrics like CTR, the unit is a pageview instead of a user. As multiple view can came from the same user <span class="math inline">\(B_1,B_2,..B_n\)</span> may also be correlated. In thus case, we need to rewrite the metrics by aggregating it into a user level: <span class="math display">\[
-V[CTR] = V[\frac{user \ avg \ click }{user\ avg \ PV}] = V[\frac{\bar{X}}{\bar{Y}}]
-\]</span></p>
-<h2 id="metrics-manipulation">3. Metrics Manipulation</h2>
-<p>We can lower the variance by replace or transform the metrics</p>
-<p><strong>Metrics Replacement</strong></p>
-<p>Creating metrics with a smaller variance while capturing similar information. For example, the number of searches has a higher variance than the number of searchers; GMV has higher variance than order amount. The selection of lower-variance metrics should be validated in a real business environment.</p>
-<p><strong>Metrics Transformation</strong></p>
-<p>Transform the metrics so that it has lower variance. Common transformation includes discretization, log tranformation, and power transformation.</p>
-<h2 id="construct-unbiased-estimator">4. Construct Unbiased Estimator</h2>
-<h3 id="stratification">4.1 Stratification</h3>
-<p>In stratification, you divide the sampling region into strata, sample within each stratum separately, and then combine results from individual strata for the overall estimate by weighted sum, which usually has smaller variance than estimating without stratification.</p>
-<p>Let <span class="math inline">\(Y\)</span> be the value of the metrics(mean or ratio): <span class="math display">\[
-V[Y] = V[Y]_{within}+V[Y]_{between} = \sum_kp_k\sigma^2_k + \sum_kp_k(\bar{y}_k-\bar{y})^2
-\]</span> where <span class="math inline">\(p_k\)</span> is the weight of the strata</p>
-<p>Let <span class="math inline">\(Y_k\)</span> be the within variance of the <span class="math inline">\(k^{th}\)</span> strata <span class="math display">\[
-V[\hat{Y}] = \sum_kp_kV[Y_k] = V[Y_{within}] &lt; V[Y]
-\]</span></p>
-<p>The stratification eliminate the between-group variance, thus can reduce the overall variance. However, the covariate, which is the strata, must be discrete.</p>
-<p><strong>Post-Stratification</strong></p>
-<p>While stratification is most commonly conducted during the sampling phase (at runtime), it is usually expensive to implement at large scale. Therefore, most applications use post-stratification, which applies stratification retrospectively during the analysis phase.</p>
-<p>For post-stratification, we still conducted a randomized sampling to decided treatment group and control group. When analyzing the results, we put the units from treatment group and control group into buckets according to their strata variable with a ratio of 1:1. This saves the costs of doing multiple randomization, but it may waste a small portion of samples.</p>
-<h3 id="regression-covariant-control">4.2 Regression Covariant Control</h3>
-<p>The covariate control method finds a continuous covariate that correlated with metric. The core idea is to make a regression relationship between the original metrics and its covariates. The covariates explain part of information of the original metric and contribute part of its variance. Thus, by taking out the part contributed by the covariate, the overall variance is lowered.</p>
-<p>To some extent, the basic ideal of stratification and covariate control is the same. The difference is that covariate control method use regression to interpret the relationship between Y and its covariate.</p>
-<p>Let X be the covariate. X should be constructed like the way Y does(mean or ratio). Construct new variable <span class="math inline">\(\hat{Y} = Y -\theta X\)</span>, if <span class="math inline">\(E[X_T] = E[X_c]\)</span>, then <span class="math inline">\(E[\hat{Y_T}-\hat{Y_C}] = E[Y_T-Y_c]\)</span>, the new variable is a unbiased estimation of the original metrics. It can be proven that <span class="math inline">\(V[\hat{Y}] &lt; V[Y]\)</span> if <span class="math inline">\(Cov[X,Y] &gt; 0\)</span>.</p>
-<p><strong>Choosing Covariate</strong></p>
-<p>One thing to notice when choosing the covariate is that the assumption <span class="math inline">\(E[X_T] = E[X_c]\)</span> should always be satisfied. Therefore, covariate should have no causal relationship with the experiment. If <span class="math inline">\(X \to T\)</span>, then the covariate is a confounder, then the covariate have different distribution on the treatment and control group,<span class="math inline">\(E[X_T] \ne E[X_C]\)</span>. On the other side, if <span class="math inline">\(T \to X\)</span>, then the X would be effected by the treatment, <span class="math inline">\(E[X_T] \ne E[X_C]\)</span> after the experiment is conducted. Either way, the estimation is biased. Thus, when choosing covariates:</p>
-<ul>
-<li>The covariates should be pre-experiment metrics or invariant metrics that won't be affected by the experiment</li>
-<li>The covariates should be independent to the assigning of treatment and control group</li>
-</ul>
-<p>A common application it to apply the same metric before the experiment as the covariate, as the pre-experiment metric is usually highly correlated with post-experiment metric. This method is usually called <strong>Controlled-experiment Using Pre-Experiment Data(CUPED)</strong></p>
-<p>Nevertheless, we can still used other covariate. Some thesis point out we can find such covariates through machine learning methods. These methods includes CUPAC(Control Using Predictions As Covariates) and MLRATE(machine learning regression-adjusted treatment effect estimator)</p>
-<p><strong>Controlled-experiment Using Pre-Experiment Data(CUPED)</strong></p>
-<p>Let X denots the value of the metric we want to test before the experiment, Y denots the value after the experiment. For an A/B test, we expect that <span class="math inline">\(E[X_T] = E[X_C], E[Y_T] \ne E[Y_C]\)</span>. Now construct two variables: <span class="math inline">\(\hat{Y_T} = Y_T - \theta X_T\)</span>, $  = Y_C - X_C$, where <span class="math inline">\(\theta\)</span> is a hyperparameter we can adjust. We know that: <span class="math display">\[
-E[ \hat{Y_T}-\hat{Y_C}] = E[(Y_T - \theta X_T) - (Y_C - \theta X_C)] = E[Y_T]-E[Y_C]
-\]</span> thus, estimate the treatment effect on CUPED variable is equivalent to estimate the effect on original metrics. Meanwhile: <span class="math display">\[
-V[\hat{Y_T}-\hat{Y_C}] =V [(Y_T - \theta X_T) - (Y_C - \theta X_C)] = V[Y_T- Y_C] +\theta^2V[X_T-X_C]-2\theta Cov[(Y_T-Y_C),(X_T-X_C)]
-\]</span> we can than regard <span class="math inline">\(V[\hat{Y_T}-\hat{Y_C}]\)</span> as a quadratic function of <span class="math inline">\(\theta\)</span>, where: <span class="math display">\[
-\Delta = 4Cov[(Y_T-Y_C),(X_T-X_C)]^2 - 4V[(Y_T - Y_ C)]V[X_T-X_C]
-\]</span> as we know: <span class="math display">\[
-Cov[X_1,X_2] \le \sqrt{V[X_1]V[X_2]}
-\]</span> we have that <span class="math inline">\(\Delta \ge 0\)</span>, thus: <span class="math display">\[
-V[\hat{Y_T}-\hat{Y_C}] \in [0,V[Y_T- Y_C]] \qquad \theta \ge 0
-\]</span> we have minimum <span class="math inline">\(V[\hat{Y_T}-\hat{Y_C}]\)</span> when <span class="math inline">\(\theta =\frac{Cov[(Y_T-Y_C),(X_T-X_C)]}{V[X_T-X_C]}\)</span></p>
-<h3 id="variance-weighted-estimators">4.3 Variance-Weighted Estimators</h3>
-<p><a href="ongoing"></a></p>
-<p>see the thesis:</p>
-<p>Variance-Weighted Estimators to Improve Sensitivity in Online Experiments</p>
-<p>KEVIN LIOU, Facebook SEAN J. TAYLOR, Lyft</p>
 
                 
               </div>
@@ -372,13 +326,34 @@ V[\hat{Y_T}-\hat{Y_C}] \in [0,V[Y_T- Y_C]] \qquad \theta \ge 0
             <div>
               <div class="post-metas my-3">
   
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Machine-Learning/" class="category-chain-item">Machine Learning</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
   
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/A-B-Testing/">#A/B Testing</a>
+        <a href="/tags/Feature-Engineering/">#Feature Engineering</a>
       
-        <a href="/tags/Sensitivity-Improvement/">#Sensitivity Improvement</a>
+        <a href="/tags/Scaler/">#Scaler</a>
       
     </div>
   
@@ -390,8 +365,8 @@ V[\hat{Y_T}-\hat{Y_C}] \in [0,V[Y_T- Y_C]] \qquad \theta \ge 0
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>A/B Testing: Experiment Sensitivity Improvement</div>
-      <div>http://example.com/2023/02/18/sensitivity-improvement/</div>
+      <div>linear-regression</div>
+      <div>http://example.com/2023/02/23/linear-regression/</div>
     </div>
     <div class="license-meta">
       
@@ -403,7 +378,7 @@ V[\hat{Y_T}-\hat{Y_C}] \in [0,V[Y_T- Y_C]] \qquad \theta \ge 0
       
         <div class="license-meta-item license-meta-date">
           <div>Posted on</div>
-          <div>February 18, 2023</div>
+          <div>February 23, 2023</div>
         </div>
       
       
@@ -435,18 +410,12 @@ V[\hat{Y_T}-\hat{Y_C}] \in [0,V[Y_T- Y_C]] \qquad \theta \ge 0
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/02/23/linear-regression/" title="linear-regression">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">linear-regression</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/02/13/prob-dense-estimation/" title="Probability Density Estimation">
-                        <span class="hidden-mobile">Probability Density Estimation</span>
+                      <a href="/2023/02/18/sensitivity-improvement/" title="A/B Testing: Experiment Sensitivity Improvement">
+                        <span class="hidden-mobile">A/B Testing: Experiment Sensitivity Improvement</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

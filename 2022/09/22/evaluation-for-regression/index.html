@@ -23,11 +23,16 @@
 <meta property="og:site_name" content="Data Shore">
 <meta property="og:description" content="This article discuss about evaluation methods for regression model">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2022/09/22/evaluation-for-regression/1.png">
+<meta property="og:image" content="http://example.com/2022/09/22/evaluation-for-regression/2.png">
+<meta property="og:image" content="http://example.com/2022/09/22/evaluation-for-regression/3.png">
+<meta property="og:image" content="http://example.com/2022/09/22/evaluation-for-regression/4.png">
 <meta property="article:published_time" content="2022-09-23T01:17:46.000Z">
-<meta property="article:modified_time" content="2022-09-23T03:02:37.854Z">
+<meta property="article:modified_time" content="2023-02-24T01:24:13.286Z">
 <meta property="article:author" content="Zhengyuan Yang">
 <meta property="article:tag" content="Model Evaluation">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2022/09/22/evaluation-for-regression/1.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -221,7 +226,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.3k words
+          6.3k words
         
       </span>
     
@@ -232,7 +237,7 @@
         
         
         
-          20 mins
+          53 mins
         
       </span>
     
@@ -315,7 +320,48 @@ R^2 = 1-\frac{\sum y-\hat{y}}{y-\bar{y}} = 1-\frac{RSS}{TSS}
 <li>If <span class="math inline">\(R^2 = 0\)</span>, TSS = RSS, which means the model equals to a model that simply predicted all samples as the average of Y, which indicates the model has a bad performance</li>
 <li><span class="math inline">\(R^2\)</span> is not a true square number, the range of it is <span class="math inline">\((-\infty,1])\)</span></li>
 </ul>
-<h2 id="evaluation-of-multicollinearity">2. Evaluation of Multicollinearity</h2>
+<h2 id="evaluation-for-linearity">2. Evaluation for Linearity</h2>
+<p>Linear model can hardly capture non-linear mapping between X and Y. Thus, the linearity between X and Y need to be examined.</p>
+<p><strong>Detection of non-Linearity</strong></p>
+<p>For high-dimension data, we can draw a draw a <strong>Residual - Fitted</strong> Plot:</p>
+<p><img src="/2022/09/22/evaluation-for-regression/1.png" srcset="/img/loading.gif" lazyload></p>
+<p>If the residuals randomly placed along a line, like case 1, than we can believe the data already have strong linearity.</p>
+<p><strong>Solution for non-Linearity</strong></p>
+<p>we should consider non-linear transformation for the features or adding non-linear terms of the features, so that the mapping relationship can be expressed by the hypothesis in a linear form</p>
+<h2 id="evaluation-for-autocorrelation">3. Evaluation for Autocorrelation</h2>
+<p>Autocorrelation refer to that there is a dependent mode between the randomized error of each sample . That is, the <span class="math inline">\(\epsilon\)</span> of different are correlated. This would lead to underestimate the real randomized error <span class="math inline">\(\epsilon\)</span>.</p>
+<p>Usually, the Autocorrelation happen when there exists time-sequence factors.</p>
+<p><strong>Detection of Autocorrelation</strong></p>
+<p><em>1.Time-sequence Plot</em></p>
+<p>A simple and direct way to recognized the time-sequence of <span class="math inline">\(\epsilon\)</span>. Draw a plot of <span class="math inline">\(\epsilon\)</span> sorted by time:</p>
+<p><img src="/2022/09/22/evaluation-for-regression/2.png" srcset="/img/loading.gif" lazyload></p>
+<p>If the previous error <span class="math inline">\(e_{t-1}\)</span> would make the next error <span class="math inline">\(e_t\)</span> tend to be with opppsite sign, we call this a negative autocorrelation. Otherwise, we call it a positive autocorrelation.</p>
+<p><em>2.DW Test</em></p>
+<p>The DW test construct test statistics using the correction between <span class="math inline">\(e^{t-1}\)</span> and <span class="math inline">\(e^t\)</span>. Gather errors of all sample and calculate <span class="math display">\[
+\rho = corr(e^t,e^{t-1})
+\]</span> Construct <span class="math display">\[
+DW \approx 2(1-\rho)
+\]</span> according the Degree of Freedom n, we can look up in the table and find the upper bound and lower bound of the DW: <span class="math inline">\(d_U,d_L\)</span>, then we can examine which section the DW falls in to and make judgement on autocorrealtion:</p>
+<p><img src="/2022/09/22/evaluation-for-regression/3.png" srcset="/img/loading.gif" lazyload></p>
+<p>The drawbacks of DW test is that it has two uncertain sections. Besides, it cannot detect higher derivative autocorrelation than 1.</p>
+<p><em>3.LM Test</em></p>
+<p>It regress on $e^t $ with all feature X and lagged error <span class="math inline">\(e = e_{t-1},e_{t-2},..e_{t-p}\)</span> with: <span class="math display">\[
+e_t = \alpha X + \rho e + \epsilon
+\]</span> Where <span class="math inline">\(\rho\)</span> is a vector, <span class="math inline">\(\rho_i\)</span> is the correlation between <span class="math inline">\(e_t\)</span> and <span class="math inline">\(e_{t-i}\)</span>. p is a hyperparameter for adjustment.</p>
+<p>Obained the Judge coefficient <span class="math inline">\(R^2\)</span> of the model, when sample size n is big, <span class="math inline">\((n-p)R^2 \sim \chi^2(p)\)</span>, we can than to a <span class="math inline">\(\chi^2\)</span> test to examine whether there exist autocorrelation</p>
+<p><strong>Solution for Autocorrelation</strong></p>
+<p>The solution for autocorrelation:</p>
+<ul>
+<li>Consider time-sequence model</li>
+<li>If there exists positive autocorrelation, consider addling lagged feature <span class="math inline">\(X_{t-1},X_{t-2},...\)</span> into the model</li>
+<li>If there exist seasonal factor, adding that factor into the model as dummies variable</li>
+<li>Generalized Difference Method: construct the model as:</li>
+</ul>
+<p><span class="math display">\[
+Y_t  = \beta_0 + \beta_1X_t + \rho_1u_1+\rho_2u_2+...\rho_pu_p+\epsilon
+\]</span></p>
+<p>Where <span class="math inline">\(u_i\)</span> is the residual of the <span class="math inline">\(i^{th}\)</span> model. This method has similar ideal like boosting. In machine learning, we can split the sample set into different moments according to timestamp like hour or date and construct serial models.</p>
+<h2 id="evaluation-of-multicollinearity">4. Evaluation of Multicollinearity</h2>
 <p>Multicollinearity refer to the relationship that a variable's change would cause another variable's change</p>
 <p>In regression, we do not want there to be multicollinearity among input variables.</p>
 <p>For example suppose we have a ideal regression model that <span class="math display">\[
@@ -327,17 +373,35 @@ Y = -100x_1 +55x_2 +b = 10x_1+b
 <li>coefficient might lose its interpretability. Positive coefficient might turn negative, insignificant variable might turn significant</li>
 <li>The model might lose stability since the coefficients are enlarged. Small noises could cause big variance</li>
 </ul>
-<p><strong>VIF</strong></p>
-<p>Variance Inflation Factor <span class="math display">\[
+<p><strong>Detection of Multicollinearity</strong></p>
+<p>1.Variance Inflation Factor <span class="math display">\[
 VIF = \frac{1}{1-R^ 2}
 \]</span> As discussed above, <span class="math inline">\(R^2\)</span> represent the goodness of fitting. Thus we can use an input variable <span class="math inline">\(x_i\)</span> as the output variable, and fit a model with other input variable <span class="math inline">\(x_1,...x_{i-1},x_{i+ 1}...x_m\)</span> being inputs. If the <span class="math inline">\(R^2\)</span> turn out to be high, then it is possible that <span class="math inline">\(x_1\)</span> are highly correlated with other variables. In such case, the VIF would be high</p>
 <p>In practice, if VIF &gt; 10, we can consider as there's a Multicollinearity problem. If VIF &gt; 100, we can consider as there's a serious Multicollinearity problem</p>
-<p>The solution Multicollinearity includes:</p>
+<p>2.Correlation Matrix</p>
+<p>VIF demands large scale of calculation when the dimension of feature is high. A simpler way is to calculate the corrections matrixs using parameters like Pearson'r, Spearman'<span class="math inline">\(\rho\)</span> or Kendall's <span class="math inline">\(\tau\)</span></p>
+<p><strong>Solution for Multicollinearity</strong></p>
+<p>The solution for Multicollinearity includes:</p>
 <ul>
 <li><p>Filtering feature selection methods based on correlation</p></li>
 <li><p>Wrapper feature engineering methods like stepwise regression</p></li>
 <li><p>Embedded Feature Engineering methods like Lasso &amp; Ridge Regression</p></li>
 </ul>
+<h2 id="evaluation-for-homoskedasticity">5. Evaluation for Homoskedasticity</h2>
+<p>Linear Regression Models require the variances of randomized to have same variance on different scale. That is, with the linearity assumption fulfilled, the variance of the model should be similar no matter how big the output variable is.</p>
+<p><strong>Detection of Heteroskedasticity</strong></p>
+<p>To detect heteroskedasticity, we can use <strong>Residual - Fitted</strong> Plot as well</p>
+<p><img src="/2022/09/22/evaluation-for-regression/4.png" srcset="/img/loading.gif" lazyload></p>
+<p>In a RF plot, if the linearity assumption is satisfied, the point will place aside a horizontal line. If the model us biased, they would place around a leaned line or a curve. We call this line or curve the central line.</p>
+<p>If the homoskedasticity is fulfilled, then the average distance from the point to the central line should be same across the axis of fitted values. If the errors has heteroskedasticity, then the points would be a shape like a spraying.</p>
+<p><strong>Solution for Heteroskedasticity</strong></p>
+<p>The solution for heteroskedasticity includes:</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://zhengyuanyang.com/2022/10/07/outlier/">Outlier detection</a>: heteroskedasticity is usually caused by outliers.</li>
+<li>Distribution transformation on Y: heteroskedasticity can also be caused by the distribution of Y. Linear models require Y to be normally distributed. We can conduct distribution type transformation</li>
+</ul>
+<h2 id="evaluation-on-normality-of-epsilon">6. Evaluation on Normality of <span class="math inline">\(\epsilon\)</span></h2>
+<p>The linear regression model requires the randomized error to be normally distributed. For normality test and normal transformation techniques, refer to <a target="_blank" rel="noopener" href="http://zhengyuanyang.com/2022/10/22/distribution-type/">this article</a></p>
 
                 
               </div>
