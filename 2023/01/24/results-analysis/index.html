@@ -28,7 +28,7 @@
 <meta property="og:image" content="http://example.com/2023/01/24/results-analysis/3.png">
 <meta property="og:image" content="http://example.com/2023/01/24/results-analysis/4.png">
 <meta property="article:published_time" content="2023-01-24T22:49:40.000Z">
-<meta property="article:modified_time" content="2023-02-18T23:54:02.318Z">
+<meta property="article:modified_time" content="2023-02-25T21:04:51.933Z">
 <meta property="article:author" content="Zhengyuan Yang">
 <meta property="article:tag" content="A&#x2F;B Testing">
 <meta property="article:tag" content="Results Analysis">
@@ -227,7 +227,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          15k words
+          12k words
         
       </span>
     
@@ -238,7 +238,7 @@
         
         
         
-          124 mins
+          97 mins
         
       </span>
     
@@ -453,47 +453,7 @@ q_i = p_i * \frac{n}{k}
 <p>Thus, it is necessary to eliminate the outliers in the samples before making conclusions. For example, a user who has 10000 pageviews is probability a robot. For outlier detection techniques, refer to <a target="_blank" rel="noopener" href="http://zhengyuanyang.com/2022/10/07/outlier/">this article</a>.</p>
 <h2 id="improvement-of-experiment-sensitivity">5. Improvement of Experiment Sensitivity</h2>
 <h3 id="sensitivity-improvement">5.1 Sensitivity Improvement</h3>
-<p>If you expected there to be an significance effect but the results turn out to be insignificant, there's a chance that the sensitivity of the experiment is not big enough. Recall the formula of sensitivity: <span class="math display">\[
-MDE = (t_{\frac{1-\alpha}{2}} + t_ {1-\beta})\sqrt{\frac{\sigma_1^2}{n_ 1} + \frac{\sigma_2^2}{n_ 2}}
-\]</span> The formula suggests that if we want to maintain the desired statistical power, there are only two way to improve sensitivity:</p>
-<p><strong>More Sample</strong></p>
-<p>To collect more sample, we can:</p>
-<ul>
-<li>bring in more data by acquiring additional units</li>
-<li>increase test duration</li>
-<li>randomized on finer grain to increase sample size</li>
-</ul>
-<p>However, in real application this can be difficult to implement.</p>
-<p><strong>Less Varaince</strong></p>
-<p>According to the equation of <span class="math inline">\(n&#39;, \delta, \beta\)</span>, we know that if the variance of the population is lower, we would need less sample to detect identical effect, given desired fixed statistical power, that is, the real-time statistical power would get higher while the sampe size remains the same.</p>
-<h3 id="variance-estimation">5.2 Variance Estimation</h3>
-<p>Before lowering variance, first we need to make sure the variance of the parameters is estimated from the sample correctly. If the variance is incorrectly estimated, the p value and the confidence interval we calculated are both wrong.</p>
-<p>As discussed in <a target="_blank" rel="noopener" href="http://zhengyuanyang.com/2022/03/25/Hypothesis-Testing/#zt-test">this article</a>, when estimating the standard error, we would usually assume the variable for the results of single units are i.i.d. However, such assumption are not always fulfilled. For example, there might exist network effects. We need to expel these effects before variance estimation</p>
-<p>For some metrics like CTR, the unit is a pageview instead of a user. As multiple view can came from the same user <span class="math inline">\(B_1,B_2,..B_n\)</span> may also be correlated. In thus case, we need to rewrite the metrics by aggregating it into a user level: <span class="math display">\[
-V[CTR] = V[\frac{user \ avg \ click }{user\ avg \ PV}] = V[\frac{\bar{X}}{\bar{Y}}]
-\]</span></p>
-<h3 id="variance-lowering-techniques">5.2 <strong>Variance Lowering Techniques</strong></h3>
-<p><strong>Metrics Replacement</strong></p>
-<p>Creating metrics with a smaller variance while capturing similar information. For example, the number of searches has a higher variance than the number of searchers; GMV has higher variance than order amount. The selection of lower-variance metrics should be validated in a real business environment.</p>
-<p><strong>Metrics Transformation</strong></p>
-<p>Transform the metrics so that it has lower variance. Common transformation includes discretization, log tranformation, and power transformation.</p>
-<p><strong>Triggered Analysis</strong></p>
-<p><strong>Stratification</strong></p>
-<p>In stratification, you divide the sampling region into strata, sample within each stratum separately, and then combine results from individual strata for the overall estimate, which usually has smaller variance than estimating without stratification. <span class="math display">\[
-V&#39;[Y] = E_x[V[Y|X]]
-\]</span></p>
-<p><strong>Controlled-experiment Using Pre-Experiment Data(CUPED)</strong></p>
-<p>Let X denots the value of the metric we want to test before the experiment, Y denots the value after the experiment. For an A/B test, we expect that <span class="math inline">\(E[X_T] = E[X_C], E[Y_T] \ne E[Y_C]\)</span>. Now construct two variables: <span class="math inline">\(\hat{Y_T} = Y_T - \theta X_T\)</span>, $  = Y_C - X_C$, where <span class="math inline">\(\theta\)</span> is a hyperparameter we can adjust. We know that: <span class="math display">\[
-E[ \hat{Y_T}-\hat{Y_C}] = E[(Y_T - \theta X_T) - (Y_C - \theta X_C)] = E[Y_T]-E[Y_C]
-\]</span> thus, estimate the treatment effect on CUPED variable is equivalent to estimate the effect on original metrics. Meanwhile: <span class="math display">\[
-V[\hat{Y_T}-\hat{Y_C}] =V [(Y_T - \theta X_T) - (Y_C - \theta X_C)] = V[Y_T- Y_C] +\theta^2V[X_T-X_C]-2\theta Cov[(Y_T-Y_C),(X_T-X_C)]
-\]</span> we can than regard <span class="math inline">\(V[\hat{Y_T}-\hat{Y_C}]\)</span> as a quadratic function of <span class="math inline">\(\theta\)</span>, where: <span class="math display">\[
-\Delta = 4Cov[(Y_T-Y_C),(X_T-X_C)]^2 - 4V[(Y_T - Y_ C)]V[X_T-X_C]
-\]</span> as we know: <span class="math display">\[
-Cov[X_1,X_2] \le \sqrt{V[X_1]V[X_2]}
-\]</span> we have that <span class="math inline">\(\Delta \ge 0\)</span>, thus: <span class="math display">\[
-V[\hat{Y_T}-\hat{Y_C}] \in [0,V[Y_T- Y_C]] \qquad \theta \ge 0
-\]</span> we have minimum <span class="math inline">\(V[\hat{Y_T}-\hat{Y_C}]\)</span> when <span class="math inline">\(\theta =\frac{Cov[(Y_T-Y_C),(X_T-X_C)]}{V[X_T-X_C]}\)</span></p>
+<p>For sensitivity improvement methods, refer to <a target="_blank" rel="noopener" href="http://zhengyuanyang.com/2023/02/18/sensitivity-improvement/">this article</a></p>
 
                 
               </div>
