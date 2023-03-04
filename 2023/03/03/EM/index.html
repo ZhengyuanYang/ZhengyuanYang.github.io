@@ -25,7 +25,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://example.com/2023/03/03/EM/1.png">
 <meta property="article:published_time" content="2023-03-04T07:18:49.000Z">
-<meta property="article:modified_time" content="2023-03-04T11:00:32.328Z">
+<meta property="article:modified_time" content="2023-03-04T11:05:20.409Z">
 <meta property="article:author" content="Zhengyuan Yang">
 <meta property="article:tag" content="EM Algorithm">
 <meta name="twitter:card" content="summary_large_image">
@@ -324,7 +324,7 @@ Q(z_i) &amp;= \frac{P(x,z_i|\theta)}{c} = \frac{P(x,z_i|\theta_i)}{\sum_iP(x,z_i
 
 \end{aligned}\]</span>
 <p><span class="math display">\[
-**We now know that when we select $Q(z_i) = P(z_i|x,\theta_i)$, what we get is a low boundary of the log likelihood function**, we know that 
+We now know that when we select $Q(z_i) = P(z_i|x,\theta_i)$, what we get is **a low boundary** of the log likelihood function. Also: 
 \]</span> P(z_i|x,_i) =  =  $$ Suppose the value of the hidden variable is <span class="math inline">\(z_i\)</span>, and the parameter of the distribution when <span class="math inline">\(Z = z_i\)</span> is <span class="math inline">\(\theta_i\)</span>, the basic assumption of the problem can be solved by EM is, when <span class="math inline">\(\theta_i\)</span> is fixed for a value, and the sample results x are given, we should be able to calculate the specific value of <span class="math inline">\(P(z_i,x|\theta = \theta_i)\)</span></p>
 <p>Such a fact means, we can directly calculate <span class="math inline">\(Q(Z)\)</span> from the observation on data. <strong>This save us from calculating the <span class="math inline">\(Z^*\)</span> by <span class="math inline">\(\frac{\partial L}{\partial Z} = 0\)</span></strong>, where <span class="math inline">\(Z^*\)</span> denotes the optimal value of <span class="math inline">\(Z\)</span> about L when <span class="math inline">\(\theta_i\)</span> is fixed.</p>
 <p>According to such assumption, the EM algorithm can be conclude as:</p>
