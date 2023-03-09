@@ -16,26 +16,26 @@
   <meta name="author" content="Zhengyuan Yang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="This article introduce the idea of EM algorithm">
+    <meta name="description" content="This article discuss four types of scaler in machine learning">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Expectation Maximization Algorithm(EM)">
-<meta property="og:url" content="http://example.com/2023/03/03/EM/index.html">
+<meta property="og:title" content="K-Means and GMM">
+<meta property="og:url" content="http://example.com/2023/03/05/Kmeans-GMM/index.html">
 <meta property="og:site_name" content="Data Shore">
-<meta property="og:description" content="This article introduce the idea of EM algorithm">
+<meta property="og:description" content="This article discuss four types of scaler in machine learning">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/2023/03/03/EM/1.png">
-<meta property="article:published_time" content="2023-03-04T07:18:49.000Z">
-<meta property="article:modified_time" content="2023-03-04T11:05:20.409Z">
+<meta property="article:published_time" content="2023-03-05T19:17:44.000Z">
+<meta property="article:modified_time" content="2023-03-09T05:26:46.577Z">
 <meta property="article:author" content="Zhengyuan Yang">
-<meta property="article:tag" content="EM Algorithm">
+<meta property="article:tag" content="K-Means">
+<meta property="article:tag" content="GMM">
+<meta property="article:tag" content="Clustering">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/2023/03/03/EM/1.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Expectation Maximization Algorithm(EM) - Data Shore</title>
+  <title>K-Means and GMM - Data Shore</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -200,7 +200,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Expectation Maximization Algorithm(EM)"></span>
+            <span id="subtitle" data-typed-text="K-Means and GMM"></span>
           
         </div>
 
@@ -211,8 +211,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-03-03 23:18" pubdate>
-          March 3, 2023 pm
+        <time datetime="2023-03-05 11:17" pubdate>
+          March 5, 2023 am
         </time>
       </span>
     
@@ -223,7 +223,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          5.3k words
+          3.4k words
         
       </span>
     
@@ -234,7 +234,7 @@
         
         
         
-          45 mins
+          29 mins
         
       </span>
     
@@ -290,92 +290,45 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Expectation Maximization Algorithm(EM)</h1>
+            <h1 style="display: none">K-Means and GMM</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="expectation-maximization-algorithmem">Expectation Maximization Algorithm(EM)</h1>
-<h2 id="baisc-idea-of-expectation-maximization-algorithm">1. Baisc Idea of Expectation Maximization Algorithm</h2>
-<p>The Expectation Maximization Algorithm(EM) is a type of algorithm sharing the same basic idea. It's not a specific model but a way to solve problems like parameter estimation and clustering.</p>
-<p>First, recall the formula of the <a target="_blank" rel="noopener" href="http://zhengyuanyang.com/2023/02/13/prob-dense-estimation/#maximum-likelihood-estimation"><strong>Maximum Likelihood Estimation</strong></a>. Given a sample set, we suppose the variable follows a distribution <span class="math inline">\(P(X|\theta)\)</span>. According to MLE, we can estimate the parameter <span class="math inline">\(\theta\)</span> by: <span class="math display">\[
-\theta = argmax  \ \  ln[\prod_n P(X_n = x|\theta)] = argmax  \ \  \sum_n ln[P(X_n = x|\theta)]
-\]</span> Suppose we now have a hidden variable <span class="math inline">\(Z\)</span> that has j possible values. We cannot directly read Z from the dataset. Under each possible value <span class="math inline">\(z_i\)</span>, X follows a unique distribution <span class="math inline">\(X \sim D(\theta = \theta_i)\)</span>. The Likelihood estimation function should now be: <span class="math display">\[
-(\theta, Z) =argmax  \ \  \sum_n ln[\sum_i P(X_n = x,Z_n = z_i)|\theta_i)]
-\]</span> For example, suppose we want to estimate the average height of a group of student. As we all known, the average height of male and female are different. <span class="math inline">\(H_m \sim N(\mu_1,\sigma^2_1),H_f \sim N(\mu_2,\sigma^2_2)\)</span>. Suppose we do not have the variable sex in our data set, but we do know there are two distribution, and we want to estimate both of them. In this case, when given a sample, there are actually two thing to do:</p>
-<ol type="1">
-<li>What's the gender(hidden variabl) of a sample?</li>
-<li>Given the gender, update according distribution's average height(parameter)</li>
-</ol>
-<p><strong>We can see when we need a EM algorithm: There exists multiple distributions. We don't know which distribution a sample is drawn from, but we do know this process is decided by a hidden variable not collected in the data.</strong></p>
-<p>Now back to the equation of above, we know that finding out the derivatives of this function is difficult, as the log of the margin distribution <span class="math inline">\(log(\sum_z P( x, z))\)</span>'s derivative is very hard to solve. In this context, we can transform the format: <span class="math display">\[
-\sum_n ln[\sum_i P(X_n = x,Z_n = z_i)|\theta_i)] =  \sum_n ln[\sum_i Q(z_i)\frac{P(x,z_i|\theta_i)}{Q(z_i)}]
-\]</span> Where we demand <span class="math inline">\(Q(z)\)</span> is a new distribution such that: <span class="math inline">\(\sum Q(z_i)\)</span></p>
-<p>according to the Jensen inequality, <span class="math inline">\(log(\sum_i\lambda_iy_i) \ge \sum_i\lambda_i[log(y_i)]\)</span> , the equality is satisfied when <span class="math inline">\(y_i = c\)</span>.</p>
-Thus: <span class="math display">\[
-\iota(\theta,z|X) = \sum_n ln[\sum_i Q(z_i)\frac{P(x,z_i|\theta_i)}{Q(z_i)}] \ge \sum_n\sum_iQ(z_i)log\frac{P(x,z_i|\theta_i)}{Q(z_i)}
-\]</span> According the condition of the equality fulfillment of Jensen inequality: $$
-<span class="math display">\[\begin{aligned}
-\frac{P(x,z_i|\theta_i)}{Q(z_i)} &amp;= c \\
-P(x,z_i|\theta_i)&amp;= c Q(z_i)\\
-\sum_i P(x,z_i|\theta_i)&amp;= c \sum_i Q(z_i) = c\\
-Q(z_i) &amp;= \frac{P(x,z_i|\theta)}{c} = \frac{P(x,z_i|\theta_i)}{\sum_iP(x,z_i|\theta_i)}\\
-&amp;= \frac{P(x,z_i|\theta_i)}{P(x,|\theta_i)} = P(z_i|x,\theta_i)
-
-\end{aligned}\]</span>
-<p><span class="math display">\[
-We now know that when we select $Q(z_i) = P(z_i|x,\theta_i)$, what we get is **a low boundary** of the log likelihood function. Also: 
-\]</span> P(z_i|x,_i) =  =  $$ Suppose the value of the hidden variable is <span class="math inline">\(z_i\)</span>, and the parameter of the distribution when <span class="math inline">\(Z = z_i\)</span> is <span class="math inline">\(\theta_i\)</span>, the basic assumption of the problem can be solved by EM is, when <span class="math inline">\(\theta_i\)</span> is fixed for a value, and the sample results x are given, we should be able to calculate the specific value of <span class="math inline">\(P(z_i,x|\theta = \theta_i)\)</span></p>
-<p>Such a fact means, we can directly calculate <span class="math inline">\(Q(Z)\)</span> from the observation on data. <strong>This save us from calculating the <span class="math inline">\(Z^*\)</span> by <span class="math inline">\(\frac{\partial L}{\partial Z} = 0\)</span></strong>, where <span class="math inline">\(Z^*\)</span> denotes the optimal value of <span class="math inline">\(Z\)</span> about L when <span class="math inline">\(\theta_i\)</span> is fixed.</p>
-<p>According to such assumption, the EM algorithm can be conclude as:</p>
-<ol type="1">
-<li><p>Randomly select a value for each <span class="math inline">\(\theta_i\)</span> in <span class="math inline">\(\theta_i = \theta_{i,0}\)</span></p></li>
-<li><p><strong>Expectation</strong>: calculate the conditional probability<span class="math inline">\(Q(z_j) = P(Z_n = z_i,X_n = x|\theta_i = \theta_{i,0})\)</span>, <span class="math inline">\(Q(z_j)\)</span> should yield a constant for each <span class="math inline">\(z_i\)</span></p></li>
-<li><p><strong>Maximization</strong>: bring <span class="math inline">\(Q(z)\)</span> back the likelihood function, since <span class="math inline">\(Q(z_i)\)</span> is now a constant and do not have an influence to derivative, we can reformat the likelihood function as: <span class="math display">\[
-\theta_{i,1} = argmax \ \ \sum_n\sum_i Q(z_i)log(P(X_n = x,Z_n = z_i|\theta_{i,0}))
-\]</span></p></li>
-<li><p>Let <span class="math inline">\(\theta_i = \theta_{i,1}\)</span>, repeat step 2-4, until <span class="math inline">\(\theta\)</span> converge</p></li>
-</ol>
-<h2 id="example-of-em">2. Example of EM</h2>
-<p>Suppose we have 2 coin A and B, each with a different probability <span class="math inline">\(p_1,p_2\)</span> of flipped as a head. We randomly select a coin and flip it 10 times and call it a trail. We repeat 5 trail and obtian 5 samples. Let:</p>
+                <h1 id="k-means-and-gmm">K-Means and GMM</h1>
+<h2 id="k-means">1. K-Means</h2>
+<h3 id="about-k-means">1.1 About K-Means</h3>
+<p>K-Means is a typical unsupervised learning algorithm for <a target="_blank" rel="noopener" href="http://zhengyuanyang.com/2022/09/11/basic_knowledgefor_ML/#clustering">clustering</a>. It is a distance-based clustering algorithm.K-Means is a very interpretable algorithm.</p>
+<p>We can understand K-Means from a EM algorithm perspective. The basic idea of K-means is to set a set of centers, and use the distance between a data point and all centers to decide which cluster the data point belongs.</p>
+<p>Let a series of variable <span class="math inline">\(\mu = (\mu_1,\mu_2,...\mu_K)\)</span> denote the locations of the centers.<span class="math inline">\(\mu\)</span> represent a split plan of the clustering algorithm. For each data point <span class="math inline">\(x_n\)</span>, let <span class="math inline">\(r_n = (r_{n,1},r_{n,2},...r_{n,K})\)</span> denote a group of variable indicating which cluster the data point belong to, where <span class="math inline">\(r_{n,k}\)</span> is a binary variable(0 or 1). The objective of the K-means is to minimize the sum of distance between data points and center with a center: <span class="math display">\[
+J  = \sum_n \sum_k r_{n,k} ||x_n-\mu_k||^2
+\]</span> This function is the objective function of a K-means algorithm, it is also called the <strong>distortion</strong>.</p>
+<p>Using a <a target="_blank" rel="noopener" href="http://zhengyuanyang.com/2023/03/03/EM/">EM algorithm</a>:</p>
 <ul>
-<li><span class="math inline">\(X_n\)</span> denote the number of heads in the <span class="math inline">\(n^{th}\)</span> trail</li>
-<li><span class="math inline">\(Z_n\)</span> denote the selection of coin in the <span class="math inline">\(n^{th}\)</span> trail</li>
-<li><span class="math inline">\(\theta_{A,k}, \theta_ {B,k}\)</span> denote the estimation of <span class="math inline">\(p_1,p_2\)</span> in the <span class="math inline">\(k^{th}\)</span> iteration</li>
+<li>Initialization: Randomly Pick some data point</li>
+<li>Expectation: Given <span class="math inline">\(\mu\)</span>, optimize J about $r_n $ (find a best split)</li>
+<li>Maximization: Given <span class="math inline">\(r_n\)</span>, optimize J about <span class="math inline">\(\mu\)</span> (update the center)</li>
 </ul>
-<p>suppose we have the following data(unlike shown in the picture, we do not know which coin is selected)</p>
-<p><img src="/2023/03/03/EM/1.png" srcset="/img/loading.gif" lazyload></p>
-<p><strong>Step 1</strong></p>
-<p>Initialize <span class="math inline">\(\theta_A = 0.6, \ \theta_ B = 0.5\)</span></p>
-<p><strong>Step 2</strong></p>
-when <span class="math inline">\(Z = A, \theta = \theta_A\)</span>, now looking are the data of the first trail $$
-<span class="math display">\[\begin{aligned}
-P(Z_1 = A|X_1,\theta_{A,1})  &amp;= \frac{P(Z_1 = A, X_1=5|\theta_{A,1} = 0.6)}{P(Z_1 = A, X_1=5|\theta_{A,1} = 0.6) + P(Z_1 = B, X_1=5|\theta_{B,1} = 0.5)} \\
-&amp; =\frac{0.6^5*(1-0.6)^5}{0.6^5*(1-0.6)^5 + 0.5^5*(1-0.5)^5} \\
-&amp; = 0.45
-
-\end{aligned}\]</span>
-<p>$$ Samely, <span class="math inline">\(P(Z_1 = B|X_1,\theta_{B,1})\)</span> is 0.55. Repeat the calculation for each of the <span class="math inline">\(n\)</span>trails. Let <span class="math inline">\(\mu_{A, n} = P(Z_n = A|X_n,\theta_{A,1}), \quad \mu_{B, n} = P(Z_n = B|X_n,\theta_{B,1})\)</span></p>
-<p><strong>Step 3</strong></p>
-<p>Format the likelihood function: <span class="math display">\[
-\begin{aligned}
-L(\theta_{A,1},\theta_{B,1}) &amp;= \sum_n \sum_{z_i}P(Z_n = z_i|X_n,\theta_{z_i,1})\ logP(X_n, Z_n|\theta_{z_i,1})\\
-&amp; =\sum_{n=1}^5 \mu_{A,n} log(\theta_{A,1}^{X_n}(1-\theta_{A,1})^{10-X_n} ) + \mu_{B,n}log(\theta_{B,1}^{X_n}(1-\theta_{B,1})^{10-X_n} )
-\end{aligned}
-\]</span> <strong>Step 4</strong></p>
-<p>Now find the partial derivatives of the Likelihood function and let them euqals to 0, updated the parameters by the optimal value. <span class="math display">\[
-\theta_{A, 2} = \theta_{A,1}^* = solve (\frac{\partial L_1 }{\partial \theta_{A,1}} = 0)
-\]</span></p>
-<p><span class="math display">\[
-\theta_{B, 2} = \theta_{B,1}^* = solve (\frac{\partial L_1 }{\partial \theta_{B,1}} = 0)
-\]</span></p>
-<h2 id="application-of-em-algorithm">3. Application of EM Algorithm</h2>
-<p>The application of the thought of EM algorithm includes:</p>
-<ul>
-<li>K-Means and GMM</li>
-<li>Sequential Minimal Optimization in SVM</li>
-<li>HMM</li>
-</ul>
+<p><strong>Training Process</strong></p>
+<p>Base on this idea, the training process of the K-Means is:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs pseudocode"># Initialize Centers<br>centers = randomly select k data points as centers<br><br># the terminate condition include:<br>#    E converge: The points in the clusters does not change(clusters_i+1 = clusters_i)<br>#    M converge: The location of centers does not change (mu_i+1 -mu &lt; epsilon) <br>while terminate condition is not reached<br>  # find a best split<br>  for each x in X:<br>      for each center in centers:<br>          dis_k = distance(x,center) #usually euclidean distance<br>          dis.append(dis_k)<br>      # the closet center is the cluster x belong<br>      x.cluster = minidx(dis)<br>  # update centers using the data points in to it<br>  for each cluster:<br>      cluster.center = cluster.x.mean()<br>		<br></code></pre></td></tr></table></figure>
+<p><strong>Assumption &amp; Properties</strong>:</p>
+<ol type="1">
+<li>The k must be a given number. This could be difficult in real application(<strong>K selection</strong>)</li>
+<li>K-Means is a distance-based method, it require scaling of feature(<strong>Scaling</strong>)</li>
+<li>K-Means is sensitive to the initial centers selection. Bad choice on initial centroids could trap the algorithm in local optimal. So K-Means could be unstable when the initial centroid change.(<strong>Initial centroid selection</strong>)</li>
+<li>K- Means assume each cluster is a convex space(a sphere). Consider kernel functions when this assumption is not satisfied. (<strong>Kernel function</strong>)</li>
+<li>K-Means assume a cluster is uniformly. This means K_Means can be unstable when there are outlier in the dataset or when some variable are not normally distributed. Consider outlier detection and normality transformation before using K-Means. (<strong>Normality</strong>)</li>
+<li>K-Means assume the feature are not correlated. (<strong>Correlation Analysis</strong>)</li>
+<li>K-Means require encoding on categorical variable, this could give binary variable very high variance, and overestimate the effect of them. (<strong>Categorical Variable Processing</strong>)</li>
+<li>The traditional K-Means use euclidean distance, this assume different features(directions) have same importance(weights) to similarity. In real application, this assumption could not always been fulfilled. <strong>(Feature Weighting)</strong></li>
+<li>When a cluster actually exists in the space but failsto be recognize by the algorithm, we call it a hidden cluster. This can usually be caused by insufficient samples of that cluster(hidden clusters). K_Means cannot deal with imbalanced data hidden cluster.<strong>(Hierarchical Clustering)</strong></li>
+</ol>
+<p>Although K-Means has so many drawbacks, it still has wide application in industries. The core reason is that it is simple and interpretable, and there is only one hyper parameter to adjust. The unstable results is decided by the inner mechanism of K-Means. If we really cannot find a stable clustering results through K-Means, we should consider other algorithm.</p>
+<h2 id="improvements-on-k-means">2. Improvements on K-means</h2>
+<h3 id="k-selection">2.1 K-Selection</h3>
+<p><strong>Score-K Plot(Elbow Method)</strong></p>
+<p>​</p>
 
                 
               </div>
@@ -394,7 +347,7 @@ L(\theta_{A,1},\theta_{B,1}) &amp;= \sum_n \sum_{z_i}P(Z_n = z_i|X_n,\theta_{z_i
     
       <span class="category-chain">
         
-  <a href="/categories/Probability-Statistics/" class="category-chain-item">Probability &amp; Statistics</a>
+  <a href="/categories/Machine-Learning/" class="category-chain-item">Machine Learning</a>
   
   
 
@@ -409,7 +362,11 @@ L(\theta_{A,1},\theta_{B,1}) &amp;= \sum_n \sum_{z_i}P(Z_n = z_i|X_n,\theta_{z_i
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/EM-Algorithm/">#EM Algorithm</a>
+        <a href="/tags/K-Means/">#K-Means</a>
+      
+        <a href="/tags/GMM/">#GMM</a>
+      
+        <a href="/tags/Clustering/">#Clustering</a>
       
     </div>
   
@@ -421,8 +378,8 @@ L(\theta_{A,1},\theta_{B,1}) &amp;= \sum_n \sum_{z_i}P(Z_n = z_i|X_n,\theta_{z_i
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Expectation Maximization Algorithm(EM)</div>
-      <div>http://example.com/2023/03/03/EM/</div>
+      <div>K-Means and GMM</div>
+      <div>http://example.com/2023/03/05/Kmeans-GMM/</div>
     </div>
     <div class="license-meta">
       
@@ -434,7 +391,7 @@ L(\theta_{A,1},\theta_{B,1}) &amp;= \sum_n \sum_{z_i}P(Z_n = z_i|X_n,\theta_{z_i
       
         <div class="license-meta-item license-meta-date">
           <div>Posted on</div>
-          <div>March 3, 2023</div>
+          <div>March 5, 2023</div>
         </div>
       
       
@@ -466,9 +423,9 @@ L(\theta_{A,1},\theta_{B,1}) &amp;= \sum_n \sum_{z_i}P(Z_n = z_i|X_n,\theta_{z_i
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/03/05/Kmeans-GMM/" title="K-Means and GMM">
+                      <a href="/2023/03/06/evaluation-cluster/" title="Evaluation for Clustering Model">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">K-Means and GMM</span>
+                        <span class="hidden-mobile">Evaluation for Clustering Model</span>
                         <span class="visible-mobile">Previous</span>
                       </a>
                     
@@ -476,8 +433,8 @@ L(\theta_{A,1},\theta_{B,1}) &amp;= \sum_n \sum_{z_i}P(Z_n = z_i|X_n,\theta_{z_i
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/02/27/decision-tree/" title="Decision Tree and Ensemble Models">
-                        <span class="hidden-mobile">Decision Tree and Ensemble Models</span>
+                      <a href="/2023/03/03/EM/" title="Expectation Maximization Algorithm(EM)">
+                        <span class="hidden-mobile">Expectation Maximization Algorithm(EM)</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
