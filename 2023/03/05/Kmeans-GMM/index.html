@@ -23,13 +23,16 @@
 <meta property="og:site_name" content="Data Shore">
 <meta property="og:description" content="This article discuss four types of scaler in machine learning">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2023/03/05/Kmeans-GMM/2.png">
+<meta property="og:image" content="http://example.com/2023/03/05/Kmeans-GMM/1.png">
 <meta property="article:published_time" content="2023-03-05T19:17:44.000Z">
-<meta property="article:modified_time" content="2023-03-09T05:26:46.577Z">
+<meta property="article:modified_time" content="2023-04-14T07:35:52.993Z">
 <meta property="article:author" content="Zhengyuan Yang">
 <meta property="article:tag" content="K-Means">
 <meta property="article:tag" content="GMM">
 <meta property="article:tag" content="Clustering">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2023/03/05/Kmeans-GMM/2.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -223,7 +226,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.4k words
+          9.6k words
         
       </span>
     
@@ -234,7 +237,7 @@
         
         
         
-          29 mins
+          80 mins
         
       </span>
     
@@ -325,9 +328,44 @@ J  = \sum_n \sum_k r_{n,k} ||x_n-\mu_k||^2
 <li>When a cluster actually exists in the space but failsto be recognize by the algorithm, we call it a hidden cluster. This can usually be caused by insufficient samples of that cluster(hidden clusters). K_Means cannot deal with imbalanced data hidden cluster.<strong>(Hierarchical Clustering)</strong></li>
 </ol>
 <p>Although K-Means has so many drawbacks, it still has wide application in industries. The core reason is that it is simple and interpretable, and there is only one hyper parameter to adjust. The unstable results is decided by the inner mechanism of K-Means. If we really cannot find a stable clustering results through K-Means, we should consider other algorithm.</p>
+<p><img src="/2023/03/05/Kmeans-GMM/2.png" srcset="/img/loading.gif" lazyload></p>
 <h2 id="improvements-on-k-means">2. Improvements on K-means</h2>
 <h3 id="k-selection">2.1 K-Selection</h3>
 <p><strong>Score-K Plot(Elbow Method)</strong></p>
+<p>The Elbow method depict the relationship of the number of K and the performance of clustering. Let S denotes a metrics that can evaluate the performance of the clustering model. The elbow graph shows the S'value(on the y-axis) corresponding to the different values of K(on the x-axis). When we see an <strong>elbow shape in the graph, we pick the K-value where the elbow gets created</strong>. We can call this point the <strong>Elbow point</strong>. Beyond the Elbow point, increasing the value of ‘K’ does not lead to a significant reduction (or increase) in S.</p>
+<p><img src="/2023/03/05/Kmeans-GMM/1.png" srcset="/img/loading.gif" lazyload></p>
+<p>As shown in the picture, when K increase, the value of evaluating metric goes better while the cost of time being greater. Select the K with closest metrics value and time consuming as the elbow. The evaluating metric for the algorithm includes distortion, Silhouette Coefficient and Calinski Index. For details, refer to <a target="_blank" rel="noopener" href="http://zhengyuanyang.com/2023/03/06/evaluation-cluster/">this article</a>. Note that choosing K on a single metric can be verty biased, since some metrics prefer smaller K while other prefer greater K. Select the optimal K with multiple metrics taken into account.</p>
+<p><strong>ISODATA</strong></p>
+<p>The ISODATA is a improved kmenas model with embedded K selection method. Comparing to traditional Kmeans, it requires 4 parameter:</p>
+<ul>
+<li><span class="math inline">\(K_0\)</span>: An expected number of K. The final K selection would be in <span class="math inline">\([{K_ 0 \over 2}, 2K_ 0]\)</span></li>
+<li><span class="math inline">\(N_{min}\)</span>: the minimum number of data points in a cluster</li>
+<li><span class="math inline">\(\sigma_{max}\)</span>: The max allowed <span class="math inline">\(\sigma\)</span>, where <span class="math inline">\(\sigma\)</span> is a metric to measure the within distance in a cluster</li>
+<li><span class="math inline">\(d_{min}\)</span>: The min allowed d, where d is a metric to measure the distance between two clusters</li>
+</ul>
+<p>The training Process of the ISODATA is given as follows:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs pseudocode">Initialize Centers<br><br>while terminate condition is not reached<br>  find a best split based on distance<br>  <br>  <br>  for each cluster in the K_0 clusters:<br>  		if the number of points in the cluster &lt; N_min:<br>  				drop the cluster and label or data points in it with the nearest cluster<br>  				K = K-1<br>  				<br>	update the centroids of all clusters<br><br>  if K &lt; K_0 / 2:<br>  # spliter some clusters into 2 clusters<br>  		For each cluster:<br>  				# calulate the sigma on each dimension(feature), and select the maximum<br>  				s_max = max(sigma_x1,sigma_x2,...)<br>  				if s_max &gt; sigma_max and n &gt; 2*N_min:<br>  						execute a kmeans on this cluster with K=2 to split it into two cluster<br>  				else:<br>  						forward<br>  if K &gt; 2K_0:<br>  # Calculate the distance between each pair of clusters:<br>  		D = distance_matrix(Clusters):<br>  		while any D(i,j) &lt; d_min:<br>  				merge cluster i and cluster j into one cluster<br>  				#update the centroid of the new cluster<br>  				c_temp = 1/(ni+nj)(ni*ci+nj*cj)<br>  				update D<br>  		<br>  # update centers using the data points in to it<br>  for each cluster:<br>      cluster.center = cluster.x.mean()<br><br></code></pre></td></tr></table></figure>
+<p>Such a algorithm can adjust the number of K in the dynamic training process.</p>
+<h3 id="k-means-1">2.2 K-Means++</h3>
+<p>The K-Means++ is an improved version of K-Means aimed at optimizing the initial centroids selection. Basically, it believe the more separated the initial centroids are, the more stable the clustering results will be. For the initial centroids choosing:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs pseudocode"># randomly pick a data point<br>c1 = random(dataset)<br>centers.append(c1)<br><br>while len(centers) &lt; k:<br>		for each sample s:<br>        # calculate the minimum of the distance between <br>        D_s = min(dis(s, c1), dis(s,c2),....)<br>        D_s = D_s ** 2<br>        D.append(D_s)<br>     # Use the ratio of D[s] and sum of D as a probability of s being selected as a centroids<br>     Prob = D[s] / sum(D[s]) for s in all sample<br>		# decide the next centroid using a Roulette method<br>		r = rand(0,1)<br>		if  Prob[s-1] &lt; r &lt; Prob[s]:<br>			 # select s as a centroid<br>			 centers.append(s)<br><br></code></pre></td></tr></table></figure>
+<h3 id="kernel-k-means">2.3 Kernel K-Means</h3>
+<p>Kernel K-means is an unsupervised clustering algorithm that extends the traditional K-means algorithm by incorporating the kernel trick. The kernel trick allows for clustering of non-linearly separable data by implicitly mapping the data points to a higher-dimensional feature space. By using kernel functions, we can compute similarity between data points in the higher-dimensional space without explicitly calculating their high-dimensional representations.</p>
+<p>The specific difference is, when calculating the distance between two data points, we know use a kernel distance(kernel trick) to evaluate the similarity of 2 data point in a high dimension.</p>
+<p>Choose a kernel function: Select an appropriate kernel function, such as the Gaussian Radial Basis Function (RBF), polynomial kernel, or Sigmoid kernel. The kernel function is used to compute similarities between data points in the higher-dimensional space.</p>
+<p>for details of kernel function, refer to <a href>ongoing</a></p>
+<h3 id="k-means-on-categorical-variable">2.4 K-Means on Categorical Variable</h3>
+<p>K-means algorithm has issues when dealing with categorical variables. This is mainly because K-means relies on Euclidean distance to compute similarity between data points, which is meaningful for continuous variables but not applicable to categorical variables. Categorical variables are typically non-numeric data that cannot be directly used to calculate Euclidean distances. Even if you transform categorical variables into numeric values through some feature engineering method(such as one-hot encoding), it still doesn't capture their actual relationships.</p>
+<p>To address this issue, we can adopt the following approaches to improve the K-means algorithm for handling categorical variables:</p>
+<p><strong>Alternative distance metrics:</strong></p>
+<p>For categorical data, you can use other distance metrics such as Hamming distance or Jaccard similarity. These metrics can better capture the relationships between categorical variables. When implementing K-means, you can replace Euclidean distance with one of these metrics. For details of Distance, refer to <a target="_blank" rel="noopener" href="http://zhengyuanyang.com/2022/10/08/distance/#jaccard-distance">this article</a></p>
+<p>An implementation of this method is the <strong>K-Modes</strong> algorithm. K-Modes is a clustering algorithm specifically designed for categorical variables. It works by replacing the Euclidean distance with the <strong>matching distance</strong> and updating the cluster centroids using the mode instead of the mean. The matching distance is the number of mismatching attributes between two data points, for example a data point X = [1,2,5,3,0], and the centroid C = [1,2,4,3,2], then <span class="math inline">\(d_{match} = 3\)</span></p>
+<p><strong>K-Prototypes algorithm:</strong></p>
+<p>K-Prototypes is a hybrid of K-means and K-Modes algorithms. It is suitable for datasets containing both continuous and categorical variables. The K-Prototypes algorithm calculates a mixed distance based on the attribute type, combining the Euclidean distance for continuous variables with the matching distance for categorical variables. Similarly, updating the cluster centroids also requires considering both continuous and categorical variables separately.</p>
+<p><strong>K-Medoids algorithm for binary data</strong>: The K-Medoids algorithm is a variant of the K-means algorithm that uses pairwise distances between data points instead of raw features to compute similarity. For categorical data, you can transform them into binary representation (e.g., one-hot encoding) and then use Hamming distance or other distance metrics suitable for binary data. The K-Medoids algorithm selects actual data points as cluster centers (i.e., medoids) instead of computing the centroid positions.</p>
+<p>Remember that these methods are specifically designed to handle categorical variables in clustering algorithms. It is essential to select the most suitable method based on the characteristics of your data and the problem at hand.</p>
+<h3 id="weighted-k-means">2.5 Weighted K-Means</h3>
+<h3 id="hierarchical-clustering">2.6 Hierarchical Clustering</h3>
 <p>​</p>
 
                 

@@ -26,12 +26,13 @@
 <meta property="og:image" content="http://example.com/2022/11/04/distribution/1.png">
 <meta property="og:image" content="http://example.com/2022/11/04/distribution/6.PNG">
 <meta property="og:image" content="http://example.com/2022/11/04/distribution/2.png">
+<meta property="og:image" content="http://example.com/2022/11/04/distribution/8.png">
 <meta property="og:image" content="http://example.com/2022/11/04/distribution/3.png">
 <meta property="og:image" content="http://example.com/2022/11/04/distribution/4.png">
 <meta property="og:image" content="http://example.com/2022/11/04/distribution/5.png">
 <meta property="og:image" content="http://example.com/2022/11/04/distribution/7.png">
 <meta property="article:published_time" content="2022-11-04T23:03:41.000Z">
-<meta property="article:modified_time" content="2023-02-22T04:39:51.352Z">
+<meta property="article:modified_time" content="2023-04-14T07:32:33.126Z">
 <meta property="article:author" content="Zhengyuan Yang">
 <meta property="article:tag" content="Distribution">
 <meta name="twitter:card" content="summary_large_image">
@@ -229,7 +230,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          9.7k words
+          13k words
         
       </span>
     
@@ -240,7 +241,7 @@
         
         
         
-          81 mins
+          110 mins
         
       </span>
     
@@ -328,73 +329,122 @@ E[X] = \sum_i x_i f( x) = 0+p =p
 Var[X] = \sum_i(x_i-E[x]^2)f(x) = p(1-p)
 \]</span></p>
 <h3 id="binomial-distribution">2.2 Binomial Distribution</h3>
+<p><img src="/2022/11/04/distribution/1.png" srcset="/img/loading.gif" lazyload></p>
+<p><strong>Story</strong></p>
 <p>Let randome variable X donates the number of success we achieved in n independent bernoulli trials. Each trail has a same probability p of success. The parameters of a Binomial Distribution includes n and p</p>
+<p><strong>Formulation</strong></p>
 <p>The PDF of a binomial distribution: <span class="math display">\[
 f_X(X = k,n,p) = \frac{n!}{k!(n-k)!}p^k(1-p)^{n-k}
 \]</span> where k = 0,1,2...n</p>
-<p><img src="/2022/11/04/distribution/1.png" srcset="/img/loading.gif" lazyload></p>
-<p>The expectation of a binomial distribution is: <span class="math display">\[
+<p>The CDF of a binomial distribution: <span class="math display">\[
+F(k,n,p) = P(X\le k) = \sum_{i=0}^k \tbinom{n}{i}p^i(1-p)^{k-i}
+\]</span> The expectation of a binomial distribution is: <span class="math display">\[
 E[X] = np
 \]</span></p>
 <p>The variance of a binomial distribution is: <span class="math display">\[
 Var[X] = np(1-p)
-\]</span> Some properties of binomial distribution:</p>
+\]</span> <strong>Properties</strong></p>
 <ul>
 <li>if <span class="math inline">\(X \sim bin( n, p), Y \sim bin(m,p)\)</span>, then <span class="math inline">\(X+Y \sim bin(n+m,p)\)</span></li>
-<li>If p is small, <span class="math inline">\(Bin(n,p)\)</span> is approximately <span class="math inline">\(Pois(\lambda)\)</span></li>
-<li>if n is large and p is not near 0 and 1, <span class="math inline">\(Bin(n,p)\)</span> is approximately <span class="math inline">\(N(np, np(1-p)\)</span></li>
+<li>If p is small, <span class="math inline">\(Bin(n,p)\)</span> is approximately <span class="math inline">\(Pois(\lambda = np)\)</span> when <span class="math inline">\(n \to \infty\)</span></li>
+<li>if n is large and p is not near 0 and 1, <span class="math inline">\(Bin(n,p)\)</span> is approximately <span class="math inline">\(N(np, np(1-p))\)</span></li>
 </ul>
 <h3 id="geometric-distribution">2.3 Geometric Distribution</h3>
-<p>A Geometric Distribution basically have same story like a binomial distribution, except now the X donates times of trails before first success. The only parameter of a Geometric Distribution is p.</p>
+<p><img src="/2022/11/04/distribution/6.PNG" srcset="/img/loading.gif" lazyload></p>
+<p><strong>Story</strong></p>
+<p>A Geometric Distribution basically have same story like a binomial distribution, except now the X donates times of trails to observe the first success. The only parameter of a Geometric Distribution is p.</p>
+<p><strong>Formulation</strong></p>
 <p>The PDF of a Geometric Distribution: <span class="math display">\[
 f(X=k) = (1-p)^{k-1}p
-\]</span> <img src="/2022/11/04/distribution/6.PNG" srcset="/img/loading.gif" lazyload></p>
-<p>The expectation of a Geometric Distribution is: <span class="math display">\[
+\]</span> The CDF of a Geometric Distribution: <span class="math display">\[
+F(X =k) = 1-(1-p)^k
+\]</span> The expectation of a Geometric Distribution is: <span class="math display">\[
 E[X] = \frac{1}{p}
 \]</span></p>
 <p>The variance of a Geometric Distribution is: <span class="math display">\[
 Var[X] = \frac{1-p}{p^2}
-\]</span> Property of Geometric Distribution:</p>
+\]</span> <strong>Properties</strong></p>
 <ul>
-<li>Memoryless: if <span class="math inline">\(x \sim Geom(p)\)</span>, then <span class="math inline">\(P(T&gt;t+s|T&gt;t) = P(T&gt;s)\)</span>. This suggests no matter how many previous failures happened, the variable representing the time to succeed from the current moment still follows a <span class="math inline">\(\sim Geom(p)\)</span></li>
+<li>Memoryless: if <span class="math inline">\(x \sim Geom(p)\)</span>, then <span class="math inline">\(P(T&gt;t+s|T&gt;t) = P(T&gt;s)\)</span>. This suggests no matter how many previous failures happened, the <strong>additional number of times of trail</strong> needed to observe a success still follows a <span class="math inline">\(\sim Geom(p)\)</span></li>
 </ul>
 <h3 id="possion-distribution">2.4 Possion Distribution</h3>
+<p><img src="/2022/11/04/distribution/2.png" srcset="/img/loading.gif" lazyload></p>
+<p><strong>Story</strong></p>
 <p>Suppose an event(X = x) happens with a certain probability(usually low probability), let X be the times that event happens in a unit time, then X follows a Possion Distribution. <span class="math inline">\(\lambda\)</span> is the only parameter for a Possion Distrbution, which is the expectation of X.</p>
+<p><strong>Formulation</strong></p>
 <p>The PDF of a Possion Distribution: <span class="math display">\[
 f_X(X = k,\lambda) = \frac{e^ {-\lambda}\lambda^k}{k!}
 \]</span> where k = 0,1,2...<span class="math inline">\(\infty\)</span></p>
-<p><img src="/2022/11/04/distribution/2.png" srcset="/img/loading.gif" lazyload></p>
+<p>The CDF of a Poission distribution: <span class="math display">\[
+F_X(X=k, \lambda) = e^{-\lambda}\sum_i^k\frac{\lambda^i}{i!}
+\]</span></p>
 <p>The expectation of a poisson function is: <span class="math display">\[
 E[X] = \lambda
 \]</span></p>
 <p>The variance of a poisson function is: <span class="math display">\[
 Var[X] = \lambda
-\]</span> Some properties of poisson distribution:</p>
+\]</span></p>
+<p><strong>Properties</strong></p>
 <ul>
-<li>if <span class="math inline">\(X \sim pois(\lambda_1), Y \sim pois(\lambda_2)\)</span>, then <span class="math inline">\(X+Y \sim pois(\lambda_1+\lambda_2)\)</span></li>
-<li><span class="math inline">\(X|(X+Y=n) \sim Bin(n,\frac{\lambda_1}{\lambda_1+\lambda_2})\)</span></li>
-<li>if n is large and p is not near 0 and 1, <span class="math inline">\(Bin(n,p)\)</span> is approximately <span class="math inline">\(N(np, np(1-p)\)</span></li>
+<li><p>Let N(t) denote the number on occurrence of the event in a time t instead of a unit time, it can be proved that <span class="math inline">\(P(N(t) = n) \sim Pois(\lambda t)\)</span></p></li>
+<li><p>Consider a Poisson Process with rate <span class="math inline">\(\lambda\)</span>, let <span class="math inline">\(T_n\)</span> denote the time interval between the <span class="math inline">\(n-1^{th}\)</span> and <span class="math inline">\(n^{th}\)</span> occurrence of the event, then <span class="math inline">\(T_1,T_2,..T_n\)</span> is i.i.d. exponential random variable with rate <span class="math inline">\(\lambda\)</span></p></li>
+<li><p>if <span class="math inline">\(X \sim pois(\lambda_1), Y \sim pois(\lambda_2)\)</span>, then <span class="math inline">\(X+Y \sim pois(\lambda_1+\lambda_2)\)</span>. Oppositely, if a Poisson Process's result can be further classified with n category with probability <span class="math inline">\(p_1,p_2,..p_n\)</span>, where <span class="math inline">\(\sum_i^np_i = 1\)</span>, then we can treat the original poisson process as n sub poisson processes with rate <span class="math inline">\(\lambda p_1, \lambda p_2,...\lambda p_n\)</span></p></li>
+<li><p>Consider 2 poisson process with rate <span class="math inline">\(\lambda_1\)</span> and <span class="math inline">\(\lambda_2\)</span>, let <span class="math inline">\(S_n^1\)</span> denote the time of <span class="math inline">\(n^{th}\)</span> event of the first process,and <span class="math inline">\(S_m^2\)</span> the time of the <span class="math inline">\(m^{th}\)</span> event of the second process: <span class="math display">\[
+P(S_n^1 &lt; S_m^2) = \sum^{n+m-1}_{k=n} {n \choose m}(\frac{\lambda_1}{\lambda_1+\lambda_2})^k(\frac{\lambda_2}{\lambda_1+\lambda_2})^{n+m-1-k}
+\]</span></p></li>
+<li><p>Let <span class="math inline">\(X,Y\)</span> be poisson random variable with rate <span class="math inline">\(\lambda_1,\lambda_2\)</span>, <span class="math inline">\(X|(X+Y=n) \sim Bin(n,\frac{\lambda_1}{\lambda_1+\lambda_2})\)</span></p></li>
 </ul>
 <h2 id="continuous-distribution">3. Continuous Distribution</h2>
+<h3 id="uniform-distribution">3.1 Uniform Distribution</h3>
+<p><strong>Story</strong></p>
+<p>The Uniform Distribution, as the name suggests, refers to a probability distribution where all outcomes in a range are equally likely.A uniform distribution has two parameters <span class="math inline">\(a ,b\)</span>, respectively represents the beginning and end of the range of possible outcome</p>
+<p><strong>Formulation</strong></p>
+<p>The PDF of a uniform distribution: <span class="math display">\[
+f(x) = \left \{ 
+\begin{aligned}
+&amp;\frac{1}{b-a} \qquad&amp; for \ a \le x \le b \\
+&amp; 0  &amp; elsewhere
+\end{aligned}
+\right.
+\]</span> The CDF of a uniform distribution: <span class="math display">\[
+F(x) = \left \{ 
+\begin{aligned}
+&amp; 0 &amp; x &lt; a\\
+&amp;\frac{x-a}{b-a} \qquad&amp; for \ a \le x \le b \\
+&amp; 1  &amp; x &gt; b
+\end{aligned}
+\right.
+\]</span> The expectation of a uniform distribution: <span class="math display">\[
+E[X] = \frac{a+b}{2}
+\]</span> The variance a uniform distribution: <span class="math display">\[
+V[X] = \frac{(b-a)^2}{12}
+\]</span></p>
 <h3 id="normal-distribution">3.1 Normal Distribution</h3>
+<p><img src="/2022/11/04/distribution/8.png" srcset="/img/loading.gif" lazyload></p>
+<p><strong>Story</strong></p>
 <p>If how the certain value of a continuous random variable X is unknown, we can assume it follows a normal distribution. The parameters of a normal distribution include <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma^2\)</span></p>
+<p><strong>Formulation</strong></p>
 <p>The PDF of a normal distribution: <span class="math display">\[
 f(x) = \frac{1}{\sigma\sqrt{2\pi}}e^{-\frac{(x-\mu)^2}{2\sigma^2}}
-\]</span> The expectation of a normal distribution is: <span class="math display">\[
+\]</span> A normal distribution does not have a closed-form CDF. It is usually obtained by simulation and approximation. Specifically, we call the denote of a <span class="math inline">\(N(0,1)\)</span> as <span class="math inline">\(\Phi\)</span>. In real application, we can search the table for the exact value.</p>
+<p>The expectation of a normal distribution is: <span class="math display">\[
 E[X] = \mu
 \]</span></p>
 <p>The variance of a normal distribution is: <span class="math display">\[
 Var[X] = \sigma^2
-\]</span> Some properties of normal distribution:</p>
+\]</span> <strong>Properties</strong></p>
 <ul>
 <li>if <span class="math inline">\(X \sim N(\mu_1,\sigma_1^2), Y \sim N(\mu_2,\sigma_2^2)\)</span>, then <span class="math inline">\(X+Y \sim N(\mu_1+\mu_2,\sigma_1^2 + \sigma_2^2)\)</span></li>
 <li>if <span class="math inline">\(X \sim N(\mu_1,\sigma_1^2)\)</span>, then $aX+b N(a+ b, (a)^2) $</li>
 <li>if <span class="math inline">\(X_1,X_2,..X_n\)</span> all follows normal distribution, than <span class="math inline">\(X_1^2+X_2^2+...X_n^2\)</span> follows <span class="math inline">\(\chi^2(n)\)</span></li>
+<li>For 2 normal distributed variable, it is equivalent to claim that they are uncorrelated(<span class="math inline">\(E[X_1X_2] = E[X_1]E[X_2]\)</span>) and that they are independent(<span class="math inline">\(P(X_1,X_ 2) = P( X_ 1)P( X_ 2)\)</span>)</li>
 </ul>
 <h3 id="exponential-distribution">3.2 Exponential Distribution</h3>
+<p><img src="/2022/11/04/distribution/3.png" srcset="/img/loading.gif" lazyload></p>
+<p><strong>Story</strong></p>
 <p>The Exponential Distribution describe same story as poisson distribution, exception the random variable X now donates the time interval between two occurrence of the events. The only parameter for exponential distribution is <span class="math inline">\(\beta\)</span>, where <span class="math inline">\(\beta = \frac{1}{\lambda}\)</span>, representing the probability of occurrence of the event in a unit time.</p>
+<p><strong>Formulation</strong></p>
 <p>The PDF of an exponential distribution: <span class="math display">\[
-f(x) = 
 f(x) = \left\{
              \begin{array}{lr}
              \lambda e^{-\lambda x} &amp; x \ge 0 \\
@@ -402,25 +452,44 @@ f(x) = \left\{
              \end{array}
 \right.
 \]</span></p>
-<p><span class="math display">\[
-\lambda = \frac{1}{\beta}
-\]</span></p>
-<p><img src="/2022/11/04/distribution/3.png" srcset="/img/loading.gif" lazyload></p>
-<p>The expectation of an exponential distribution is: <span class="math display">\[
-E[X] = \beta
+<p>The CDF of an exponential distribution: <span class="math display">\[
+F(x) = \left\{
+             \begin{array}{lr}
+             1 -  e^{-\lambda x} &amp; x \ge 0 \\
+             0 &amp; x&lt;0\\
+             \end{array}
+\right.
+\]</span> The expectation of an exponential distribution is: <span class="math display">\[
+E[X] = {1\over \lambda } 
 \]</span></p>
 <p>The variance of an exponential distribution is: <span class="math display">\[
-Var[X] = \beta^2
-\]</span> Some properties of an exponential distribution:</p>
+Var[X] = {1\over \lambda^2}
+\]</span> <strong>Properties</strong></p>
 <ul>
-<li>Memoryless: if <span class="math inline">\(x \sim Expo(\beta)\)</span>, then <span class="math inline">\(P(T&gt;t+s|T&gt;t) = P(T&gt;s)\)</span></li>
-<li>if <span class="math inline">\(X \sim Expo(\lambda)\)</span>, then <span class="math inline">\(\lambda X \sim Expo(1)\)</span></li>
-<li><span class="math inline">\(X \sim Expo(\lambda_1), Y \sim Expo(\lambda_2)\)</span>, then <span class="math inline">\(Z = aX+bY \sim Expo(\frac{\lambda_1\lambda_2(e^{-\lambda_2 z/b}-e^{-\lambda_1z/a})}{b\lambda_1 - a\lambda_2})\)</span>, if X and Y are i.i.d., then <span class="math inline">\(Z =X+Y \sim Expo(\lambda)\)</span></li>
-<li>if we have independent <span class="math inline">\(X_i \sim Expo( \lambda_ i)\)</span>, then <span class="math inline">\(min(X_1,X_2,..X_k) \sim Expo(\lambda_1+\lambda_2+...+\lambda_k)\)</span></li>
-<li>if we have independent <span class="math inline">\(X_i \sim Expo( \lambda)\)</span>, then <span class="math inline">\(max(X_1,X_2,..X_k) \sim Expo(\lambda)+Expo(2\lambda)+...+Expo(k\lambda)\)</span></li>
+<li><p>Memoryless: if <span class="math inline">\(x \sim Expo(\beta)\)</span>, then: <span class="math display">\[
+P(T&gt;t+s|T&gt;t) = P(T&gt;s)
+\]</span> That is given the information of the state of the current moment, the <strong>additional time</strong> for the random event is still a <span class="math inline">\(Expo(\beta)\)</span></p></li>
+<li><p>If <span class="math inline">\(X_1,...,X_n\)</span> are independent exponential random variables with common rate λ, then <span class="math inline">\(\sum_i^nX_i\)</span> is a $(n, λ) $random variable. If they instead follow exponential distribution with different rate <span class="math inline">\(\lambda_1,\lambda_2,...\lambda_n\)</span>, then: <span class="math display">\[
+P(\sum_i^nX_i) = \sum_i^nC_{i,n}\lambda_ie^{-\lambda_it}
+\]</span> Where: <span class="math display">\[
+C_{i,j} = \prod_{j\ne i} \frac{\lambda_i}{\lambda_j-\lambda_i}
+\]</span></p></li>
+<li><p>Let <span class="math inline">\(X_1,X_2,...X_n\)</span> be exponentially distributed random variable with rate <span class="math inline">\(\lambda_1, \lambda_2,...\lambda_n\)</span>, then: <span class="math display">\[
+P(min(X_1,X_2,...X_n) = X_i) = \frac{\lambda_i}{\sum_i^n\lambda_n}
+\]</span></p></li>
+<li><p>if we have independent <span class="math inline">\(X_i \sim Expo( \lambda_ i)\)</span>, then: <span class="math display">\[
+\begin{aligned}
+min(X_1,X_2,..X_k) &amp;\sim Expo(\lambda_1+\lambda_2+...+\lambda_k) \\ 
+max(X_1,X_2,..X_k) &amp;\sim Expo(\lambda)+Expo(2\lambda)+...+Expo(k\lambda)
+\end{aligned}
+\]</span></p></li>
+<li><p>if <span class="math inline">\(X \sim Expo(\lambda)\)</span>, then <span class="math inline">\(C*X \sim Expo({\lambda \over C})\)</span></p></li>
 </ul>
 <h3 id="gamma-distribution">3.3 Gamma Distribution</h3>
-<p>Suppose in the exponential distribution scenario, you want to observe the event for <span class="math inline">\(\alpha\)</span> times before you stop, then the time you need to do that would follows a Gamma distribution <span class="math display">\[
+<p><strong>Story</strong></p>
+<p>Suppose in the exponential distribution scenario, you want to observe the event for <span class="math inline">\(\alpha\)</span> times before you stop, then the time you need to do that would follows a Gamma distribution</p>
+<p><strong>Formulation</strong></p>
+<p>The PDF of a Gamma distribution: <span class="math display">\[
 f(x) = \frac{x^{\alpha-1}\lambda^\alpha e^{-\lambda x}}{\Gamma(\alpha) }
 \]</span></p>
 <p><span class="math display">\[
@@ -432,48 +501,66 @@ f(x) = \frac{x^{\alpha-1}\lambda^\alpha e^{-\lambda x}}{\Gamma(\alpha) }
 <p><span class="math display">\[
 \Gamma(\frac{1}{2}) = \sqrt{\pi}
 \]</span></p>
-<p>The expectation of a gamma distribution is: <span class="math display">\[
+<p>The PDF of a Gamma distribution: <span class="math display">\[
+F(X)= \frac{\gamma(\alpha,\beta x)}{\Gamma(\alpha)}
+\]</span> where <span class="math inline">\(\gamma(\alpha,\beta x)\)</span> is a lower incomplete gamma function: <span class="math display">\[
+\gamma(s,x) = \int_0^x t^{s-1}e^{-t}dt
+\]</span> The expectation of a gamma distribution is: <span class="math display">\[
 E[X] = \alpha \beta
 \]</span></p>
 <p>The variance of a gamma distribution is: <span class="math display">\[
 Var[X] = \alpha \beta^2
-\]</span> Some properties of gamma distribution:</p>
+\]</span> <strong>properties</strong></p>
 <ul>
 <li><p>if <span class="math inline">\(X \sim \Gamma(\alpha_1,\beta), Y \sim \Gamma(\alpha_2,\beta)\)</span>, then <span class="math inline">\(X+Y \sim \Gamma(\alpha_1+\alpha_2, \beta)\)</span></p></li>
 <li><p>When <span class="math inline">\(\alpha = 1\)</span>, a gamma distribution is equivalent to a exponential distribution</p></li>
 </ul>
 <h3 id="beta-distribution">3.4 Beta Distribution</h3>
+<p><img src="/2022/11/04/distribution/4.png" srcset="/img/loading.gif" lazyload></p>
+<p><strong>Story</strong></p>
 <p>The beta distribution is the conjugate prior distribution of a binomial distribution in a Bayesian Inference Context. Thus, it can be interpreted as the PDF of the parameter of a binomial distribution, which is the probability to success in the trail. In other world, it is a likelihood function.</p>
-<p>The PDF of a exponential distribution: <span class="math display">\[
+<p><strong>Formulation</strong></p>
+<p>The PDF of a beta distribution: <span class="math display">\[
 f(x) = \frac{1}{B(\alpha,\beta)}x^{\alpha-1}(1-x)^{\beta-1}
 \]</span> where:</p>
 <ul>
 <li><p><span class="math inline">\(\alpha\)</span> is the number of observations of success</p></li>
 <li><p><span class="math inline">\(\beta\)</span> is the number of observations of failure</p></li>
-<li><p><span class="math inline">\(B(\alpha, \beta)\)</span> is a standard B function. It is applied to make the integrate of the PDF one</p>
-<p><img src="/2022/11/04/distribution/4.png" srcset="/img/loading.gif" lazyload></p></li>
+<li><p><span class="math inline">\(B(\alpha, \beta)\)</span> is a standard B function. It is applied to make the integrate of the PDF one <span class="math display">\[
+B(\alpha,\beta) = \frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)}
+\]</span></p></li>
 </ul>
-<p>The expectation of a beta distribution is: <span class="math display">\[
+<p>The CDF of a beta distribution: <span class="math display">\[
+F(x;\alpha,\beta) = \frac{B_x(\alpha,\beta)}{B(\alpha,\beta)}
+\]</span></p>
+<p>where <span class="math inline">\(B_x(\alpha,\beta)\)</span> is a incomplete beta function: <span class="math display">\[
+B_x(\alpha,\beta) = \int_0^x t^{\alpha - 1}(1-t)^{\beta-1} dt
+\]</span> The expectation of a beta distribution is: <span class="math display">\[
 E[X] = \frac{\alpha}{\alpha + \beta}
 \]</span></p>
 <p>The variance of a gamma distribution is: <span class="math display">\[
 Var[X] = \frac{\alpha \beta}{(\alpha+\beta)^2(\alpha+\beta+1)}
-\]</span> Some properties of beta distribution:</p>
+\]</span> <strong>Properties</strong></p>
 <ul>
 <li><p>if <span class="math inline">\(X \sim \Gamma(a,\lambda), Y \sim \Gamma(b,\lambda)\)</span>, X and Y are independent, then <span class="math inline">\(\frac{X}{X+Y} \sim B(a,b)\)</span></p></li>
-<li><p>After n trial, if x success is observed, the distribution of p pf a trail is updated to <span class="math inline">\(B(\alpha+x,\beta+n-x)\)</span></p></li>
+<li><p>After n trial, if x success is observed, the distribution of p is updated to <span class="math inline">\(B(\alpha+x,\beta+n-x)\)</span></p></li>
 </ul>
 <h3 id="chi2-distribution">3.5 <span class="math inline">\(\chi^2\)</span> Distribution</h3>
+<p><img src="/2022/11/04/distribution/5.png" srcset="/img/loading.gif" lazyload></p>
+<p><strong>Story</strong></p>
 <p>Suppose k independent random variable <span class="math inline">\(Z_1,..Z_ k\)</span> all follow standard normal distribution, then define random variable X as <span class="math inline">\(\sum_iZ_i^2\)</span>, then X follows a <span class="math inline">\(\chi^2\)</span> distribution. k is the only parameter of <span class="math inline">\(\chi^2\)</span> distribution, representing the number of independent variable(degree of freedom)</p>
+<p><strong>Formulation</strong></p>
 <p>The PDF of a <span class="math inline">\(\chi^2\)</span> distribution: <span class="math display">\[
 f(x) = \frac{1}{2^{\frac{k}{2}}\Gamma(\frac{k}{2})}x^{\frac{k}{2}-1}e^{\frac{-x}{2}}
-\]</span> <img src="/2022/11/04/distribution/5.png" srcset="/img/loading.gif" lazyload></p>
+\]</span> The CDF of a <span class="math inline">\(\chi^2\)</span> distribution: <span class="math display">\[
+F_k(X)= \frac{\gamma({k \over 2},{x \over 2})}{\Gamma({k \over 2})}
+\]</span></p>
 <p>The expectation of a <span class="math inline">\(\chi^2\)</span> distribution is: <span class="math display">\[
 E[X] = k
 \]</span></p>
 <p>The variance of a <span class="math inline">\(\chi^2\)</span> distribution is: <span class="math display">\[
 Var[X] = 2k
-\]</span> Some properties of <span class="math inline">\(\chi ^2\)</span> distribution:</p>
+\]</span> <strong>Properties:</strong></p>
 <ul>
 <li><p>If <span class="math inline">\(\chi^2(k_1)\)</span> and <span class="math inline">\(\chi^2(k_2)\)</span> are independent, then <span class="math inline">\(\chi^2(k_1) + \chi^2(k_2) \sim \chi^2(k_1+k_2)\)</span></p></li>
 <li><p>When k is large, a <span class="math inline">\(\chi^2\)</span> distribution is similar to a normal distribution</p></li>
@@ -533,7 +620,7 @@ f_Y(y) = (F^{-1}(y))&#39;f_X(F^{-1}(y)) = F(F^{-1}(y))&#39;F^{-1}(y) = F(F^{-1}(
 </tr>
 </tbody>
 </table>
-<p>In some case, we use a transformation to let <span class="math inline">\(f_Y(y)\)</span> have an approximate formulation as the target distribution. Then we define an error function to measure the loss of y and E[y] under target distribution, and train the parameters of the tranformation</p>
+<p>In many applications, we want to transform a non-normal distribution into a normal one. We know that a normal distribution does not have a closed-form CDF, we need to approximate it through error function h(x). In some case, we use a transformation to directly let <span class="math inline">\(f_Y(y)\)</span> have an approximate formulation as the target distribution. Then we define an error function to measure the loss of y and E[y] under target distribution, and train the parameters of the tranformation.</p>
 <table>
 <thead>
 <tr class="header">
@@ -555,8 +642,8 @@ f_Y(y) = (F^{-1}(y))&#39;f_X(F^{-1}(y)) = F(F^{-1}(y))&#39;F^{-1}(y) = F(F^{-1}(
 </tr>
 </tbody>
 </table>
-<p>There are many improved transformation algorithm like Box-cox, Yeo-johnson and Box-Muller. For more transformation methods for data distribution in machine learning, refer to <a href>ongoing</a>.</p>
-<h2 id="a-distribution-type-and-their-parameters">A: Distribution Type and their parameters</h2>
+<p>There are many improved transformation algorithm like Box-cox, Yeo-johnson and Box-Muller. For more transformation methods for data distribution in machine learning, refer to <a target="_blank" rel="noopener" href="http://zhengyuanyang.com/2022/10/22/distribution-type/">this article</a>.</p>
+<h2 id="a-distribution-type-and-their-properties">A: Distribution Type and their properties</h2>
 <p><img src="/2022/11/04/distribution/7.png" srcset="/img/loading.gif" lazyload></p>
 
                 

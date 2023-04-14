@@ -24,7 +24,7 @@
 <meta property="og:description" content="This article discuss about the procedure of handling metircs diagnosis problem in data science interview">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-12-25T20:57:56.000Z">
-<meta property="article:modified_time" content="2023-02-01T00:12:52.196Z">
+<meta property="article:modified_time" content="2023-04-14T07:49:05.940Z">
 <meta property="article:author" content="Zhengyuan Yang">
 <meta property="article:tag" content="Case Interview">
 <meta name="twitter:card" content="summary_large_image">
@@ -221,7 +221,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2k words
+          2.7k words
         
       </span>
     
@@ -232,7 +232,7 @@
         
         
         
-          18 mins
+          23 mins
         
       </span>
     
@@ -321,6 +321,11 @@
 </ol>
 <p>Segment the metric by dimensions like region, new/old user, platform, content category. For each subgroup, calculate its contributions ot the decline of the metrics. For example, if you find some facts like 90% of the decline are caused by new user, than you probably would suspect there's a association, like the gui is not friendly to new user</p></li>
 </ol>
+<h2 id="fermi-estimation">2. Fermi Estimation</h2>
+<p>Fermi estimation is a method of making rough estimates of unknown quantities using approximate values and simple reasoning. The basic idea is to decompose the metric we want to estimate into some submetrics in a additive or multiplicative way. For example, to answer to question: how many red vehicles are there in New York?</p>
+<p>We can make such decomposition:</p>
+<p>Red vichle in New York = Population in New York * Vichle ownership rate * City factor(large city usually has higher ownership rate) * the ratio of red car in all cars</p>
+<p>Then, for each metirc, we given them a upper boundary and a lower boundary according to our common sense. We use the median of the range as an estimation and use them to calculate the estimation for the target metric.</p>
 
                 
               </div>
