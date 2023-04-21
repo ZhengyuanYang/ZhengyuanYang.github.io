@@ -1,0 +1,901 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Zhengyuan Yang">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Introduce common dimension reduction techniques">
+<meta property="og:type" content="article">
+<meta property="og:title" content="dimension_reduction">
+<meta property="og:url" content="http://example.com/2023/04/18/dimension-reduction/index.html">
+<meta property="og:site_name" content="Data Shore">
+<meta property="og:description" content="Introduce common dimension reduction techniques">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2023/04/18/dimension-reduction/1.png">
+<meta property="og:image" content="http://example.com/2023/04/18/dimension-reduction/2.png">
+<meta property="og:image" content="http://example.com/2023/04/18/dimension-reduction/3.png">
+<meta property="og:image" content="http://example.com/2023/04/18/dimension-reduction/4.png">
+<meta property="article:published_time" content="2023-04-18T08:59:54.000Z">
+<meta property="article:modified_time" content="2023-04-21T21:37:27.232Z">
+<meta property="article:author" content="Zhengyuan Yang">
+<meta property="article:tag" content="Dimension Reduction">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2023/04/18/dimension-reduction/1.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>dimension_reduction - Data Shore</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Data Shore</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/banner.gif') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="dimension_reduction"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-04-18 01:59" pubdate>
+          April 18, 2023 am
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          17k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          142 mins
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> views
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Table of Contents</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">dimension_reduction</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="common-dimension-reduction-methods">Common Dimension Reduction Methods</h1>
+<h2 id="about-dimension-reduction">1. About Dimension Reduction</h2>
+<p>In the world of data analysis, it is common to encounter datasets with a large number of variables or features. While each variable can provide valuable information, the sheer volume of data can make analysis difficult and time-consuming. This is where dimension reduction comes in as a powerful tool to simplify complex data analysis. Dimension reduction is a statistical technique that reduces the number of variables in a dataset while retaining as much of the original information as possible.</p>
+<p>There are two types of dimension reduction. The first involves directly extracting a subset from the original feature space. The second involves mapping the high-dimensional data into a low-dimensional feature space. We mainly focus on the second method. Therefore, in this article, the term "dimensionality reduction" specifically refers to mapping features of high-dimensional space to low-dimensional space.</p>
+<h2 id="principal-component-analysispca">2. Principal Component Analysis(PCA)</h2>
+<p>One popular dimension reduction method is Principal Component Analysis (PCA). This method transforms a large number of variables into a smaller set of uncorrelated variables known as principal components. These principal components are linear combinations of the original variables and are sorted in order of the amount of variance they explain in the data. By selecting the first few principal components, we can effectively reduce the dimensionality of the data without losing too much information.</p>
+<h3 id="variance-maximization-theory">2.1 Variance Maximization Theory</h3>
+<p>The PCA algorithm has multiple theoretical explanation. Here we adopt the Variance Maximization Theory. We know that in signal processing, signal usually has variance than noise, the Variance Maximization Theory believes variance contains information. For dimension reduction, our task is to map high dimension space data points into low dimension space with minimum information loss, in other word, maximum variance.</p>
+<p><img src="/2023/04/18/dimension-reduction/1.png" srcset="/img/loading.gif" lazyload></p>
+<p>For example, in the graph above, we want to map some two-dimension data points into a one-dimension space(a line). In this case, the left graph is a better mapping than the right one, as it produce higher variance after mapping.</p>
+<p>Now we inspect the mapping process:</p>
+<p><img src="/2023/04/18/dimension-reduction/2.png" srcset="/img/loading.gif" lazyload></p>
+<p>We know that if we map a vector to a direction, the magnitude of <span class="math inline">\(x\)</span> after the transformation is <span class="math inline">\(d = |x| |u| cos\theta=x \cdot u^T\)</span> <span class="math inline">\(d\)</span>. If the linear space represented by <span class="math inline">\(x\)</span> is standardized (with mean 0 in every dimension and no dimensional differences in scale), then the transformed space remains standardized. Let <span class="math inline">\(\mu _j\)</span> denote the mean of the <span class="math inline">\(j^ {th }\)</span>dimension after transformation, <span class="math inline">\(\mu_ j = 0\)</span>, then the Variance on that dimension is <span class="math inline">\(V_ j = \frac{1 }{n}\sum_i^n(d_{i,j} - \mu_j)^2 = \frac{1 }{n}\sum_i^n(d_{i,j})^2\)</span>, where <span class="math inline">\(n\)</span> is the number of samples, <span class="math inline">\(d_{i,j}\)</span> is the length of mapped vectors on dimension <span class="math inline">\(j\)</span> of the <span class="math inline">\(i^{th }\)</span> sample.</p>
+<p>As the Variance Maximization Theory suggests, we want the to find a space(a group of vectors that) allows maximum variance in all all dimensions. However, if the these vectors are highly correlated, then each pair of dimensions would have high covariance. It can be imagined that if we find a single direction that maximizes the variance (magnitude) of the mapping of the original x in that direction, then finding some directions "almost coincident" with that direction can achieve maximum variance. But this group of vectors is meaningless because there is too much redundant information between them, and each vector represents features that are almost identical in meaning. Therefore, on the basis of maximizing the variance as much as possible, it is also necessary to assume a constraint that makes the covariance as small as possible. According to this, we obtained the main idea of PCA: to find a space that:</p>
+<ol type="1">
+<li>has lower dimension then the original feature space</li>
+<li>has as much total variance as possible</li>
+<li>is orthogonal, that the covariance of each two dimensions is 0</li>
+</ol>
+<p>We know that the covariance of two variable is given by:</p>
+<p><span class="math display">\[
+Cov[X,Y] = E[(X-E[X])(Y-E[Y])]
+\]</span></p>
+<p>In a standardized space, the expectation of any dimension is 0, thus, for two feature:</p>
+<p><span class="math display">\[
+Cov[X,Y] = E[XY] = \frac{1}{n-1}\sum_i^n(X_i,Y_i)
+\]</span></p>
+<p>We can then obtained the covariance matrix:</p>
+<p><span class="math display">\[
+corr = \frac{1}{n-1}\begin{bmatrix}
+Cov[X_1,X_1..] &amp; Cov[X_1,X_2] &amp; ... \\
+Cov[X_2,X_1] &amp; ... &amp; ... \\
+... &amp; ... &amp; Cov[X_n,X_n] \\
+\end{bmatrix}
+= \frac{1}{n-1}X^TX
+\]</span></p>
+<p>The diagonal of the covariance matrix represent the variance of the feature, other elements represent the covariance between a pair of dimension.</p>
+<p>Back to our objective, we want the covariances of the mapped space to be 0, will we want the variances of the space remain as high as possible. Let X denote the original space(dataset), P denote the mapping vectors, <span class="math inline">\(Y = XP\)</span> denote the new space after mapping. Let <span class="math inline">\(D\)</span> denote the covariance matrix of Y. <strong>If D is diagonal matrix, that all elements not on the diagonal are 0, while the elements on the diagonal remains positive value or 0, we can claim that we found a P that fit our PCA optimization objective.</strong> Then we can select the top k dimensions sorted by magnitude of mapped vectors(Variance), and believe these dimensions contain most of the information of the original space and call them <strong>Principal Components</strong>.</p>
+<p>But how can we find the desired <span class="math inline">\(D\)</span>? Since the <span class="math inline">\(D\)</span> we described above is also a standardized space, we can write this covariance matrix into:</p>
+<p><span class="math display">\[
+\begin{aligned}
+D &amp;= \frac {1}{n-1} Y^TY \\
+&amp; = \frac {1}{n-1}(XP)^T(XP)\\
+&amp; = P^T(\frac {1}{n-1}X^TX)P
+\end{aligned}
+\]</span></p>
+<p>Now we can find that the part <span class="math inline">\(\frac {1}{n-1}X^TX\)</span> happen to be the covariance matrix of the original space, as it is also a standardized space. We denote this covariance matrix as <span class="math inline">\(C\)</span>. Suppose vectors in P we want to find can be normalized as a unit vectors. In this case, the P is a unitary matrix, that <span class="math inline">\(P^T = P^{-1}\)</span></p>
+<p><span class="math display">\[
+C = PDP^{-1}
+\]</span></p>
+<p>Since D is a diagonal matrix, we can find that this process is actually a eigenvalue decomposition of the original covariance matrix <span class="math inline">\(C\)</span>. In other word, the P we want to find is the unit eigenvectors of C.</p>
+<h3 id="steps-of-pca">2.2 Steps of PCA</h3>
+<p>With the analysis in 2.1, we can conclude the procedures of implementing a PCA algorithm:</p>
+<ol type="1">
+<li>Applied Standardization on the original dataset’s feature space. Note that this assume the feature space is normal distributed. If that is not the case, we should consider <a target="_blank" rel="noopener" href="http://zhengyuanyang.com/2022/10/22/Normality_Transformation/">normalization transformation</a></li>
+<li>Calculate the Covariance Matrix C</li>
+<li>Decompose <span class="math inline">\(C = PDP^ T\)</span> to obtain eigenvectors matrix <span class="math inline">\(P\)</span></li>
+<li>sort the diagonal of <span class="math inline">\(D\)</span> (Variance), select top <span class="math inline">\(k\)</span> values, <span class="math inline">\(k\)</span> is a hyperparameter</li>
+<li>Based on the selected feature values, find the corresponding k feature vectors and form a matrix <span class="math inline">\(P_{m \times k}\)</span></li>
+<li><span class="math inline">\(Y_{n\times k} = X_{n\times m}P_{m\times k}\)</span>. <span class="math inline">\(Y\)</span> is the transformed data.</li>
+</ol>
+<h3 id="svd-realization-of-pca">2.3 SVD Realization of PCA</h3>
+<p>We know that in <a target="_blank" rel="noopener" href="https://www.notion.so/Common-Dimension-Reduction-Methods-e032e8bdbd464bfd9ecf3a314e0dc81f">Singular Value Decomposition</a>, the way we obtain the singular matrix <span class="math inline">\(U\)</span> and <span class="math inline">\(V\)</span> is to conduct eigenvalue decomposition on <span class="math inline">\(A^T A\)</span> and <span class="math inline">\(A^TA\)</span>. As discussed above, these two matrix are equivalent to the covariance matrix for standardized space. <strong>That is to say, SVD can replace eigenvalue decomposition to realize the thought of PCA.</strong> For a dataset <span class="math inline">\(X_{n\times m }\)</span>, according to SVD:</p>
+<p><span class="math display">\[
+X_{n\times m} = U_{n\times n}\Sigma_{n \times m} V_{m \times m}^T
+\]</span></p>
+<p>If we consider column space as the feature space:</p>
+<p><span class="math display">\[
+X_{n \times m}V_{m \times m} =  U_{n\times n}\Sigma_{n \times m}
+\]</span></p>
+<p>This process maps n data points onto a set of m-dimensional orthogonal basis, and the size of each direction is determined by the elements on the corresponding main diagonal of <span class="math inline">\(\Sigma\)</span>. Conversely, if the row space is defined as the feature space:</p>
+<p><span class="math display">\[
+X_{m \times n}^TU_{n \times n} =  V_{m\times m}\Sigma_{m \times n}^T
+\]</span></p>
+<p>At this point, we represent mapping m data points onto a set of n-dimensional orthogonal bases. Singular values remain elements on <span class="math inline">\(\Sigma\)</span>. Note that when <span class="math inline">\(m &lt; n\)</span>, we can only find m singular values, but this does not affect our ability to compress n into smaller numbers according to the order of singular values.</p>
+<p>After selecting the feature space, similar to PCA, we can sort the singular values and select the top k singular values and their corresponding singular vector matrix. For example, if we select the column space as the feature space:</p>
+<p><span class="math display">\[
+Y_{n,k} = X_{n \times m}V_{m \times k}
+\]</span></p>
+<p>In real application, many package use SVD to realize PCA, this is because comparing to eigenvalue decomposition, SVD has some advantages:</p>
+<ol type="1">
+<li>In some package, the SVD process can avoid the calculation of covariance matrix <span class="math inline">\(\frac{1}{n}X^TX\)</span> , which is very time consuming when the dimension of feature is high</li>
+<li>SVD can do dimension reduction on both row space and column space. This is useful when the features are associated with both rows and columns. For example, in graph compression, both rows and columns are pixels, or in recommendation system, both user and item are considered feature.</li>
+</ol>
+<h2 id="t-distributed-stochastic-neighbor-embedding">3. T-Distributed Stochastic Neighbor Embedding</h2>
+<p>Another dimension reduction method is t-Distributed Stochastic Neighbor Embedding (t-SNE). Unlike PCA, t-SNE is a non-linear method that is particularly useful for visualizing high-dimensional data. t-SNE maps high-dimensional data points to a low-dimensional space while preserving the relative distance between them. This makes it possible to visualize clusters of similar data points that may not be apparent in the original high-dimensional space.</p>
+<h3 id="sne">3.1 SNE</h3>
+<p>The basic idea if SNE is to construct a conditional probability distribution that describe the similarity(distance). If two data points are close in the original space, in other word, one point is very possible to be found near another point, then the same situation should happen in the low dimension space after mapping.</p>
+<p>Given a data point i, Let <span class="math inline">\(p_{j|i}\)</span> denote the probability that we can find j in the neighborhood of i in the high dimension space. We can calculate <span class="math inline">\(p_{j|i}\)</span> with the euclidean distance:</p>
+<p><span class="math display">\[
+p_{j|i} = \frac{-e^{\frac{||x_j - x_i||^2}{2\sigma^2_i}}}{\sum_{k \ne i} e^{-\frac{||x_k - x_i||^2}{2\sigma^2_i}}}
+\]</span></p>
+<p>Note that <span class="math inline">\(\sigma_i\)</span> is a manually defined parameter, and it should be different for different points i. Specifically, <span class="math inline">\(p_{j|j } = 0\)</span></p>
+<p>Let <span class="math inline">\(q_{j|i}\)</span> denote the same probability in the low dimension space. In the low dimension space, let <span class="math inline">\(\sigma_i\)</span> for any i be <span class="math inline">\(\frac{ 1}{\sqrt{2}}\)</span>.</p>
+<p><span class="math display">\[
+q_{j|i} = \frac{-e^{||y_j - y_i||^2}}{\sum_{k \ne i} e^{-||y_k - y_i||^2}}
+\]</span></p>
+<p>As the idea of SNE suggests, <span class="math inline">\(p_{j|i}\)</span> and <span class="math inline">\(q_{j|i}\)</span> should be two similar distribution. We can thus use the KL divergence(refer to <a target="_blank" rel="noopener" href="http://zhengyuanyang.com/2022/09/22/information-theory-in-ML/">this article</a>) to measure the similarity.</p>
+<p><span class="math display">\[
+C = \sum_iKL(p_{j|i}q_{j|i}) = \sum_i\sum_jp_{j|i}log\frac{p_{j|i}}{q_{j|i}}
+\]</span></p>
+<p>To find a group of <span class="math inline">\(\sigma_i\)</span>, the SNE introduce the concept of perplexity.</p>
+<p>Larger <span class="math inline">\(\sigma _i\)</span> would enlarge the neighborhood of point i, which would include more other point in the interval and hence increase the entropy. Let <span class="math inline">\(P_i\)</span> denote the probability distribution of <span class="math inline">\(p_{j| i}\)</span> given i, <span class="math inline">\(H(P_ i)\)</span> denote the entropy of distribution <span class="math inline">\(P_i\)</span> . Define Perplexity as:</p>
+<p><span class="math display">\[
+Perp( i) = 2^{H(P_i)}
+\]</span></p>
+<p>This hyper parameter, perplexity, is decided by the number of points in the neighborhood for any point i. SNE would adjust <span class="math inline">\(\sigma_i\)</span> for each i to let the perplexity calculated from data point i approximate the preset perplexity by the user. Choosing 2 as the base is because SNE commonly uses binary search to search for conditions <span class="math inline">\(\sigma_i\)</span> .</p>
+<p>With these set, we can optimize the loss, which is the KL divergence and update the lower dimension mapping data points using <strong>momentum optimization</strong></p>
+<p><span class="math display">\[
+Y^{(t)}  = Y^ {(t- 1)} + \eta \frac{\partial C}{\partial Y} +\alpha(t)(Y^{(t-1)} - Y^{(t-2)}) 
+\]</span></p>
+<h3 id="improvement-of-sne">3.2 Improvement of SNE</h3>
+<p><strong>Symmetric SNE</strong></p>
+<p>KL divergence is asymmetric. Asymmetry makes computing the derivative of KL divergence very time-consuming。 One approach is to modify the conditional probability to joint probability, so that <span class="math inline">\(p_{i,j} = p_{j,i}\)</span>, which can simplify the calculation:</p>
+<p><span class="math display">\[
+p_{j|i} = \frac{-e^{\frac{||x_j - x_i||^2}{2\sigma^2_i}}}{\sum_{k \ne l} e^{-\frac{||x_k - x_l||^2}{2\sigma^2_i}}} \qquad q_{j|i} = \frac{-e^{||y_j - y_i||^2}}{\sum_{k \ne l} e^{-||y_k - y_l||^2}}
+\]</span></p>
+<p>However, this will bring up the issue of outliers, where an outlier point i will affect all <span class="math inline">\(p_{i,j}\)</span>. Therefore, redefining <span class="math inline">\(p_{i,j}\)</span>:</p>
+<p><span class="math display">\[
+p_{i,j} = \frac{p_{j|i} + p_{i|j}}{2}
+\]</span></p>
+<p><span class="math display">\[
+C = KL(P||Q) = \sum_i\sum_jp_{i,j}log\frac{p_{i,j}}{q_{i,j}}
+\]</span></p>
+<p>By doing so, we ensure that <span class="math inline">\(p_{i,j}\)</span> is symmetric and that <span class="math inline">\(\sum_j p_{i,j} &gt; \frac{1}{2n}\)</span>, so that each data point contributes to the loss to some extent. The main function of Symmetric SNE is to speed up calculations, with limited performance improvement effect on traditional SNE.</p>
+<p><strong>t-distribution SNE</strong></p>
+<p>Since t-SNE is commonly used for visualization and reduces dimensionality to a low degree (2-3 dimensions), <strong>overcrowding</strong> can occur. In other words, in the original high-dimensional space, the distance between two data points may be large, but after reducing to two dimensions, there may not be enough space to represent such a large distance, making the two points appear close together. Meanwhile, since KL divergence is asymmetric, using two distant points in distribution <span class="math inline">\(q_i\)</span> to represent two nearby points in <span class="math inline">\(p_i\)</span> would result in a large loss, while using two nearby points in <span class="math inline">\(q_i\)</span> to represent distant points in <span class="math inline">\(p_i\)</span> would not incur a significant cost. This tendency of distribution <span class="math inline">\(q_i\)</span> to retain local features of <span class="math inline">\(p_i\)</span> while ignoring global features, in other word, SNE tend to crowd the points together in low dimension space, this further increases overcrowding problem.</p>
+<p>One solution is to replace Gaussian distribution with t-distribution in the low dimension space. t-distribution is a long-tail distribution.</p>
+<p><img src="/2023/04/18/dimension-reduction/3.png" srcset="/img/loading.gif" lazyload></p>
+<p>As shown in this figure, the x-axis represent the distant of two data points, the y-axis represents the probability <span class="math inline">\(p_{ij},q_{ij}\)</span>. If we replace the distribution of low-dimensional space with t-distribution, we will find that for two points that are close to each other, a shorter distance between them is required to maintain <span class="math inline">\(p_{ij}=q_{ij}\)</span> compared to not using t-distribution, while for two points that are far away, a longer distance between them is required to maintain <span class="math inline">\(p_{ij}=q_{ij}\)</span>. This indicates that by replacing the distribution of low-dimensional space with t-distribution at the same level of KL divergence, similar points can be closer together and dissimilar points can be farther apart, which preserves the global characteristics of the original space. Thus, we can replace <span class="math inline">\(q_{i,j}\)</span> with:</p>
+<p><span class="math display">\[
+q_{i,j} = \frac{(1+||y_j-y_i||^2)^{-1}}{\sum_{k\ne l}(1+||y_k-y_l||^2)^{-1}}
+\]</span></p>
+<h3 id="t-sne">3.3 T-SNE</h3>
+<p>We then then obtained the procedures of the t- SNE algorithm:</p>
+<ol type="1">
+<li>Set the number of dimension to cut: <span class="math inline">\(X_{n \times m} \to Y_{n \times k}\)</span>. Randomize the initial value for <span class="math inline">\(Y\)</span></li>
+<li>Set perplexity, usually among 5 ~ 50</li>
+<li>For each point in X, calculate <span class="math inline">\(p_{i,j} = \frac{p_{j|i} + p_{i|j}}{2}\)</span></li>
+<li>Calculate <span class="math inline">\(q_{i,j}\)</span> for each point in Y. Calculate loss <span class="math inline">\(C\)</span></li>
+<li>Update Y through momentum optimization</li>
+<li>Repeat step 3~5, until the termination condition is reached</li>
+</ol>
+<p>Although t-SNE partially alleviates the bias towards local information, overall t-SNE is still more suitable for visualizing local structures. Generally speaking, data with very high dimensions are not suitable for t-SNE. PCA algorithm can be used as a pre-step of t-SNE to maximize the retained variance and avoid overcrowding problems.</p>
+<p>Comparing to PCA, which emphasize retaining as maximum variance(information) of feature, t-SNE focuses on retaining the similarity among data points, thus is more suitable for visualization rather than feature engineering. We can use t-SNE in combination with clustering algorithms to visualize the clustering results of high-dimensional data in two dimensions.</p>
+<h2 id="linear-discriminant-analysis">4. Linear Discriminant Analysis</h2>
+<h3 id="basic-idea-of-lda">4.1 Basic idea of LDA</h3>
+<p>Linear Discriminant Analysis (LDA) is another dimension reduction method that is commonly used for classification tasks. Given a labeled dataset, LDA finds a projection of the data that maximizes the separation between classes while minimizing the variance within each class.</p>
+<p><img src="/2023/04/18/dimension-reduction/4.png" srcset="/img/loading.gif" lazyload></p>
+<p>For example, in a dataset demonstrated as the figure, data point are labeled as red or blue. We want to map two-dimension data point into a one-dimension plane. According to the LDA, the plane in second plane is better, as the two cluster is <strong>dense and far away from each other.</strong></p>
+<p>Let the data set <span class="math inline">\(D = \{(x_1,y_1),(x_2,y_2),...(x_n,y_n)\}\)</span>, where each <span class="math inline">\(x_i\)</span> is a m-dimension data points, <span class="math inline">\(y_i\)</span> is its label <span class="math inline">\(y_i \in \{0,1...k\}\)</span>. Let <span class="math inline">\(\mu\)</span> denote the mean vector of all sample, <span class="math inline">\(\mu_j\)</span> denote the mean vector if all sample of category <span class="math inline">\(j\)</span> . Assume the mapping we want LDA to conduct is <span class="math inline">\(Z = XP\)</span>w, then the mapped mean vector <span class="math inline">\(\mu_y = \mu P\)</span> . Let <span class="math inline">\(n_j\)</span> denote the number of samples of category <span class="math inline">\(j\)</span> , we define the variance between classes as:</p>
+<p><span class="math display">\[
+\begin{aligned}
+S_b&#39; &amp;= \sum_j (\mu_jP -\mu P)^T (\mu_ j P -\mu P) \\
+&amp; = P^T \sum_j (\mu_j-\mu)^T(\mu_j-\mu)P\\
+&amp; = P^TS_bP 
+\end{aligned}
+\]</span></p>
+<p>where <span class="math inline">\(S_b\)</span> is the variance between classes of the original dataset. Samely we have the variance within classes:</p>
+<p><span class="math display">\[
+\begin{aligned}
+S_w&#39; &amp;= \sum_j^k S&#39;_{w,j} \\
+&amp; = \sum_j^k \sum_{x\in X_j}(xP-\mu_jP)^T(xP-\mu_jP)\\
+&amp; = P^TS_wP 
+\end{aligned}
+\]</span></p>
+<p>where <span class="math inline">\(S_w\)</span> is the variance with classes of the original dataset. Thus, we define the optimization function of the LDA as:</p>
+<p><span class="math display">\[
+J(P) = \frac{P^TS_bP}{P^TS_wP}
+\]</span></p>
+<p>Since <span class="math inline">\(S_w,S_b\)</span> are both matrix, we cannot apply function optimizer. Nevertheless, according to deduction in PCA, we know that ideally <span class="math inline">\(S_w&#39;\)</span> and <span class="math inline">\(S_b &#39;\)</span> should be diagonal matrix. We know for a diagonal matrix D we have <span class="math inline">\(|D| = \prod_i \lambda_i\)</span> , where <span class="math inline">\(\lambda_i\)</span> is the <span class="math inline">\(i ^{th }\)</span> element on the diagonal. Suppose we want to reduct k dimensions to d dimensions, we can approximately change the optimization funtion to:</p>
+<p><span class="math display">\[
+J(P) = \frac{\prod_{diag}P^TS_bP}{\prod_{diag}P^TS_wP} = \prod_i^k\frac{P^TS_bP}{P^TS_wP} \approx \prod_i^d\frac{P^TS_bP}{P^TS_wP}
+\]</span></p>
+<p>Based on the properties of the generalized Rayleigh quotient, we can derive that the maximum of <span class="math inline">\(\frac{P^TS_bP}{P^TS_wP}\)</span> is the maximum eigenvalue of matrix <span class="math inline">\(S_w^{-1}S_ b\)</span> , thus the maximum of <span class="math inline">\(\prod_i^d\frac{P^TS_bP}{P^TS_wP}\)</span> is the product of the top d eigenvalue of <span class="math inline">\(S_w^{-1}S_ b\)</span> , in this case, <span class="math inline">\(P\)</span> consists of the eigenvectors of these eigenvalues. Notice that the maximum rank of <span class="math inline">\(S_b\)</span> is <span class="math inline">\(k-1\)</span>, which decideds there are at most <span class="math inline">\(k- 1\)</span> eigenvectors. This suggests that we cannot reduce the number of dimensions to more than <span class="math inline">\(k-1\)</span> through LDA.</p>
+<h3 id="procedures-and-properties">4.2 Procedures and Properties</h3>
+<p><strong>Procedures</strong></p>
+<ol type="1">
+<li>Given the dataset <span class="math inline">\(X_{n\times m}\)</span> and label <span class="math inline">\(Y_{n \times 1}\)</span>, calculate <span class="math inline">\(S_w,S_ b\)</span></li>
+<li>Calculate <span class="math inline">\(A = S_w^{-1}S_b\)</span></li>
+<li>Conduct eigenvalue decomposition on <span class="math inline">\(S_w^{-1}S_b\)</span> , select the top d eigenvalues and obtain matrix of according eigenvectors <span class="math inline">\(P&#39;_{n \times d}\)</span></li>
+<li>Calculate <span class="math inline">\(Z_{n\times d} = X P &#39;\)</span></li>
+</ol>
+<p><strong>Properties</strong></p>
+<ul>
+<li>Similar to PCA, LDA requires data to to be normally distributed</li>
+<li>The number of dimensions that LDA can reduct to is at most <span class="math inline">\(k-1\)</span>, where <span class="math inline">\(k\)</span> is the number of category of <span class="math inline">\(Y\)</span></li>
+<li>When the information for classification are largely depends on the mean instead of the variance, LDA has better performance. On the contrary, when information are contained largely in variance, PCA has better performance.</li>
+<li>LDA can be used in classification. Since we project the original dataset into a low dimension space with label, we can obtain a distribution of low dimension points for each category of <span class="math inline">\(Y\)</span>. We can then apply parameter estimation to obtain a parameter <span class="math inline">\(\theta_j\)</span> for each type <span class="math inline">\(j\)</span> . When we have a new data point <span class="math inline">\(x\)</span>, we can map it into the low dimension space we found as <span class="math inline">\(z\)</span> , calculate the probability of the mapped data points belonging to each category based on the estimated distribution parameters of each category:</li>
+</ul>
+<p><span class="math display">\[
+P(z \in Z _j ) = P_{\theta_j}(z)
+\]</span></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Machine-Learning/" class="category-chain-item">Machine Learning</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Dimension-Reduction/">#Dimension Reduction</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>dimension_reduction</div>
+      <div>http://example.com/2023/04/18/dimension-reduction/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Zhengyuan Yang</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>April 18, 2023</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/04/18/linear-algebra/" title="linear-algebra">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">linear-algebra</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/03/06/evaluation-cluster/" title="Evaluation for Clustering Model">
+                        <span class="hidden-mobile">Evaluation for Clustering Model</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <i class="iconfont icon-bug"></i> <a href="http://zhengyuanyang.com/report/" target="_blank" rel="nofollow noopener"><span>Report Bug</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,930 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Zhengyuan Yang">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="This article go through the basic knowledge of linear algebra.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linear-algebra">
+<meta property="og:url" content="http://example.com/2023/04/18/linear-algebra/index.html">
+<meta property="og:site_name" content="Data Shore">
+<meta property="og:description" content="This article go through the basic knowledge of linear algebra.">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-04-18T23:32:03.000Z">
+<meta property="article:modified_time" content="2023-04-18T23:33:49.456Z">
+<meta property="article:author" content="Zhengyuan Yang">
+<meta property="article:tag" content="Basic Knowledge">
+<meta property="article:tag" content="Linear Algebra">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>linear-algebra - Data Shore</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Data Shore</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/banner.gif') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="linear-algebra"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-04-18 16:32" pubdate>
+          April 18, 2023 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          12k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          101 mins
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> views
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Table of Contents</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">linear-algebra</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="basic-linear-algebra">Basic Linear Algebra</h1>
+<h2 id="introduction">1. Introduction</h2>
+<p>Linear Algebra is an essential branch of mathematics that deals with the study of linear equations and their representations in vector spaces. It is a fundamental concept in many areas, including physics, engineering, economics, and computer science. Linear Algebra involves the study of vectors, matrices, and linear spaces. In this blog post, we will discuss the basics of Linear Algebra.</p>
+<h2 id="linear-spaces">2. Linear Spaces</h2>
+<h3 id="definition">2.1 Definition</h3>
+<p>Let F be a set of at least two numbers. If the four operations of addition, subtraction, multiplication, and division are closed on F, then F is called a <strong>number field.</strong></p>
+<p>Suppose there is a set V, where each element <span class="math inline">\(\{V_1,V_2,...\}\)</span>is a vector. If these vectors satisfy additivity and scalar multiplication, then V is called a <strong>linear space</strong> over F.</p>
+<p>A linear space is a collection of vectors that satisfies certain properties. A linear space is also called a vector space. It is a fundamental concept in Linear Algebra that allows us to generalize the properties of vectors to more abstract structures.The properties of vector addition and scalar multiplication are called axioms, and they define the properties of the linear space.</p>
+<p>Note that the vector is a generalized concept. It can be a number, a vector, or a matrix. As long as these vectors satisfy the properties mentioned above, they can be called a linear space.</p>
+<h3 id="base-dimensional-coordinates">2.2 Base dimensional coordinates</h3>
+<p>Let <span class="math inline">\(V\)</span> be a linear space. If there exists a non-empty subset <span class="math inline">\(B=\{\boldsymbol{v}_1,\boldsymbol{v}_2,\cdots,\boldsymbol{v}_n\}\subset V\)</span> that satisfies the following two conditions:</p>
+<ul>
+<li><span class="math inline">\(B\)</span> is linearly independent.</li>
+<li>Any vector <span class="math inline">\(\boldsymbol{v}\)</span> in <span class="math inline">\(V\)</span> can be expressed as a linear combination of the vectors in <span class="math inline">\(B\)</span>, i.e., <span class="math inline">\(\boldsymbol{v}=a_1\boldsymbol{v}_1+a_2\boldsymbol{v}_2+\cdots+a_n\boldsymbol{v}_n\)</span>.</li>
+</ul>
+<p>Then <span class="math inline">\(B\)</span> is called a basis of <span class="math inline">\(V\)</span>, and <span class="math inline">\(n\)</span> is called the dimension of <span class="math inline">\(V\)</span>, denoted as <span class="math inline">\(dim(V)=n\)</span>. <span class="math inline">\(a = \{a_1,a_2,...a_n\}\)</span> is called the coordinate of vector v.</p>
+<p>To check if a set of vectors is a basis, put them into a matrix and find the determinant. If the determinant is equal to 0, then the set of vectors is a basis. Specifically, if the mode of all basis vector are 1, then this basis is called a Orthonormal basis.</p>
+<p>**********************Coordinate**********************</p>
+<p>The coefficients of the basis vectors form the coordinates of the vector with respect to the basis. Note that a basis for a linear space is not always unique, thus different basis selection lead to different coordinate. Suppose two basis <span class="math inline">\(\alpha, \beta\)</span>, respectively give two coordinate <span class="math inline">\((a_1,a_2,...a_n),(b_1,b_2,...b_n)\)</span> to a vector v. Let <span class="math inline">\(\gamma\)</span> be a basis equals <span class="math inline">\(\alpha+\beta\)</span>, then <span class="math inline">\(\gamma\)</span> would give v a coordinate such that <span class="math inline">\((a_1+b_1,a_2+b_2,...a_n+b_n)\)</span></p>
+<h2 id="vector">3. Vector</h2>
+<p>A vector is a mathematical entity that represents a quantity with magnitude and direction. In Linear Algebra, vectors are represented as an ordered list of numbers. For example, a two-dimensional vector can be represented as (x, y). Vectors can be added and subtracted, and multiplied by scalars to produce new vectors. The magnitude of a vector is the length of the vector, and it is calculated using the Pythagorean theorem.</p>
+<h3 id="vector-operations">3.1 Vector Operations</h3>
+<p>To add or subtract two vectors, the dimensions of the two vectors must be the same, and then the corresponding components must be added.</p>
+<p><span class="math display">\[
+(a_1,a_2,..a_n)+(b_1,b_2,...b_n) = (a_1+b_1,a_2+b_2,...a_n+b_n)
+\]</span></p>
+<p>Scalar multiplication of a vector:</p>
+<p><span class="math display">\[
+k(a_1,a_2,...a_n) = (ka_1,ka_2,...ka_n)
+\]</span></p>
+<h3 id="linear-relationships-of-vectors">3.2 Linear Relationships of Vectors</h3>
+<p>Suppose <span class="math inline">\(\beta,\alpha_1,\alpha_2,...\alpha_n\)</span> are all m-dimensional vectors. If there exist <span class="math inline">\((k_1,k_2,...k_n)\)</span> such that <span class="math inline">\(\beta = k_1a_2+k_2a_2+...k_na_n\)</span> holds true, then <span class="math inline">\(\beta\)</span> is called a linear combination of <span class="math inline">\((\alpha_1,\alpha_2,...\alpha_n)\)</span>, i.e., there exists:</p>
+<p><span class="math display">\[
+\left\{ \begin{aligned}
+\beta_1 &amp;= k_1a_{11}+k_2a_{21}+...k_na_{n1}\\
+...\\
+\beta_n &amp;= k_1a_{1n}+k_2a_{2n}+...k_na_{nn} 
+\end{aligned}\right.
+\]</span></p>
+<p>Let <span class="math inline">\(\alpha_1,\alpha_2,...\alpha_n\)</span> denote a set of m-dimensional vectors. If there exists a set of coefficient that are not all zero <span class="math inline">\((k_1,k_2,...k_n)\)</span>, then <span class="math inline">\(\alpha_1,\alpha_2,...\alpha_n\)</span> is call <strong>linearly correlated</strong>. Otherwise, it is called linearly uncorrelated. If n &gt; m, then <span class="math inline">\(\alpha_1,\alpha_2,...\alpha_n\)</span> has to be linearly correlated</p>
+<p>If <span class="math inline">\(\alpha_1,\alpha_2,...\alpha_n\)</span> is linear correlated, then at least one vector in it can be linearly expressed by other vectors</p>
+<h3 id="the-rank-of-vector">3.3 The Rank of Vector</h3>
+<p>Let <span class="math inline">\(\alpha_1,\alpha_2,...\alpha_n\)</span> denote a set of m-dimensional vectors. Suppose a subset with r vectors, <span class="math inline">\(\alpha_1,..\alpha_r\)</span>, satisfies:</p>
+<ol type="1">
+<li><span class="math inline">\(\alpha_1,..\alpha_r\)</span> is linearly uncorrelated</li>
+<li>Any subsets with <span class="math inline">\(r+ 1\)</span> vectors will be linearly correlated</li>
+<li>Every vector in <span class="math inline">\(\alpha_1,\alpha_2,...\alpha_n\)</span> can be linearly expressed in <span class="math inline">\(\alpha_1,..\alpha_r\)</span></li>
+</ol>
+<p>Then we call <span class="math inline">\(\alpha_1,..\alpha_k\)</span> a <strong>Maximal linearly independent set</strong>. r is called the rank of the set of vectors. Rank actually represents the number of dimension of basis in a linear space. The range of rank is <span class="math inline">\([0,m]\)</span>.</p>
+<p>Notice that, no matter you treat <span class="math inline">\(\alpha_i\)</span> as a row vector, column vector or treat <span class="math inline">\(\alpha_1,\alpha_2,...\alpha_n\)</span> as matrix, the rank is the same. This indicates that, if you want to find out the rank of a group of vectors(e.g. sample value of features), then you can calculate the rank of matrix consists of these vectors</p>
+<h2 id="matrix">4. Matrix</h2>
+<p>A matrix is a rectangular array of numbers arranged in rows and columns. Matrices have many applications, including solving systems of linear equations and representing linear transformations. In Linear Algebra, matrices are used to represent linear transformations of vectors.</p>
+<p><strong>Identity Matrix</strong></p>
+<p>If all the elements on the diagonal of a matrix are 1, and all the other elements are 0, then this matrix is called an identity matrix, denoted as <span class="math inline">\(I\)</span>.</p>
+<p><span class="math display">\[
+\begin{bmatrix}
+1 &amp; 0 &amp; 0 \\
+0 &amp; 1 &amp; 0 \\
+0 &amp; 0 &amp; 1 \\
+\end{bmatrix}
+\]</span></p>
+<p>For matrix <span class="math inline">\(A_{n\times m }\)</span></p>
+<p><span class="math display">\[
+I_nA = A
+\]</span></p>
+<p><span class="math display">\[
+AI_M = A
+\]</span></p>
+<p><strong>Diagonal Matrix</strong></p>
+<p>A diagonal matrix is a square matrix in which all the off-diagonal elements are zero. The diagonal elements can be any number, including zero.</p>
+<p><span class="math display">\[
+\begin{bmatrix}
+\lambda_1 &amp; 0 &amp; 0 \\
+0 &amp; \lambda_2 &amp; 0 \\
+0 &amp; 0 &amp; \lambda_3 \\
+\end{bmatrix}
+\]</span></p>
+<p>The determinant of a diagonal matrix is the product of its diagonal elements.</p>
+<p><span class="math display">\[
+|D|= \prod_i^n\lambda_n
+\]</span></p>
+<p><strong>Symmetric Matrix</strong></p>
+<p>A symmetric matrix is a square matrix where the transpose of the matrix is equal to the matrix itself. In other words, a matrix A is symmetric if and only if <span class="math inline">\(A^T = A\)</span><strong>.</strong></p>
+<p><span class="math display">\[
+\begin{bmatrix}
+1 &amp; 2 &amp; 3 \\
+2 &amp; 4 &amp; 0 \\
+3 &amp; 0 &amp; 5 \\
+\end{bmatrix}
+\]</span></p>
+<p><strong>Unitary Matrix</strong></p>
+<p>A unitary matrix is a square matrix whose conjugate transpose is its inverse. In real number domain, this equals that <span class="math inline">\(U^T = U^ {-1}\)</span></p>
+<h3 id="determinant">4.1 Determinant</h3>
+<p>The determinant of a <strong>square matrix</strong> is a scalar value that can be calculated from the elements of the matrix. It is denoted by <span class="math inline">\(|A|\)</span> or <span class="math inline">\(det(A )\)</span>. For a <span class="math inline">\(n \times n\)</span> matrix A, let <span class="math inline">\(j = (j_1,j_2,...j_n)\)</span> denote a possible permutation of the column label:</p>
+$$ det(
+<span class="math display">\[\begin{bmatrix}
+a_{11} &amp; ... &amp; a_{1n}\\
+... &amp; ... &amp;...\\
+a_{n1} &amp; ... &amp; a_{nn}\\
+
+\end{bmatrix}\]</span>
+<p>) = <em>j (-1)^{N(j )}a</em>{j_1}a_{j_2}...a_{j_n} $$</p>
+<p>where <span class="math inline">\(N(j)\)</span> is the inversion number(number of inverse sub permutation in <span class="math inline">\(j\)</span>).</p>
+<p>For a square matrix A, its determinant has following properties:</p>
+<ol type="1">
+<li><span class="math inline">\(|A| = |A^T|\)</span></li>
+<li>If a row of a determinant has a common factor, it can be factored out of the determinant.</li>
+</ol>
+$$ det(
+<span class="math display">\[\begin{bmatrix}
+k a_{11} &amp; ... &amp; k a_{1n}\\
+... &amp; ... &amp;...\\
+a_{n1} &amp; ... &amp; a_{nn}\\
+
+\end{bmatrix}\]</span>
+) = k  det(
+<span class="math display">\[\begin{bmatrix}
+ a_{11} &amp; ... &amp;  a_{1n}\\
+... &amp; ... &amp;...\\
+a_{n1} &amp; ... &amp; a_{nn}\\
+
+\end{bmatrix}\]</span>
+<p>) $$</p>
+<ol type="1">
+<li>If there are two rows in a matrix that are proportional, the determinant of the matrix is 0.</li>
+</ol>
+<h3 id="matrix-operations">4.2 Matrix Operations</h3>
+<p><strong>Addition and Subtraction(only applied on same shape):</strong> <span class="math display">\[
+\begin{bmatrix}
+a_ 1 &amp; a_ 2 \\
+a_3 &amp; a_4\\
+\end{bmatrix}
++
+\begin{bmatrix}
+b_ 1 &amp; b_2 \\
+b_3 &amp; b_4\\
+\end{bmatrix}
+= \begin{bmatrix}
+a_1+b_1 &amp; a_2+b_2 \\
+a_3 +b_3&amp; a_4+b_4\\
+\end{bmatrix}
+\]</span></p>
+<p><strong>Scalar multiplication</strong></p>
+<p><span class="math display">\[
+k \begin{bmatrix}
+a_ 1 &amp; a_ 2 \\
+a_3 &amp; a_4\\
+\end{bmatrix} = 
+\begin{bmatrix}
+ka_1 &amp; ka_ 2 \\
+ka_3 &amp;k a_4\\
+\end{bmatrix}
+\]</span></p>
+<p>M<strong>ultiplication(inner product, (n,m) x (m,k))</strong></p>
+<p><span class="math inline">\(\begin{bmatrix} a_ 1 &amp; a_ 2 \\ a_3 &amp; a_4\\ \end{bmatrix} * \begin{bmatrix} b_ 1 &amp; b_2 &amp; b_3 \\ b_4 &amp; b_5 &amp; b_6\\ \end{bmatrix} = \begin{bmatrix} a_1*b_1 + a_2*b_4 &amp; a_1*b_2+ a_2*b_ 5 &amp; a_ 1*b_ 3+a_ 2*b_6 \\ a_3*b_1 + a_4*b_4 &amp; a_3*b_2+ a_4*b_ 5 &amp; a_3*b_3+a_4*b_6 \\ \end{bmatrix}\)</span></p>
+<p>Note that for matrix multiplication, we may find:</p>
+<ul>
+<li><span class="math inline">\(AB \ne BA\)</span></li>
+<li><span class="math inline">\(AB = 0 \nrightarrow A=0 \ or \ B =0\)</span></li>
+<li><span class="math inline">\(AB = AC, A \ne 0 \nrightarrow B = C\)</span></li>
+<li><span class="math inline">\(A(BC) = (AB)C\)</span></li>
+<li><span class="math inline">\((A+B)C = AB + BC\)</span></li>
+<li><span class="math inline">\(C(A+B) = CA + CB\)</span></li>
+<li><span class="math inline">\(k(AB) = (kA)B = A(kB) \quad k \ is \ constant\)</span></li>
+</ul>
+<p><strong>Power</strong> <span class="math display">\[
+A^k = A \cdot  A \cdot A. ... A
+\]</span></p>
+<p><span class="math display">\[
+A^0 = I
+\]</span></p>
+<p><span class="math display">\[
+(AB)^k\ne A^KB^K 
+\]</span></p>
+<p><strong>Transpose</strong></p>
+<p><span class="math display">\[
+（A+B）^T = A^T + B^T 
+\]</span></p>
+<p><span class="math display">\[
+(ABC)^T = C^TB^TA^T
+\]</span></p>
+<h3 id="inverse-of-matrix">4.3 Inverse of Matrix</h3>
+<p>The inverse of a <strong>square matrix</strong> A is another square matrix <span class="math inline">\(A^{-1}\)</span> such that <span class="math inline">\(A \cdot A^{-1} = A \cdot A^{-1} = I\)</span>, where I is the identity matrix. Not all matrices have an inverse, and those that do not are called singular or non-invertible matrices. The inverse is a useful tool in solving systems of linear equations and in representing linear transformations.</p>
+$$
+<span class="math display">\[\begin{aligned}
+AB &amp;= DC \\
+A &amp;= ABB^{-1} = DCB^{-1}\\
+
+\end{aligned}\]</span>
+<p>$$</p>
+<p>For an n x n matrix <span class="math inline">\(A\)</span>, <span class="math inline">\(A\)</span> is invertible if and only if the determinant of <span class="math inline">\(A\)</span> is not equal to 0, i.e. <span class="math inline">\(det(A) \neq 0\)</span>. For an invertible matrix <span class="math inline">\(A\)</span>, we can find its inverse matrix by using the Gaussian-Jordan elimination method or the adjugate matrix method.</p>
+<p>In addition, if a matrix is a symmetric matrix, i.e. <span class="math inline">\(A^T = A\)</span>, then it is always an invertible matrix.</p>
+<h3 id="the-rank-of-matrix">4.4 The Rank of Matrix</h3>
+<p>The rank of a matrix is the number of dimensions of the basis in a linear space. It indicates the degree of the transformation of the matrix. The range of the rank is <span class="math inline">\([0,m]\)</span>, where m is <span class="math inline">\(min(n_{row},n_{col})\)</span>. To find out the rank of a group of vectors, you can calculate the rank of the matrix consisting of these vectors. Note that rank of a matrix would be 0 if and only if the matrix is a zero matrix.</p>
+<h3 id="eigenvalue-and-eigenvector">4.5 Eigenvalue and Eigenvector</h3>
+<p>Let A denote a n x n square matrix. For a number <span class="math inline">\(\lambda\)</span> , if there exists a non-zero vector <span class="math inline">\(\alpha\)</span> that <span class="math inline">\(A \alpha = \lambda \alpha\)</span>. Then we call <span class="math inline">\(\lambda\)</span> a eigenvalue of A, <span class="math inline">\(\alpha\)</span> a eigenvector of A. We know that in linear algebraic, a matrix can be taken as a linear transformation for a vector. That is two say, for a vector <span class="math inline">\(\alpha\)</span> , if matrix A only scale <span class="math inline">\(\alpha\)</span> without spinning it. then <span class="math inline">\(\alpha\)</span> is the eigenvector, the scaling coefficient <span class="math inline">\(\lambda\)</span> is the eigenvalue. In addition, if <span class="math inline">\(\alpha\)</span> is a eigenvector of A, then any scalar multiplication <span class="math inline">\(C \alpha\)</span> is also a eigenvector. One eigenvalue can correspond to multiple proportional eigenvectors, but conversely, one eigenvector will only correspond to one eigenvalue.</p>
+<p>To find the eigenvalue of A:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\lambda\alpha - A \alpha &amp;= 0\\
+(\lambda I - A)\alpha &amp; =0 \\
+\end{aligned}
+\]</span></p>
+<p>To ensure this equation has at least one root, <span class="math inline">\(|\lambda I - A| = 0\)</span>. This equation is called the eigenfunction. With <span class="math inline">\(\lambda\)</span> obtained, we can find <span class="math inline">\(\alpha\)</span> by solving the equation <span class="math inline">\((\lambda I - A)\alpha =0\)</span></p>
+<h3 id="decomposition-of-matrix">4.6 Decomposition of Matrix</h3>
+<p><strong>Eigenvalue Decomposition</strong></p>
+<p>An <span class="math inline">\(n \times n\)</span> matrix <span class="math inline">\(A\)</span> is <strong>diagonalizable</strong> if and only if it has <span class="math inline">\(n\)</span> linearly independent eigenvectors, this would ensure all eigenvalues of <span class="math inline">\(A\)</span> are distinct. In this case, the eigenvectors of A can be used as a basis for A, and A can be expressed in the form <span class="math inline">\(A = PDP^{-1}\)</span>, where <span class="math inline">\(P\)</span> is a matrix composed of the eigenvectors of <span class="math inline">\(A\)</span>, and <span class="math inline">\(D\)</span> is a diagonal matrix composed of the eigenvalues of <span class="math inline">\(A\)</span>. We call these process a eigenvalue decomposition.</p>
+<p>Especially, if A is an <span class="math inline">\(n \times n\)</span> real symmetric matrix, then A must have n linearly independent eigenvectors, and it can be proved that these vectors are mutually orthogonal. In other words, these eigenvectors form an orthonormal basis for A. At this point, A can be decomposed into <span class="math inline">\(QDQ^{-1}\)</span>, where Q is an orthogonal matrix composed of A's eigenvectors. Each column represents a eigenvector and these vectors can be normalized. If Q is normalized, which means it is a standard orthogonal basis of A, then we have <span class="math inline">\(QQ^T = 1, Q^T = Q^{-1}\)</span></p>
+<p><strong>Singular Value Decomposition(SVD)</strong></p>
+<p>According to the necessary condition for matrix eigenvalue decomposition, non-square matrices cannot be decomposed into eigenvalues. To solve this problem, let A denote a <span class="math inline">\(n \times m\)</span> matrix. We first conduct a eigenvalue decomposition on <span class="math inline">\(AA^T\)</span>to obtain its matrix of eigenvectors <span class="math inline">\(U\)</span>, where <span class="math inline">\(U\)</span> is a <span class="math inline">\(n \times n\)</span> matrix. Then we repeat on <span class="math inline">\(A^T A\)</span> and obtain <span class="math inline">\(V_{m \times m }\)</span>. It can be deduced that:</p>
+<p><span class="math display">\[
+A_{n \times m} = U_{n \times n} \Sigma_{n \times m} V_{m \times m}^T 
+\]</span></p>
+<p>where <span class="math inline">\(\Sigma\)</span> is A matrix where all elements except those on the main diagonal are 0：</p>
+<p><span class="math display">\[
+\begin{bmatrix}
+\sigma_1 &amp; 0 &amp; 0 \\
+0 &amp; \sigma_2 &amp; 0 \\
+0 &amp; 0 &amp; \sigma_3 \\
+0 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 0\\
+\end{bmatrix}
+\]</span></p>
+<p>and U and V are both unitary matrices. This yields:</p>
+<p><span class="math display">\[
+A_{n \times m}  V_{m \times m}  = U_{n \times n} \Sigma_{n \times m} 
+\]</span></p>
+<p>Such a equation suggests that, for a m-dimension feature space, suppose V is a group of orthogonal basis, if we applied a linear transformation <span class="math inline">\(A_{m \times n}\)</span> to map the basis into a n-dimension space, the results will still be a group of orthogonal basis, where <span class="math inline">\(U_{n \times n}\)</span> is the standardization of the basis, and <span class="math inline">\(\Sigma\)</span> gives the mode of each basis vector.</p>
+<h2 id="systems-of-linear-equations">5. Systems of Linear Equations</h2>
+<p>A system of linear equations is a set of equations that can be represented as a matrix equation. Each row of the matrix represents an equation, and each column represents a variable. The system can be solved by finding the inverse of the matrix and multiplying it by the matrix of constants. Linear Algebra provides efficient methods to solve systems of linear equations, including Gauss-Jordan elimination, LU decomposition, and the inverse matrix method.</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Probability-Statistics/" class="category-chain-item">Probability &amp; Statistics</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Basic-Knowledge/">#Basic Knowledge</a>
+      
+        <a href="/tags/Linear-Algebra/">#Linear Algebra</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>linear-algebra</div>
+      <div>http://example.com/2023/04/18/linear-algebra/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Zhengyuan Yang</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>April 18, 2023</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/04/18/dimension-reduction/" title="dimension_reduction">
+                        <span class="hidden-mobile">dimension_reduction</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <i class="iconfont icon-bug"></i> <a href="http://zhengyuanyang.com/report/" target="_blank" rel="nofollow noopener"><span>Report Bug</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>
