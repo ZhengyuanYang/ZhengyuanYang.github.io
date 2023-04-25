@@ -1,0 +1,887 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Zhengyuan Yang">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="This article go through the basic knowledge of Markov Chain">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Basics of Markov Chain">
+<meta property="og:url" content="http://example.com/2023/04/23/markov-chain/index.html">
+<meta property="og:site_name" content="Data Shore">
+<meta property="og:description" content="This article go through the basic knowledge of Markov Chain">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2023/04/23/markov-chain/1.png">
+<meta property="og:image" content="http://example.com/2023/04/23/markov-chain/2.png">
+<meta property="og:image" content="http://example.com/2023/04/23/markov-chain/3.png">
+<meta property="article:published_time" content="2023-04-23T07:41:22.000Z">
+<meta property="article:modified_time" content="2023-04-25T19:53:27.982Z">
+<meta property="article:author" content="Zhengyuan Yang">
+<meta property="article:tag" content="Markov Chain">
+<meta property="article:tag" content="Stochastic Process">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2023/04/23/markov-chain/1.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>Basics of Markov Chain - Data Shore</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Data Shore</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/banner.gif') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Basics of Markov Chain"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-04-23 00:41" pubdate>
+          April 23, 2023 am
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          9.3k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          78 mins
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> views
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Table of Contents</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Basics of Markov Chain</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="basics-of-markov-chain">Basics of Markov Chain</h1>
+<h2 id="about-markov-chain">1. About Markov Chain</h2>
+<p>Markov Chain is a mathematical model used to describe a system's behavior over time, where the future state of the system depends only on its current state. It is a stochastic process that is widely used in various fields such as physics, economics, and computer science.</p>
+<p>A Markov Chain is a sequence of random variables, where each variable represents the state of the system at a specific time. The probability of transitioning from one state to another is based only on the current state of the system, and not on the past states.</p>
+<p>Let <span class="math inline">\(X_ n\)</span> denote a be a stochastic process that takes on finite possible values <span class="math inline">\(\{0,1,...m \}\)</span>. For all <span class="math inline">\(i, j , n\)</span>, if we have:</p>
+<p><span class="math display">\[
+P\{X_{n+1} = j | X_n = i, X_{n-1} = i_{n-1},...X_0 = i_0\} = P\{X_{n+1} = j | X_n = i\}
+\]</span></p>
+<p>Then we said this random process has Markov Property. We can <span class="math inline">\(P\{X_{n+1} = j | X_n = i\}\)</span> the <strong>one-step transition probability</strong> from state <span class="math inline">\(i\)</span> to state <span class="math inline">\(j\)</span> , denoted as <span class="math inline">\(P_ {ij}\)</span>.</p>
+<h2 id="discrete-time-markov-chain">2. Discrete Time Markov Chain</h2>
+<h3 id="transition-matrix-and-transition-diagram">2.1 Transition Matrix and Transition Diagram</h3>
+<p>We can expressed the one-step transition probability among states of a markov chain in 2 ways.</p>
+<p><strong>Transition Probability Matrix</strong></p>
+<p>We define the one-step transition probability matrix as:</p>
+<p><span class="math display">\[
+P = \begin{bmatrix}
+P_{0,0 } &amp; P_ {01}&amp;... &amp; P_{0m}\\
+P_{10} &amp; P_{11} &amp; ...\\
+... &amp; ... &amp;...\\
+P_{m0} &amp; P_{11} &amp; ... &amp; P_{mm}\\
+\end{bmatrix}
+\]</span></p>
+<p>where each element is a one-step transition probability from the state of the row index to the state of the column index. The sum of each row <span class="math inline">\(\sum_jP_{ij} =1\)</span> .</p>
+<p>Let <span class="math inline">\(P^n_{ij} = P\{X_{n+k} = j |X_k = i\}\)</span>. We call this the n-step probability from state <span class="math inline">\(i\)</span> to state <span class="math inline">\(j\)</span>. According to the Chapman-Kolmogorov equations, we can deduce that:</p>
+<p><span class="math display">\[
+\begin{aligned}
+P^{n+m}_{ij} &amp; = P\{X_{n+m} = j | X_0 = i\}\\
+&amp; = \sum^\infty_0P\{X_{n+m}\ = j,X_n = k | X_0 = i\} \\
+&amp; = \sum^\infty_0P\{X_{n+m}\ = j| X_n = k , X_0 = i\}P\{ X_n = k| X_0 = i\} \\
+&amp; = \sum^\infty_0 P^m_{kj}P^n_{ik}
+\end{aligned}
+\]</span></p>
+<p>Let <span class="math inline">\(P^{(n )}\)</span> denote the <strong>n-step transition probability matrix</strong>. According to this deduction, we can further obtain that:</p>
+$$
+<span class="math display">\[\begin{aligned}
+P ^{(n+m)} &amp;= P^{(n)} \cdot P^{(m)}\\
+P^{(2)} &amp;= P \cdot P\\
+P^{(n)} &amp;=P^{(n- 1)} \cdot P = P^ n 
+
+\end{aligned}\]</span>
+<p>$$</p>
+<p><strong>Transition Diagram</strong></p>
+<p>The transition probabilities can also be expressed in a transition diagram</p>
+<p><img src="/2023/04/23/markov-chain/1.png" srcset="/img/loading.gif" lazyload></p>
+<p>The circles in the graph represent states.The directed arrow in the graph represent the one-step transition.</p>
+<h3 id="classification-of-states">2.2 Classification of States</h3>
+<p><strong>Communicate</strong></p>
+<p>State <span class="math inline">\(j\)</span> is said to be accessible from state <span class="math inline">\(i\)</span> if <span class="math inline">\(P_{ij}^n &gt; 0\)</span> for some <span class="math inline">\(n\)</span> . In other word, start from state <span class="math inline">\(i\)</span> , it is possible to ever enter state <span class="math inline">\(j\)</span> . If two state are accessible from each other, we say these two states <strong>communicate.</strong> If <span class="math inline">\(i\)</span> communicate with <span class="math inline">\(j\)</span> , j communicate with <span class="math inline">\(k\)</span> , then <span class="math inline">\(i\)</span> communicate with <span class="math inline">\(k\)</span> . We call a group of states <span class="math inline">\(\{i_ 0,i_ 1,...\}\)</span> a <strong>class</strong> if every pair of states in the class communicates. If any two states of a markov chain communicates, then there is only one class of states. In this case, we call the markov chain <strong>irreducible.</strong></p>
+<p><strong>Recurrent and Transient</strong></p>
+<p>We said a state <span class="math inline">\(i\)</span> is <strong>recurrent</strong> if <span class="math inline">\(\sum^ \infty _{n= 1} P^n_{ii} = \infty\)</span>, or is <strong>transient</strong> if <span class="math inline">\(\sum^ \infty _{n= 1} P^n_{ii} &lt; \infty\)</span>. This can be more clearly understood from a transition diagram:</p>
+<p><img src="/2023/04/23/markov-chain/2.png" srcset="/img/loading.gif" lazyload></p>
+<p>We say state <span class="math inline">\(i\)</span> is recurrent if, starting from state <span class="math inline">\(i\)</span> , wherever you go to, you can always find a way back to <span class="math inline">\(i\)</span>.</p>
+<p>On the contrary, we sat state <span class="math inline">\(i\)</span> is transient if, starting from state <span class="math inline">\(i\)</span>, if you go to some where, you can never find a way back to <span class="math inline">\(i\)</span> .</p>
+<ul>
+<li>If state <span class="math inline">\(i\)</span> is recurrent, and state i communicates with state <span class="math inline">\(j\)</span> , then state <span class="math inline">\(j\)</span> is recurrent.</li>
+<li>If state <span class="math inline">\(i\)</span> is transient, and state i communicates with state <span class="math inline">\(j\)</span> , then state <span class="math inline">\(j\)</span> is transient.</li>
+<li>Recurrent and transient are class properties. If one element if the class is recurrent or transient, then all elements in that class are recurrent or transient as well</li>
+<li>At least one state in a Markov Chain should be recurrent</li>
+<li>Let <span class="math inline">\(\mu_ {ii }\)</span> denote the expectation of steps it takes from <span class="math inline">\(i\)</span> back to <span class="math inline">\(i\)</span>. If <span class="math inline">\(\mu_{ii } &gt; 0\)</span>, we call it positive recurrent, if <span class="math inline">\(\mu_ {ii} = 0\)</span>, we call it zero recurrent.</li>
+<li>If state <span class="math inline">\(i\)</span> is transient, then the number of times the process will reenter <span class="math inline">\(i\)</span> follows a geometric distribution <span class="math inline">\(Geo(1-f_{ii })\)</span>, where <span class="math inline">\(f_{ii }\)</span> is the probability that the process will ever reenter <span class="math inline">\(j\)</span> from <span class="math inline">\(j\)</span> .</li>
+</ul>
+<p><strong>Periodical</strong></p>
+<p>For a state <span class="math inline">\(i\)</span>, let <span class="math inline">\(d\)</span> denote the Greatest Common Divisor of a collection of n that <span class="math inline">\(P^n_{ii} &gt; 0\)</span> (<span class="math inline">\(d = 0\)</span> if the collection is empty ). If <span class="math inline">\(d &gt; 1\)</span>, then we said this state is periodical. For example, a state is only possible to reenter itself when the step <span class="math inline">\(n = 2,4,6,8,...\)</span>. The greatest common divisor is 2. which makes this state periodical. If a state is:</p>
+<ol type="1">
+<li>aperiodic</li>
+<li>positive recurrent</li>
+</ol>
+<p>we call this state <strong>ergodic.</strong> If all states in an irreducible markov chain is ergodic, then we call this markov chain a <strong>ergodic chain </strong></p>
+<h3 id="stationary-distribution-and-balance-equations">2.3 Stationary Distribution and Balance Equations</h3>
+<p>Consider a markov chain go through infinite steps. Under some condition, we would find that:</p>
+<p><span class="math display">\[
+\lim _{n \to \infty}P^{(n)} = \begin{bmatrix}
+\pi(0) &amp; \pi(1)&amp;... &amp; \pi(m)\\
+\pi(0) &amp; \pi(1)&amp;... &amp; \pi(m)\\
+... &amp; ... &amp;...\\
+\pi(0) &amp; \pi(1)&amp;... &amp; \pi(m)\\
+\end{bmatrix}
+\]</span></p>
+<p>If this limitation does exists, we call the markov chain reach a <strong>stationary distribution</strong>. The limitation <span class="math inline">\(\pi(i )\)</span> is called the <strong>long-run proportion</strong> or <strong>stationary probability</strong> of state <span class="math inline">\(i\)</span> . <span class="math inline">\(\sum_i^m \pi(i) = 1\)</span>.</p>
+<p>The condition of being able to reach stationary distribution is complex, but basically, a markov chain will eventually converge if it satisfies:</p>
+<ol type="1">
+<li>irreducible</li>
+<li>all states are aperiodic</li>
+</ol>
+<p>A important property of stationary markov chain is that, for each state, the “flow- in” equals the “flowout”. For example, in such a transition diagram:</p>
+<p><img src="/2023/04/23/markov-chain/3.png" srcset="/img/loading.gif" lazyload></p>
+<p>for state 9, it should have:</p>
+<p><span class="math display">\[
+(P_{99}+P_{93}+P_{95})\pi_9 = P_{59}\pi_5+P_{39}\pi_3
+\]</span></p>
+<p>For a markov chain, <span class="math inline">\(\sum_ jP_ {ij} =1\)</span>, thus:</p>
+<p><span class="math display">\[
+\pi_9 = P_{59}\pi_5+P_{39}\pi_3
+\]</span></p>
+<p>Specifically, for a markov chain reach stationary distribution, let <span class="math inline">\(\pi = (\pi_1,\pi_ 2,...\pi_ m)\)</span> , P denote the one-step transition probability matrix, we should have:</p>
+<p><span class="math display">\[
+\pi = \pi \cdot P 
+\]</span></p>
+<p>Thus, we can find the long-run proportion by solving a system of equations. We call this system of equations the <strong>stationary balance equations.</strong></p>
+<p>Specifically, if the stationary distribution of a markov chain does not change when we reverse the time order, we call this markov chain <strong>time reversible.</strong> In this case we have:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\pi_i  P_{ij} &amp;= \pi_i P_{ji}\\
+\pi \cdot P &amp;= \pi \cdot P^ T  
+\end{aligned}
+\]</span></p>
+<p>It can be proven that a time reversible markov chain has to be able to reach stationary distribution.</p>
+<p>If a markov chain has transient states, it is not irreducible and does not necessarily have a stationary distribution. In such case, we can still calculate the mean time spent in transient states. Such a mean is different given different start point. Since it is impossible to enter transient state from recurrent state, the start point can only be transient states.</p>
+<p>Let <span class="math inline">\(T = \{0,1,2,...t \}\)</span> denote the collection of all transient states. <span class="math inline">\(P_T\)</span> denote the one-step probability matrix consists only of these states. Note here the row sums of <span class="math inline">\(P_T\)</span> can be less then 1. Let <span class="math inline">\(s_{ij}\)</span> denote the mean number of steps that the process stay in <span class="math inline">\(j\)</span> if it starts from <span class="math inline">\(i\)</span>. Let:</p>
+<p><span class="math display">\[
+S = \begin{bmatrix}
+s_{01} &amp; s_{02}&amp;... &amp; s_{0m}\\
+s_{11} &amp; s_{12}&amp;... &amp; s_{1m}\\
+... &amp; ... &amp;...\\
+s_{m1} &amp; s_{m2}&amp;... &amp; s_{mm}\\
+\end{bmatrix}
+\]</span></p>
+<p>With proofing omitted, we can obtained:</p>
+<p><span class="math display">\[
+S = (I - P_T)
+\]</span></p>
+<h2 id="continuous-time-markov-chain">3. Continuous Time Markov Chain</h2>
+<h3 id="transition-rate">3.1 Transition Rate</h3>
+<p>We said a random process is a Continuous Time Markov Chain if for all moments and states, we have:</p>
+<p><span class="math display">\[
+P\{ X_{s+t} = j | X_1 = i_1,...X_s= i_s\}  = P\{ X_{s+ t} = j|X_s = i \}
+\]</span></p>
+<p>If this probability is independent to <span class="math inline">\(s\)</span> , we say this markov chain has a stationary transition probability, denoted as <span class="math inline">\(P_{ij}(t )\)</span>. We can such markov chain a <strong>Time-homogeneous Markov Chain</strong>. For example, the Poisson Process is a time-homogeneous CTMC.</p>
+<p>In a continuous time Markov chain, the transition times <span class="math inline">\(t\)</span> between states are <strong>exponentially distributed</strong>. After <span class="math inline">\(t\)</span> , the process leaves <span class="math inline">\(i\)</span> and enter state <span class="math inline">\(j\)</span> with a probability <span class="math inline">\(P_ {ij }(t )\)</span>, where <span class="math inline">\(\sum_jP_{ij}(t ) =1\)</span>, <span class="math inline">\(P_{ii}(t ) =0\)</span>. The probability of transitioning from state <span class="math inline">\(i\)</span> to state <span class="math inline">\(j\)</span> in a small time interval <span class="math inline">\(\Delta t\)</span> is given by <span class="math inline">\(P_ {ij}(\Delta t) = q_{ij}\Delta t\)</span>, where <span class="math inline">\(q_{ij}\)</span> is the <strong>rate</strong>, or to say, the probability of transition from state <span class="math inline">\(i\)</span> to state <span class="math inline">\(j\)</span> in a unit time. According to Chapman-Kolmogorov equations, we can define <span class="math inline">\(q_{ij}\)</span> as:</p>
+$$
+<span class="math display">\[\begin{aligned}
+q_{ij} &amp;= \lim_{\Delta t \to 0} \frac{P_{ij}(\Delta t)}{\Delta t} \qquad i \ne j\\
+q_{ii} &amp;= \lim_{\Delta t \to 0} \frac{P_{ii}(\Delta t) - 1}{\Delta t} 
+
+\end{aligned}\]</span>
+<p>$$</p>
+<p>We can then obtain the transition rate matrix of a CTMC:</p>
+<p><span class="math display">\[
+Q = \begin{bmatrix}
+q_{00} &amp; q_{01}&amp;... &amp; q_{0m}\\
+q_{11} &amp; q_{12}&amp;... &amp; q_{1m}\\
+... &amp; ... &amp;...\\
+q_{m1} &amp; q_{m2}&amp;... &amp; q_{mm}\\
+\end{bmatrix}
+\]</span></p>
+<p>The diagonal entries of the rate matrix <span class="math inline">\(Q\)</span> are negative so that the row sums equal zero:</p>
+<p><span class="math display">\[
+q_{ii} = \sum_{j \ne i} q_{ij}
+\]</span></p>
+<p>In other would, the entry <span class="math inline">\(q_{ii}\)</span> actually represents the opposite number of “flow-out”. This Matrix <span class="math inline">\(Q\)</span> has same meaning as the one-step transition probability matrix in a DTMC, and the matrix of <span class="math inline">\(P(t )\)</span> has the same meaning as the matrix <span class="math inline">\(P^{(n )}\)</span> in DTMC.</p>
+<h3 id="stationary-balance-equations">3.2 Stationary Balance Equations</h3>
+<p>The condition that a CTMC can reach stationary distribution is simply <strong>irreducible.</strong></p>
+<p>Back to the definition of transition rate, we can deduce the following equations:</p>
+<p><span class="math display">\[
+P&#39;_{ij}(t) = \sum_{k \ne j}q_{kj}P_{ik(t)} - v_iP_{ij}(t)
+\]</span></p>
+<p><span class="math display">\[
+P&#39;_{ij}(t) = \sum_{k \ne i }q_{ik}P_{kj(t)} - v_iP_{ij}(t)
+\]</span></p>
+<p>where <span class="math inline">\(v_i = \sum_{j \ne i} q_{ij}\)</span>, representing the total “flow-out” amount of state <span class="math inline">\(i\)</span>.</p>
+<p>These two equations are called <strong>Kolmogorov’s Forward Equation</strong> and <strong>Kolmogorov’s Backward Equation</strong>.</p>
+<p>Like DTMC, we define the stationary probability as:</p>
+<p><span class="math display">\[
+\lim_{t \to \infty} \begin{bmatrix}
+p_{00}(t) &amp; p_{01}(t)&amp;... &amp; P_{0m}(t)\\
+p_{11}(t) &amp; p_{12}(t)&amp;... &amp; q_{1m}(t)\\
+... &amp; ... &amp;...\\
+p_{m1}(t) &amp; p_{m2}(t)&amp;... &amp; p_{mm}(t)\\
+\end{bmatrix} = \begin{bmatrix}
+\pi(0) &amp; \pi(1)&amp;... &amp; \pi(m)\\
+\pi(0) &amp; \pi(1)&amp;... &amp; \pi(m)\\
+... &amp; ... &amp;...\\
+\pi(0) &amp; \pi(1)&amp;... &amp; \pi(m)\\
+\end{bmatrix}
+\]</span></p>
+<p>where <span class="math inline">\(\pi_i\)</span> standards for the limitation probability, or long-run proportion of state <span class="math inline">\(i\)</span>. Let <span class="math inline">\(\pi = (\pi_0,\pi_1,...\pi_m)\)</span>. Since the limitation probability is a constant, <span class="math inline">\(\frac{dP(t)}{dt} =0\)</span> , we can then transform the Kolmogorov ‘s equations into:</p>
+<p><span class="math display">\[
+0= \pi \cdot Q 
+\]</span></p>
+<p><span class="math display">\[
+0= Q \cdot \pi 
+\]</span></p>
+<p>These give the stationary balance equations of a CTMC.</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Probability-Statistics/" class="category-chain-item">Probability &amp; Statistics</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Markov-Chain/">#Markov Chain</a>
+      
+        <a href="/tags/Stochastic-Process/">#Stochastic Process</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Basics of Markov Chain</div>
+      <div>http://example.com/2023/04/23/markov-chain/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Zhengyuan Yang</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>April 23, 2023</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/04/18/linear-algebra/" title="Basics of Linear Algebra">
+                        <span class="hidden-mobile">Basics of Linear Algebra</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <i class="iconfont icon-bug"></i> <a href="http://zhengyuanyang.com/report/" target="_blank" rel="nofollow noopener"><span>Report Bug</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>
