@@ -23,12 +23,14 @@
 <meta property="og:site_name" content="Data Shore">
 <meta property="og:description" content="This article discuss about the experiment results analysis process of an A&#x2F;B testintechniques regarding to Experiment Sensitivity Improvement.">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2023/02/18/sensitivity-improvement/1.png">
 <meta property="article:published_time" content="2023-02-18T23:48:48.000Z">
-<meta property="article:modified_time" content="2023-03-03T21:27:17.091Z">
+<meta property="article:modified_time" content="2023-04-26T09:21:15.067Z">
 <meta property="article:author" content="Zhengyuan Yang">
 <meta property="article:tag" content="A&#x2F;B Testing">
 <meta property="article:tag" content="Sensitivity Improvement">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2023/02/18/sensitivity-improvement/1.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -222,7 +224,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          8.5k words
+          10k words
         
       </span>
     
@@ -233,7 +235,7 @@
         
         
         
-          71 mins
+          87 mins
         
       </span>
     
@@ -297,11 +299,17 @@
                 <h1 id="ab-testing-experiment-sensitivity-improvement">A/B Testing: Experiment Sensitivity Improvement</h1>
 <h2 id="about-sensitivity-improvement">1. About Sensitivity Improvement</h2>
 <p>If you expected there to be an significance effect but the results turn out to be insignificant, there's a chance that the sensitivity of the experiment is not big enough. In other word, given current sample size, your experiment can not perform enough statistical power as your demand. The sensitivity is usually measured by the Minimum Detectable E Effect(MDE).</p>
-<p>Notice that when MDE is smaller than the PSB, even if we further improve the sensitivity by reduce mde, the mean of difference on metrics would still be lower than the PSB(any valid significant difference <span class="math inline">\(\mu\)</span> should has <span class="math inline">\(\mu &lt; mde\)</span>, while <span class="math inline">\(mde &lt; psb\)</span>). In such cases, the results have no chance to be practically significant. In other word, <strong>we only need improve sensitivity when:</strong> <span class="math display">\[
+Notice that when MDE is smaller than the PSB, even if we further improve the sensitivity by reduce mde, the mean of difference on metrics would still be lower than the PSB(any valid significant difference <span class="math inline">\(\mu\)</span> should has <span class="math inline">\(\mu &lt; mde\)</span>, while <span class="math inline">\(mde &lt; psb\)</span>). In such cases, the results have no chance to be practically significant. In other word, <strong>we only need improve sensitivity when:</strong> <span class="math display">\[
 MDE &gt; PSB
-\]</span> Recall the formula of MDE: <span class="math display">\[
-MDE = (t_{\frac{1-\alpha}{2}} + t_ {1-\beta})\sqrt{\frac{\sigma_1^2}{n_ 1} + \frac{\sigma_2^2}{n_ 2}}
-\]</span> The formula suggests that if we want to maintain the desired statistical power, there are only two way to improve sensitivity:</p>
+\]</span> Recall the formula of MDE: $$
+<span class="math display">\[\begin{aligned}
+MDE &amp;= (t_{\frac{1-\alpha}{2}} + t_ {1-\beta})SE[\delta]\\
+&amp;= (t_{\frac{1-\alpha}{2}} + t_ {1-\beta})\sqrt{V[\bar{Y_T}-\bar{Y_C}]}\\
+&amp; = (t_{\frac{1-\alpha}{2}} + t_ {1-\beta})\sqrt{V[\bar{Y_T}]+ V[\bar{Y_C}]}\\
+&amp;=(t_{\frac{1-\alpha}{2}} + t_ {1-\beta})\sqrt{\frac{\sigma_1^2}{n_ 1} + \frac{\sigma_2^2}{n_ 2}}
+
+\end{aligned}\]</span>
+<p>$$ The formula suggests that if we want to maintain the desired statistical power, there are only two way to improve sensitivity:</p>
 <p><strong>More Sample</strong></p>
 <p>To collect more sample, we can:</p>
 <ul>
@@ -343,7 +351,7 @@ V[\Delta \%] =  \frac{1}{\tilde{Y_C}^2}V[ \tilde{Y_T}] + \frac{\tilde{Y_T}^2}{\t
 <p>Let <span class="math inline">\(Y\)</span> be the value of the metrics(mean or ratio): <span class="math display">\[
 V[Y] = V[Y]_{within}+V[Y]_{between} = \sum_kp_k\sigma^2_k + \sum_kp_k(\bar{y}_k-\bar{y})^2
 \]</span> where <span class="math inline">\(p_k\)</span> is the weight of the strata</p>
-<p>Let <span class="math inline">\(Y_k\)</span> be the within variance of the <span class="math inline">\(k^{th}\)</span> strata <span class="math display">\[
+<p>Construct new estimator <span class="math inline">\(\hat{Y} = \sum_kw_kY_k\)</span>, where <span class="math inline">\(Y_k\)</span> is the treatment effect of the <span class="math inline">\(k^{th}\)</span> strata <span class="math display">\[
 V[\hat{Y}] = \sum_kp_kV[Y_k] = V[Y_{within}] &lt; V[Y]
 \]</span></p>
 <p>The stratification eliminate the between-group variance, thus can reduce the overall variance. However, the covariate, which is the strata, must be discrete.</p>
@@ -375,10 +383,28 @@ Cov[X_1,X_2] \le \sqrt{V[X_1]V[X_2]}
 V[\hat{Y_T}-\hat{Y_C}] \in [0,V[Y_T- Y_C]] \qquad \theta \ge 0
 \]</span> we have minimum <span class="math inline">\(V[\hat{Y_T}-\hat{Y_C}]\)</span> when <span class="math inline">\(\theta =\frac{Cov[(Y_T-Y_C),(X_T-X_C)]}{V[X_T-X_C]}\)</span></p>
 <h3 id="variance-weighted-estimators">4.3 Variance-Weighted Estimators</h3>
-<p><a href="ongoing"></a></p>
-<p>see the thesis:</p>
-<p>Variance-Weighted Estimators to Improve Sensitivity in Online Experiments</p>
-<p>KEVIN LIOU, Facebook SEAN J. TAYLOR, Lyft</p>
+<p>For a single user, we can write the outcome of his experiment results of metrics Y as: <span class="math display">\[
+Y = \alpha+ \delta _iZ_ i +\epsilon_i
+\]</span> where <span class="math inline">\(\alpha\)</span> is the basic level of the outcome, <span class="math inline">\(\delta_i\)</span> is the treatment effect on the <span class="math inline">\(i^ {th}\)</span> user, <span class="math inline">\(Z_i\)</span> is a indicator of whether that user are exposed with the treatment, and <span class="math inline">\(\epsilon_i\)</span> is the random error of his observation. Suppose <span class="math inline">\(\epsilon_i \sim N(0,\sigma_i^2)\)</span>, then <span class="math inline">\(V[\delta_i] = \sigma_i^2\)</span>. This means the variance of treatment effect on a single user is decided by the characteristics of that user. We typically assume homogeneity in the variance of the error terms <span class="math inline">\(\sigma _i^2 = \sigma^2\)</span>, in other world, we treat all user as identical person except for whether they are exposed with the treatment. However, it is totally sensible if different user's variance are naturally different.</p>
+<p>Like the idea of stratification, we can regard the total variance as: <span class="math display">\[
+V[\delta] = E_i[variance  \ of \ user \ i]+ E[variance \ among \ users ]
+\]</span> Thus we can let: <span class="math display">\[
+\hat{ \delta}  = \sum_i w_ i\delta_ i
+\]</span> With derivation, it can be proven that when we set: <span class="math display">\[
+w_i = \frac{\sigma^2_i}{\sum_i\frac{1}{\sigma^2_i}}
+\]</span> we would have lowest variance: <span class="math display">\[
+min \ V[\hat{\delta}] = \frac{1}{\sum_i\frac{1}{\sigma_i^2}}
+\]</span> here: <span class="math display">\[
+\begin{aligned}
+V[\delta]-V[\hat{\delta}] &amp;= \frac{\sum_i\sigma_i^2}{n} -\frac{1}{\sum_i\frac{1}{\sigma_i^2}} \\
+&amp; = \frac{\sum _i\sigma^2_i\sum_i\frac{1}{\sigma_i^2} - n}{n\sum_i\frac{1}{\sigma_i^2}}\\
+&amp; &gt;0
+\end{aligned}
+\]</span> Thus, we lower the variance of the treatment <span class="math inline">\(\bar{Y_T}-\bar{Y_C}\)</span> and thus lower the MDE, increase the sensitivity of the experiment.</p>
+<p>In real application, <span class="math inline">\(\sigma_i^2\)</span> are estimated from pre-experiment data of Y on user i. For cost-saving calculation reason, we would bin the users into K groups and use the mean of user's variance who is in the group: <span class="math display">\[
+w_k = \frac{1}{\sigma_k^2} = \frac{1}{\frac{1}{n_k}\sum_{i \in k}\sigma_i^2}
+\]</span></p>
+<p><img src="/2023/02/18/sensitivity-improvement/1.png" srcset="/img/loading.gif" lazyload></p>
 
                 
               </div>
