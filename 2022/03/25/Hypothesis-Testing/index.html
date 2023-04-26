@@ -28,7 +28,7 @@
 <meta property="og:image" content="http://example.com/2022/03/25/Hypothesis-Testing/5.png">
 <meta property="og:image" content="http://example.com/2022/03/25/Hypothesis-Testing/8.png">
 <meta property="article:published_time" content="2022-03-25T23:25:15.000Z">
-<meta property="article:modified_time" content="2023-02-02T09:14:07.035Z">
+<meta property="article:modified_time" content="2023-04-25T22:55:31.443Z">
 <meta property="article:author" content="Zhengyuan Yang">
 <meta property="article:tag" content="Hypothesis Testing">
 <meta name="twitter:card" content="summary_large_image">
@@ -237,7 +237,7 @@
         
         
         
-          131 mins
+          138 mins
         
       </span>
     
@@ -558,60 +558,60 @@ F(n_1-1,n_2-1) = \frac{s_1^2/\sigma_1^2}{s_2^2/\sigma_2^2}=\frac{s_ 1^2}{s_2^2}
 <p>If it is a one-tail experiment, then reject <span class="math inline">\(H_0\)</span> when <span class="math inline">\(F &lt; F_{1-\alpha}\)</span></p>
 <h3 id="single-factor-anova">4.2 Single Factor ANOVA</h3>
 <p>We can use f- test to examine the impact of a factor to an indicator by judging if the indicator is same when the factor is set to different value</p>
-<p>Let the factor be Y, indicator be x</p>
+<p>Let the factor be X, indicator be Y. Let SST denote the total variance of Y, SSA denote the variance between groups grouping by value of X, SSE denote the variance of Y within each gropu, we have: <span class="math display">\[
+SST  = SSA + \sum_ i SSE_i
+\]</span></p>
 <p>Suppose we got the following observations:</p>
 <table>
 <thead>
 <tr class="header">
-<th>Y = Y1</th>
-<th>Y=y2</th>
-<th>y=y3</th>
-<th>y=y4</th>
+<th>X = <span class="math inline">\(x_1\)</span></th>
+<th>X = <span class="math inline">\(x_2\)</span></th>
+<th>X = <span class="math inline">\(x_3\)</span></th>
+<th>X = <span class="math inline">\(x_4\)</span></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>x=1</td>
-<td>x=2</td>
+<td>y=1</td>
+<td>y=2</td>
 <td>...</td>
 <td>...</td>
 </tr>
 <tr class="even">
-<td>x=3</td>
-<td>x=3</td>
+<td>y=3</td>
+<td>y=3</td>
 <td>...</td>
 <td>...</td>
 </tr>
 <tr class="odd">
-<td>x=2</td>
-<td>x=4</td>
+<td>y=2</td>
+<td>y=4</td>
 <td>...</td>
 <td>...</td>
 </tr>
 <tr class="even">
-<td>x=6</td>
-<td>x=6</td>
+<td>y=6</td>
+<td>y=6</td>
 <td>...</td>
 <td>...</td>
 </tr>
 </tbody>
 </table>
-<p>Let k = number of groups(number of different values of Y)</p>
-<p>Let <span class="math inline">\(n_i\)</span> = the number of samples in <span class="math inline">\(i_{th}\)</span> group</p>
-<p>Let n = <span class="math inline">\(max(n_ k)\)</span></p>
-<p>Construct <span class="math display">\[
+<p>Let k = number of groups(number of different values of X), <span class="math inline">\(n_i\)</span> = the number of samples in <span class="math inline">\(i_{th}\)</span> group, n = <span class="math inline">\(max(n_ k)\)</span></p>
+<p>Construct F statistics <span class="math display">\[
 F = \frac{SSA/df1}{SSE/df2}
-\]</span> where:</p>
+\]</span> With:</p>
 <ul>
-<li><p>df1 = k - 1</p></li>
-<li><p>df2 = n- k</p></li>
+<li><p><span class="math inline">\(df1 = k - 1\)</span></p></li>
+<li><p><span class="math inline">\(df2 = n- k\)</span></p></li>
 <li><p>SSA is Sum of Square Between Groups:</p>
 <p><span class="math display">\[
-SSA = \sum_{i=1}^kn_i(\bar{x_i}-\bar{x})
+SSA = \sum_{i=1}^kn_i(\bar{y_i}-\bar{y})
 \]</span> Where:</p>
 <ul>
-<li><span class="math inline">\(\bar{x_i}\)</span> is the average of the <span class="math inline">\(i_{th}\)</span> group</li>
-<li><span class="math inline">\(\bar{x}\)</span> is the average of all <span class="math inline">\(\bar{x_i}\)</span></li>
+<li><span class="math inline">\(\bar{y_i}\)</span> is the average of the <span class="math inline">\(i_{th}\)</span> group</li>
+<li><span class="math inline">\(\bar{y}\)</span> is the average of all <span class="math inline">\(\bar{y_i}\)</span></li>
 </ul></li>
 <li><p>SSE is the Sum of square error <span class="math display">\[
 SSE = \sum_{i=1}^k(n_i-1)s_i^2
@@ -621,28 +621,24 @@ SSE = \sum_{i=1}^k(n_i-1)s_i^2
 </ul></li>
 </ul>
 <p>Look up the F score table, if <span class="math inline">\(F &gt; F_{\alpha}\)</span>, reject <span class="math inline">\(H_0\)</span>(the factor do has an impact)</p>
-<h3 id="exam-on-the-significance-of-the-linear-regression">4.3 Exam on the significance of the Linear Regression</h3>
+<h3 id="linear-regression-anova">4.3 Linear Regression ANOVA</h3>
 <p>We can use f-test to examine on whether a liner model(linear hypothesis) fit a problem well</p>
 <p>Suppose we got the following linear hypothesis function: <span class="math display">\[
-y = \beta_1x_1 + \beta_2x_ 2 + \beta_ 0
-\]</span> Define SSR as: <span class="math display">\[
-SSR = ||\hat{y}-\bar{y}1_n||^2
-\]</span> Where:</p>
-<ul>
-<li><span class="math inline">\(\hat{y}\)</span> is the prediction of y</li>
-<li><span class="math inline">\(\bar{ y }\)</span> is the average of true y</li>
-<li>1n is a vector with all one</li>
-</ul>
-<p>Define SSE as: <span class="math display">\[
-SSR = ||y- \hat{y}||^2
-\]</span> Construct F statistics as: <span class="math display">\[
-F = \frac{SSR/p}{SSE/(n-p-1)}
+y = \beta_ 0+\beta_1x_1 + \beta_2x_ 2 +... \beta_mX_m +\epsilon
+\]</span> For a regression model, we believe there's such a equitation: <span class="math display">\[
+\begin{aligned}
+TSS &amp;= ESS + RSS\\
+\sum_i^n(y_i-\bar{y})^2 &amp; =\sum_i^n(\hat{y_i}-\bar{y})^2+\sum_i^n(y_i-\hat{y_i})^2
+\end{aligned}
+\]</span> In this equations, TSS stands for the total sum of squared error, which is the variance of the output variable. ESS stands for the explained sum of squared error, which represents estimated variance of Y, ot to say, the variance explained by the model. The RSS stands for the residual sum of squared error, which represents the error casued by the model's failure to capture the pattern. If <span class="math inline">\(ESS = 0\)</span>, TSS = RSS, which means the model equals to a model that simply predicted all samples as the average of Y, which indicates the model has a bad performance.</p>
+<p>With null hypothesis <span class="math inline">\(H_0: \beta_1 = \beta_2=...=\beta_m = 0\)</span>, or we can say <span class="math inline">\(H_0: ESS = 0\)</span>, we construct F statistics as: <span class="math display">\[
+f = \frac{ESS/df_{ESS}}{RSS/df_{RSS} } = \frac{ESS/m}{RSS/(n-m-1)}
 \]</span> where:</p>
 <ul>
 <li><p>n is number of samples</p></li>
-<li><p>p is number of variables(x)</p></li>
+<li><p>m is number of variables(x)</p></li>
 </ul>
-<p>Look up the F score table, if <span class="math inline">\(F &gt; F_{\alpha}\)</span>, reject <span class="math inline">\(H_0\)</span>. In such case, the linear model is significant to the change of the x and y, thus the linear hypothesis is acceptable. Otherwise, consider a non-linear model</p>
+<p>Look up the F score table, if <span class="math inline">\(F &gt; F_{\alpha}\)</span>, reject <span class="math inline">\(H_0\)</span>. In such case, the variance of Y can be well explained by the variance of X. Otherwise, consider feature engineering or a non-linear model.</p>
 <h2 id="chi2-test">5. <span class="math inline">\(\chi^2\)</span> Test</h2>
 <p>A <span class="math inline">\(\chi^2\)</span> Test construct the test statistics as a function of a <span class="math inline">\(\chi^2\)</span> variable. The degree of freedom are usually involved in the construction of such a statistics</p>
 <h4 id="chi-squared-test-for-independence">5.1 Chi-squared Test for Independence</h4>

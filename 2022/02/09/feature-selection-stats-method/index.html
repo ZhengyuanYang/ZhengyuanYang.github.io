@@ -25,7 +25,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://example.com/2022/02/09/feature-selection-stats-method/1.png">
 <meta property="article:published_time" content="2022-02-10T06:04:00.000Z">
-<meta property="article:modified_time" content="2022-12-04T21:21:58.209Z">
+<meta property="article:modified_time" content="2023-04-25T20:44:29.872Z">
 <meta property="article:author" content="Zhengyuan Yang">
 <meta property="article:tag" content="Feature Engineering">
 <meta property="article:tag" content="Feature Selection">
@@ -224,7 +224,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          8.4k words
+          9.9k words
         
       </span>
     
@@ -235,7 +235,7 @@
         
         
         
-          70 mins
+          83 mins
         
       </span>
     
@@ -373,63 +373,9 @@ r = \frac{\sum_i^n(X_i-\bar{X})(Y_i-\bar{Y})}{\sqrt{\sum_i^n(X_i-\bar{X})^2} \sq
 <p><strong>An implementation of feature selection based on Pearson R in Python</strong></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.feature_selection <span class="hljs-keyword">import</span> SelectKBest<br><span class="hljs-keyword">from</span> scipy.stats <span class="hljs-keyword">import</span> pearsonr<br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_all_pscore</span>(<span class="hljs-params">x,y</span>):</span><br>    k = np.zeros([<span class="hljs-number">4</span>,<span class="hljs-number">2</span>])<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">0</span>,x.shape[<span class="hljs-number">1</span>]):<br>        temp = pearsonr(x[:,i],y[:,<span class="hljs-number">0</span>])<br>        k[i,:] = np.array(temp)<br>    <span class="hljs-keyword">return</span> [k.T[<span class="hljs-number">0</span>],k.T[<span class="hljs-number">1</span>]]<br><span class="hljs-comment"># 下面的写法有问题理论上应该与上面的函数等价，实际上在调用np.array时，会把最内层的pearsonr系数值变成一个数组对象，导致SelectKBest无法</span><br><span class="hljs-comment"># 遍历，需要用astype把第一列转化为float，但这样很难封装进lambda函数里，不如不用，写这个的人铁nt，害我研究一个多小时</span><br><span class="hljs-comment"># get_all_pscore =  lambda X,Y:np.array(list(map(lambda x:pearsonr(x,Y),X.T))).T</span><br><br><span class="hljs-comment">#第一个参数为一个callable()，该函数以feature，target为输入，输出可以是两种：</span><br><span class="hljs-comment"># 1. 一对数组pearsonr系数-p值（可以是tuple中两个数组，也可以是ndarray，总之第一个维度须为2</span><br><span class="hljs-comment"># 2. 一个单一的数组（只有相关系数）</span><br><span class="hljs-comment"># 第二个参数k，代表选择前k个</span><br>data_1 = SelectKBest(get_all_pscore(),k=<span class="hljs-number">2</span>).fit_transform(data_0,target_0)<br></code></pre></td></tr></table></figure>
 <h3 id="hypothesis-testing">1.3 Hypothesis Testing</h3>
-<h4 id="chi-squared-test">1.3.1 Chi-Squared Test</h4>
-<p>chi-squared test is a <strong>supervised</strong> hypothesis testing method to calculate the probability that 2 variables are correlated</p>
-<ol type="1">
-<li><p>According to the observations, make the frequency table</p></li>
-<li><p>calculate the row total and the column total</p></li>
-<li><p>calculate the expectations for each cell by <span class="math inline">\(\frac{R_i*C_j}{total}\)</span> (<span class="math inline">\(\frac{125*310}{600} = 65\)</span>,etc.)</p></li>
-<li><p>the chi2 of each cell and the total chi2 are given by <span class="math display">\[
-\chi_{i,j}^2 = \frac{(O_{i,j} - E_{i,j})^2}{E_{i,j}}\\
-\chi^2 = \sum_{i,j}^{r,c}\chi_{i,j}^2
-\]</span></p></li>
-<li><p>calculate the degree of freedom, <span class="math inline">\(k=(r-1)(c-1)\)</span></p>
-<table>
-<thead>
-<tr class="header">
-<th>movie type</th>
-<th>High POPULARITY</th>
-<th>low POPULARITY</th>
-<th>Row total</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>type1</td>
-<td>50(65)</td>
-<td>75(60)</td>
-<td>125</td>
-</tr>
-<tr class="even">
-<td>type2</td>
-<td>125(155)</td>
-<td>175(145)</td>
-<td>300</td>
-</tr>
-<tr class="odd">
-<td>type3</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-</tr>
-<tr class="even">
-<td>type4</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-</tr>
-<tr class="odd">
-<td>column total</td>
-<td>310</td>
-<td>290</td>
-<td>600</td>
-</tr>
-</tbody>
-</table></li>
-<li><p>check the significance table of chi distribution to find the value of the random variable under given k and <span class="math inline">\(\alpha\)</span></p></li>
-<li><p>compare the <span class="math inline">\(\chi^2\)</span>z with the rejection area, if <span class="math inline">\(\chi^2\)</span> &gt; the found value(which means p value is smaller than <span class="math inline">\(\alpha\)</span>), then reject the null hypothesis</p></li>
-</ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.feature_selection <span class="hljs-keyword">import</span> SelectKBest, chi2<br>X, y = data_0,target_0<br>X_new = SelectKBest(chi2, k=<span class="hljs-number">2</span>).fit_transform(X, y)<br></code></pre></td></tr></table></figure>
+<p>We can conduct hypothesis testing on correlation to examine whether the correlation of two variables are significant, and we can drop those features with high correlation with others.</p>
+<p>For example, we can conduct <span class="math inline">\(\chi^2\)</span> test to test the correlation of discrete variables. We can conduct Fisher's Z test on the correlation coefficient to determine whether the correlation are significant.</p>
+<p>For details of these tests, refer to<a target="_blank" rel="noopener" href="http://zhengyuanyang.com/2022/03/25/Hypothesis-Testing/">this article</a></p>
 <h3 id="mutual-information">1.4 Mutual Information</h3>
 <p>For the theoretical part about Entrophy and Mutual Information, refer to <a target="_blank" rel="noopener" href="http://zhengyuanyang.com/2022/09/22/information-theory-in-ML/">this article</a> <span class="math display">\[
 MI = H(x,y) - H(x|y) - H(y|x) = \sum_x\sum_yp(x,y)log\frac{p(x,y)}{p(x)p(y)}\\
@@ -456,6 +402,32 @@ MI = H(x,y) - H(x|y) - H(y|x) = \sum_x\sum_yp(x,y)log\frac{p(x,y)}{p(x)p(y)}\\
 </ol>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.feature_selection <span class="hljs-keyword">import</span> RFE<br><span class="hljs-keyword">from</span> sklearn.feature_selection <span class="hljs-keyword">import</span> RFECV<br><span class="hljs-keyword">from</span> sklearn.model_selection <span class="hljs-keyword">import</span> StratifiedKFold<br><span class="hljs-keyword">from</span> sklearn.ensemble <span class="hljs-keyword">import</span> RandomForestClassifier<br><span class="hljs-comment"># REF works for all models that have a weight on features</span><br><span class="hljs-comment"># step: the number(or precentage) of feature to eliminate in each iteration</span><br>estimator = RandomForestClassifier(n_estimators=<span class="hljs-number">100</span>)<br>selector = RFE(estimator= estimator, n_features_to_select= <span class="hljs-number">3</span>,step=<span class="hljs-number">1</span>)<br>data_transformed = selector.fit_transform(data_0,target_0)<br><br><span class="hljs-comment"># REFCV</span><br><span class="hljs-comment"># REF with cross validation</span><br>cv = StratifiedKFold(n_splits=<span class="hljs-number">5</span>)<br>selector = RFECV(estimator= estimator, min_features_to_select= <span class="hljs-number">3</span>, cv=cv, step=<span class="hljs-number">1</span>)<br>data_transformed = selector.fit_transform(data_0,target_0)<br></code></pre></td></tr></table></figure>
 <h3 id="step-wise-regression">2.2 Step-wise Regression</h3>
+<p>Stepwise regression is a variable selection method used in multiple linear regression to identify the most significant predictors or independent variables in a dataset. It is an iterative process that involves adding or removing variables based on their statistical significance, with the goal of improving the overall model's performance. Stepwise regression can help to mitigate multicollinearity, reduce overfitting, and simplify a model for easier interpretation.</p>
+<p>There are three primary types of stepwise regression: forward selection, backward elimination, and bidirectional elimination (also known as stepwise selection).</p>
+<ol type="1">
+<li>Forward selection:
+<ul>
+<li>Start with an empty model (i.e., no independent variables)</li>
+<li>Add the most significant variable based on a predetermined significance level threshold (e.g., p-value &lt; 0.05)</li>
+<li>Continue adding variables one at a time, each time selecting the variable that provides the most significant improvement to the model</li>
+<li>Stop when no further variables meet the significance level for inclusion</li>
+</ul></li>
+<li>Backward elimination:
+<ul>
+<li>Start with a full model (i.e., all independent variables included)</li>
+<li>Remove the least significant variable based on a predetermined significance level threshold (e.g., p-value &gt; 0.1)</li>
+<li>Continue removing variables one at a time, each time selecting the variable that has the least significant impact on the model</li>
+<li>Stop when all remaining variables meet the significance level for retention</li>
+</ul></li>
+<li>Bidirectional elimination (stepwise selection):
+<ul>
+<li>Start with either an empty model or a full model</li>
+<li>At each step, consider both adding and removing variables based on predetermined significance levels for inclusion and retention</li>
+<li>Continue adding or removing variables iteratively until no more variables meet the criteria for inclusion or exclusion</li>
+</ul></li>
+</ol>
+<p>Stepwise regression has some limitations and assumptions. The procedure assumes a linear relationship between the independent and dependent variables and requires that the data meet the assumptions of linear regression (e.g., normally distributed errors, homoscedasticity, and absence of multicollinearity). Additionally, stepwise regression can be sensitive to the initial set of variables, and the final model may depend on the order in which variables are considered.</p>
+<p>Despite these limitations, stepwise regression can be a valuable tool for identifying the most important predictors in a dataset and building a parsimonious model with improved interpretability.</p>
 <h2 id="embedded">3. Embedded</h2>
 <p>Some models, like Lasso, Ridge, and Random Forest has method embedded in the model to evaluate features. Train these model first and than make selection of feature.</p>
 <p><strong>Pro</strong>: fast, easy to apply</p>

@@ -23,12 +23,15 @@
 <meta property="og:site_name" content="Data Shore">
 <meta property="og:description" content="This article discussed probability density estimation methods">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2023/02/13/prob-dense-estimation/1.png">
+<meta property="og:image" content="http://example.com/2023/02/13/prob-dense-estimation/2.png">
 <meta property="article:published_time" content="2023-02-13T20:36:40.000Z">
-<meta property="article:modified_time" content="2023-02-22T04:34:14.084Z">
+<meta property="article:modified_time" content="2023-04-26T07:30:27.243Z">
 <meta property="article:author" content="Zhengyuan Yang">
 <meta property="article:tag" content="Parameter Estimation">
 <meta property="article:tag" content="Probability Density Estimation">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2023/02/13/prob-dense-estimation/1.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -222,7 +225,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.2k words
+          6.7k words
         
       </span>
     
@@ -233,7 +236,7 @@
         
         
         
-          27 mins
+          57 mins
         
       </span>
     
@@ -335,8 +338,40 @@ P(\theta|E) = \frac{P(E|\theta)P(\theta)}{P(E)} = \frac{P(E|\Theta = \theta)P(\T
 \]</span> Such assumption make the calculation of the posterior probability much more easier. The MAP allows to add the prior distribution of <span class="math inline">\(\theta\)</span> into the estimation. It is a simpler version of Bayesian Estimation.</p>
 <h2 id="non-parameter-estimation">3. Non-parameter Estimation</h2>
 <h3 id="histogram">3.1 Histogram</h3>
-<h3 id="kernel-density-estimation">3.2 Kernel Density Estimation</h3>
-<h3 id="parzen-windows-k_n-neighbors">3.2 Parzen Windows &amp; <span class="math inline">\(K_n\)</span> Neighbors</h3>
+<p>A histogram is a graphical representation of data distribution. It is used to show the frequency distribution of a set of continuous or discrete data. In a histogram, the data is divided into a set of intervals, also known as bins. The number of values that fall into each bin is represented by the height of the bar above the bin.</p>
+<p><img src="/2023/02/13/prob-dense-estimation/1.png" srcset="/img/loading.gif" lazyload></p>
+<p>Let <span class="math inline">\(h\)</span> denote the width of a bin with range <span class="math inline">\([a,a+h]\)</span>, Let <span class="math inline">\(k\)</span> denote the number of sample in that bin, n denote the total number of samples. The probability density in any points lie in <span class="math inline">\([a, a+ h )]\)</span> would be: <span class="math display">\[
+P(x) = \frac{k}{nh}
+\]</span></p>
+<p>There is no optimal method for selecting the bin width of a histogram. A bin width that is too large can distort the estimated probability distribution, while a bin width that is too small can lead to overfitting. In addition, the probability density estimated from histogram are not continuous on the endpoints on bins. Therefore, histograms are often only used to roughly observe the shape of a distribution and cannot be used for accurate probability predictions.</p>
+<h3 id="kernel-density-estimationparzen-windows">3.2 Kernel Density Estimation(Parzen Windows)</h3>
+<p>KDE can be seen as a improvement of histogram. We know that PDF is the derivative of CDF. For a histogram, when the value of <span class="math inline">\(h\)</span> tends to 0, we obtain the PDF. Let <span class="math inline">\(f(x)\)</span> denote the PDF and <span class="math inline">\(F(x)\)</span> denote the CDF: <span class="math display">\[
+f(x) = \lim_{h \to 0} \frac{F(x+h) - F(x-h)}{2h}
+\]</span></p>
+<p>In a histogram, we use the empirical distribution, which is the ratio of the number of data points falling in the interval <span class="math inline">\([x-h, x+h]\)</span> to the total number of data points, to substitute <span class="math inline">\(F(x+h) - F(x-h)\)</span>. By taking a small enough <span class="math inline">\(h\)</span> to ensure that the condition <span class="math inline">\(h \to 0\)</span> is satisfied, we obtain the probability density formula for the histogram:</p>
+<p><span class="math display">\[
+p(x) = \frac{count_{x_i}([x-h,x+h])}{2nh}
+\]</span></p>
+<p>Now, we assume that the data points falling within the interval <span class="math inline">\([x-h,x+h]\)</span> have different contributions (weights) to the probability density estimate of <span class="math inline">\(x\)</span>. This contribution satisfies a certain distribution, where the farther away from <span class="math inline">\(x\)</span>, the smaller the contribution, and the integral should be equal to 1. We use a function <span class="math inline">\(K(\frac{x_i-x}{h})\)</span> to represent the contribution of data point <span class="math inline">\(x_i\)</span> near <span class="math inline">\(x\)</span> to <span class="math inline">\(p(x)\)</span>, and let <span class="math inline">\(t = \frac{x_i-x}{h}\)</span>, <span class="math inline">\(K_0(t) = \frac{1}{2}K(t)\)</span>, ensuring that <span class="math inline">\(\int K_0(t)dt = 1\)</span>. At this point, the PDF estimate becomes:</p>
+<p><span class="math display">\[
+p(x) = \frac{1}{2nh}\sum_{x_i\in [x-h,x+h]} K(\frac{x_i-x}{h}) = \frac{1}{nh}\sum_{x_i\in [x-h,x+h]} K_0(t_i )
+\]</span></p>
+<p>At this point, we refer to <span class="math inline">\(K_0(t)\)</span> as the kernel function and the estimation of <span class="math inline">\(p(x)\)</span> as kernel density estimation. The estimation of <span class="math inline">\(p(x)\)</span> is continuous, meaning that for any <span class="math inline">\(x\)</span>, we can estimate the corresponding <span class="math inline">\(p(x)\)</span>, unlike histograms where the probability density estimation of bin endpoints is discontinuous.</p>
+<p><img src="/2023/02/13/prob-dense-estimation/2.png" srcset="/img/loading.gif" lazyload></p>
+<p>Common kernel functions for KDE includes:</p>
+<ul>
+<li>Gaussian kernel: <span class="math inline">\(\phi(t) = \frac{1}{\sqrt{2\pi}}e^{-\frac{1}{2}t^2}\)</span></li>
+<li>Exponential kernel: <span class="math inline">\(\phi(t) = e^ {-|u|}\)</span></li>
+<li>Triangular kernel: <span class="math inline">\(\phi(t) = \left \{ \begin{aligned} &amp;1-|t| \quad &amp;|t|&lt;1\\ &amp;0 &amp;otherwise \end{aligned}\right.\)</span></li>
+<li>hypersphere kernel: <span class="math inline">\(\phi(t)= \left \{ \begin{aligned} &amp;1 \quad &amp;||t||&lt;1\\ &amp;0 &amp;otherwise \end{aligned}\right.\)</span></li>
+</ul>
+<p>When we adopt the hypersphere kernel, the contribution function works the same as the counting in the histogram, the difference is that instead of pre-decide all sections, we now count the the points in section <span class="math inline">\([x- h,x+ h ]\)</span> for any <span class="math inline">\(x\)</span> , so <span class="math inline">\(p( x )\)</span> is continuous. Just like histogram, the KDE still need us to manually decide <span class="math inline">\(h\)</span> , and the trade-off between distortion and overfitting still exists.</p>
+<h3 id="k-nearest-neighbors">3.3 K Nearest Neighbors</h3>
+<p>KDE fixed the length <span class="math inline">\(h\)</span> of the neighborhood of <span class="math inline">\(x\)</span>. This approach may lead to unstable estimation results of probability density for some regions with low density, where there are very few data points within the neighborhood of <span class="math inline">\(x\)</span>. As an alternative approach, we can fix the number <span class="math inline">\(k\)</span> of data points within the neighborhood of <span class="math inline">\(x\)</span> and allow the length <span class="math inline">\(h\)</span> to vary. In this case, the estimation of probability density is given by:</p>
+<p><span class="math display">\[
+p(x) = \frac{k}{nV_k(x)}
+\]</span></p>
+<p>where <span class="math inline">\(V_k(x)\)</span> is the length of <span class="math inline">\(x\)</span>’s neighborhood that contain <span class="math inline">\(k\)</span> neighbors.</p>
 
                 
               </div>

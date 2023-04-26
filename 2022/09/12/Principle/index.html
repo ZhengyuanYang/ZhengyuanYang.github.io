@@ -24,7 +24,7 @@
 <meta property="og:description" content="Summry of Learning Principle in Machine Learning">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-09-12T08:29:16.000Z">
-<meta property="article:modified_time" content="2022-09-12T15:05:40.482Z">
+<meta property="article:modified_time" content="2023-04-25T23:28:54.921Z">
 <meta property="article:author" content="Zhengyuan Yang">
 <meta property="article:tag" content="Learning Principle">
 <meta name="twitter:card" content="summary_large_image">
@@ -221,7 +221,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.6k words
+          2.7k words
         
       </span>
     
@@ -232,7 +232,7 @@
         
         
         
-          22 mins
+          23 mins
         
       </span>
     
@@ -298,11 +298,10 @@
 <h2 id="loss-function-risk-function-and-objective-function">1. Loss function, Risk function and Objective function</h2>
 <p>Loss function is a function used to evaluate the fitness of a model</p>
 <p>For supervised learning, loss function evaluate the difference between the predicted output and true output, noted as <span class="math inline">\(L(Y,f(x, \theta))\)</span>. Ususally, loss function is applied to a single sample or a part of the samples, it cannot evaluate the overall performance of the model. To obtain that, we define: <span class="math display">\[
-R_{exp}(\theta) = E_P[L(Y,f(x, \theta))] = \int_{X*Y}L(Y,f(x, \theta)P(X,Y)dxdy
-\]</span> Where <span class="math inline">\(R_{exp}\)</span> is called <strong>risk function</strong> or **expected loss*</p>
+R_{exp}(\theta) = E_P[L(Y,f(x, \theta))] = \int_{X*Y}L(Y,f(x, \theta))P(X,Y)dxdy
+\]</span> Where <span class="math inline">\(R_{exp}\)</span> is called <strong>risk function</strong> or <strong>expected loss</strong></p>
 <p>To convert a ML problem into an optimization problem, a ideal practice is to adopt risk function as the objective function for the optimization program. However, this require us to know the true JPD P(X, Y), which is usually unknown in real problem(we can only know the estimated JPD through observational dataset), this is called an ill-formed problem</p>
-<p><em>Note: sometimes, instead of directly use loss function, we would use a function of the loss function to construct objective function, for example, the boosting algorithm</em></p>
-<p>For unsupervised learning, the loss function is a totally different thing, we usually directly talked about the objective function since we do not have a <span class="math inline">\(Y_{true}\)</span> to compare with. The specific form of the objective function varies from specific type of unsupervised learning</p>
+<p>The objective function a concept in the context of optimization. It refer to the function the optimizer is minimizing. In many case, the objective function in the model is the same as the risk function. However, there also exist situation that we cannot call a risk function a objective function(e. g. Boosting, PCA).</p>
 <h2 id="empirical-risk-minimization">2. <strong>Empirical Risk Minimization</strong></h2>
 <p>An obvious solution for ill-formed problem is to replace ture P(X,Y) with the observed <span class="math inline">\(\hat{P(X,Y)}\)</span> on training dataset.</p>
 <p>Suppose the weight of all sample are equivalent, we define <span class="math display">\[
@@ -317,7 +316,7 @@ R_{srm}(\theta) = R_{emp} + \lambda J(\theta)
 <p>When we use structural risk as our objective function, we call the learning principle of the machine learning "SRM"</p>
 <p>For a probability model, under some condition, we can consider SRM as equivalent to a <strong>Maximum-A-Posterior</strong>(MAP). Refer to another article about parameter estimation</p>
 <h2 id="objective-function-for-unsupervised-learning">4. Objective function for Unsupervised Learning</h2>
-<p>[ongoing]</p>
+<p>For unsupervised learning, although we can introduce regularization techniques, we normally want directly classify unsupervised learning models into a certain learning principle. We instead emphasize the objective function of their optimization process. Objective functions for specific algorithm can be found in corresponding articles.</p>
 
                 
               </div>
