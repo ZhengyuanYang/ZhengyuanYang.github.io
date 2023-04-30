@@ -25,10 +25,10 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://example.com/2023/03/06/evaluation-cluster/1.png">
 <meta property="article:published_time" content="2023-03-06T21:29:30.000Z">
-<meta property="article:modified_time" content="2023-03-09T05:10:03.303Z">
+<meta property="article:modified_time" content="2023-04-26T21:52:14.017Z">
 <meta property="article:author" content="Zhengyuan Yang">
-<meta property="article:tag" content="Clustering">
 <meta property="article:tag" content="Model Evaluation">
+<meta property="article:tag" content="Clustering">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/2023/03/06/evaluation-cluster/1.png">
   
@@ -224,7 +224,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.9k words
+          5.1k words
         
       </span>
     
@@ -235,7 +235,7 @@
         
         
         
-          33 mins
+          43 mins
         
       </span>
     
@@ -337,8 +337,63 @@ B = \sum_k n_k \ ||c_ k-c||^2_2
 CHI =  \frac{B}{K-1}/\frac{W}{n-K}
 \]</span> where n is the number of all samples. The greater s is, the better clustering performance is. The theoratical range of CHI is <span class="math inline">\((0,+\infty)\)</span>. Note that CHI often prefer smaller number of cluster, while small K gives high CHI, it could also give high distortion. Again, we should evaluate the performance based on multiple metrics as a integer.</p>
 <h2 id="evaluation-for-clustering-stability">3. Evaluation for Clustering Stability</h2>
-<p>Clustering stability: an overview</p>
-<p>luxberg</p>
+<p>A clustering should be stable that it can remain same on clustering results(low variance) when the sample points vary. Suppose $D $ is the original sample set, <span class="math inline">\(D&#39;\)</span> is another sample set drawn from the same population, <span class="math inline">\(C\)</span> is a clustering plan. If we can find a distant function <span class="math inline">\(d\)</span> to measure the similarity between the clustering results, then we want: <span class="math display">\[
+d[C(D),C(D&#39;)] \approx 0
+\]</span> Thus, we can apply such steps to test the stability of a clustering plan:</p>
+<ol type="1">
+<li>Generate <span class="math inline">\(m\)</span> perturbed versions of the original dataset <span class="math inline">\(D\)</span>, denote as <span class="math inline">\(V = \{v_1,v_ 2,...v_ m\}\)</span></li>
+<li>For each version, conduct clustering plan <span class="math inline">\(C\)</span> and obtain and clustering results <span class="math inline">\(C_ i\)</span></li>
+<li>For each pair of <span class="math inline">\((i, j)\)</span> in m, compute the distance <span class="math inline">\(d(C_i,C_j)\)</span></li>
+<li>The overall instability metric would be <span class="math inline">\(I(C) = \frac{1}{m^2}\sum_{i, j}d(C_i,C_j)\)</span></li>
+</ol>
+<p>These procedures brings the following question:</p>
+<p><strong>Generating perturbed versions</strong></p>
+<p>Solutions includes:</p>
+<ul>
+<li><p>Draw a random subsample from <span class="math inline">\(D\)</span> with or without replacement</p></li>
+<li><p>Add random noise to the original <span class="math inline">\(D\)</span></p></li>
+<li><p>Create artificial samples through oversampling methods</p></li>
+</ul>
+<p><strong>Distance Measure</strong></p>
+<p>The clustering results of <span class="math inline">\(C_i\)</span> and <span class="math inline">\(C_j\)</span> is formed as:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Data points</th>
+<th><span class="math inline">\(C_i\)</span> label</th>
+<th>$C_j $ Label</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(x_1\)</span></td>
+<td>1</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(x_2\)</span></td>
+<td>3</td>
+<td>3</td>
+</tr>
+<tr class="odd">
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(x_n\)</span></td>
+<td>k</td>
+<td>k</td>
+</tr>
+</tbody>
+</table>
+<p>These can be seen as two collections <span class="math inline">\(\{(x,C_i)\}, \{(x,C_j\}\)</span> or two sequnce <span class="math inline">\(C_i, C_j\)</span> by taking <span class="math inline">\(x\)</span> as index. Thus we can use the following metrics to measure the distance:</p>
+<ul>
+<li>Minimal Matching Distance</li>
+<li>Jaccard Distance</li>
+<li>Hamming Distance</li>
+</ul>
+<p>Details of these metrics can be found in <a target="_blank" rel="noopener" href="http://zhengyuanyang.com/2022/10/08/distance/">this article</a></p>
 
                 
               </div>
@@ -372,9 +427,9 @@ CHI =  \frac{B}{K-1}/\frac{W}{n-K}
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Clustering/">#Clustering</a>
-      
         <a href="/tags/Model-Evaluation/">#Model Evaluation</a>
+      
+        <a href="/tags/Clustering/">#Clustering</a>
       
     </div>
   

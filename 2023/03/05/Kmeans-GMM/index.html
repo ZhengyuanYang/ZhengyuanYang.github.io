@@ -16,17 +16,21 @@
   <meta name="author" content="Zhengyuan Yang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="This article discuss four types of scaler in machine learning">
+    <meta name="description" content="This article discuss some distance-based clustering methods.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="K-Means and GMM">
 <meta property="og:url" content="http://example.com/2023/03/05/Kmeans-GMM/index.html">
 <meta property="og:site_name" content="Data Shore">
-<meta property="og:description" content="This article discuss four types of scaler in machine learning">
+<meta property="og:description" content="This article discuss some distance-based clustering methods.">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://example.com/2023/03/05/Kmeans-GMM/2.png">
 <meta property="og:image" content="http://example.com/2023/03/05/Kmeans-GMM/1.png">
+<meta property="og:image" content="http://example.com/2023/03/05/Kmeans-GMM/3.png">
+<meta property="og:image" content="http://example.com/2023/03/05/Kmeans-GMM/4.png">
+<meta property="og:image" content="http://example.com/2023/03/05/Kmeans-GMM/5.png">
+<meta property="og:image" content="http://example.com/2023/03/05/Kmeans-GMM/6.png">
 <meta property="article:published_time" content="2023-03-05T19:17:44.000Z">
-<meta property="article:modified_time" content="2023-04-14T07:35:52.993Z">
+<meta property="article:modified_time" content="2023-04-30T10:43:34.164Z">
 <meta property="article:author" content="Zhengyuan Yang">
 <meta property="article:tag" content="K-Means">
 <meta property="article:tag" content="GMM">
@@ -226,7 +230,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          9.6k words
+          15k words
         
       </span>
     
@@ -237,7 +241,7 @@
         
         
         
-          80 mins
+          128 mins
         
       </span>
     
@@ -325,7 +329,7 @@ J  = \sum_n \sum_k r_{n,k} ||x_n-\mu_k||^2
 <li>K-Means assume the feature are not correlated. (<strong>Correlation Analysis</strong>)</li>
 <li>K-Means require encoding on categorical variable, this could give binary variable very high variance, and overestimate the effect of them. (<strong>Categorical Variable Processing</strong>)</li>
 <li>The traditional K-Means use euclidean distance, this assume different features(directions) have same importance(weights) to similarity. In real application, this assumption could not always been fulfilled. <strong>(Feature Weighting)</strong></li>
-<li>When a cluster actually exists in the space but failsto be recognize by the algorithm, we call it a hidden cluster. This can usually be caused by insufficient samples of that cluster(hidden clusters). K_Means cannot deal with imbalanced data hidden cluster.<strong>(Hierarchical Clustering)</strong></li>
+<li>When a cluster actually exists in the space but fails to be recognized by the algorithm, we call it a hidden cluster. This can usually be caused by insufficient samples of that cluster(hidden clusters). K_Means cannot deal with imbalanced data hidden cluster.<strong>(Hierarchical Clustering)</strong></li>
 </ol>
 <p>Although K-Means has so many drawbacks, it still has wide application in industries. The core reason is that it is simple and interpretable, and there is only one hyper parameter to adjust. The unstable results is decided by the inner mechanism of K-Means. If we really cannot find a stable clustering results through K-Means, we should consider other algorithm.</p>
 <p><img src="/2023/03/05/Kmeans-GMM/2.png" srcset="/img/loading.gif" lazyload></p>
@@ -353,19 +357,96 @@ J  = \sum_n \sum_k r_{n,k} ||x_n-\mu_k||^2
 <p>Kernel K-means is an unsupervised clustering algorithm that extends the traditional K-means algorithm by incorporating the kernel trick. The kernel trick allows for clustering of non-linearly separable data by implicitly mapping the data points to a higher-dimensional feature space. By using kernel functions, we can compute similarity between data points in the higher-dimensional space without explicitly calculating their high-dimensional representations.</p>
 <p>The specific difference is, when calculating the distance between two data points, we know use a kernel distance(kernel trick) to evaluate the similarity of 2 data point in a high dimension.</p>
 <p>Choose a kernel function: Select an appropriate kernel function, such as the Gaussian Radial Basis Function (RBF), polynomial kernel, or Sigmoid kernel. The kernel function is used to compute similarities between data points in the higher-dimensional space.</p>
-<p>for details of kernel function, refer to <a href>ongoing</a></p>
-<h3 id="k-means-on-categorical-variable">2.4 K-Means on Categorical Variable</h3>
+<p>For details of kernel function, refer to <a href>ongoing</a></p>
+<h3 id="k-medoids">2.4 K-Medoids</h3>
+<p>We can conduct outlier detection to elimate their influences. However, some points that are on the boundary of clusters would "pull away" the centroid we found. Consider a cluster <span class="math inline">\((1,2),(2,1),(1,1),(5,10)\)</span>, the last point would distinctly move the centroid in updating.</p>
+<p>To fix such problems, we can introduce K-Medoids, which apply different centroid updating strategy. In K-Medoids, the new centroid is not the mean of all data points in the cluster, Instead, for each point <span class="math inline">\(x\)</span> in the cluster, we need to compute the Manhattan Distance between <span class="math inline">\(x\)</span> and every other data point. The sum of these distances is the error of point <span class="math inline">\(x\)</span> : <span class="math display">\[
+\begin{aligned}
+Error(x_i) &amp;= \sum_{j \ne i } ManhattanD(x_i,x_j)\\
+centroid &amp;= argmin_{x_i} \ Error(x_i) 
+\end{aligned}
+\]</span></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs pseudocode"># Initialize Centers<br>centers = randomly select k data points as centers<br><br>while terminate condition is not reached<br>  # find a best split<br>  for each x in X:<br>      for each center in centers:<br>          dis_k = distance(x,center) #usually euclidean distance<br>          dis.append(dis_k)<br>      # the closet center is the cluster x belong<br>      x.cluster = minidx(dis)<br>  # update centers using the data points in to it<br>  for each cluster_k:<br>      for each x_i in cluster:<br>      		#calculate the sum of mahatten distance between point x_i and the rest point<br>      		for each x_j in rest points in the cluster:<br>      				error_ij = Mah_Dist(x_i,x_j)<br>      		error_i = sum(error_ij)<br>      		Error.append(error_i)<br>      # update the cent <br>      center_k = argmin_x(Error)<br></code></pre></td></tr></table></figure>
+<p>Although K-Medoids can undermine the effect of points on boundary, the time complexity of updating centroids is <span class="math inline">\(O(n^2)\)</span>, which makes the whole algorithm time-consuming.</p>
+<h3 id="k-means-on-categorical-variable">2.5 K-Means on Categorical Variable</h3>
 <p>K-means algorithm has issues when dealing with categorical variables. This is mainly because K-means relies on Euclidean distance to compute similarity between data points, which is meaningful for continuous variables but not applicable to categorical variables. Categorical variables are typically non-numeric data that cannot be directly used to calculate Euclidean distances. Even if you transform categorical variables into numeric values through some feature engineering method(such as one-hot encoding), it still doesn't capture their actual relationships.</p>
 <p>To address this issue, we can adopt the following approaches to improve the K-means algorithm for handling categorical variables:</p>
 <p><strong>Alternative distance metrics:</strong></p>
 <p>For categorical data, you can use other distance metrics such as Hamming distance or Jaccard similarity. These metrics can better capture the relationships between categorical variables. When implementing K-means, you can replace Euclidean distance with one of these metrics. For details of Distance, refer to <a target="_blank" rel="noopener" href="http://zhengyuanyang.com/2022/10/08/distance/#jaccard-distance">this article</a></p>
-<p>An implementation of this method is the <strong>K-Modes</strong> algorithm. K-Modes is a clustering algorithm specifically designed for categorical variables. It works by replacing the Euclidean distance with the <strong>matching distance</strong> and updating the cluster centroids using the mode instead of the mean. The matching distance is the number of mismatching attributes between two data points, for example a data point X = [1,2,5,3,0], and the centroid C = [1,2,4,3,2], then <span class="math inline">\(d_{match} = 3\)</span></p>
+<p>An implementation of this method is the <strong>K-Modes</strong> algorithm. K-Modes is a clustering algorithm specifically designed for categorical variables. It works by replacing the Euclidean distance with the <strong>hamming distance</strong> and updating the cluster centroids using the mode instead of the mean. The matching distance is the number of mismatching attributes between two data points, for example a data point X = [1,2,5,3,0], and the centroid C = [1,2,4,2,3], then <span class="math inline">\(d_{match} = 3\)</span></p>
 <p><strong>K-Prototypes algorithm:</strong></p>
 <p>K-Prototypes is a hybrid of K-means and K-Modes algorithms. It is suitable for datasets containing both continuous and categorical variables. The K-Prototypes algorithm calculates a mixed distance based on the attribute type, combining the Euclidean distance for continuous variables with the matching distance for categorical variables. Similarly, updating the cluster centroids also requires considering both continuous and categorical variables separately.</p>
-<p><strong>K-Medoids algorithm for binary data</strong>: The K-Medoids algorithm is a variant of the K-means algorithm that uses pairwise distances between data points instead of raw features to compute similarity. For categorical data, you can transform them into binary representation (e.g., one-hot encoding) and then use Hamming distance or other distance metrics suitable for binary data. The K-Medoids algorithm selects actual data points as cluster centers (i.e., medoids) instead of computing the centroid positions.</p>
-<p>Remember that these methods are specifically designed to handle categorical variables in clustering algorithms. It is essential to select the most suitable method based on the characteristics of your data and the problem at hand.</p>
 <h3 id="weighted-k-means">2.5 Weighted K-Means</h3>
+<p>In the original K-Means algorithm, we eliminated the dimensional differences of each feature through scaling, and at this point, the importance of each feature for similarity calculation is equal. However, in real applications, this may not be true. If a feature contains very little information and a lot of noise, but has the same importance as other dimensions in distance calculation, then this feature will reduce the accuracy of clustering. Therefore, an improved algorithm, Weighted K-Means, was proposed to solve this problem. In WKMeans, we assign a weight to each feature, and the optimization objective function of clustering becomes: <span class="math display">\[
+J(C) = J  = \sum_n \sum_k r_{n,k}\sum_i w_i^\beta(x_{n,i}-\mu_{k,i})^2
+\]</span> where <span class="math inline">\(\omega_i\)</span> is the weight of the <span class="math inline">\(i^{th}\)</span> dimension, <span class="math inline">\(\sum_i\omega_i = 1\)</span>. <span class="math inline">\(\beta\)</span> is a parameter controls the extent of weighting, usually among <span class="math inline">\([0,1]\)</span>. When <span class="math inline">\(\beta = 0\)</span>, the WKMeans degenerated to the original K-Means algorithm.</p>
+<p>In training procedures of the WK-Means, we need to update the weight vector after we update the centroids of all clusters in each iteration. With the Lagrange multiplier method, we can obtain the updating equation of <span class="math inline">\(\omega_i\)</span> : <span class="math display">\[
+\omega_i = \frac{1}{\sum_j\frac{D_i}{D_j}^{\frac{1}{\beta-1}}}
+\]</span> where <span class="math inline">\(D_j\)</span> is the sum of unweighted distance of all samples to their corresponding centroid on the <span class="math inline">\(j^{th}\)</span> dimension, <span class="math inline">\(D_j = \sum_n\sum_kr_{n,k}(x_{n,j}-\mu_{k,j})^2\)</span>.</p>
 <h3 id="hierarchical-clustering">2.6 Hierarchical Clustering</h3>
+<p>Hierarchical clustering is a type of clustering algorithm that aims to build a hierarchy of clusters. It can be classified in Agglomerative Clustering and Divisive Clustering.</p>
+<p>The Agglomerative Clustering starts by considering all data points as individual clusters and then repeatedly merges the two closest clusters until there is only one cluster left, while in divisive clustering, the algorithm starts with all the data points in a single cluster and recursively splits them into smaller and smaller clusters, until the minimum number of samples in a cluster is reached.</p>
+<p>The result is a tree-like structure, called a dendrogram, that shows the hierarchical relationships among the data points.</p>
+<figure>
+<img src="/2023/03/05/Kmeans-GMM/3.png" srcset="/img/loading.gif" lazyload alt="img"><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<p>The Divisive Clustering is easy to implement, we can simply repeat K-Means recursively on each hierarchy. The Agglomerative Clustering involves computing the similarly of two clusters when merging them, there are three metrics:</p>
+<ul>
+<li>Single Linkage: the distance between the two closest data points in the two clusters</li>
+</ul>
+<figure>
+<img src="/2023/03/05/Kmeans-GMM/4.png" srcset="/img/loading.gif" lazyload alt="img"><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<ul>
+<li>Complete Linkage: the distance between the two farthest data points in the two clusters</li>
+</ul>
+<figure>
+<img src="/2023/03/05/Kmeans-GMM/5.png" srcset="/img/loading.gif" lazyload alt="img"><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<ul>
+<li>Compute the distance between each pair of data points in the two clusters。Calculate the mean of all distances as the distance between two clusters.</li>
+</ul>
+<figure>
+<img src="/2023/03/05/Kmeans-GMM/6.png" srcset="/img/loading.gif" lazyload alt="img"><figcaption aria-hidden="true">img</figcaption>
+</figure>
+<h2 id="gaussian-mixture-model">3. Gaussian Mixture Model</h2>
+<h3 id="mixture-model">3.1 Mixture Model</h3>
+<p>A mixture model is a statistical model that represents the presence of subpopulations within an overall population, without requiring that an observed data set should identify the sub-population to which an individual observation belongs.</p>
+<p><img src></p>
+<p>If we believe the distribution of each sub-population is a Gaussian distribution, then we call the whole model a gaussian mixture model: <span class="math display">\[
+P(x) = \sum_i^k \alpha_kN(x|\mu_k,\sigma_k)
+\]</span> where <span class="math inline">\(\sum_ i^ k \alpha_ k = 1\)</span>, representing a weight that allows <span class="math inline">\(\int P(X = x) = 1\)</span>. In a clustering problem, we can use the probability that a random data point will belong to cluster k as the weight <span class="math inline">\(\alpha_k = P(z=C_k)\)</span>, in other word, the distribution of the hidden variable z, denoted as <span class="math inline">\(P(z) = (\pi_1,\pi_2,...\pi_k)\)</span>. Since we usually have multiple feature in clustering, the gaussian distribution is usually a <a target="_blank" rel="noopener" href="http://zhengyuanyang.com/2022/11/04/distribution/#multivariate-normal-distribution">mutilvariate normal distribution</a>, replace <span class="math inline">\(\mu_k,\sigma_k\)</span> with matrix of mean and covariance <span class="math inline">\(\Mu, \Sigma\)</span>: <span class="math display">\[
+P(x) = \sum_i^{k}P(x|z=C_i)P(z=C_i) = \sum_i^{k}P(x|\Mu_ k,\Sigma ^2_k)\pi_k
+\]</span> Thus, we find that the GMM model transform the clustering to a parameter estimating problem on <span class="math inline">\((M_1,...M_k),(\Sigma_1,...\Sigma_k),(\pi_1,...\pi_k)\)</span>.</p>
+<h3 id="em-algorithm-to-solve-gmm">3.2 EM Algorithm to Solve GMM</h3>
+<p>We can applied the <a target="_blank" rel="noopener" href="http://zhengyuanyang.com/2023/03/03/EM/">EM algorithm</a> to optimize the estimation of the three groups of parameters.</p>
+<p>We know from the EM algorithm that for each point <span class="math inline">\(x_i\)</span>, the lower boundary of the likelihood function is: <span class="math display">\[
+Q_i(z_j) = P(z_j|x_i,\theta_j)=\frac{P(z_j)P(x_i|z_j,\theta_j)}{\sum_jP(z_j)P(x_i|z_j,\theta_j)}= \frac{\pi_jN(x_i|\Mu_j,\Sigma_j)}{\sum_j^k\pi_jN(x_i|\Mu_j,\Sigma_j)}
+\]</span> The Likelihood function would be: <span class="math display">\[
+\begin{aligned}
+L(\Mu,\Sigma,\pi) &amp;= \sum_i^n\sum_j Q_i(z_j)log(P(x_i,Z_i = z_j|\theta_{j}))\\
+&amp; =\sum_i\sum_j \frac{\pi_jN(x_i|\Mu_j,\Sigma_j)}{\sum_j^k\pi_jN(x_i|\Mu_j,\Sigma_j)}log[\pi_jN(x_i|\Mu_j,\Sigma_j)]
+\end{aligned}
+\]</span> Through deriving, we can find the update equation for the parameters. Let <span class="math inline">\(\mu^{(t)}_{j}\)</span> denote the estimation for mean of the <span class="math inline">\(j^{th}\)</span> cluster in the <span class="math inline">\(t^{th}\)</span> iteration: <span class="math display">\[
+\begin{aligned}
+\Mu_{j}^{(t+1)}  &amp;=  \frac{\sum_i^nQ_i(z_j) x_i}{\sum_iQ_i(z_j)}\\
+\Sigma_j^{(t+1)} &amp;= \frac{\sum_i^n (x_i - \Mu_j^{(t+1)})^T\cdot (x_i - \Mu_j^{(t+1)})Q_i(z_j)}{\sum_i^nQ_i(z_j)}\\
+\pi^{(t+1)}_j &amp;= \frac{\sum_i^nQ_i(z_j)}{n}
+\end{aligned}
+\]</span> Thus the traning algorithm for GMM is:</p>
+<ol type="1">
+<li>Randomly initial <span class="math inline">\(\Mu,\Sigma,\pi\)</span></li>
+<li>For each sample, compute posterior probability <span class="math inline">\(Q_i(z_j)\)</span></li>
+<li>Update <span class="math inline">\(\Mu,\Sigma,\pi\)</span> through the equations above</li>
+<li>Repeat step 2-3, until termination condition is reached</li>
+</ol>
+<h3 id="about-gmm">3.3 About GMM</h3>
+<ol type="1">
+<li>GMM is a probability model, the prediction yields the probabilities a data points belongs to each cluster</li>
+<li>To predict a data point, fix <span class="math inline">\(\Mu, \Sigma\)</span>, compute the probability it belongs to each cluster</li>
+<li>Unlike K-Means, GMM is soft-clustering, K-Means can be saw as a hard clustering variant of GMM.</li>
+<li>GMM directly model on <span class="math inline">\(P(X, Z)\)</span>, thus it is a generative model.</li>
+</ol>
 <p>​</p>
 
                 

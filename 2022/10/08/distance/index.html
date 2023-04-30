@@ -28,7 +28,7 @@
 <meta property="og:image" content="http://example.com/2022/10/08/distance/4.png">
 <meta property="og:image" content="http://example.com/2022/10/08/distance/5.png">
 <meta property="article:published_time" content="2022-10-08T21:47:07.000Z">
-<meta property="article:modified_time" content="2022-12-13T13:46:55.488Z">
+<meta property="article:modified_time" content="2023-04-26T21:24:10.858Z">
 <meta property="article:author" content="Zhengyuan Yang">
 <meta property="article:tag" content="Distance">
 <meta name="twitter:card" content="summary_large_image">
@@ -226,7 +226,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.5k words
+          4k words
         
       </span>
     
@@ -237,7 +237,7 @@
         
         
         
-          30 mins
+          33 mins
         
       </span>
     
@@ -323,7 +323,7 @@ d = \sum_i^m |x_i-y_i|
 <p>The manhattan distance is the maxnium of <strong>axis difference</strong> between two data points. It is given as: <span class="math display">\[
 D = max |x_i-y_i|
 \]</span></p>
-<h2 id="minkowski-distance">4.Minkowski Distance</h2>
+<h2 id="minkowski-distance">4. Minkowski Distance</h2>
 <p>Minkowski Distance is the distance between two points in a p norm space <span class="math display">\[
 d = (\sum|x_i-y_i|^p)^\frac{1}{p}
 \]</span></p>
@@ -360,16 +360,26 @@ d = 1- cos(\theta) = 1- \frac{a\cdot b}{|a|*|b|}
 <li><p>The rule of cosine similarity of two vector is "according -&gt; 1, Orthogonal -&gt;, inverse -&gt; -1". Such rule remains same even when the dimension is extremely high. Since the Euclidean distance could be effected by the number of dimensions, consine distance can be a better measure when it comes to high-dimension data. FOr example, a long sentence and a short sentence share a same meaning can have large euclidean distance, but small cosine distance</p></li>
 <li><p>cosine distance is not a strictly defined distance for mathematics, as it does not satisfy triangle inequality</p></li>
 </ul>
-<h2 id="jaccard-distance">7. Jaccard Distance</h2>
-<p>The Jaccard Distance uses Jaccard similarity to represent distance: <span class="math display">\[
+<h2 id="collections-distancemmd-and-jaccard-index">7. Collections Distance(MMD and Jaccard Index)</h2>
+<p><strong>Minimal Matching Distance</strong></p>
+<p>Minimal Matching Distance counts the matching points in two collections： <span class="math display">\[
+MM(A,B) = 1 - |A \cap B|
+\]</span> The Jaccard Distance uses Jaccard similarity to represent distance: <span class="math display">\[
 d = 1-J(A,B) = 1-\frac{|A \cap B|}{|A \cup B|}
 \]</span> Where J(A,B) is the ratio of two set's intersection and their union</p>
 <ul>
-<li>Jaccard distance can represent the similarity of two set instead of to points. For example, it can measure the similarity of two customer's shopping records. It can be applied in user segmentation and recommendation</li>
+<li>Jaccard distance can represent the similarity of two set instead of two points. For example, it can measure the similarity of two customer's shopping records. It can be applied in user segmentation and recommendation</li>
 </ul>
-<h2 id="string-related-distance">8. String Related Distance</h2>
-<p><strong>Hamming Distance:</strong> For two string s1 and s2, the hamming distance is the minimun times needed to transform s1 to s2 by replacing a single character</p>
-<p><strong>Edit Distance</strong>：For two string s1 and s2, the edit distance is the minimun times needed to transform s1 to s2 by adding,deleting or replacing a single character</p>
+<h2 id="sequences-distancehamming-distance-edit-distance">8. Sequences Distance(Hamming Distance &amp; Edit Distance)</h2>
+<p><strong>Hamming Distance</strong></p>
+<p>The hamming distance measures two sequences with same length. Two element would be zero-distant only if there position and value are both identical:</p>
+<p>For two string s1 and s2, the hamming distance is the minimun times needed to transform s1 to s2 by replacing a single character: <span class="math display">\[
+H(&#39;abcde&#39;,&#39;acrdb&#39;) = 2
+\]</span></p>
+<p><strong>Edit Distance</strong>：</p>
+<p>The Edit distance can measure two sequences with different length. For two string s1 and s2, the edit distance is the minimun times needed to transform s1 to s2 by adding,deleting or replacing a single character. <span class="math display">\[
+E(&#39;aecfg&#39;,&#39;akgh&#39;) = 3
+\]</span></p>
 <h2 id="other-measure-similar-to-distance">9. Other Measure similar to Distance</h2>
 <p>Some measures, just like cosine distance, are not strictly defined distance by mathematics, but can take effects in a similar way, including:</p>
 <ul>

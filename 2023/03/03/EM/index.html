@@ -25,7 +25,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://example.com/2023/03/03/EM/1.png">
 <meta property="article:published_time" content="2023-03-04T07:18:49.000Z">
-<meta property="article:modified_time" content="2023-03-04T11:05:20.409Z">
+<meta property="article:modified_time" content="2023-04-30T10:52:45.630Z">
 <meta property="article:author" content="Zhengyuan Yang">
 <meta property="article:tag" content="EM Algorithm">
 <meta name="twitter:card" content="summary_large_image">
@@ -223,7 +223,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          5.3k words
+          5.6k words
         
       </span>
     
@@ -234,7 +234,7 @@
         
         
         
-          45 mins
+          47 mins
         
       </span>
     
@@ -312,27 +312,26 @@
 \sum_n ln[\sum_i P(X_n = x,Z_n = z_i)|\theta_i)] =  \sum_n ln[\sum_i Q(z_i)\frac{P(x,z_i|\theta_i)}{Q(z_i)}]
 \]</span> Where we demand <span class="math inline">\(Q(z)\)</span> is a new distribution such that: <span class="math inline">\(\sum Q(z_i)\)</span></p>
 <p>according to the Jensen inequality, <span class="math inline">\(log(\sum_i\lambda_iy_i) \ge \sum_i\lambda_i[log(y_i)]\)</span> , the equality is satisfied when <span class="math inline">\(y_i = c\)</span>.</p>
-Thus: <span class="math display">\[
+<p>Thus: <span class="math display">\[
 \iota(\theta,z|X) = \sum_n ln[\sum_i Q(z_i)\frac{P(x,z_i|\theta_i)}{Q(z_i)}] \ge \sum_n\sum_iQ(z_i)log\frac{P(x,z_i|\theta_i)}{Q(z_i)}
-\]</span> According the condition of the equality fulfillment of Jensen inequality: $$
-<span class="math display">\[\begin{aligned}
+\]</span> According the condition of the equality fulfillment of Jensen inequality: <span class="math display">\[
+\begin{aligned}
 \frac{P(x,z_i|\theta_i)}{Q(z_i)} &amp;= c \\
 P(x,z_i|\theta_i)&amp;= c Q(z_i)\\
 \sum_i P(x,z_i|\theta_i)&amp;= c \sum_i Q(z_i) = c\\
 Q(z_i) &amp;= \frac{P(x,z_i|\theta)}{c} = \frac{P(x,z_i|\theta_i)}{\sum_iP(x,z_i|\theta_i)}\\
-&amp;= \frac{P(x,z_i|\theta_i)}{P(x,|\theta_i)} = P(z_i|x,\theta_i)
-
-\end{aligned}\]</span>
-<p><span class="math display">\[
-We now know that when we select $Q(z_i) = P(z_i|x,\theta_i)$, what we get is **a low boundary** of the log likelihood function. Also: 
-\]</span> P(z_i|x,_i) =  =  $$ Suppose the value of the hidden variable is <span class="math inline">\(z_i\)</span>, and the parameter of the distribution when <span class="math inline">\(Z = z_i\)</span> is <span class="math inline">\(\theta_i\)</span>, the basic assumption of the problem can be solved by EM is, when <span class="math inline">\(\theta_i\)</span> is fixed for a value, and the sample results x are given, we should be able to calculate the specific value of <span class="math inline">\(P(z_i,x|\theta = \theta_i)\)</span></p>
+&amp;= \frac{P(x,z_i|\theta_i)}{P(x,|\theta_i)} = P(z_i|x,\theta_i)\\
+\end{aligned}
+\]</span> We now know that when we select <span class="math inline">\(Q(z_i) = P(z_i|x,\theta_i)\)</span>, what we get is <strong>a low boundary</strong> of the log likelihood function. We know that: <span class="math display">\[
+P(z_i|x,\theta_i) = \frac{P(z_i,x|\theta_i)}{P(x|\theta_i)} = \frac{P(z_i,x|\theta_i)}{\sum_iP(z_i,x|\theta_i)}
+\]</span> Suppose the value of the hidden variable is <span class="math inline">\(z_i\)</span>, and the parameter of the distribution when <span class="math inline">\(Z = z_i\)</span> is <span class="math inline">\(\theta_i\)</span>, the basic assumption of the problem can be solved by EM is, when <span class="math inline">\(\theta_i\)</span> is fixed for a value, and the sample results x are given, we should be able to calculate the specific value of <span class="math inline">\(P(z_i,x|\theta = \theta_i)\)</span></p>
 <p>Such a fact means, we can directly calculate <span class="math inline">\(Q(Z)\)</span> from the observation on data. <strong>This save us from calculating the <span class="math inline">\(Z^*\)</span> by <span class="math inline">\(\frac{\partial L}{\partial Z} = 0\)</span></strong>, where <span class="math inline">\(Z^*\)</span> denotes the optimal value of <span class="math inline">\(Z\)</span> about L when <span class="math inline">\(\theta_i\)</span> is fixed.</p>
 <p>According to such assumption, the EM algorithm can be conclude as:</p>
 <ol type="1">
-<li><p>Randomly select a value for each <span class="math inline">\(\theta_i\)</span> in <span class="math inline">\(\theta_i = \theta_{i,0}\)</span></p></li>
-<li><p><strong>Expectation</strong>: calculate the conditional probability<span class="math inline">\(Q(z_j) = P(Z_n = z_i,X_n = x|\theta_i = \theta_{i,0})\)</span>, <span class="math inline">\(Q(z_j)\)</span> should yield a constant for each <span class="math inline">\(z_i\)</span></p></li>
+<li><p>Randomly select a value for each <span class="math inline">\(\theta_i\)</span> in the first iteration, denoted as <span class="math inline">\(\theta_{i,0}\)</span></p></li>
+<li><p><strong>Expectation</strong>: For each sample <span class="math inline">\(x_n\)</span>, calculate the posterior probability <span class="math inline">\(Q_n(z_i) = P(Z_n = z_i,X_n = x_n|\theta_i = \theta_{i,0})\)</span>. This step should yield a constant <span class="math inline">\(Q_n(z_i)\)</span> for each <span class="math inline">\(z_i\)</span> for each sample n.</p></li>
 <li><p><strong>Maximization</strong>: bring <span class="math inline">\(Q(z)\)</span> back the likelihood function, since <span class="math inline">\(Q(z_i)\)</span> is now a constant and do not have an influence to derivative, we can reformat the likelihood function as: <span class="math display">\[
-\theta_{i,1} = argmax \ \ \sum_n\sum_i Q(z_i)log(P(X_n = x,Z_n = z_i|\theta_{i,0}))
+\theta_{i,1} = argmax \ \ \sum_n\sum_i Q_n(z_i)log(P(x_n,Z_n = z_i|\theta_{i,0}))
 \]</span></p></li>
 <li><p>Let <span class="math inline">\(\theta_i = \theta_{i,1}\)</span>, repeat step 2-4, until <span class="math inline">\(\theta\)</span> converge</p></li>
 </ol>
@@ -343,19 +342,19 @@ We now know that when we select $Q(z_i) = P(z_i|x,\theta_i)$, what we get is **a
 <li><span class="math inline">\(Z_n\)</span> denote the selection of coin in the <span class="math inline">\(n^{th}\)</span> trail</li>
 <li><span class="math inline">\(\theta_{A,k}, \theta_ {B,k}\)</span> denote the estimation of <span class="math inline">\(p_1,p_2\)</span> in the <span class="math inline">\(k^{th}\)</span> iteration</li>
 </ul>
-<p>suppose we have the following data(unlike shown in the picture, we do not know which coin is selected)</p>
+<p>suppose we have the following data(unlike shown in the picture, we do not know which coin is selected). Suppose the prior knowledge <span class="math inline">\(P(Z =A) = \frac{1}{2}\)</span> is fixed, and we do not want to update it.</p>
 <p><img src="/2023/03/03/EM/1.png" srcset="/img/loading.gif" lazyload></p>
 <p><strong>Step 1</strong></p>
 <p>Initialize <span class="math inline">\(\theta_A = 0.6, \ \theta_ B = 0.5\)</span></p>
 <p><strong>Step 2</strong></p>
-when <span class="math inline">\(Z = A, \theta = \theta_A\)</span>, now looking are the data of the first trail $$
-<span class="math display">\[\begin{aligned}
-P(Z_1 = A|X_1,\theta_{A,1})  &amp;= \frac{P(Z_1 = A, X_1=5|\theta_{A,1} = 0.6)}{P(Z_1 = A, X_1=5|\theta_{A,1} = 0.6) + P(Z_1 = B, X_1=5|\theta_{B,1} = 0.5)} \\
+<p>when <span class="math inline">\(Z = A, \theta = \theta_A\)</span>, now looking are the data of the first trail <span class="math display">\[
+\begin{aligned}
+P(Z_1 = A|X_1,\theta_{A,1})  &amp;= \frac{\frac{1}{2} P(Z_1 = A, X_1=5|\theta_{A,1} = 0.6)}{\frac{1}{2}P(Z_1 = A, X_1=5|\theta_{A,1} = 0.6) + \frac{1}{2}P(Z_1 = B, X_1=5|\theta_{B,1} = 0.5)} \\
 &amp; =\frac{0.6^5*(1-0.6)^5}{0.6^5*(1-0.6)^5 + 0.5^5*(1-0.5)^5} \\
 &amp; = 0.45
-
-\end{aligned}\]</span>
-<p>$$ Samely, <span class="math inline">\(P(Z_1 = B|X_1,\theta_{B,1})\)</span> is 0.55. Repeat the calculation for each of the <span class="math inline">\(n\)</span>trails. Let <span class="math inline">\(\mu_{A, n} = P(Z_n = A|X_n,\theta_{A,1}), \quad \mu_{B, n} = P(Z_n = B|X_n,\theta_{B,1})\)</span></p>
+\end{aligned}
+\]</span></p>
+<p>Samely, <span class="math inline">\(P(Z_1 = B|X_1,\theta_{B,1})\)</span> is 0.55. Repeat the calculation for each of the <span class="math inline">\(n\)</span> trails. Let the last posterior probability be <span class="math inline">\(\mu_{A, n} = P(Z_n = A|X_n,\theta_{A,1}), \quad \mu_{B, n} = P(Z_n = B|X_n,\theta_{B,1})\)</span></p>
 <p><strong>Step 3</strong></p>
 <p>Format the likelihood function: <span class="math display">\[
 \begin{aligned}
