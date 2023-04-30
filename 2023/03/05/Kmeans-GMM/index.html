@@ -30,7 +30,7 @@
 <meta property="og:image" content="http://example.com/2023/03/05/Kmeans-GMM/5.png">
 <meta property="og:image" content="http://example.com/2023/03/05/Kmeans-GMM/6.png">
 <meta property="article:published_time" content="2023-03-05T19:17:44.000Z">
-<meta property="article:modified_time" content="2023-04-30T10:43:34.164Z">
+<meta property="article:modified_time" content="2023-04-30T11:05:36.261Z">
 <meta property="article:author" content="Zhengyuan Yang">
 <meta property="article:tag" content="K-Means">
 <meta property="article:tag" content="GMM">
@@ -241,7 +241,7 @@
         
         
         
-          128 mins
+          127 mins
         
       </span>
     
@@ -415,35 +415,35 @@ J(C) = J  = \sum_n \sum_k r_{n,k}\sum_i w_i^\beta(x_{n,i}-\mu_{k,i})^2
 <p><img src></p>
 <p>If we believe the distribution of each sub-population is a Gaussian distribution, then we call the whole model a gaussian mixture model: <span class="math display">\[
 P(x) = \sum_i^k \alpha_kN(x|\mu_k,\sigma_k)
-\]</span> where <span class="math inline">\(\sum_ i^ k \alpha_ k = 1\)</span>, representing a weight that allows <span class="math inline">\(\int P(X = x) = 1\)</span>. In a clustering problem, we can use the probability that a random data point will belong to cluster k as the weight <span class="math inline">\(\alpha_k = P(z=C_k)\)</span>, in other word, the distribution of the hidden variable z, denoted as <span class="math inline">\(P(z) = (\pi_1,\pi_2,...\pi_k)\)</span>. Since we usually have multiple feature in clustering, the gaussian distribution is usually a <a target="_blank" rel="noopener" href="http://zhengyuanyang.com/2022/11/04/distribution/#multivariate-normal-distribution">mutilvariate normal distribution</a>, replace <span class="math inline">\(\mu_k,\sigma_k\)</span> with matrix of mean and covariance <span class="math inline">\(\Mu, \Sigma\)</span>: <span class="math display">\[
-P(x) = \sum_i^{k}P(x|z=C_i)P(z=C_i) = \sum_i^{k}P(x|\Mu_ k,\Sigma ^2_k)\pi_k
+\]</span> where <span class="math inline">\(\sum_ i^ k \alpha_ k = 1\)</span>, representing a weight that allows <span class="math inline">\(\int P(X = x) = 1\)</span>. In a clustering problem, we can use the probability that a random data point will belong to cluster k as the weight <span class="math inline">\(\alpha_k = P(z=C_k)\)</span>, in other word, the distribution of the hidden variable z, denoted as <span class="math inline">\(P(z) = (\pi_1,\pi_2,...\pi_k)\)</span>. Since we usually have multiple feature in clustering, the gaussian distribution is usually a <a target="_blank" rel="noopener" href="http://zhengyuanyang.com/2022/11/04/distribution/#multivariate-normal-distribution">mutilvariate normal distribution</a>, replace <span class="math inline">\(\mu_k,\sigma_k\)</span> with matrix of mean and covariance <span class="math inline">\(M, \Sigma\)</span>: <span class="math display">\[
+P(x) = \sum_i^{k}P(x|z=C_i)P(z=C_i) = \sum_i^{k}P(x|M_k,\Sigma ^2_k)\pi_k
 \]</span> Thus, we find that the GMM model transform the clustering to a parameter estimating problem on <span class="math inline">\((M_1,...M_k),(\Sigma_1,...\Sigma_k),(\pi_1,...\pi_k)\)</span>.</p>
 <h3 id="em-algorithm-to-solve-gmm">3.2 EM Algorithm to Solve GMM</h3>
 <p>We can applied the <a target="_blank" rel="noopener" href="http://zhengyuanyang.com/2023/03/03/EM/">EM algorithm</a> to optimize the estimation of the three groups of parameters.</p>
 <p>We know from the EM algorithm that for each point <span class="math inline">\(x_i\)</span>, the lower boundary of the likelihood function is: <span class="math display">\[
-Q_i(z_j) = P(z_j|x_i,\theta_j)=\frac{P(z_j)P(x_i|z_j,\theta_j)}{\sum_jP(z_j)P(x_i|z_j,\theta_j)}= \frac{\pi_jN(x_i|\Mu_j,\Sigma_j)}{\sum_j^k\pi_jN(x_i|\Mu_j,\Sigma_j)}
+Q_i(z_j) = P(z_j|x_i,\theta_j)=\frac{P(z_j)P(x_i|z_j,\theta_j)}{\sum_jP(z_j)P(x_i|z_j,\theta_j)}= \frac{\pi_jN(x_i|M_j,\Sigma_j)}{\sum_j^k\pi_jN(x_i|M_j,\Sigma_j)}
 \]</span> The Likelihood function would be: <span class="math display">\[
 \begin{aligned}
-L(\Mu,\Sigma,\pi) &amp;= \sum_i^n\sum_j Q_i(z_j)log(P(x_i,Z_i = z_j|\theta_{j}))\\
-&amp; =\sum_i\sum_j \frac{\pi_jN(x_i|\Mu_j,\Sigma_j)}{\sum_j^k\pi_jN(x_i|\Mu_j,\Sigma_j)}log[\pi_jN(x_i|\Mu_j,\Sigma_j)]
+L(M,\Sigma,\pi) &amp;= \sum_i^n\sum_j Q_i(z_j)log(P(x_i,Z_i = z_j|\theta_{j}))\\
+&amp; =\sum_i\sum_j \frac{\pi_jN(x_i|M_j,\Sigma_j)}{\sum_j^k\pi_jN(x_i|M_j,\Sigma_j)}log[\pi_jN(x_i|M_j,\Sigma_j)]
 \end{aligned}
 \]</span> Through deriving, we can find the update equation for the parameters. Let <span class="math inline">\(\mu^{(t)}_{j}\)</span> denote the estimation for mean of the <span class="math inline">\(j^{th}\)</span> cluster in the <span class="math inline">\(t^{th}\)</span> iteration: <span class="math display">\[
 \begin{aligned}
-\Mu_{j}^{(t+1)}  &amp;=  \frac{\sum_i^nQ_i(z_j) x_i}{\sum_iQ_i(z_j)}\\
-\Sigma_j^{(t+1)} &amp;= \frac{\sum_i^n (x_i - \Mu_j^{(t+1)})^T\cdot (x_i - \Mu_j^{(t+1)})Q_i(z_j)}{\sum_i^nQ_i(z_j)}\\
+M_{j}^{(t+1)}  &amp;=  \frac{\sum_i^nQ_i(z_j) x_i}{\sum_iQ_i(z_j)}\\
+\Sigma_j^{(t+1)} &amp;= \frac{\sum_i^n (x_i - M_j^{(t+1)})^T\cdot (x_i - M_j^{(t+1)})Q_i(z_j)}{\sum_i^nQ_i(z_j)}\\
 \pi^{(t+1)}_j &amp;= \frac{\sum_i^nQ_i(z_j)}{n}
 \end{aligned}
 \]</span> Thus the traning algorithm for GMM is:</p>
 <ol type="1">
-<li>Randomly initial <span class="math inline">\(\Mu,\Sigma,\pi\)</span></li>
+<li>Randomly initial <span class="math inline">\(M,\Sigma,\pi\)</span></li>
 <li>For each sample, compute posterior probability <span class="math inline">\(Q_i(z_j)\)</span></li>
-<li>Update <span class="math inline">\(\Mu,\Sigma,\pi\)</span> through the equations above</li>
+<li>Update <span class="math inline">\(M,\Sigma,\pi\)</span> through the equations above</li>
 <li>Repeat step 2-3, until termination condition is reached</li>
 </ol>
 <h3 id="about-gmm">3.3 About GMM</h3>
 <ol type="1">
 <li>GMM is a probability model, the prediction yields the probabilities a data points belongs to each cluster</li>
-<li>To predict a data point, fix <span class="math inline">\(\Mu, \Sigma\)</span>, compute the probability it belongs to each cluster</li>
+<li>To predict a data point, fix <span class="math inline">\(M, \Sigma\)</span>, compute the probability it belongs to each cluster</li>
 <li>Unlike K-Means, GMM is soft-clustering, K-Means can be saw as a hard clustering variant of GMM.</li>
 <li>GMM directly model on <span class="math inline">\(P(X, Z)\)</span>, thus it is a generative model.</li>
 </ol>
