@@ -16,27 +16,27 @@
   <meta name="author" content="Zhengyuan Yang">
   <meta name="keywords" content="">
   
-    <meta name="description" content="This article introduce the idea and procedures of PSM.">
+    <meta name="description" content="This article introduce the Synthetic Control Method.">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Propensity Score Matching">
-<meta property="og:url" content="http://example.com/2023/05/11/PSM/index.html">
+<meta property="og:title" content="Synthetic Control Method">
+<meta property="og:url" content="http://example.com/2023/05/22/synthetic-control/index.html">
 <meta property="og:site_name" content="Data Shore">
-<meta property="og:description" content="This article introduce the idea and procedures of PSM.">
+<meta property="og:description" content="This article introduce the Synthetic Control Method.">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/2023/05/11/PSM/1.png">
-<meta property="article:published_time" content="2023-05-12T04:09:31.000Z">
-<meta property="article:modified_time" content="2023-05-22T07:37:53.491Z">
+<meta property="og:image" content="http://example.com/2023/05/22/synthetic-control/1.png">
+<meta property="og:image" content="http://example.com/2023/05/22/synthetic-control/2.png">
+<meta property="article:published_time" content="2023-05-22T20:40:02.000Z">
+<meta property="article:modified_time" content="2023-05-22T21:29:36.481Z">
 <meta property="article:author" content="Zhengyuan Yang">
-<meta property="article:tag" content="Causal Effect Estimation">
-<meta property="article:tag" content="PSM">
+<meta property="article:tag" content="SCM">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/2023/05/11/PSM/1.png">
+<meta name="twitter:image" content="http://example.com/2023/05/22/synthetic-control/1.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>Propensity Score Matching - Data Shore</title>
+  <title>Synthetic Control Method - Data Shore</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -201,7 +201,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Propensity Score Matching"></span>
+            <span id="subtitle" data-typed-text="Synthetic Control Method"></span>
           
         </div>
 
@@ -212,8 +212,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-05-11 21:09" pubdate>
-          May 11, 2023 pm
+        <time datetime="2023-05-22 13:40" pubdate>
+          May 22, 2023 pm
         </time>
       </span>
     
@@ -224,7 +224,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          5.4k words
+          3.3k words
         
       </span>
     
@@ -235,7 +235,7 @@
         
         
         
-          46 mins
+          28 mins
         
       </span>
     
@@ -291,89 +291,42 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Propensity Score Matching</h1>
+            <h1 style="display: none">Synthetic Control Method</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="propensity-score-matching">Propensity Score Matching</h1>
-<h2 id="about-propensity-score">1. About Propensity Score</h2>
-<p>The <strong>propensity score matching(PSM)</strong> is a method for causal inference. Specifically, it is a method for estimating average treatment effect on treated(ATT). Recall the definition of ATT, where we have:</p>
+                <h1 id="synthetic-control-method">Synthetic Control Method</h1>
+<h2 id="about-synthetic-control-method">1. About Synthetic Control Method</h2>
+<p>Synthetic Control Method is a statistical technique used in policy evaluations. It can be deemed as an improvement for DID with matching techniques that can create homogeneous population to satisfy the parallel tendency assumption.</p>
+<p>The basic idea is to create an artificial counterfactual outcome, called <strong>synthetic control</strong> for treatment group by doing a regression on the control group. The synthetic control is created by weighting a combination of control units that have similar pre-treatment characteristics to the treated unit. The weights are chosen to minimize the difference between the pre-treatment outcomes of the treated unit and the synthetic control.</p>
+<h2 id="procedure-of-scm">2. Procedure of SCM</h2>
+<p>Suppose we have only one treated unit A, the factual and counterfactual outcome of it are denoted as <span class="math inline">\(Y_A\)</span> and <span class="math inline">\(Y_A^*\)</span>. We also have <span class="math inline">\(j\)</span> control units in the dataset, called donor pool. According to the idea of DID, we want to match the treated unit with a control unit that has parallel tendency so that we can take the outcome <span class="math inline">\(Y_c+\lambda\)</span> as <span class="math inline">\(Y_ A^ *\)</span>. Such a unit can be hard to find as there can be multiple confounders. Nevertheless, we can find a linear combination of these control units to mimic a unit that is homogeneous to the treated unit but yield the counterfactual outcome. We called this unit a <strong>synthetic control unit</strong>.</p>
+<p>Let <span class="math inline">\(X=\{x_1,x_2...x_n\}\)</span> denote the confounders,<span class="math inline">\(A = (T= 1,a_1,a_2,...,a_n,Y_a)\)</span>, <span class="math inline">\(S = (T= 0,s_1,s_2,...,s_n,Y_s)\)</span> denote the treated and synthetic unit, where <span class="math inline">\(a_1...a_n,a_1...a_n\)</span> is the <strong>pre-treatment</strong> value of confounding variables for these two unit. We can formed the input data as:</p>
+<p><img src="/2023/05/22/synthetic-control/1.png" srcset="/img/loading.gif" lazyload></p>
+<p>If we have time sequence data, we can stack the time dimension on the confounder dimension. The input and output data should like:</p>
+<p><img src="/2023/05/22/synthetic-control/2.png" srcset="/img/loading.gif" lazyload></p>
+<p>Fitting such a model would yield a series of weights <span class="math inline">\(W = (w_1,w_2,...w_j)\)</span>. Here we drop the interception in the weight vector <span class="math inline">\(w_0\)</span>. Let <span class="math inline">\(Y_C = (y_1,y_2,...y_j)\)</span> denote the value of outcome variable for the units in the donor pool after the treatment, we estimate the counterfactual outcome as:</p>
 <p><span class="math display">\[
-\begin{aligned}ATT &amp; = E[Y(1)-Y(0)|T=1]\\&amp;= \sum_x (E[Y|X,T=1]-E[Y|X,T=0]) * P(X|T=1)\end{aligned}
+\begin{aligned}
+Y^*_A &amp;= Y_s+\lambda = W \cdot Y_C\\
+\delta &amp;=Y_A-Y_A^* = Y_A- W\cdot Y_C-\lambda\\
+\lambda &amp;= \hat{Y_A} - W\cdot \hat{Y_C}
+\end{aligned}
 \]</span></p>
-<p>We now introduce a new concept propensity score, it represent a unit’s propensity to select treatment <span class="math inline">\(T\)</span> causing by factor <span class="math inline">\(X\)</span>, denoted as <span class="math inline">\(P = P(T=1|X)\)</span>. <span class="math inline">\(P\)</span> is caused only by <span class="math inline">\(X\)</span> and it represent the intact causal effect of <span class="math inline">\(X\)</span> on <span class="math inline">\(T\)</span>. In a causal graph, it is demonstrated in such way:</p>
-<p><img src="/2023/05/11/PSM/1.png" srcset="/img/loading.gif" lazyload></p>
-<p>Now suppose the following assumption is satisfied:</p>
-<ol type="1">
-<li>There’s no unmeasured confounders(CIA).</li>
-</ol>
+<p>where <span class="math inline">\(\lambda\)</span> is the pre-treatment difference of <span class="math inline">\(Y\)</span> between the treated unit and the weighted sum of the donor pool.</p>
+<p>Theoretically, we can repeat this process for each treated unit and find each of them a corresponding synthetic unit. We can then call these two group matching and calculate ATT. However, this can be very time consuming as we need to fit numerous regression model. Besides, finding the weight(conditional probability) for each pair of treated and synthetic unit can be difficult to decide. Thus, SCM are more often implemented when there is only one singles treated unit.</p>
+<h2 id="extrapolation-problem">3. Extrapolation Problem</h2>
+<p>In the regression model of SCM, we treat the number of units as the dimension of the feature space. In practice, the number of units is often not fixed. In addition, there may be some connections between units that violate SUTVA, which can make the weight results obtained by the regression model unstable and may result in extremely large or small coefficients. We call these units with extremely large or small weights Extrapolation. Extrapolation may make the estimation results of causal effects unstable.</p>
+<p>To solve the problem of extrapolation, we can add constraints to the optimization of linear regression. For example, we can require the weight <span class="math inline">\(w\)</span> to be between 0 and 1, and require the sum of <span class="math inline">\(W\)</span> to be 1. Thus, we change the optimization form of the regression problem to:</p>
 <p><span class="math display">\[
-(Y(0),Y(1)) \ \perp \! \! \!\perp \ T \quad |X
+\begin{aligned}
+&amp;obj \ ||X_A-X_S||^2\\
+&amp;s.t. &amp;\ 0&lt;w_j&lt;1 \quad \forall j \\
+&amp;\ &amp;\sum_j^J w_j = 1
+\end{aligned}
 \]</span></p>
-<ol start="2" type="1">
-<li>As <span class="math inline">\(P\)</span> represents all causal effects of <span class="math inline">\(X\)</span> on <span class="math inline">\(T\)</span> completely, when we condition on <span class="math inline">\(P\)</span> , we can block the causal effect of <span class="math inline">\(X\)</span> on <span class="math inline">\(T\)</span>:</li>
-</ol>
-<p><span class="math display">\[
-T \ \perp \! \! \!\perp \ X \quad |P
-\]</span></p>
-<ol start="3" type="1">
-<li>Common Support: <span class="math inline">\(0&lt;P(T=1|X) &lt;1\)</span>. When propensity score equals 0 or 1, it can excluded covariants that will directly decide <span class="math inline">\(T\)</span> , which would make matching infeasible.</li>
-</ol>
-<p>This brings us to:</p>
-<p><span class="math display">\[
-(Y(0),Y(1)) \ \perp \! \! \!\perp \ T \quad |P
-\]</span></p>
-<p>With such conclusion, we have:</p>
-<p><span class="math display">\[
-\sum_{ P| T= 1} (E[Y|P,T=1]-E[Y|P,T=0]) * P(P|T=1)
-\]</span></p>
-<p>We know that that in a real problem, there can exist multiple confounders and the dimension of <span class="math inline">\(X\)</span> can be really high. The PSM conclude the affection of all confounders into a propensity score, and make it easy for computation.</p>
-<h2 id="estimation-on-propensity">2. Estimation on Propensity</h2>
-<p>The estimation of propensity score is simply a problem of probability prediction on <span class="math inline">\(P(T=1|X)\)</span>. Most probability machine learning model as well as some non-probability model can do such job, including logistic regression, naive bayes, and decision tree.</p>
-<p>For such a machine learning model, a problem to consider is the feature selection. Features consist <span class="math inline">\(X\)</span>should guarantee:</p>
-<ol type="1">
-<li>All features that simultaneously effect <span class="math inline">\(T\)</span> and <span class="math inline">\(Y\)</span> should be concluded, so that the CIA is fulfilled.</li>
-<li>Features affected by <span class="math inline">\(T\)</span> should be excluded. These features are invariants and should account for <span class="math inline">\(P\)</span> .</li>
-<li>The features should not cause <span class="math inline">\(P= 1\)</span> or <span class="math inline">\(P=0\)</span>. which violate the common support assumption. From a machine learning perspective, too much features increase the variance.</li>
-</ol>
-<p>Such conditions suggest we should conduct causal relationship exploring. Usually we would start with large amount of features and filtered some of them, and then conduct structural causal estimation on the remaining features to ensure condition 1 and 2 are satisfied, then fit the model again.</p>
-<h2 id="matching">3. Matching</h2>
-<p>After Propensity estimation, each unit in the treatment group as well as the control group should have a propensity score in <span class="math inline">\((0,1)\)</span>. To calculate <span class="math inline">\(E[Y|P,T=1]-E[Y|P,T=0]\)</span>, we need to match unit in the treatment group with unit in control group with same or close propensity score. Common matching methods include:</p>
-<p><strong>Nearest Neighbors Matching</strong></p>
-<p>For each unit in treatment group, simply find a unit in control group with closest <span class="math inline">\(P\)</span> . We do this with or without replacement. If without replacement, the bias would reduce but the variance would increase, as fewer samples are used in computation:</p>
-<p><span class="math display">\[
-\tau = \frac{1}{N_T}\sum_{i \in T}(Y^T_i-Y^C_i)
-\]</span></p>
-<p>We can also match each unit in treatment group with multiple units in control group. In such case, we can give each neighbor a weight on causal effect according to the distance. Let <span class="math inline">\(C(i )\)</span> denote the neighborhood of unit <span class="math inline">\(i\)</span> in treatment group, <span class="math inline">\(\tau\)</span> denote estimation on ATT:</p>
-<p><span class="math display">\[
-\tau = \frac{1}{N_T}\sum_{i \in T}(Y^T_i-\sum_{j\in C(i)}w_{ij}Y^C_j)
-\]</span></p>
-<p><strong>Kernel Matching</strong></p>
-<p>Just like what we do in many other application, we can replace NN with kernel method. Let <span class="math inline">\(G(\frac{P_j-P_i}{h})\)</span> denote the kernel function, where <span class="math inline">\(h\)</span> is the bandwidth:</p>
-<p><span class="math display">\[
-\tau = \frac{1}{N_T}\sum_{i\in T}(Y^T_i- \sum_{j \in C}\frac{G(\frac{P_j-P_i}{h})}{\sum_kG(\frac{P_k-P_i}{h})}Y^C_j)
-\]</span></p>
-<p>For the kernel function, we can select gaussian kernel or epanechnikov kernel.</p>
-<p><strong>Stratification Matching</strong></p>
-<p>The Stratification method segment the propensity score of treated units into several section. Let <span class="math inline">\(q\)</span> index these intervals, <span class="math inline">\(I(q)\)</span> denote the <span class="math inline">\(q^{th}\)</span> interval. The internal ATT is given by:</p>
-<p><span class="math display">\[
-\tau_q= \frac{\sum_{i \in I(q)Y^T_i}}{N_{T, q}} -\frac{\sum_{i \in I(q)Y^C_j}}{N_{C  , q}}
-\]</span></p>
-<p>The overall ATT is:</p>
-<p><span class="math display">\[
-\tau = \sum_q^Q\tau_q\frac{\sum_{i\in I(q)}1\{T=1\}}{\sum_{\forall i}1\{T=1\}}
-\]</span></p>
-<p><strong>Matching Quality Evaluation</strong></p>
-<p>The matching quality is basically defined on how well the propensity estimation fulfill the three assumption. The CIA is hard to test, while the common support should already been guaranteed in feature engineering, ML model optimization and matching method selection. Here we focus on examining whether <span class="math inline">\(T \ \perp \! \! \!\perp \ X \quad |P\)</span> is satisfied. Let <span class="math inline">\(X_M^T\)</span> denote the <span class="math inline">\(X\)</span> of the matched treatment unit, <span class="math inline">\(X^C_M\)</span> denote its matching group in control group. These two matched group should have same size in samples. On each matched pair, since <span class="math inline">\(P\)</span> is conditioned, <span class="math inline">\(x^T\)</span> and <span class="math inline">\(x^C\)</span> should be independent, thus, <span class="math inline">\(X^T_M\ \perp \! \! \!\perp \ X_M^C\)</span>. These become to a problem of whether two variable are independent. We can use Standarized Mean Difference(SMD), covariance, correlation coefficients, Fisher’s T test, or fit a regression model for with <span class="math inline">\(T = f(X )\)</span> and find out the <span class="math inline">\(R^ 2\)</span> or f statistics.</p>
-<h2 id="weighting">4. Weighting</h2>
-<p>The difference in expectations we obtained in the matching step is biased, we need to further estimate <span class="math inline">\(P(P |T= 1)\)</span> to estimate the unbiased ATT. A simple thought is to use the inverse of the propensity score, as larger propensity means there are less pure causal effect of <span class="math inline">\(T\to Y\)</span> given same statistical significance. This method is called Inverse Propensity Score Weighting(IPSW):</p>
-<p><span class="math display">\[
-\tau = \frac{1}{N_T}\sum_{i \in T}\frac{1}{P_ i}(Y^T_i-Y^C_i)
-\]</span></p>
-<p>We can also try <a target="_blank" rel="noopener" href="http://zhengyuanyang.com/2023/02/13/prob-dense-estimation/">probability density estimation</a> on <span class="math inline">\(P(P|T= 1)\)</span>.</p>
-<h2 id="sensitivity-analysis">5. Sensitivity Analysis</h2>
-<p>We know that CIA requires all potential confounders included in the model. This condition difficult to satisfy. However, we can test the stability of the causal model. If the results on causla effect change greatly when we slightly add or decrease feature in confounder <span class="math inline">\(X\)</span>, then it is possible that the CIA is yet not satisfied. We can also apply skills like cross validation.</p>
+<p>We can apply convex optimization tools to solve this problem.</p>
 
                 
               </div>
@@ -407,9 +360,7 @@ T \ \perp \! \! \!\perp \ X \quad |P
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Causal-Effect-Estimation/">#Causal Effect Estimation</a>
-      
-        <a href="/tags/PSM/">#PSM</a>
+        <a href="/tags/SCM/">#SCM</a>
       
     </div>
   
@@ -421,8 +372,8 @@ T \ \perp \! \! \!\perp \ X \quad |P
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Propensity Score Matching</div>
-      <div>http://example.com/2023/05/11/PSM/</div>
+      <div>Synthetic Control Method</div>
+      <div>http://example.com/2023/05/22/synthetic-control/</div>
     </div>
     <div class="license-meta">
       
@@ -434,7 +385,7 @@ T \ \perp \! \! \!\perp \ X \quad |P
       
         <div class="license-meta-item license-meta-date">
           <div>Posted on</div>
-          <div>May 11, 2023</div>
+          <div>May 22, 2023</div>
         </div>
       
       
@@ -466,18 +417,12 @@ T \ \perp \! \! \!\perp \ X \quad |P
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/05/21/did/" title="Difference-in-differences Method">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Difference-in-differences Method</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/04/30/svm/" title="Support Vector Machine(SVM)">
-                        <span class="hidden-mobile">Support Vector Machine(SVM)</span>
+                      <a href="/2023/05/21/did/" title="Difference-in-differences Method">
+                        <span class="hidden-mobile">Difference-in-differences Method</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
