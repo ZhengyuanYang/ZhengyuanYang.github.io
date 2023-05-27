@@ -33,7 +33,7 @@
 <meta property="og:image" content="http://example.com/2022/11/10/structual-causal-model/9.png">
 <meta property="og:image" content="http://example.com/2022/11/10/structual-causal-model/10.png">
 <meta property="article:published_time" content="2022-11-10T22:53:16.000Z">
-<meta property="article:modified_time" content="2023-04-30T10:56:24.689Z">
+<meta property="article:modified_time" content="2023-05-27T06:55:18.111Z">
 <meta property="article:author" content="Zhengyuan Yang">
 <meta property="article:tag" content="Basic Knowledge">
 <meta property="article:tag" content="Structural Causal Model">
@@ -175,9 +175,9 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/archives/">
-                <i class="iconfont icon-archive-fill"></i>
-                Archives
+              <a class="nav-link" href="/Toolbox/">
+                <i class="iconfont icon-briefcase"></i>
+                Toolbox
               </a>
             </li>
           
@@ -233,7 +233,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          6.5k words
+          7.6k words
         
       </span>
     
@@ -244,7 +244,7 @@
         
         
         
-          55 mins
+          64 mins
         
       </span>
     
@@ -380,6 +380,18 @@ P(X_1,X_2,...X_n) = \prod_i^n P(X_i|par(X_i))
 <p>For some causal relationship, we may found two different potential causal graph of it appears to have same statistical independent on data. For example, a fork and a chain have same relationship on statistical independence. When we try to infer the causal relationship, we might found some causility, or we can say the directions of some edgs in the DAG, cannot be decided through data. In this case, we call these potential models with same statistical independence appearance <strong>Equivalent Classes</strong></p>
 <p><img src="/2022/11/10/structual-causal-model/10.png" srcset="/img/loading.gif" lazyload></p>
 <p>A intuitive method to judge whether two graph are equivalent classes is to check each V-structure in for both graph and earse the direction of the edges if the two V-struture are equivalent. If there are no directions left, then the two classes are equivalent. If there are remaining directed edges or V-structure that are different, then the two graphs are not equivalent.</p>
+<h2 id="causal-discovery-algorithm">5. Causal Discovery Algorithm</h2>
+<p>The basic problem of Structual Causal Learning is:</p>
+<ol type="1">
+<li><strong>Structure Learning:</strong> Causal Discovey. To find out the causal relationship among variables and depict it as a probability graph</li>
+<li><strong>Parameter Estimation:</strong> When the causal structure is found, find the parameter of conditional probability distribution so that we can apply bayesian chain rule.</li>
+</ol>
+<p>For Parameter Estimation, refer to <a target="_blank" rel="noopener" href="http://zhengyuanyang.com/2023/02/13/prob-dense-estimation/">this blog</a>. For Causal Discovery, the algorithm to implement includes three types:</p>
+<ul>
+<li><strong>Constraint-based Algorithms</strong>: This class of algorithms learn a set of causal graphs which satisfy the conditional independence embedded in the data. These algorithms use statistical tests to verify if a candidate graph fits all the independence based on the faithfulness assumption. Examples are PC algorithm, FCI, and GFCI</li>
+<li><strong>Score-based Algorithms</strong>: This type of algorithm replaces conditional independence tests with the goodness of fit tests. Score-based algorithms learn causal graphs by maximizing the scoring criterion which returns the score of the causal graph given data. Examples are Greedy Equivalence Search (GES)、FGES</li>
+<li>Algorithms based on <strong>Functional Causal Models (FCMs)</strong>: In FCMs, a variable can be written as a function of its directed causes and some noise term. Examples are Linear Non-Gaussian Acyclic Model (LiNGAM)、ICA-LiNGAM</li>
+</ul>
 
                 
               </div>
