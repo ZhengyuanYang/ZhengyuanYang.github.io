@@ -25,11 +25,12 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://example.com/2023/06/16/data-modeling/1.png">
 <meta property="og:image" content="http://example.com/2023/06/16/data-modeling/2.png">
+<meta property="og:image" content="http://example.com/2023/06/16/data-modeling/6.png">
 <meta property="og:image" content="http://example.com/2023/06/16/data-modeling/3.png">
 <meta property="og:image" content="http://example.com/2023/06/16/data-modeling/4.png">
 <meta property="og:image" content="http://example.com/2023/06/16/data-modeling/5.png">
 <meta property="article:published_time" content="2023-06-16T14:04:01.000Z">
-<meta property="article:modified_time" content="2023-06-16T15:39:52.296Z">
+<meta property="article:modified_time" content="2023-06-16T16:35:44.565Z">
 <meta property="article:author" content="Zhengyuan Yang">
 <meta property="article:tag" content="Basics">
 <meta property="article:tag" content="Data Modeling">
@@ -228,7 +229,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          7.7k words
+          8.5k words
         
       </span>
     
@@ -239,7 +240,7 @@
         
         
         
-          65 mins
+          72 mins
         
       </span>
     
@@ -344,10 +345,14 @@
 <p>Fact tables are the central tables in the schema of a dimensional model. They are used in conjunction with dimension tables and they contain <strong>facts and keys to dimension tables.</strong></p>
 <p>The facts are the measurements or metrics that a business process of interest creates. The fact must be strictly on the grain of data defined by the dimension model.</p>
 <p><strong>Dimension tables</strong></p>
-<p>Dimension tables are used to describe dimensions; they contain dimension keys, values and attributes. A dimension is a perspective for observing the facts, it is usually on a greater grain. Theoretically, the product of the dimension keys should yield the grain of data. The dimension keys are Primary keys that uniquely identify information on the corresponding dimension. The dimensional attributes are measurements fall on the grain of their dimension.</p>
+<p>Dimension tables are used to describe dimensions; they contain dimension keys, values and attributes. A dimension is a perspective for observing the facts, usually having bigger grain than the grain of fact. Theoretically, the product of the dimension keys should yield the grain of data. The dimension keys are Primary keys that uniquely identify information on the corresponding dimension. The dimensional attributes are measurements contains information about the dimension, they grain are the same as their dimensions. For instance, for the fact of user behavior, there are three dimension: user, video, time. The grain thus is user * video * time. The attributes belong to the user dimension, like "user name"and "gender", are on a greater grain than the facts measure like "share" and "comment"</p>
 <p>A dimension Model is bottom-up structure. It first defines the grain, or dimensions of the data according to the extent of details needed to understand the business. Then it select metrics of interest on that grain. Finally it adds information on dimension through attributes. Such procedure decides that a dimension model can more focusing on specific business rather than the overall picture. Besides, it is easier to develop. Thus a dimension model is more suitable for a OLAP database comparing to an ER model. For a business perspective, we can deem the dimension modeling as a kind of decoupling ER modeling</p>
 <p><img src="/2023/06/16/data-modeling/2.png" srcset="/img/loading.gif" lazyload></p>
 <p>For example, if our task is analyzing user behavior, then in a dimension model, there is no need to maintain the unrelated metrics “watch_duration” and “finished”as well as unrelated entities “order” and “product”.</p>
+<p><strong>Roll-up, drill-down and dimension reduction</strong></p>
+<p>The roll-up is a operation for a dimension model that refers to aggregating the facts on a dimension attribute. This is usually for description statistics. The drill-down refer to the reverse operation of roll-up, which means decomposing the aggregated metrics by the value of certain dimension attribute. Roll-up and drill down would change the grain of the data.</p>
+<p>When a dimension has only one attribute, and these attribute has finite value, we can eliminate this dimension, if that make it more delivering, by convert the long table to the wide table. Such a process is called a dimension reduction.</p>
+<p><img src="/2023/06/16/data-modeling/6.png" srcset="/img/loading.gif" lazyload></p>
 <h3 id="schema-of-dimension-model">4.2 Schema of Dimension Model</h3>
 <p>The Schema of dimension modeling includes:</p>
 <p><strong>Star Schema</strong></p>
