@@ -23,17 +23,17 @@
 <meta property="og:site_name" content="Data Shore">
 <meta property="og:description" content="This article discusses the idea of support vector machine.">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/Users/kenny_yang/Downloads/1.png">
-<meta property="og:image" content="http://example.com/Users/kenny_yang/Downloads/3.png">
-<meta property="og:image" content="http://example.com/Users/kenny_yang/Downloads/2.png">
-<meta property="og:image" content="http://example.com/Users/kenny_yang/Downloads/4.png">
-<meta property="og:image" content="http://example.com/Users/kenny_yang/Downloads/5.png">
+<meta property="og:image" content="http://example.com/2023/04/30/svm/1.png">
+<meta property="og:image" content="http://example.com/2023/04/30/svm/3.png">
+<meta property="og:image" content="http://example.com/2023/04/30/svm/2.png">
+<meta property="og:image" content="http://example.com/2023/04/30/svm/4.png">
+<meta property="og:image" content="http://example.com/2023/04/30/svm/5.png">
 <meta property="article:published_time" content="2023-04-30T15:29:48.000Z">
-<meta property="article:modified_time" content="2023-05-01T11:49:09.792Z">
+<meta property="article:modified_time" content="2023-06-16T16:43:25.023Z">
 <meta property="article:author" content="Zhengyuan Yang">
 <meta property="article:tag" content="SVM">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/Users/kenny_yang/Downloads/1.png">
+<meta name="twitter:image" content="http://example.com/2023/04/30/svm/1.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -306,7 +306,7 @@
 <h3 id="basic-idea">2.1 Basic Idea</h3>
 <p><strong>Hyperplane</strong></p>
 <p>SVM works by creating a <strong>hyperplane</strong>, which is a line or a series of lines that separate the data into different classes. The objective of SVM is to create a hyperplane that maximizes the <strong>margin</strong>, which is the distance between the hyperplane and the closest data points from each class. The data points that are closest to the hyperplane are called support vectors.</p>
-<p><img src="/Users/kenny_yang/Downloads/1.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2023/04/30/svm/1.png" srcset="/img/loading.gif" lazyload></p>
 <p>Suppose we have a group of data points <span class="math inline">\(\{(x_ i,y_i)\}\)</span>, where <span class="math inline">\(x\)</span> is a vector of features <span class="math inline">\(x_i = (x_{i,1}...x_{i,m})\)</span>, <span class="math inline">\(y_i \in \{-1,1\}\)</span> is the label of the <span class="math inline">\(i^{th}\)</span> sample. Suppose the expression of the hyperplane in space <span class="math inline">\(x\)</span> is <span class="math inline">\(wx+b = 0\)</span>. The case where the model correctly classified a sample is that the sample lies in the correct side of the hyperplane corresponding to its label:</p>
 <p><span class="math display">\[
 \left \{ \begin{aligned}
@@ -395,9 +395,9 @@ s.t. \ &amp;y_i(wx_i+ b) \ge 1-\xi_ i \qquad   \forall i
 <h3 id="kernel-method">4.1 Kernel Method</h3>
 <p>SVM assumes the dataset is linear separable. However, in most application it is not the case. If there’s only slight non-linearity in the dataset, we can use soft margin SVM to solve problem. However , when the dataset is strictly not linear separable, we need to introduce kernel method. Kernel Method is a way to solve nonlinear problems by mapping the original data to a higher-dimensional space where the problem becomes linearly separable.</p>
 <p>Suppose the original feature space is <span class="math inline">\(d = (x_1,x_2)\)</span>, let <span class="math inline">\(\phi(x)\)</span> denote a high dimensional mapping that <span class="math inline">\(\phi(x) = (x_1,x_2,(x_1-x_2)^2)\)</span>), then we would get such effect:</p>
-<p><img src="/Users/kenny_yang/Downloads/3.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2023/04/30/svm/3.png" srcset="/img/loading.gif" lazyload></p>
 <p>Note that every dimension of the new space can be a non-linear transformation(usually non-linear), we do have to retain the original feature x. By using kernel methods, SVM can handle nonlinear problems and provide high accuracy for a wide range of applications.</p>
-<p><img src="/Users/kenny_yang/Downloads/2.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2023/04/30/svm/2.png" srcset="/img/loading.gif" lazyload></p>
 <h3 id="kernel-function">4.2 Kernel Function</h3>
 <p>By transforming SVM into a dual problem, we make the variables to be optimized dependent on the number of samples <span class="math inline">\(n\)</span>, but when calculating the objective function, we still need to compute the dot product <span class="math inline">\(\phi(x_i) \cdot \phi(x_j^T)\)</span>. When using kernel tricks, if <span class="math inline">\(x\)</span> is mapped to a high-dimensional space, computing the dot product can still be very time-consuming.</p>
 <p>Now, let us assume that a function satisfies the following property: suppose <span class="math inline">\(x_i,x_j\)</span> are two data points in the original space, and <span class="math inline">\(\phi(x)\)</span> can map data points in the original space to a high-dimensional space <span class="math inline">\(z\)</span>. If there exists a function <span class="math inline">\(K\)</span> such that:</p>
@@ -438,7 +438,7 @@ f(x) = sign(\sum_i^n\lambda_i y_i K(x,x_i)+b )
 &amp;|y_i-\hat{y_i}|  \ &amp;|y_i-\hat{y_i}| &gt; \epsilon\\
 \end{aligned}\right.
 \]</span></p>
-<p><img src="/Users/kenny_yang/Downloads/4.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2023/04/30/svm/4.png" srcset="/img/loading.gif" lazyload></p>
 <p>We call the region within <span class="math inline">\(\epsilon\)</span> distance from the hyperplane the <strong><span class="math inline">\(\epsilon\)</span>-insensitivity zone.</strong> Ideally, we want all data points to fall within this zone (constraint). During training, we can treat the points outside of this region as penalty terms in the optimization process (slack variables). We add a regularization term <span class="math inline">\(\frac{1}{2}||\omega||^2\)</span> in the loss function, the training of the regression model can then be written as:</p>
 <p><span class="math display">\[
 \begin{aligned}
@@ -447,7 +447,7 @@ s.t. \ &amp;|y_ i - (wx_i+ b)| \le \epsilon +\xi_ i \qquad   \forall i
 \end{aligned}
 \]</span></p>
 <p>We found that the optimization problem is very similar to the form of Soft Margin SVM, and we can use the same techniques, kernel functions, dual problem solving methods, etc. to solve this problem. We call such a model a <strong>Support Vector Regressor（SVR）</strong>, the data points lie out of the zone is the support vectors.</p>
-<p><img src="/Users/kenny_yang/Downloads/5.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2023/04/30/svm/5.png" srcset="/img/loading.gif" lazyload></p>
 <p>By discussing different cases, removing absolute value signs, we can transform the above problem into a convex problem. For each data point <span class="math inline">\(x_i\)</span>, we introduce two slack variables <span class="math inline">\(\xi_i^+\)</span> and <span class="math inline">\(\xi_i^-\)</span>, which represent the distance from the point to the upper boundary of the <span class="math inline">\(\epsilon\)</span>-insensitive zone and the distance from the point to the lower boundary of the <span class="math inline">\(\epsilon\)</span>-insensitive zone, respectively. If a data point is not within the <span class="math inline">\(\epsilon\)</span>-insensitive zone, then it can only be either above or below the zone, and thus at most one of <span class="math inline">\(\xi_i^+\)</span> and <span class="math inline">\(\xi_i^-\)</span> can be non-zero for the same data point. We can then formulate the optimization problem as follows:</p>
 <p><span class="math display">\[
 \begin{aligned}
