@@ -24,8 +24,10 @@
 <meta property="og:description" content="This article discuss about the experiment results analysis process of an A&#x2F;B testintechniques regarding to Experiment Sensitivity Improvement.">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://example.com/2023/02/18/sensitivity-improvement/1.png">
+<meta property="og:image" content="http://example.com/2023/02/18/sensitivity-improvement/2.png">
+<meta property="og:image" content="http://example.com/2023/02/18/sensitivity-improvement/3.png">
 <meta property="article:published_time" content="2023-02-18T07:48:48.000Z">
-<meta property="article:modified_time" content="2023-04-26T09:21:15.067Z">
+<meta property="article:modified_time" content="2023-10-03T20:14:20.254Z">
 <meta property="article:author" content="Zhengyuan Yang">
 <meta property="article:tag" content="A&#x2F;B Testing">
 <meta property="article:tag" content="Sensitivity Improvement">
@@ -224,7 +226,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          10k words
+          16k words
         
       </span>
     
@@ -235,7 +237,7 @@
         
         
         
-          87 mins
+          135 mins
         
       </span>
     
@@ -405,6 +407,55 @@ V[\delta]-V[\hat{\delta}] &amp;= \frac{\sum_i\sigma_i^2}{n} -\frac{1}{\sum_i\fra
 w_k = \frac{1}{\sigma_k^2} = \frac{1}{\frac{1}{n_k}\sum_{i \in k}\sigma_i^2}
 \]</span></p>
 <p><img src="/2023/02/18/sensitivity-improvement/1.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="triggering-analysis">5. Triggering Analysis</h2>
+<h3 id="triggering">5.1 Triggering</h3>
+<p>Triggering provides experimenters with a way to improve sensitivity (statistical power) by filtering out noise created by users who could not have been impacted by the experiment. As organizational experimentation maturity improves, we see more triggered experiments being run.</p>
+<p>If you make a change that only impacts some users, the Treatment effect of those who are not impacted is zero. This simple observation of analyzing only users who could have been impacted by your change has profound implications for experiment analysis and can significantly improve sensitivity or statistical power.</p>
+<p>Commonly triggering analysis can be applied in the following situations:</p>
+<ol type="1">
+<li><strong>Intentional Partial Exposure:</strong> The treatment are designed to take effect on only some particular population. For example, a new UI are only exposed to Android user. Note that if there exists some “mixed” population, in this case, users that log on both Android and IOS, then these user should also be regarded as observation population</li>
+<li><strong>Conditional Exposure:</strong> the change is to users who reach a portion of your product. For example, we improve the payment procedures, but users need to reach the checkout page to experience the new procedures</li>
+<li><strong>Coverage Increase:</strong> The strategy of the treatment group covers the strategy of the control group. For example, in control group, we offer users buy more than $30 with free shipment fee, while in treatment group, we lower the threshold to <span class="math inline">\(20 dollars. In this case, the treatment strategy totally cover the control group, the overlapping population(\)</span>{T C}$), which is users buy over $30, are supposed to have zero effect and thus should not be triggered. Samely, those who buy under <span class="math inline">\(20(\)</span>{U-(TC)}$) shoule not be triggered. Only those who buy between $20 and <span class="math inline">\(30(\)</span>{T-C}$) should be triggered</li>
+</ol>
+<p><img src="/2023/02/18/sensitivity-improvement/2.png" srcset="/img/loading.gif" lazyload></p>
+<ol type="1">
+<li><strong>Coverage Change:</strong> the coverage isn’t increased, but is changed, as shown in the Venn diagram. For example, Control offers free shipping to shoppers with at least $30 in their cart but Treatment offers free shipping to users with at least $20 in their cart except if they returned an item within 60 days before the experiment started. In such case, the population should be triggered are those who
+<ol type="1">
+<li><span class="math inline">\(\{T-C\}\)</span>: buy between $20 and $30 and do bot return any itemsin 60 days,</li>
+<li><span class="math inline">\(\{C-T\}\)</span>: those who buy over $30 but return items in 60 days</li>
+</ol></li>
+</ol>
+<p><img src="/2023/02/18/sensitivity-improvement/3.png" srcset="/img/loading.gif" lazyload></p>
+<p>note that the same metric can go opposite on these two parts, and neutralized the overall effect.</p>
+<p><strong>Optimal and Conservative Triggering</strong></p>
+<p>When comparing two variants, the optimal trigger condition is to trigger into the analysis only users for which there was some difference between the two variants compared. In other word, the counterfactuals of that user would be different.</p>
+<p>In practice, however, we sometimes need to include more users than the optimal triggering population:</p>
+<ol type="1">
+<li><strong>Multiple Treatment:</strong> When there exists multiple treatment, a sub population that is assumed to have zero effect between <span class="math inline">\(C\)</span> and <span class="math inline">\(T1\)</span> may have differences between <span class="math inline">\(C\)</span> and <span class="math inline">\(T2\)</span>:</li>
+</ol>
+<p><span class="math display">\[
+\begin{aligned}
+Y_{sp}(T1) - Y_{sp}(C) &amp;= 0\\
+Y_{sp}(T2) - Y_{sp}(C) &amp;\ne 0
+\end{aligned}
+\]</span></p>
+<ol start="2" type="1">
+<li><p><strong>Lack of samples:</strong> Sometimes triggering analysis would significantly reduce the number of samples. A low number of samples can also decrease statistical power. In this case, we consider expanding the triggering population to achieve the optimal balance of statistical power.</p></li>
+<li><p><strong>The recognition of optimal triggering population is unavailable:</strong> For example, the treatment is improvement procedure, but the event tracking for entering checkout page is missed. In this case, we can enlarge the population to “user who click the checkout button in shopping car page”</p></li>
+</ol>
+<h3 id="pitfalls-in-triggering-analysis">5.2 Pitfalls in Triggering Analysis</h3>
+<p>Triggering is a powerful concept, but there are several pitfalls to be aware of.</p>
+<p><strong>Estimating Overall Effect</strong></p>
+<p>Suppose the triggering population accounts for 10% of the volume and we detect a 3% improvement on some metrics. Does that mean the overall effect is 0.3%? The answer is no. Actually, the real effect can be any number between 0% and 3%, or even negative.</p>
+<p>For example, the treatment is to improve the payment procedures and the triggering population is those who reach the checkout page. We observed a 3% improvement on revenue. One fact is, only those who reach the checkout page can produce revenue, so the real effect on the overall population can still be 3%. Triggering analysis only lower the variance by conditioning on a sub population and thus make the difference statistically significant.</p>
+<p>Oppositely, if the triggering population are some low-spending user, then the real overall effect can also be much lower than 0.3%. Only when the metric have the same distribution on the overall population and the sub population, can we estimate the overall treatment effect simply based on sub population ratio.</p>
+<p>Besides, there can also be a Simpson paradox and drive the overall effect to the contrary side. For example, in the former example, the treatment may enlarge the ratio of the low-spending population and cause the decrease of overall revenue, even when the conditional effect on the triggering population is positive</p>
+<p><strong>Experimenting on Tiny Segments That Are Hard to Generalize</strong></p>
+<p>The triggering population should somehow be representative, or we can say, meaningful. In the case of improving payment procedures, even though the users who reach the checkout page only account for 5% of the total users, they may contribute more than 99% of the revenue. In this scenario, conducting a triggering analysis based on the revenue metric is reasonable.</p>
+<p>However, let's consider a different scenario where the treatment involves highlighting the first video on a video searching page, and we only trigger for users who click on the first video. In this case, the best conclusion we can draw is that "highlighting the first video improves its play times." It may be difficult to generalize this conclusion to all videos on the searching page, as different videos naturally have varying play amounts, and the first video represents only a small portion of all the videos.</p>
+<p><strong>The selection of triggered user are influenced by the treatment itself</strong></p>
+<p>Theoretically, we should guarantee the treatment itself does not change the selection of triggered users. For example, in the case of improving payment procedures, the triggered users are those who who reach the checkout page. However, the new procedures are so terrible that many users do not click the checkout button and enter the checkout page again. If we still focus only on those who reach the checkout page, we may found the average revenue of them does not drop significantly, but the real effect is underestimated.</p>
+<p>In real application, when the treatment has a causal effect on the probability that a unit is triggered, unexpected dependence can be introduced. A solution is to keep a user in the population for analysis once he is triggered.</p>
 
                 
               </div>
