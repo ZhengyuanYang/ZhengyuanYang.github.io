@@ -296,46 +296,46 @@
             
               <div class="markdown-body">
                 
-                <h1 id="overfitting-cause-and-solution">Overfitting: Cause and Solution</h1>
-<h2 id="bias-variance-and-overfitting">1. Bias, Variance and Overfitting</h2>
+                <h1 id="overfitting-cause-and-solution"><a class="markdownIt-Anchor" href="#overfitting-cause-and-solution"></a> Overfitting: Cause and Solution</h1>
+<h2 id="1-bias-variance-and-overfitting"><a class="markdownIt-Anchor" href="#1-bias-variance-and-overfitting"></a> 1. Bias, Variance and Overfitting</h2>
 <p>Theoretically, we consider the expected risk of the model on real data consists of two parts:</p>
 <p><strong>Bias</strong></p>
-<p>The model's failure to imitate the real mapping, probability distribution or other relationship of the data. For example, if we try to fit a non-linear relationship with a linear model, there would be inevitable bias. Another example is that we leave some important factors omitted</p>
+<p>The model’s failure to imitate the real mapping, probability distribution or other relationship of the data. For example, if we try to fit a non-linear relationship with a linear model, there would be inevitable bias. Another example is that we leave some important factors omitted</p>
 <p><strong>Variance</strong></p>
-<p>The model's sensitivity to changes in data. High variance occurs when the model try to seize any details. It put too many weights on unimportant feature or noise in order to reduce error in training process.</p>
-<p>Neither high bias nor high variance is good. However, when we take measure to solve bias, like applying complex model or increase feature, the variance of the model increase accordingly. In other worlds, there is a trade-off between bias and variance. In training process, our aim would be finding a model with bias and variance acceptable.</p>
+<p>The model’s sensitivity to changes in data. High variance occurs when the model try to seize any details. It put too many weights on unimportant feature or noise in order to reduce error in training process.</p>
+<p>Neither high bias nor high variance is good. However,  when we take measure to solve bias, like applying complex model or increase feature, the variance of the model increase accordingly. In other worlds, there is a trade-off between bias and variance. In training process, our aim would be finding a model with bias and variance acceptable.</p>
 <p><strong>Underfitting and Overfitting</strong></p>
 <p>When the bias is high, we cannot describe the pattern of the data correctly, we call such a scene Underfitting</p>
 <p>When the bias is low, but the variance is high, the model is trapped in the details or noises of the data, ot fit well on the given data but it has poor generality so that it would fail on other data</p>
-<p><img src="/2022/09/19/overfitting/1.PNG" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2022/09/19/overfitting/1.PNG" srcset="/img/loading.gif" lazyload alt></p>
 <p>The performance on training and testing dataset under these scenes</p>
 <table>
 <thead>
-<tr class="header">
+<tr>
 <th></th>
 <th>training SET Erro</th>
 <th>Testing Set ERROR</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td>Underfit</td>
 <td>high</td>
 <td>high</td>
 </tr>
-<tr class="even">
+<tr>
 <td>Overfit</td>
 <td>low</td>
 <td>high</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>Optimum</td>
 <td>low</td>
 <td>low</td>
 </tr>
 </tbody>
 </table>
-<h2 id="causes-of-overfitting">2. Causes of Overfitting</h2>
+<h2 id="2-causes-of-overfitting"><a class="markdownIt-Anchor" href="#2-causes-of-overfitting"></a> 2. Causes of Overfitting</h2>
 <p>As specified above, the core reason that cause of overfitting is the imbalanced trade-off(High variance, low bias). Specifically, we induct the reasons into:</p>
 <ul>
 <li>Complexity of the model: The model is too complex for the pattern we want to discover in the data</li>
@@ -343,16 +343,16 @@
 <li>Overtraining: the model is trained with too much epochs that force the model to learn noises in order to converge</li>
 <li>Improper sampling/splitting: the training set fails to represent the distribution of the real data. Or, in some other case, the real distribution itself decides that the model is hard to imitate it.</li>
 </ul>
-<h2 id="solutions-for-overfitting">3. Solutions for Overfitting</h2>
+<h2 id="3-solutions-for-overfitting"><a class="markdownIt-Anchor" href="#3-solutions-for-overfitting"></a> 3. Solutions for Overfitting</h2>
 <p>According to four reasons, we can also induct the solutions into:</p>
-<h3 id="control-complexity">3.1 <strong>Control complexity</strong></h3>
+<h3 id="31-control-complexity"><a class="markdownIt-Anchor" href="#31-control-complexity"></a> 3.1 <strong>Control complexity</strong></h3>
 <p><strong>Regularization</strong></p>
 <p>In machine learning, regularization refer to constraints on the number of feature dimensions. Usually, it is realized through adding an regular term to the loss function to penalize putting weight on too many features. This includes:</p>
 <ul>
 <li>Lasso regression and Ridge regression</li>
 <li>Soft margin for SVM</li>
 <li>Regular term in XGBoost</li>
-<li>...</li>
+<li>…</li>
 </ul>
 <p><strong>Feature Engineering</strong></p>
 <p>Reduce the number of features. FIlter those redundant feature through feature engineering methods like correlation analysis and dimensionality reduction. For details, please refer to <a href>ongoing</a></p>
@@ -363,19 +363,19 @@
 <li>pruning in tree-based model</li>
 <li>Hyperparameter like hidden size, max-leaf-node</li>
 </ul>
-<h3 id="data-augmentation"><strong>3.2 Data augmentation </strong></h3>
+<h3 id="32-data-augmentation"><a class="markdownIt-Anchor" href="#32-data-augmentation"></a> **3.2 Data augmentation **</h3>
 <p>The best way to eliminate the variance caused by data defects is simply increasing more data to the training set. Since sufficient data are sometimes unavailable in real project. We can apply data augmentation to generate more training data. Data augmentation is more common in deep learning feild.</p>
-<h3 id="early-stopping"><strong>3.3 Early stopping</strong></h3>
+<h3 id="33-early-stopping"><a class="markdownIt-Anchor" href="#33-early-stopping"></a> <strong>3.3 Early stopping</strong></h3>
 <p>Stop the optimizer earlier to prevent overtraining. For example:</p>
 <ul>
 <li>raise error threshold for an optimzer</li>
 <li>set max depth for an decision tree</li>
 <li>set max iterations for an neural network</li>
 </ul>
-<h3 id="sampling-and-spliting"><strong>3.4 Sampling and spliting</strong></h3>
+<h3 id="34-sampling-and-spliting"><a class="markdownIt-Anchor" href="#34-sampling-and-spliting"></a> <strong>3.4 Sampling and spliting</strong></h3>
 <p><strong>Cross Validation</strong></p>
 <p>Cross validation means spliting the dataset into subsets. Use some of them to estimate the distribution and other of them to evaluate the estimation. Such procedure can effectively control the varaince caused by sample selection bias. For the details of cross validation, refer to<a href>ongoing</a></p>
-<p><strong>Sampling </strong></p>
+<p>**Sampling **</p>
 <p>From an theoretical perspective, sampling itself is actually a kind of non-parameter ML model. When you do sampling, yur actual target is to imitate the distribution of the real population through getting a sample. Thus, the sample itself would have bias if it cannot represent the true distribution of the population. Training a mode using these samples would obviously cause variance.</p>
 <p>Thus, a way might help solving overfitting is improving your sampling method. For details of sampling methods in ML, refer to <a href>ongoing</a></p>
 

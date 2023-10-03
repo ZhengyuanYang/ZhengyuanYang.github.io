@@ -36,8 +36,8 @@
 <meta property="article:published_time" content="2022-09-30T03:36:21.000Z">
 <meta property="article:modified_time" content="2023-01-10T22:42:09.903Z">
 <meta property="article:author" content="Zhengyuan Yang">
-<meta property="article:tag" content="Interview">
 <meta property="article:tag" content="SQL">
+<meta property="article:tag" content="Interview">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/2022/09/30/SQL-problems/1.PNG">
   
@@ -305,145 +305,166 @@
             
               <div class="markdown-body">
                 
-                <h1 id="笔试常见sql难题">笔试常见SQL难题</h1>
-<h2 id="用户连续登录">1. 用户连续登录</h2>
-<p><img src="/2022/09/30/SQL-problems/1.PNG" srcset="/img/loading.gif" lazyload></p>
+                <h1 id="笔试常见sql难题"><a class="markdownIt-Anchor" href="#笔试常见sql难题"></a> 笔试常见SQL难题</h1>
+<h2 id="1-用户连续登录"><a class="markdownIt-Anchor" href="#1-用户连续登录"></a> 1. 用户连续登录</h2>
+<p><img src="/2022/09/30/SQL-problems/1.PNG" srcset="/img/loading.gif" lazyload alt></p>
 <p><strong>思路</strong>：</p>
-<ol type="1">
-<li><p>以用户为组，日期为序，每一行记录加上一个行号</p>
+<ol>
+<li>
+<p>以用户为组，日期为序，每一行记录加上一个行号</p>
 <p>注意，一个用户一天可以登录多次，如果全部排号，这个方法就失效了，所以加一个group by，但是不聚合，这相当于选择了distinct（user_id sales_date）的组合</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> <br>    user_id,<br>    sales_date,<br>    <span class="hljs-built_in">row_number</span>() <span class="hljs-keyword">over</span>(<span class="hljs-keyword">partition</span> <span class="hljs-keyword">by</span> user_id <span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> sales_date) rn<br><span class="hljs-keyword">from</span> sales_tb<br><span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> user_id,<span class="hljs-type">date</span>()<br></code></pre></td></tr></table></figure></li>
-<li><p>将上表作为cte，用user_id, date_sub(current_date, interval rn day) group by， 这样相当于把连续的天数聚合到了同一个天（1/3 -1， 1/4 -2， 1/6 - 3 中断）</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">with</span> cte <span class="hljs-keyword">as</span> (<br><span class="hljs-keyword">select</span> <br>    user_id,<br>    sales_date,<br>    <span class="hljs-built_in">row_number</span>() <span class="hljs-keyword">over</span>(<span class="hljs-keyword">partition</span> <span class="hljs-keyword">by</span> user_id <span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> sales_date) rn<br><span class="hljs-keyword">from</span> sales_tb<br><span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> user_id,sales_date<br>)<br><span class="hljs-keyword">select</span> <br>	<span class="hljs-built_in">count</span>(<span class="hljs-operator">*</span>) <br><span class="hljs-keyword">from</span> cte <br><span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> user_id, date_sub(sales_date,<span class="hljs-type">interval</span> rn <span class="hljs-keyword">day</span>) <br><br></code></pre></td></tr></table></figure></li>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> <br>    user_id,<br>    sales_date,<br>    <span class="hljs-built_in">row_number</span>() <span class="hljs-keyword">over</span>(<span class="hljs-keyword">partition</span> <span class="hljs-keyword">by</span> user_id <span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> sales_date) rn<br><span class="hljs-keyword">from</span> sales_tb<br><span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> user_id,<span class="hljs-type">date</span>()<br></code></pre></td></tr></table></figure>
+</li>
+<li>
+<p>将上表作为cte，用user_id, date_sub(current_date, interval rn day) group by， 这样相当于把连续的天数聚合到了同一个天（1/3 -1， 1/4 -2， 1/6 - 3 中断）</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">with</span> cte <span class="hljs-keyword">as</span> (<br><span class="hljs-keyword">select</span> <br>    user_id,<br>    sales_date,<br>    <span class="hljs-built_in">row_number</span>() <span class="hljs-keyword">over</span>(<span class="hljs-keyword">partition</span> <span class="hljs-keyword">by</span> user_id <span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> sales_date) rn<br><span class="hljs-keyword">from</span> sales_tb<br><span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> user_id,sales_date<br>)<br><span class="hljs-keyword">select</span> <br>	<span class="hljs-built_in">count</span>(<span class="hljs-operator">*</span>) <br><span class="hljs-keyword">from</span> cte <br><span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> user_id, date_sub(sales_date,<span class="hljs-type">interval</span> rn <span class="hljs-keyword">day</span>) <br><br></code></pre></td></tr></table></figure>
+</li>
 </ol>
-<h3 id="变体连续签到领取金币">变体：连续签到领取金币</h3>
-<p><img src="/2022/09/30/SQL-problems/4.PNG" srcset="/img/loading.gif" lazyload></p>
+<h3 id="变体连续签到领取金币"><a class="markdownIt-Anchor" href="#变体连续签到领取金币"></a> 变体：连续签到领取金币</h3>
+<p><img src="/2022/09/30/SQL-problems/4.PNG" srcset="/img/loading.gif" lazyload alt></p>
 <p>思路：</p>
-<ol type="1">
+<ol>
 <li>与上题一样，将uid和登录日期combine-distinct后，加上一列行号</li>
 </ol>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs SQL"><span class="hljs-keyword">SELECT</span><br>uid,<br><span class="hljs-type">date</span>(in_time) <span class="hljs-keyword">as</span> login_date,<br><span class="hljs-built_in">row_number</span>() <span class="hljs-keyword">over</span>(<span class="hljs-keyword">partition</span> <span class="hljs-keyword">by</span>  uid <span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> <span class="hljs-type">date</span>(in_time)) <span class="hljs-keyword">as</span> rn<br><span class="hljs-keyword">from</span> <br>tb_user_log<br><span class="hljs-keyword">where</span> <span class="hljs-type">date</span>(in_time) <span class="hljs-operator">&gt;=</span> <span class="hljs-string">&#x27;2021-07-07&#x27;</span> <span class="hljs-keyword">and</span> <span class="hljs-type">date</span>(in_time) <span class="hljs-operator">&lt;</span> <span class="hljs-string">&#x27;2021-11-01&#x27;</span><br>             <span class="hljs-keyword">and</span> sign_in <span class="hljs-operator">=</span> <span class="hljs-number">1</span><br>            <span class="hljs-keyword">and</span> artical_id <span class="hljs-operator">=</span> <span class="hljs-number">0</span><br><span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> uid, <span class="hljs-type">date</span>(in_time)<br></code></pre></td></tr></table></figure>
-<ol start="2" type="1">
+<ol start="2">
 <li>将上表作为cte，同样通过减去行号的方式，将连续的签到天数聚合到一天（past day）</li>
 </ol>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs SQL"><span class="hljs-keyword">select</span> <br>uid,<br>date_sub(login_date, <span class="hljs-type">interval</span> rn <span class="hljs-keyword">DAY</span>) ad,<br><span class="hljs-built_in">count</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">as</span> days,<br><span class="hljs-built_in">FLOOR</span>(<span class="hljs-built_in">count</span>(<span class="hljs-operator">*</span>)<span class="hljs-operator">/</span><span class="hljs-number">7</span>) <span class="hljs-keyword">as</span> fac,<br><span class="hljs-built_in">count</span>(<span class="hljs-operator">*</span>)<span class="hljs-operator">%</span><span class="hljs-number">7</span> <span class="hljs-keyword">as</span> res<br><span class="hljs-keyword">from</span> cte <br><span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">by</span> uid, date_sub(login_date, <span class="hljs-type">interval</span> rn <span class="hljs-keyword">DAY</span>)<br></code></pre></td></tr></table></figure>
-<ol start="3" type="1">
+<ol start="3">
 <li>将上表作为cte2， 增加两列
-<ol type="1">
+<ol>
 <li>将past day + lag（day counts）+ 1， 这样相当于找到了同uid下上一次连续登录了几天，由于当前行的past day 是由其所代表的连续签到天数的一天减掉其行号所得到的，而这个行号比上一行的最大连续签到天数再大1，所以是past + lag + 1</li>
 <li>根据天数计算及金币数量</li>
-</ol></li>
+</ol>
+</li>
 </ol>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs SQL"><span class="hljs-keyword">select</span> <br>    uid,<br>    date_add(ad, <span class="hljs-type">interval</span> (ifnull(<span class="hljs-built_in">lag</span>(days) <span class="hljs-keyword">over</span>(<span class="hljs-keyword">partition</span> <span class="hljs-keyword">by</span> uid <span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> ad),<span class="hljs-number">0</span>)<span class="hljs-operator">+</span><span class="hljs-number">1</span>) <span class="hljs-keyword">DAY</span>) cd,<br>    <span class="hljs-keyword">case</span><br>    <span class="hljs-keyword">when</span> res <span class="hljs-operator">&lt;</span> <span class="hljs-number">3</span> <span class="hljs-keyword">then</span> fac<span class="hljs-operator">*</span><span class="hljs-number">15</span> <span class="hljs-operator">+</span> res<br>    <span class="hljs-keyword">when</span> res <span class="hljs-operator">&gt;=</span> <span class="hljs-number">3</span> <span class="hljs-keyword">then</span> fac<span class="hljs-operator">*</span><span class="hljs-number">15</span> <span class="hljs-operator">+</span> res<span class="hljs-operator">+</span><span class="hljs-number">2</span><br>    <span class="hljs-keyword">end</span> coin<br><span class="hljs-keyword">from</span> cte2<br></code></pre></td></tr></table></figure>
-<ol start="4" type="1">
+<ol start="4">
 <li>以上表为cte3，根据uid，月份聚合，得到结果，注意时间格式抽取函数的运用</li>
 </ol>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs SQL"><span class="hljs-keyword">select</span> <br>    uid,<br>    date_format(cd,&quot;%Y%m&quot;),<br>    <span class="hljs-built_in">sum</span>(coin)<br><span class="hljs-keyword">from</span> cte3<br><span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> uid, date_format(cd,&quot;%Y%m&quot;)<br></code></pre></td></tr></table></figure>
-<h3 id="技巧mysql-时间格式化函数">技巧：MySQL 时间格式化函数</h3>
+<h3 id="技巧mysql-时间格式化函数"><a class="markdownIt-Anchor" href="#技巧mysql-时间格式化函数"></a> 技巧：MySQL 时间格式化函数</h3>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> <br>date_format(target_datetime, <span class="hljs-string">&#x27;%Y-%m-...&#x27;</span>)<br><span class="hljs-keyword">from</span><br>tb_time<br></code></pre></td></tr></table></figure>
 <p>格式具体代码如下</p>
-<p><img src="/2022/09/30/SQL-problems/2.PNG" srcset="/img/loading.gif" lazyload></p>
-<p><img src="/2022/09/30/SQL-problems/3.PNG" srcset="/img/loading.gif" lazyload></p>
-<h2 id="同一时间最大观看人数">2. 同一时间最大观看人数</h2>
-<p><img src="/2022/09/30/SQL-problems/5.PNG" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2022/09/30/SQL-problems/2.PNG" srcset="/img/loading.gif" lazyload alt></p>
+<p><img src="/2022/09/30/SQL-problems/3.PNG" srcset="/img/loading.gif" lazyload alt></p>
+<h2 id="2-同一时间最大观看人数"><a class="markdownIt-Anchor" href="#2-同一时间最大观看人数"></a> 2. 同一时间最大观看人数</h2>
+<p><img src="/2022/09/30/SQL-problems/5.PNG" srcset="/img/loading.gif" lazyload alt></p>
 <p>思路：</p>
-<ol type="1">
+<ol>
 <li>将进入和登出union起来，并把进入记为1，退出记为-1</li>
 </ol>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs SQL"><span class="hljs-keyword">select</span> <br>    artical_id,<br>    uid,<br>    in_time <span class="hljs-keyword">as</span> tn,<br>    <span class="hljs-number">1</span> person<br><span class="hljs-keyword">from</span> tb_user_log<br><span class="hljs-keyword">where</span> artical_id <span class="hljs-operator">!=</span> <span class="hljs-number">0</span><br><span class="hljs-keyword">UNION</span><br><span class="hljs-keyword">select</span> <br>    artical_id,<br>    uid,<br>    out_time <span class="hljs-keyword">as</span> tn,<br>    <span class="hljs-number">-1</span> person<br><span class="hljs-keyword">from</span> tb_user_log<br><span class="hljs-keyword">where</span> artical_id <span class="hljs-operator">!=</span> <span class="hljs-number">0</span><br></code></pre></td></tr></table></figure>
-<ol start="2" type="1">
+<ol start="2">
 <li>以上表为cte，以文章为组，根据文章，时间点，人数排序，用sum记录当前实时人数 running total</li>
 </ol>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs SQL"><span class="hljs-keyword">select</span><br><span class="hljs-operator">*</span>,<br><span class="hljs-built_in">sum</span>(person) <span class="hljs-keyword">over</span>(<span class="hljs-keyword">partition</span> <span class="hljs-keyword">by</span> artical_id <span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> artical_id, tn <span class="hljs-keyword">asc</span>, person <span class="hljs-keyword">DESC</span> <span class="hljs-keyword">rows</span> <span class="hljs-keyword">BETWEEN</span> UNBOUNDED PRECEDING <span class="hljs-keyword">and</span> <span class="hljs-keyword">CURRENT</span> <span class="hljs-type">ROW</span> ) <span class="hljs-keyword">as</span> p_count<br><span class="hljs-keyword">from</span> <br>cte1<br></code></pre></td></tr></table></figure>
-<ol start="3" type="1">
+<ol start="3">
 <li>以上表为cte，选取各文章组别组别中实时人数最大的时间节点</li>
 </ol>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs SQL"><span class="hljs-keyword">select</span> artical_id, <span class="hljs-built_in">max</span>(p_count) <span class="hljs-keyword">as</span> max_read<br><span class="hljs-keyword">from</span> cte2 <br><span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> artical_id<br><span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> max_read <span class="hljs-keyword">desc</span><br></code></pre></td></tr></table></figure>
-<h2 id="新用户的次日留存率">3. 新用户的次日留存率</h2>
-<p><img src="/2022/09/30/SQL-problems/6.PNG" srcset="/img/loading.gif" lazyload></p>
-<ol type="1">
+<h2 id="3-新用户的次日留存率"><a class="markdownIt-Anchor" href="#3-新用户的次日留存率"></a> 3. 新用户的次日留存率</h2>
+<p><img src="/2022/09/30/SQL-problems/6.PNG" srcset="/img/loading.gif" lazyload alt></p>
+<ol>
 <li>由于跨天登入登出算都活跃，所以将in和out union起来，然后用group by uid，date(time) 来去除一天内重复的活跃记录（相当于只记录每天有没有活跃）</li>
 </ol>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs SQL"><span class="hljs-keyword">select</span> <br>    uid,<span class="hljs-type">date</span>(in_time) <span class="hljs-keyword">as</span> tn<br><span class="hljs-keyword">from</span> tb_user_log<br><span class="hljs-keyword">union</span><br><span class="hljs-keyword">select</span> <br>    uid, <span class="hljs-type">date</span>(out_time) <span class="hljs-keyword">as</span> tn<br><span class="hljs-keyword">from</span> tb_user_log<br><span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> uid,<span class="hljs-type">date</span>(tn)<br></code></pre></td></tr></table></figure>
-<ol start="2" type="1">
+<ol start="2">
 <li>以上图为cte
-<ol type="1">
+<ol>
 <li>增加一列判断该用户本次登录时是否为新用户（以用户为组，时间为序，给每一次登录一个row number， 新用户row_numbe为1）</li>
 <li>left join自身 on （1.day+1 = 2.day），增加一列判断该用户在后一天是否活跃（left join自身，如果后一天未活跃，则会得到null）</li>
-</ol></li>
+</ol>
+</li>
 </ol>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs SQL"><span class="hljs-keyword">select</span> a1.<span class="hljs-operator">*</span>, <br>    <span class="hljs-keyword">case</span><br>    <span class="hljs-keyword">when</span> <span class="hljs-built_in">row_number</span>() <span class="hljs-keyword">over</span>(<span class="hljs-keyword">partition</span> <span class="hljs-keyword">by</span> a1.uid <span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> a1.tn) <span class="hljs-operator">=</span> <span class="hljs-number">1</span> <span class="hljs-keyword">then</span> <span class="hljs-string">&#x27;NEW&#x27;</span><br>    <span class="hljs-keyword">else</span> <span class="hljs-string">&#x27;OLD&#x27;</span><br>    <span class="hljs-keyword">end</span> user_status,<br>    <span class="hljs-keyword">case</span><br>    <span class="hljs-keyword">when</span> a2.uid <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-keyword">null</span> <span class="hljs-keyword">then</span> <span class="hljs-number">1</span><br>    <span class="hljs-keyword">else</span> <span class="hljs-number">0</span><br>    <span class="hljs-keyword">end</span> next_day<br><span class="hljs-keyword">from</span> active a1<br><span class="hljs-keyword">left</span> <span class="hljs-keyword">join</span> active a2 <span class="hljs-keyword">ON</span><br>date_add(a1.tn,<span class="hljs-type">interval</span> <span class="hljs-number">1</span> <span class="hljs-keyword">day</span>) <span class="hljs-operator">=</span> a2.tn<br><span class="hljs-keyword">and</span><br>a1.uid <span class="hljs-operator">=</span> a2.uid<br></code></pre></td></tr></table></figure>
-<ol start="3" type="1">
+<ol start="3">
 <li>以上表为cte，在where语句中加入只计算新用户，月份为11等条件，group by聚合，计算每天的的今日新用户次日留存数/今日新用户总数</li>
 </ol>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs SQL"><span class="hljs-keyword">select</span> <br>tn,<br>round(<span class="hljs-built_in">sum</span>(next_day)<span class="hljs-operator">/</span><span class="hljs-built_in">count</span>(<span class="hljs-operator">*</span>),<span class="hljs-number">2</span>) <span class="hljs-keyword">as</span> uv_left_rate<br><span class="hljs-keyword">from</span> cte <span class="hljs-keyword">where</span> user_status  <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;NEW&#x27;</span><br> <span class="hljs-keyword">and</span> <span class="hljs-keyword">month</span>(tn) <span class="hljs-operator">=</span> <span class="hljs-number">11</span><br><span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> tn<br><span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> tn <br></code></pre></td></tr></table></figure>
-<h2 id="行列置换">4.行列置换</h2>
+<h2 id="4行列置换"><a class="markdownIt-Anchor" href="#4行列置换"></a> 4.行列置换</h2>
 <p>要对每一列的值进行聚合，在把其作为一行输出</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs SQL"><span class="hljs-keyword">select</span> <span class="hljs-string">&#x27;column_1&#x27;</span>,<span class="hljs-built_in">sum</span>(column_1), <span class="hljs-built_in">count</span>(column_1) <br><span class="hljs-keyword">from</span> orders<br><span class="hljs-keyword">union</span><br><span class="hljs-keyword">select</span> <span class="hljs-string">&#x27;column_2&#x27;</span>,<span class="hljs-built_in">sum</span>(column_2), <span class="hljs-built_in">count</span>(column_2) <br><span class="hljs-keyword">from</span> orders<br></code></pre></td></tr></table></figure>
-<h3 id="技巧从csv导入文件">技巧：从csv导入文件</h3>
+<h3 id="技巧从csv导入文件"><a class="markdownIt-Anchor" href="#技巧从csv导入文件"></a> 技巧：从csv导入文件</h3>
 <p>标准的导入语法为</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs SQL">LOAD DATA INFILE <span class="hljs-string">&#x27;path&#x27;</span><br><span class="hljs-keyword">INTO</span> <span class="hljs-keyword">TABLE</span> tb<br>FIELDS TERMINATED <span class="hljs-keyword">BY</span> <span class="hljs-string">&#x27;,&#x27;</span><br>ENCLOSED <span class="hljs-keyword">BY</span> <span class="hljs-string">&#x27;&quot;&#x27;</span><br>LINES TERMINATED <span class="hljs-keyword">BY</span> <span class="hljs-string">&#x27;\n&#x27;</span><br>IGNORE <span class="hljs-number">1</span> LINES<br></code></pre></td></tr></table></figure>
 <p>注意：</p>
-<ol type="1">
-<li><p>文件必须放在MYSQL指定的安全文件夹中，才能导入，可以使用语句</p>
+<ol>
+<li>
+<p>文件必须放在MYSQL指定的安全文件夹中，才能导入，可以使用语句</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs SQL"><span class="hljs-keyword">SHOW</span> VARIABLES <span class="hljs-keyword">LIKE</span> <span class="hljs-string">&#x27;secure_file_priv&#x27;</span><br></code></pre></td></tr></table></figure>
-<p>来查看</p></li>
-<li><p>文件路径中的反斜杠/</p></li>
-<li><p>若在windows文件夹下，行截止符应为 ''</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs SQL">LINES TERMINATED <span class="hljs-keyword">BY</span> <span class="hljs-string">&#x27;\r\n&#x27;</span><br></code></pre></td></tr></table></figure></li>
-<li><p>IGNORE 用于跳过表头行</p></li>
+<p>来查看</p>
+</li>
+<li>
+<p>文件路径中的反斜杠\需要换成正斜杠/</p>
+</li>
+<li>
+<p>若在windows文件夹下，行截止符应为 ‘\r\n’</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs SQL">LINES TERMINATED <span class="hljs-keyword">BY</span> <span class="hljs-string">&#x27;\r\n&#x27;</span><br></code></pre></td></tr></table></figure>
+</li>
+<li>
+<p>IGNORE 用于跳过表头行</p>
+</li>
 </ol>
-<h2 id="选取组内最小的另一种思路">5. 选取组内最小的另一种思路</h2>
-<p><img src="/2022/09/30/SQL-problems/7.PNG" srcset="/img/loading.gif" lazyload></p>
+<h2 id="5-选取组内最小的另一种思路"><a class="markdownIt-Anchor" href="#5-选取组内最小的另一种思路"></a> 5. 选取组内最小的另一种思路</h2>
+<p><img src="/2022/09/30/SQL-problems/7.PNG" srcset="/img/loading.gif" lazyload alt></p>
 <p>思路：</p>
 <p>这里不使用窗口函数和子语句，因为那样不方便查找min（date）所对应的device</p>
-<ol type="1">
+<ol>
 <li>以所有该用户的event_date为子查询，选取组内小于等于任何event_date的 event date，得到的就是组内最小值，且可以简单的得到最小值对应行的其他数据</li>
 </ol>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs SQL"><span class="hljs-keyword">SELECT</span> player_id, device_id <span class="hljs-keyword">from</span> Activity a1<br><span class="hljs-keyword">WHERE</span> event_date <span class="hljs-operator">&lt;=</span> <span class="hljs-keyword">ALL</span>(<span class="hljs-keyword">SELECT</span> event_date <span class="hljs-keyword">FROM</span> Activity a2 <span class="hljs-keyword">WHERE</span> a1.player_id <span class="hljs-operator">=</span> a2.player_id );<br></code></pre></td></tr></table></figure>
-<h2 id="选取第二高的薪水">6. 选取第二高的薪水</h2>
-<p><img src="/2022/09/30/SQL-problems/8.PNG" srcset="/img/loading.gif" lazyload></p>
+<h2 id="6-选取第二高的薪水"><a class="markdownIt-Anchor" href="#6-选取第二高的薪水"></a> 6. 选取第二高的薪水</h2>
+<p><img src="/2022/09/30/SQL-problems/8.PNG" srcset="/img/loading.gif" lazyload alt></p>
 <p>思路：</p>
 <p>可以使用dense_rank进行排序，但这里使用另一种方式</p>
-<ol type="1">
+<ol>
 <li>选出distinct的salary，降序排列，然后使用limit offset进行筛选</li>
 </ol>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs SQL"><span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">DISTINCT</span><br>    Salary <span class="hljs-keyword">AS</span> SecondHighestSalary<br><span class="hljs-keyword">FROM</span><br>    Employee<br><span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> Salary <span class="hljs-keyword">DESC</span><br>LIMIT <span class="hljs-number">1</span> <span class="hljs-keyword">OFFSET</span> <span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
-<ol start="2" type="1">
+<ol start="2">
 <li>加上ifnull</li>
 </ol>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">SELECT</span><br>    IFNULL(<br>      (<span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">DISTINCT</span> Salary<br>       <span class="hljs-keyword">FROM</span> Employee<br>       <span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> Salary <span class="hljs-keyword">DESC</span><br>        LIMIT <span class="hljs-number">1</span> <span class="hljs-keyword">OFFSET</span> <span class="hljs-number">1</span>),<br>    <span class="hljs-keyword">NULL</span>) <span class="hljs-keyword">AS</span> SecondHighestSalary<br></code></pre></td></tr></table></figure>
-<h3 id="技巧有关limit和offset的使用">技巧：有关limit和offset的使用</h3>
-<ol type="1">
-<li><p>当limit后跟一个参数时，表示从头开始选取若干行</p>
-<p><code>select * from tb limit 3</code></p></li>
-<li><p>当limit后跟两个参数时，表示从头开始跳过a行，再选取之后的b行</p>
-<p><code>select * from tb limit 2,3 --跳过1-2行，选取3-5行</code></p></li>
-<li><p>limit offset 组合使用时，limit后只跟一个参数表示选取多少行，offset后一个参数，表示跳过多少行</p>
-<p><code>select * from tb limit 3 offset 2 --效果同 2.</code></p></li>
+<h3 id="技巧有关limit和offset的使用"><a class="markdownIt-Anchor" href="#技巧有关limit和offset的使用"></a> 技巧：有关limit和offset的使用</h3>
+<ol>
+<li>
+<p>当limit后跟一个参数时，表示从头开始选取若干行</p>
+<p><code>select * from tb limit 3</code></p>
+</li>
+<li>
+<p>当limit后跟两个参数时，表示从头开始跳过a行，再选取之后的b行</p>
+<p><code>select * from tb limit 2,3 --跳过1-2行，选取3-5行</code></p>
+</li>
+<li>
+<p>limit offset 组合使用时，limit后只跟一个参数表示选取多少行，offset后一个参数，表示跳过多少行</p>
+<p><code>select * from tb limit 3 offset 2 --效果同 2.</code></p>
+</li>
 </ol>
-<h2 id="技巧从json导入数据">7.技巧：从json导入数据</h2>
-<p>似乎有专门的导入工具，暂时可以使用<a target="_blank" rel="noopener" href="https://data.page/json/csv">此网址</a>,输入json格式的数据（不用输入表头)，将其转化为csv文件，在参考<a href="#技巧：从csv导入文件">从csv导入文件</a></p>
-<h2 id="选择连续且为空的座位">8. 选择连续且为空的座位</h2>
-<p><img src="/2022/09/30/SQL-problems/9.PNG" srcset="/img/loading.gif" lazyload></p>
+<h2 id="7技巧从json导入数据"><a class="markdownIt-Anchor" href="#7技巧从json导入数据"></a> 7.技巧：从json导入数据</h2>
+<p>似乎有专门的导入工具，暂时可以使用<a target="_blank" rel="noopener" href="https://data.page/json/csv">此网址</a>,输入json格式的数据（不用输入表头)，将其转化为csv文件，在参考<a href="#%E6%8A%80%E5%B7%A7%EF%BC%9A%E4%BB%8Ecsv%E5%AF%BC%E5%85%A5%E6%96%87%E4%BB%B6">从csv导入文件</a></p>
+<h2 id="8-选择连续且为空的座位"><a class="markdownIt-Anchor" href="#8-选择连续且为空的座位"></a> 8. 选择连续且为空的座位</h2>
+<p><img src="/2022/09/30/SQL-problems/9.PNG" srcset="/img/loading.gif" lazyload alt></p>
 <p>思路：</p>
-<p>此题应该与<a href="#1.%20用户连续登录">用户连续登录</a>区分开来，此问题需要输出所有连续的行号，而不需要聚合，所以用row number判断并不恰当</p>
-<ol type="1">
+<p>此题应该与[用户连续登录](#1. 用户连续登录)区分开来，此问题需要输出所有连续的行号，而不需要聚合，所以用row number判断并不恰当</p>
+<ol>
 <li>将表格和自身join起来，on
-<ol type="1">
+<ol>
 <li>abs（1.seat - 2.seat）= 1</li>
 <li>1.free = 2.free = 1</li>
-</ol></li>
+</ol>
+</li>
 <li>这样出现在表格中的每一行都一定有一个neighbor， 且neighbour也为空座，最后再选择distinct</li>
 </ol>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs SQL"><span class="hljs-keyword">select</span> <span class="hljs-keyword">distinct</span> a.seat_id<br><span class="hljs-keyword">from</span> cinema a <span class="hljs-keyword">join</span> cinema b<br>  <span class="hljs-keyword">on</span> <span class="hljs-built_in">abs</span>(a.seat_id <span class="hljs-operator">-</span> b.seat_id) <span class="hljs-operator">=</span> <span class="hljs-number">1</span><br>  <span class="hljs-keyword">and</span> a.free <span class="hljs-operator">=</span> <span class="hljs-literal">true</span> <span class="hljs-keyword">and</span> b.free <span class="hljs-operator">=</span> <span class="hljs-literal">true</span><br><span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> a.seat_id<br></code></pre></td></tr></table></figure>
-<h2 id="技巧使用concat">9.技巧：使用concat（）</h2>
+<h2 id="9技巧使用concat"><a class="markdownIt-Anchor" href="#9技巧使用concat"></a> 9.技巧：使用concat（）</h2>
 <p>concat()的作用是把两个列连接成一个列，当要使用类似如下语句时</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> <span class="hljs-keyword">table</span> <span class="hljs-keyword">where</span> concat(a,b) <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> (<span class="hljs-keyword">select</span> concat(c,d) <span class="hljs-keyword">from</span> cte)<br></code></pre></td></tr></table></figure>
 <p>此语句逻辑为：只要a,b不同时等于某些特定组合，就可以选择</p>
-<h2 id="累积求和差">10. 累积求和/差</h2>
+<h2 id="10-累积求和差"><a class="markdownIt-Anchor" href="#10-累积求和差"></a> 10. 累积求和/差</h2>
 <p>如图，若干位乘客要登上大巴，每位乘客有一登车次序，乘客的体重列在表中，大巴车能容纳1000KG的重量，要求返回最后一名能够上车的乘客的姓名</p>
-<p><img src="/2022/09/30/SQL-problems/10.PNG" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2022/09/30/SQL-problems/10.PNG" srcset="/img/loading.gif" lazyload alt></p>
 <p>思路：按照登车顺序，计算登车乘客体重的running total：</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs SQL"><span class="hljs-keyword">with</span> cte <span class="hljs-keyword">as</span> (<br><span class="hljs-keyword">select</span> <span class="hljs-operator">*</span>, <br>  <span class="hljs-built_in">sum</span>(weight) <span class="hljs-keyword">over</span>(<span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> turn <span class="hljs-keyword">rows</span> <span class="hljs-keyword">BETWEEN</span> UNBOUNDED PRECEDING <span class="hljs-keyword">and</span> <span class="hljs-keyword">CURRENT</span> <span class="hljs-type">ROW</span>) <span class="hljs-keyword">as</span> roll_sum<br><span class="hljs-keyword">from</span> Quene <span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> turn<br></code></pre></td></tr></table></figure>
 <p>筛选体重running total小于等于1000的乘客，并获取最后一位乘客的姓名</p>
@@ -481,9 +502,9 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Interview/">#Interview</a>
-      
         <a href="/tags/SQL/">#SQL</a>
+      
+        <a href="/tags/Interview/">#Interview</a>
       
     </div>
   

@@ -293,38 +293,52 @@
             
               <div class="markdown-body">
                 
-                <h1 id="case-interview-metrics-diagnosis">Case Interview: Metrics Diagnosis</h1>
-<h2 id="procedure-of-metrics-shift-diagnosis">1. Procedure of Metrics Shift Diagnosis</h2>
+                <h1 id="case-interview-metrics-diagnosis"><a class="markdownIt-Anchor" href="#case-interview-metrics-diagnosis"></a> Case Interview: Metrics Diagnosis</h1>
+<h2 id="1-procedure-of-metrics-shift-diagnosis"><a class="markdownIt-Anchor" href="#1-procedure-of-metrics-shift-diagnosis"></a> 1. Procedure of Metrics Shift Diagnosis</h2>
 <p>This type of cases usually come as a important metrics shift(usually towards a negative direction), and the objective the problem is <strong>to find the root cause of the shift and try to fix it</strong></p>
 <p>Framework:</p>
-<ol type="1">
-<li><p><strong>Clarify the definition of the metric:</strong></p>
-<p>how the metrics is defined. This help you decompose the metrics correctly. This is useful for metric decomposition</p></li>
-<li><p><strong>Check Data:</strong></p>
-<p>Check the log of the data source and data pipeline to make sure the shift is not caused by any bugs, logical errors or outliers</p></li>
-<li><p><strong>Check external factors</strong>:</p>
+<ol>
+<li>
+<p><strong>Clarify the definition of the metric:</strong></p>
+<p>how the metrics is defined. This help you decompose the metrics correctly. This is useful for metric decomposition</p>
+</li>
+<li>
+<p><strong>Check Data:</strong></p>
+<p>Check the log of the data source and data pipeline to make sure the shift is not caused by any bugs, logical errors or outliers</p>
+</li>
+<li>
+<p><strong>Check external factors</strong>:</p>
 <p>Figure out whether the shift is caused by any external factors, including:</p>
 <ul>
 <li><strong>Seasonality:</strong> Is there a seasonal factor in the lifecycle of the product? Like there would be a drastic decline in certain weeks or months of every year. Conduct year-on-year comparison to see such decline always appear in a particular stage in a year</li>
-<li><strong>Industry/market trend</strong>: If there exist a descending trend in the industry? Look to the data of the metrics for the previous few weeks or month. Also see this trend happens on other products or competitors or industry. Figure out the scope of the trend</li>
+<li><strong>Industry/market trend</strong>: If there exist a descending trend in the industry?  Look to the data of the metrics for the previous few weeks or month. Also see this trend happens on other products or competitors or industry. Figure out the scope of the trend</li>
 <li><strong>Competitors</strong>: If the competitors are doing a sales campaign? Does the loss of the metrics goes to the competitors?</li>
 <li><strong>Special events:</strong> Is there a change of policy? Is there any social events or phenomenon happening that it might have a potential impact on the metrics?</li>
-</ul></li>
-<li><p><strong>Check Internal facotrs</strong>:</p>
-<ol type="1">
-<li><p><strong>Change or treatment on product:</strong></p>
-<p>is there any change or treatment implemented on the product around the time of the metric's decline? if so, we can do a causal inference to evaluate the effect</p></li>
-<li><p><strong>Decompose the metrics</strong>:</p>
+</ul>
+</li>
+<li>
+<p><strong>Check Internal facotrs</strong>:</p>
+<ol>
+<li>
+<p><strong>Change or treatment on product:</strong></p>
+<p>is there any change or treatment implemented on the product around the time of the metric’s decline? if so, we can do a causal inference to evaluate the effect</p>
+</li>
+<li>
+<p><strong>Decompose the metrics</strong>:</p>
 <p>decompose the metrics in a additive or multiplicative way, for example: order amont = show pv * CTR * C_O, ETA = waiting time for a drive to take the order + time the driver arrive the pick up point + time the rider find the driver</p>
-<p>For each sub-metrics, calculate the changing rate and find out which submetric is the most influential part of the original metrics, focus on these sub- metrics</p></li>
-<li><p><strong>Segment the metric by user demographic channel, or user behavior</strong></p></li>
+<p>For each sub-metrics, calculate the changing rate and find out which submetric is the most influential part of the original metrics, focus on these sub- metrics</p>
+</li>
+<li>
+<p><strong>Segment the metric by user demographic channel, or user behavior</strong></p>
+</li>
 </ol>
-<p>Segment the metric by dimensions like region, new/old user, platform, content category. For each subgroup, calculate its contributions ot the decline of the metrics. For example, if you find some facts like 90% of the decline are caused by new user, than you probably would suspect there's a association, like the gui is not friendly to new user</p></li>
+<p>Segment the metric by dimensions like region, new/old user, platform, content category. For each subgroup, calculate its contributions ot the decline of the metrics. For example, if you find some facts like 90% of the decline are caused by new user, than you probably would suspect there’s a association, like the gui is not friendly to new user</p>
+</li>
 </ol>
-<h2 id="fermi-estimation">2. Fermi Estimation</h2>
+<h2 id="2-fermi-estimation"><a class="markdownIt-Anchor" href="#2-fermi-estimation"></a> 2. Fermi Estimation</h2>
 <p>Fermi estimation is a method of making rough estimates of unknown quantities using approximate values and simple reasoning. The basic idea is to decompose the metric we want to estimate into some submetrics in a additive or multiplicative way. For example, to answer to question: how many red vehicles are there in New York?</p>
 <p>We can make such decomposition:</p>
-<p>Red vichle in New York = Population in New York * Vichle ownership rate * City factor(large city usually has higher ownership rate) * the ratio of red car in all cars</p>
+<p>Red vichle in New York = Population in New York * Vichle ownership rate * City factor(large city usually  has higher ownership rate) * the ratio of red car in all cars</p>
 <p>Then, for each metirc, we given them a upper boundary and a lower boundary according to our common sense. We use the median of the range as an estimation and use them to calculate the estimation for the target metric.</p>
 
                 
